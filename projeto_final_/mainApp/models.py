@@ -9,6 +9,15 @@ class App_user(models.Model):
     birthDate = models.DateField()
     isVerified = models.BooleanField()
 
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        App_user.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.App_user.save()
+
 class Tenant(App_user):
     app_user = models.OneToOneField(User, on_delete=models.CASCADE)
 
