@@ -7,3 +7,6 @@ def index(response):
 
 def home(response):
     return render(response, "mainApp/home.html", {})
+
+def profile(responde):
+    return render(responde, "mainApp/profile.html", {})
