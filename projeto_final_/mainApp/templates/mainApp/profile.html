@@ -1,13 +1,41 @@
 {% extends 'mainApp/base.html' %}
 
 {% block content %}
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-3 bg-secondary">
-                User name
-            </div>
+            <!-- List of options-->
             <div class="col-3">
-                Info
+               <div class="container profileOptionsContainer bg-secondary">
+                    <div class="row text-white">
+                        <!-- Options-->    
+                        <div class="col-12 p-3">
+                            Nome
+                        </div>
+                        <!--If landlord-->
+                        <div class="col-12 p-3">
+                            Lista de Alojamentos
+                        </div>
+                        <!--If landlord-->
+                        <div class="col-12 p-3">
+                            Adicionar Alojamento
+                        </div>
+                        <!--If tenant-->
+                        <div class="col-12 p-3">
+                            Renovar Acordo
+                        </div>
+                        <div class="col-12 p-3">
+                            Cancelar Acordo
+                        </div>
+                    </div>
+               </div>
+            </div>
+            <!--Details-->
+            <div class="col-9">
+                <div class="row">
+                    <div class="col-12 p-3 border">
+                        Details
+                    </div>
+                </div>
             </div>
         </div>
     </div>
