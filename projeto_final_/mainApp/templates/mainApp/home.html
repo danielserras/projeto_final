@@ -1,5 +1,13 @@
 {% extends 'mainApp/base.html' %}
 
 {% block content %}
-    <h1>Hello World!</h1>
+    <div class="container bg-warning mt-5">
+        <div class="row">
+            <div class="col-sm-6 border border-secondary">
+                {% load static %}
+                <img src='{% static "mainApp/images/HomeSvg.svg" %}'>
+            </div>
+            <div class="col-sm-6 border border-secondary">col-sm-6</div>
+        </div>
+    </div>
 {% endblock %}
