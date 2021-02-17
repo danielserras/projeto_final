@@ -1,11 +1,7 @@
 * {
     font-family: 'lato', sans-serif;
 }
-body{
-    padding-left: 2%;
-    padding-right: 2%;
-}
 
-profileOptionsContainer{
-    min-height: 50% !important;
+a:hover{
+    text-decoration: none !important;
 }
