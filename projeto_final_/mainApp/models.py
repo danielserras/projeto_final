@@ -5,9 +5,9 @@ from django.dispatch import receiver
 
 class App_user(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phoneNumber = models.IntegerField()
-    birthDate = models.DateField()
-    isVerified = models.BooleanField()
+    phoneNumber = models.IntegerField(null=True, blank=True)
+    birthDate = models.DateField(null=True, blank=True)
+    isVerified = models.BooleanField(null=True, blank=True)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -16,7 +16,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.App_user.save()
+    instance.app_user.save()
 
 class Tenant(App_user):
     app_user = models.OneToOneField(User, on_delete=models.CASCADE)
