@@ -1,13 +1,35 @@
-{% extends 'mainApp/base.html' %}
-
-{% block content %}
-    <div class="container bg-warning mt-5">
-        <div class="row">
-            <div class="col-sm-6 border border-secondary">
-                {% load static %}
-                <img src='{% static "mainApp/images/HomeSvg.svg" %}'>
+{% extends 'mainApp/base.html' %} {% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-6 p-4">
+            {% load static %}
+            <img src='{% static "mainApp/images/HomeSvg.svg" %}' class='img-fluid'>
+        </div>
+        <div class="col-sm-6 my-auto">
+            <div class="row">
+                <div class="col-sm-12 p-4">
+                    <h1 class="font-weight-bold">
+                        Vais estudar e não sabes onde ficar? Nós podemos ajudar!
+                    </h1>
+                </div>
             </div>
-            <div class="col-sm-6 border border-secondary">col-sm-6</div>
+            <div class="row align-middle">
+                <div class="col-sm-12 p-4">
+                    <form class="form-inline">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white border-right-0 border-info border-5 p-1">
+                                    {% load static %}
+                                    <img src='{% static "mainApp/images/map-pin.svg" %}' class='img-fluid'>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control border-left-0 pl-0 border-info rounded-right" placeholder="Localização" aria-label="Username" aria-describedby="basic-addon1">
+                            <button type="submit" class="btn btn-secondary ml-2 border-0 font-weight-bold">Pesquisar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 {% endblock %}
