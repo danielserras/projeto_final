@@ -8,33 +8,73 @@
     </div>
     <div class="row">
         <div class="container border border-info border-3 p-3">
+
             <div class="row">
-                <div class="col-12">
+                <div class="col-sm-12">
                     <h3>Quarto no Areiro</h3> <!--Title-->
                 </div>
             </div>
+
             <div class="row">
-                <div class="col-12">
+                <div class="col-sm-12">
                     <h4>Condições de Arrendamento</h4>
                 </div>
             </div>
+
             <div class="row">
-                <div class="col-12">
+                <div class="col-sm-12">
                     <ul id="agreementList">
-                    <li><b>Data de entrada: </b>10/03/2021</li> <!--startsDate-->
-                    <li><b>Data de saída: </b>18/07/2021</li> <!--endsDate-->
-                    <li><b>Renda: </b>500€</li><!--rentAumont-->
+                        <li><b>Data de entrada: </b>10/03/2021</li> <!--startsDate-->
+                        <li><b>Data de saída: </b>18/07/2021</li> <!--endsDate-->
+                        <li><b>Renda: </b>500€</li><!--rentAumont-->
+                        <li><b>Caução: </b> 500€</li> <!--securityDeposit-->
+                        <li><b>Frequência dos Serviços de limpeza: </b>Todas as semanas</li> <!--cleaningServices-->
                     </ul>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>Regras</h4>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul id="agreementList">
+                        <li><b>Animais de estimação permitidos: </b>Sim</li> <!--pets-->
+                        <li><b>Visitas podem pernoitar ocasionalmente: </b>Sim</li><!--overnightVisits-->       
+                        <li><b>Permitido fumar: </b>Não</li> <!--smoke-->            
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>Despesas Incluídas</h4>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul id="agreementList">
+                        <li><b>Animais de estimação permitidos: </b>Sim</li> <!--pets-->
+                        <li><b>Visitas podem pernoitar ocasionalmente: </b>Sim</li><!--overnightVisits-->       
+                        <li><b>Permitido fumar: </b>Não</li> <!--smoke-->            
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </div>
+
     <div class="row">
         <div class="custom-control custom-checkbox mr-sm-2">
             <input type="checkbox" class="custom-control-input" id="agreementAccept">
             <label class="custom-control-label" for="agreementAccept">Li e aceito todas as regras acima estabelecidas.</label>
         </div>
     </div>
+
     <div class="row float-right">
         <button id="agreementSubmit" type="submit" class="btn btn-secondary" disabled>Aceitar Acordo</button>
     </div>
