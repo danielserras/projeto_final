@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% load static %}
     <link rel="stylesheet" href='{% static "mainApp/css/bootstrap/css/bootstrap.min.css" %}'>
     <link rel="stylesheet" href='{% static "mainApp/css/style.css" %}'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src='{% static "mainApp/css/bootstrap/js/bootstrap.min.js" %}'></script>
     <script src='{% static "mainApp/js/script.js" %}'></script>
-    <title>Document</title>
+    <title>UniHouses</title>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
@@ -22,7 +24,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                    <a class="nav-link" href="#">Pesquisar</a>
+                        <a class="nav-link" href="#">Pesquisar</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Resgistar</a>
@@ -34,7 +36,23 @@
             </div>
         </div>
     </nav>
-    {% block content %}
-    {% endblock %}
+    {% block content %} {% endblock %}
+    <footer class="container-fluid bg-info text-light p-4">
+        <div class="row justify-content-md-center">
+            <a>
+                <p class="text-light my-auto m-1 font-weight-bold">UniHouses</p>
+            </a>
+            <i class="fa fa-circle my-auto m-1 " style="font-size:6px;"></i>
+            <a>
+                <p class="text-light my-auto m-1 font-weight-bold">Política de Privacidade</p>
+            </a>
+            <i class="fa fa-circle my-auto m-1" style="font-size:6px;"></i>
+            <a>
+                <p class="text-light my-auto m-1 font-weight-bold">GitHub</p>
+            </a>
+            <i class="fa fa-github my-auto" style="font-size:18px;"></i>
+        </div>
+    </footer>
 </body>
+
 </html>
