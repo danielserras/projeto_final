@@ -1,0 +1,27 @@
+{% extends 'mainApp/base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+        <h2>Descrição do Acordo</h2>
+    </div>
+    <div class="row border border-info border-3 p-3">
+        <h3>Quarto no Areeiro</h3> <!--Description-->
+        <h4>Regras</h4>
+        <p></p>
+    </div>
+    <div class="row">
+        <div class="custom-control custom-checkbox mr-sm-2">
+            <input type="checkbox" class="custom-control-input" id="agreementAccept">
+            <label class="custom-control-label" for="agreementAccept">Li e aceito todas as regras acima estabelecidas.</label>
+        </div>
+    </div>
+    <div class="row float-right">
+        <button id="agreementSubmit" type="submit" class="btn btn-secondary" disabled>Aceitar Acordo</button>
+    </div>
+</div>
+
+
+
+{% endblock %}

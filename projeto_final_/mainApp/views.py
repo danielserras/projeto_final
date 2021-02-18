@@ -42,7 +42,7 @@ def index(response):
     return render(response, "mainApp/home.html", {})
 
 def startsAgreement(response):
-    return render(response, "mainApp/startsAgreement.html", {})
+    return render(response, "mainApp/startsAgreementTenent.html", {})
 
 def profile(response):
     return render(response, "mainApp/profile.html", {})
