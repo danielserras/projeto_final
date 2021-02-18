@@ -16,6 +16,9 @@ a:hover {
     text-decoration: none !important;
 }
 
+#agreementList{
+    list-style-type: none;
+}
 #bottom-home-container {
     margin-top: 100px;
 }
