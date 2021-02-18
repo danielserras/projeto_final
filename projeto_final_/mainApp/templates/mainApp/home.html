@@ -13,22 +13,55 @@
                     </h1>
                 </div>
             </div>
-            <div class="row align-middle">
-                <div class="col-sm-12 p-4">
-                    <form class="form-inline">
+            <div class="row align-middle p-4">
+                <form class="form-inline col-sm-12">
+                    <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text bg-white border-right-0 border-info border-5 p-1">
+                                <span class="input-group-text bg-white border-info p-1">
                                     {% load static %}
                                     <img src='{% static "mainApp/images/map-pin.svg" %}' class='img-fluid'>
                                 </span>
                             </div>
                             <input type="text" class="form-control border-left-0 pl-0 border-info rounded-right" placeholder="Localização" aria-label="Username" aria-describedby="basic-addon1">
-                            <button type="submit" class="btn btn-secondary ml-2 border-0 font-weight-bold">Pesquisar</button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary ml-2 border-0 font-weight-bold">Pesquisar</button>
+                    </div>
+                </form>
             </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="jumbotron jumbotron-fluid" id="bottom-home-container">
+    <div class="jumbotron-background">
+        {% load static %}
+        <img class="blur full-div-width" src='{% static "mainApp/images/bgHomeBottom.jpg" %}' alt=" ">
+    </div>
+    <div class="container p-4 ">
+        <div class="row justify-content-center m-3 ">
+            <h2 class="col-sm-6 text-center ">Lorem ipsum dolor sit </h2>
+        </div>
+        <div class="row justify-content-center m-1 ">
+            <p class="col-sm-8 text-center ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Arcu mauris etiam dignissim scelerisque tincidunt eget adipiscing in duis. Neque, enim a vel dictum in ac nibh. Arcu, euismod tincidunt lectus donec convallis. Euismod commodo enim,
+                mattis netus velit, at vel risus.
+            </p>
+        </div>
+        <div class="row justify-content-center ">
+            <button type="button " class="btn btn-secondary font-weight-bold ">Sou estudante</button>
+        </div>
+        <div class="row justify-content-center mt-5 m-3 ">
+            <h2 class="col-sm-6 text-center ">Lorem ipsum dolor sit </h2>
+        </div>
+        <div class="row justify-content-center ">
+            <p class="col-sm-8 text-center ">Tempor amet convallis gravida in condimentum gravida congue congue. Aliquet tortor nullam in congue libero scelerisque. Pharetra integer quis in laoreet ultrices blandit eu pretium arcu. Tortor orci, odio morbi a, mi rhoncus tellus sed vitae.
+                Sit consequat sagittis turpis magna.
+            </p>
+        </div>
+        <div class="row justify-content-center ">
+            <button type="button " class="btn btn-secondary font-weight-bold ">Sou senhorio</button>
         </div>
     </div>
 </div>
