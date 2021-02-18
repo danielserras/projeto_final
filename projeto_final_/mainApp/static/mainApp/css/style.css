@@ -6,3 +6,7 @@
 a:hover{
     text-decoration: none !important;
 }
+
+#agreementList{
+    list-style-type: none;
+}
