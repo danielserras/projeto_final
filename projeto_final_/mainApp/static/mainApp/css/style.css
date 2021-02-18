@@ -53,3 +53,9 @@ img.blur {
     width: 100%;
     height: 100%;
 }
+
+
+.agreementDescription{
+    max-height: 70vh !important;
+    overflow-y: scroll;
+}
