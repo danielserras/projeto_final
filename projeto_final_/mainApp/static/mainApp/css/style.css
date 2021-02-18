@@ -1,6 +1,10 @@
-body,
-html {
-    height: 100%
+body,html{
+    height: 100%;
+}
+
+#main{
+    min-height: 100vh;
+    position: relative;
 }
 
 * {
@@ -58,4 +62,8 @@ img.blur {
 .agreementDescription{
     max-height: 70vh !important;
     overflow-y: scroll;
+}
+
+#footer{
+    position: absolute;
 }
