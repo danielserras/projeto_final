@@ -1,0 +1,36 @@
+{% extends 'mainApp/base.html' %}
+
+{% block content %}
+    <!-- <div class="d-flex align-items-center min-vh-100">-->
+        <div class= "container mt-5">
+            <div class="row justify-content-center mb-5">
+                <h1>Login</h1>
+            </div>
+            <form action="">
+                <div class="row justify-content-center">
+                    <div class="col-sm-4">
+                        {% load static %}
+                        <img src='{% static "mainApp/images/LoginImg1.svg" %}' class='img-fluid loginImg' alt="loginImg1">
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="row align-self-center form-group">
+                            <input type="text" class="form-control" id="usernameLogin" placeholder="Username">
+                        </div>
+                        
+                        
+                        <div class="row align-self-center form-group">
+                            <input type="password" class="form-control" id="passwordLogin" placeholder="Password">
+                        </div>
+                        
+                        <div class="row justify-content-center">
+                                <button type="submit" class=" w-50 btn btn-secondary">Login</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <img src='{% static "mainApp/images/LoginImg2.svg" %}' class='img-fluid loginImg' alt="loginImg2">
+                    </div>
+                </div>
+            </form>
+        </div> 
+   <!--  </div> --> 
+{% endblock %}

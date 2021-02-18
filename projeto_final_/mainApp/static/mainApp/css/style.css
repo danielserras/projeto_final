@@ -42,8 +42,9 @@ a:hover {
     position: absolute;
     top: 0;
     z-index: 1;
-    width: 100%;
-    height: 100%;
+    left: -1%;
+    width: 110%;
+    height: 110%;
 }
 
 img.blur {
@@ -66,4 +67,8 @@ img.blur {
 
 #footer{
     position: absolute;
+}
+.loginImg{
+    height:200px;
+    width:100px;
 }

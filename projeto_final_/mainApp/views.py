@@ -17,7 +17,7 @@ def login_view(request):
             messages.info(request, 'Username ou password incorretos')
             return redirect('login') #placeholder
     context = {}
-    return render(request,'login.html', context) #placeholder
+    return render(request,'mainApp/login.html', context) #placeholder
 
 
 def register_view(request):
@@ -33,9 +33,10 @@ def register_view(request):
             user_nameStr = form.cleaned_data.get('username')
             messages.success(request, 'Account was created for ' + useruser_nameStr )
             return redirect('home_page') #placeholder, alterem depois
+            
 
     context = {'form':form, 'pform':pform}
-    return render(request, 'register.html', context)
+    return render(request, 'mainApp/register.html', context)
 
 
 def index(response):
