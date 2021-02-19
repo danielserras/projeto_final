@@ -75,7 +75,7 @@ img.blur {
     text-align: center;
 }
 
-#formContent, #formContent2, #formContent3 {
+#formContent, #formContent2 {
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
     background: #fff;
