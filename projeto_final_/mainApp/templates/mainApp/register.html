@@ -9,7 +9,7 @@
                 <h2 class="text-center mt-3 mb-4">Registo</h2>
             </div>
         </div>
-        <form action="">
+        <form method='POST' action="{% url 'register_view' %}">
             <div class="row form-group">
                 <div class="col-sm">
                     <input type="text" class="inputType1 " placeholder="Nome de Utilizador">
@@ -27,12 +27,18 @@
             </div>
             <div class="row form-group">
                 <div class="col-sm">
-                    <input type="text" class="inputType1 " placeholder="Nome">
+                    <input type="text" class="inputType1 " placeholder="Primeiro nome">
+                    <input type="text" class="inputType1 " placeholder="Apelido">
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
                     <input type="email" class="inputType1" placeholder="E-mail">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm">
+                    <input type="text" class="inputType1" placeholder="Número de Telefone">
                 </div>
             </div>
             <div class="row form-group">
