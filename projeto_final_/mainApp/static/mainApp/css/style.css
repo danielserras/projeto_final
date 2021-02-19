@@ -174,15 +174,12 @@ input[type=text]:focus, input[type=password]:focus {
     -webkit-transform: translate3d(0, -100%, 0);
     transform: translate3d(0, -100%, 0);
 }
-
-.loginImg{
-    height:200px;
-    width:100px;
+100% {
     opacity: 1;
     -webkit-transform: none;
     transform: none;
 }
-
+}
 
 @keyframes fadeInDown {
 0% {
