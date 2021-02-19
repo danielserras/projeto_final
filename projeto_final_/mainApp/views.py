@@ -3,6 +3,9 @@ from django.utils import timezone
 from django.http import HttpResponse
 from .models import *
 from .forms import CreateUserForm
+from django.conf import settings 
+from django.core.mail import send_mail
+from verify_email.email_handler import send_verification_email
 
 
 def login_view(request):
@@ -32,7 +35,16 @@ def register_view(request):
             #pform.user = user
             pform.save()
             user_nameStr = form.cleaned_data.get('username')
-            messages.success(request, 'Account was created for ' + useruser_nameStr )
+            user_first_name = form.cleaned_data.get('first_name')
+            messages.success(request, 'Utilizador ' + user_nameStr + ' criado!')
+
+            #confirmation email
+            subject = 'UniHouses - Confirmação de crendenciais'
+            message = f'Olá {user_first_name}, obrigado por se juntar a nós!'
+            email_from = settings.EMAIL_HOST_USER 
+            recipient_list = [user.email, ] 
+            send_mail( subject, message, email_from, recipient_list ) 
+
             return redirect('home_page') #placeholder, alterem depois   
 
     context = {'form':form} #, 'pform':pform
