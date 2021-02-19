@@ -83,7 +83,7 @@ img.blur {
     padding: 20px;
 }
 
-#formContent {
+#formContent, #formContent2 {
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
     background: #fff;
