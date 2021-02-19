@@ -1,0 +1,58 @@
+{% extends 'mainApp/base.html' %}
+
+{% block content %}
+
+<div class="wrapper container mt-5">
+    <div id="formContent2">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2 class="text-center mt-3 mb-4">Registo</h2>
+            </div>
+        </div>
+        <form action="">
+            <div class="row form-group">
+                <div class="col-sm">
+                    <input type="text" class="inputType1 form-control" placeholder="Nome de Utilizador">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm">
+                    <input type="password" class="inputType1 form-control" placeholder="Palavra-passe">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm">
+                    <input type="password" class="inputType1 form-control" placeholder="Confirme a palavra-passe">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm">
+                    <input type="text" class="inputType1 form-control" placeholder="Nome">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm">
+                    <input type="email" class="inputType1 form-control" placeholder="E-mail">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm">
+                    <label for="birthdate">Data de Nascimento:</label>
+                    <input type="date" name="birthdate" class="inputType1 form-control">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm">
+                    <h5 class="">Tipo de Conta:</h5>
+                    <input type="radio" name="Inquilino" class="inputType1 form-control" value="Inquilino"> Inquilino 
+                    <input type="radio" name="Senhorio" class="inputType1 form-control" value="Senhorio"> Senhorio
+                </div>
+            </div>
+            <div class="row form-group">
+                <input type="submit" class="inputType2 w-50 btn btn-secondary font-weight-bold mx-auto" value="Registar">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
