@@ -3,23 +3,9 @@ html {
     height: 100%;
 }
 
-<<<<<<< HEAD
 #main {
     min-height: 100vh;
     position: relative;
-=======
-body {
-    display: flex;
-    flex-direction: column;
-}
-
-#main{
-    flex: 1 0 auto;
-}
-
-#footer{
-    flex-shrink: 0;
->>>>>>> 3a72c364d78a247207b0bb9e72b27a1ba5e5e16a
 }
 
 * {
@@ -35,12 +21,7 @@ a:hover {
     text-decoration: none !important;
 }
 
-<<<<<<< HEAD
 #agreementList {
-=======
-/* startsAgreementTenent */
-#agreementList{
->>>>>>> 3a72c364d78a247207b0bb9e72b27a1ba5e5e16a
     list-style-type: none;
 }
 
@@ -96,7 +77,8 @@ img.blur {
     padding: 20px;
 }
 
-#formContent, #formContent2 {
+#formContent,
+#formContent2 {
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
     background: #fff;

@@ -47,3 +47,6 @@ def startsAgreement(response):
 
 def profile(response):
     return render(response, "mainApp/profile.html", {})
+
+def search(response):
+    return render(response, "mainApp/search.html", {})
