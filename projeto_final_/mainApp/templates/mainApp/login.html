@@ -1,7 +1,7 @@
 {% extends 'mainApp/base.html' %}
 
 {% block content %}
-    <!-- <div class="d-flex align-items-center min-vh-100">-->
+     <!--<div class="d-flex align-items-center min-vh-100">
         <div class= "container mt-5">
             <div class="row justify-content-center mb-5">
                 <h1>Login</h1>
@@ -10,13 +10,12 @@
                 <div class="row justify-content-center">
                     <div class="col-sm-4">
                         {% load static %}
-                        <img src='{% static "mainApp/images/LoginImg1.svg" %}' class='img-fluid loginImg' alt="loginImg1">
+                         <img src='{% static "mainApp/images/LoginImg1.svg" %}' class='img-fluid' alt="loginImg1">
                     </div>
                     <div class="col-sm-4">
                         <div class="row align-self-center form-group">
                             <input type="text" class="form-control" id="usernameLogin" placeholder="Username">
                         </div>
-                        
                         
                         <div class="row align-self-center form-group">
                             <input type="password" class="form-control" id="passwordLogin" placeholder="Password">
@@ -26,11 +25,29 @@
                                 <button type="submit" class=" w-50 btn btn-secondary">Login</button>
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <img src='{% static "mainApp/images/LoginImg2.svg" %}' class='img-fluid loginImg' alt="loginImg2">
+                     <div class="col-sm-4">
+                        <img src='{% static "mainApp/images/LoginImg2.svg" %}' class='' alt="loginImg2">
                     </div>
                 </div>
             </form>
         </div> 
-   <!--  </div> --> 
+    </div>-->
+
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+          <div class="fadeIn first">
+            {% load static %}
+            <img src='{% static "mainApp/images/user.svg" %}' id="icon" alt="User Icon" />
+          </div>
+          <form>
+            <input type="text" id="username" class="fadeIn second" name="login" placeholder="Nome de Utilizador">
+            <input type="password" id="password" class="fadeIn third" name="login" placeholder="Palavra-passe">
+            <input type="submit" class="fadeIn fourth w-25 btn btn-secondary mb-2 mt-2 font-weight-bold" value="Login">
+          </form>
+          <div id="formFooter">
+            <a class="underlineHover" href="#">Esqueceste-te da password?</a>
+          </div>
+      
+        </div>
+    </div>
 {% endblock %}
