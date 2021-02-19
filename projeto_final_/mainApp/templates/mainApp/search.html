@@ -18,7 +18,12 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-4 bg-danger p-2">
-                        <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                        <div class="input-group">
+                            <input type="text" class="form-control border-info rounded-left" placeholder="Raio">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-white border-info p-1">Km</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group col-sm-1 bg-info">
                         <button type="button" class="advancedSearchFormButton btn bg-transparent mt-3 p-0">
@@ -30,16 +35,36 @@
                 </div>
                 <div class="form-row border-border-primary">
                     <div class="form-group col-sm bg-danger p-2">
+                        <select class="form-select bg-white border-info p-1" aria-label="Tipo de Alojamento">
+                            <option selected>Alojamento</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
                     </div>
                     <div class="form-group col-sm bg-danger p-2">
+                        <select class="form-select bg-white border-info p-1" aria-label="Número de Inquilinos">
+                            <option selected>Nº inquilinos</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-row border-border-primary">
                     <div class="form-group col-sm bg-danger p-2">
+                        <select class="form-select bg-white border-info p-1" aria-label="Número de Quartos">
+                            <option selected>Nº quartos</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
                     </div>
                     <div class="form-group col-sm bg-danger p-2">
+                        <input type="date" id="birthday" name="birthday">
                     </div>
                     <div class="form-group col-sm bg-danger p-2">
+                        <input type="date" id="birthday" name="birthday">
                     </div>
                 </div>
             </form>
