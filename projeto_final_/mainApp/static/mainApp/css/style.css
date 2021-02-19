@@ -2,9 +2,17 @@ body,html{
     height: 100%;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 #main{
-    min-height: 100vh;
-    position: relative;
+    flex: 1 0 auto;
+}
+
+#footer{
+    flex-shrink: 0;
 }
 
 * {
@@ -20,6 +28,7 @@ a:hover {
     text-decoration: none !important;
 }
 
+/* startsAgreementTenent */
 #agreementList{
     list-style-type: none;
 }
@@ -62,7 +71,7 @@ img.blur {
 
 /* Css do Login */ 
 
-/* Estrutura */
+/* STRUCTURE */
 
 .wrapper {
     display: flex;
@@ -72,10 +81,9 @@ img.blur {
     width: 100%;
     min-height: 100%;
     padding: 20px;
-    text-align: center;
 }
 
-#formContent, #formContent2, #formContent3 {
+#formContent {
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
     background: #fff;
@@ -102,7 +110,7 @@ img.blur {
 
 /*Typography*/
 
-.inputType2 {
+input[type=button], input[type=reset]  {
     border: none;
     padding: 15px 80px;
     text-align: center;
@@ -118,11 +126,11 @@ img.blur {
     transition: all 0.3s ease-in-out;
     }
 
-.inputType2:hover  {
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
     background-color: #E76F51;
 }
 
-.inputType2:active {
+input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
     -moz-transform: scale(0.95);
     -webkit-transform: scale(0.95);
     -o-transform: scale(0.95);
@@ -130,7 +138,7 @@ img.blur {
     transform: scale(0.95);
 }
 
-.inputType1{
+input[type=text], input[type=password] {
     background-color: #f6f6f6;
     border: none;
     color: #0d0d0d;
@@ -151,7 +159,7 @@ img.blur {
     border-radius: 5px 5px 5px 5px;
 }
 
-.inputType1:focus{
+input[type=text]:focus, input[type=password]:focus {
     background-color: #fff;
     border-bottom: 2px solid #E76F51;
 }
