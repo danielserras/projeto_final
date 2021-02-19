@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.http import HttpResponse
 from .models import *
+from .forms import CreateUserForm
 
 
 def login_view(request):
@@ -21,7 +22,7 @@ def login_view(request):
 
 
 def register_view(request):
-    form = CreateUserForm()
+    form = CreateUserForm() 
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         pform = ProfileForm(request.POST)
@@ -32,10 +33,9 @@ def register_view(request):
             pform.save()
             user_nameStr = form.cleaned_data.get('username')
             messages.success(request, 'Account was created for ' + useruser_nameStr )
-            return redirect('home_page') #placeholder, alterem depois
-            
+            return redirect('home_page') #placeholder, alterem depois   
 
-    context = {'form':form, 'pform':pform}
+    context = {'form':form} #, 'pform':pform
     return render(request, 'mainApp/register.html', context)
 
 

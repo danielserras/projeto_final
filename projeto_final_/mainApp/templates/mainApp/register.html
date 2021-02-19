@@ -1,0 +1,62 @@
+{% extends 'mainApp/base.html' %}
+
+{% block content %}
+
+<div class="wrapper container mt-5">
+    <div id="formContent2">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2 class="text-center mt-3 mb-4">Registo</h2>
+            </div>
+        </div>
+        <form action="">
+            <div class="row form-group">
+                <div class="col-sm">
+                    <input type="text" class="inputType1 " placeholder="Nome de Utilizador">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm">
+                    <input type="password" class="inputType1 " placeholder="Palavra-passe">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm">
+                    <input type="password" class="inputType1 " placeholder="Confirme a palavra-passe">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm">
+                    <input type="text" class="inputType1 " placeholder="Nome">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm">
+                    <input type="email" class="inputType1" placeholder="E-mail">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm">
+                    <label for="birthdate">Data de Nascimento:</label>
+                    <input type="date" name="birthdate" class="inputType1">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-12">
+                    <p class="">Tipo de Conta:</p>
+                    <label for="" class="radio-inline">
+                        <input type="radio" name="tipo" class="inputType1" value="Inquilino"> Inquilino 
+                    </label>
+                    <label for="" class="radio-inline">
+                        <input type="radio" name="tipo" class="inputType1" value="Senhorio"> Senhorio
+                    </label>
+                </div>
+            </div>
+            <div class="row form-group">
+                <input type="submit" class="inputType2 w-50 btn btn-secondary font-weight-bold mx-auto" value="Registar">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
