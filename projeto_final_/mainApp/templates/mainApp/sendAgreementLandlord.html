@@ -4,27 +4,117 @@
 
 <div class="container mt-5">
     <div class="row">
-        <h3>Descrição do Acordo</h3>
-    </div>
-    <div class="row border border-info border-3 p-3">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vestibulum maximus diam, sed tincidunt arcu scelerisque et. Nunc iaculis elit a vulputate faucibus. Aliquam tincidunt nisi quam, vitae placerat dolor tristique mattis. Ut fermentum et mi sed faucibus. Curabitur non tristique nunc, a aliquet ligula. Pellentesque sed dapibus tortor, a laoreet quam. Suspendisse molestie, eros sit amet ullamcorper laoreet, nisl purus imperdiet sem, blandit euismod odio mauris eget neque. Nulla ipsum nisl, suscipit et augue eu, hendrerit tincidunt ipsum. Etiam vel est vitae lorem porta ornare. Suspendisse scelerisque tortor massa, eget suscipit mauris rutrum eu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
-
-Cras accumsan diam purus, et sagittis dui mollis sit amet. Mauris tempor libero ut nulla porttitor, id egestas tortor mollis. Sed et arcu vitae dolor varius volutpat id in metus. Cras quis augue efficitur, eleifend risus sed, iaculis justo. Pellentesque ac nibh tincidunt, consectetur nisl aliquam, laoreet lectus. Fusce id libero id ligula condimentum aliquam non vehicula leo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse potenti. Morbi venenatis porttitor turpis, quis vehicula felis laoreet eget. Nam ac lorem non massa posuere vestibulum.
-
-Donec id tempor justo, vitae egestas velit. Aliquam erat volutpat. Curabitur arcu lectus, lobortis nec ante vitae, elementum dignissim augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec nunc diam. Sed lobortis, odio vel tincidunt elementum, sem justo finibus ligula, at ullamcorper purus nibh nec dolor. Cras eget magna rutrum, vehicula nunc ut, vestibulum leo. Aenean egestas odio ut nibh lobortis cursus.
-
-Praesent auctor lectus ac nibh iaculis, nec vehicula elit tempor. Donec ut erat in mi sagittis pulvinar. Nam dapibus ligula a vehicula bibendum. Etiam vel nisi ut dolor pharetra feugiat. Donec aliquet vitae diam at gravida. Nulla faucibus mi vitae ante placerat faucibus. Sed faucibus iaculis purus vitae porta. In sit amet metus nec risus faucibus consequat. Morbi commodo nec mauris at blandit. In vestibulum augue urna, at convallis nunc tincidunt at.
-
-Maecenas ac finibus enim. Maecenas eu tristique mi, non ultrices felis. Proin laoreet eros nec ligula molestie, eu ullamcorper turpis tempus. Integer pellentesque, lacus a congue tempor, felis nunc euismod dui, et scelerisque ex ante id nisi. In porta pellentesque nibh, quis tristique orci tincidunt in. Duis elementum libero eu erat consequat, eget dictum massa dignissim. Sed pharetra felis purus, quis pellentesque tortor placerat a. Duis ullamcorper purus non maximus tincidunt. Proin felis justo, volutpat eget ultrices vitae, mollis at enim. Vestibulum pretium ut orci sed luctus. Vivamus vel vulputate neque.
+        <h2>Descrição do Acordo</h2>
     </div>
     <div class="row">
-        <div class="custom-control custom-checkbox mr-sm-2">
-            <input type="checkbox" class="custom-control-input" id="agreementAccept">
-            <label class="custom-control-label" for="agreementAccept">Li e aceito todas as regras acima estabelecidas.</label>
+        <div class="container border border-info border-3 p-3 agreementDescription">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>Quarto no Areiro</h4> <!--Title-->
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <h5>Condições de Arrendamento</h5>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <ul id="sendAgreementList">
+                        <li><b>Data de entrada: </b><input class="form-control border-primary" type="date" name="" id="" value="2021-03-10"></li> <!--startsDate-->
+                        <li><b>Data de saída: </b><input class="form-control border-primary" type="date" name="" id="" value="2021-07-18"></li> <!--endsDate-->
+                        <li><b>Renda: </b><input class="form-control border-primary" type="number" name="" id="" value="500" min="1"></li><!--rentAumont-->
+                        <li><b>Caução: </b> <input class="form-control border-primary" type="number" name="" id="" value="500" min="1"></li> <!--securityDeposit-->
+                        <li><b>Frequência dos Serviços de limpeza: </b><input class="form-control border-primary" type="text" name="" id="" value="Todas as semanas"></li> <!--cleaningServices-->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <h5>Regras</h5>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <ul id="sendAgreementList">
+                        <li><b>Animais de estimação permitidos: </b><select name="" id="" class="form-control border-primary">
+                                                                        <option value="Sim">Sim</option>
+                                                                        <option value="Não">Não</option>
+                                                                    </select></li> <!--pets-->
+                        <li><b>Visitas podem pernoitar ocasionalmente: </b><select name="" id="" class="form-control border-primary">
+                                                                        <option value="Sim">Sim</option>
+                                                                        <option value="Não">Não</option>
+                                                                    </select></li></li><!--overnightVisits-->       
+                        <li><b>Permitido fumar: </b><select name="" id="" class="form-control border-primary">
+                                                                        <option value="Sim">Sim</option>
+                                                                        <option value="Não">Não</option>
+                                                                    </select></li></li> <!--smoke-->            
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <h5>Despesas Incluídas</h5>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <ul id="sendAgreementList">
+                        <li><b>Internet: </b><select name="" id="" class="form-control border-primary">
+                                                                        <option value="Sim">Sim</option>
+                                                                        <option value="Não">Não</option>
+                                                                    </select></li></li> <!--internet-->
+                        <li><b>Eletricidade: </b><select name="" id="" class="form-control border-primary">
+                                                                        <option value="Sim">Sim</option>
+                                                                        <option value="Não">Não</option>
+                                                                    </select></li></li><!--eletricity-->       
+                        <li><b>Água: </b><select name="" id="" class="form-control border-primary">
+                                                                        <option value="Sim">Sim</option>
+                                                                        <option value="Não">Não</option>
+                                                                    </select></li></li> <!--water-->   
+                        <li><b>Gás: </b><select name="" id="" class="form-control border-primary">
+                                                                        <option value="Sim">Sim</option>
+                                                                        <option value="Não">Não</option>
+                                                                    </select></li></li> <!--gas-->            
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-12">
+                    <h5>Outros:</h5>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                   <textarea class="form-control border-primary w-100" rows="10">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vestibulum maximus diam, 
+                            sed tincidunt arcu scelerisque et. Nunc iaculis elit a vulputate faucibus. Aliquam tincidunt nisi 
+                            quam, vitae placerat dolor tristique mattis. Ut fermentum et mi sed faucibus. Curabitur non tristique 
+                            nunc, a aliquet ligula. Pellentesque sed dapibus tortor, a laoreet quam. Suspendisse molestie, eros sit 
+                            amet ullamcorper laoreet, nisl purus imperdiet sem, blandit euismod odio mauris eget neque. Nulla ipsum nisl, 
+                            suscipit et augue eu, hendrerit tincidunt ipsum. Etiam vel est vitae lorem porta ornare. Suspendisse scelerisque 
+                            tortor massa, eget suscipit mauris rutrum eu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices 
+                            posuere cubilia curae;
+                    </textarea>
+                </div>
+            </div>
+            
         </div>
     </div>
-    <div class="row float-right">
-        <button id="agreementSubmit" type="submit" class="btn btn-secondary" disabled>Aceitar Acordo</button>
+
+
+    <div class="row float-right mt-2">
+        <div class="col-sm-12">
+            <button id="sendAgreement" type="submit" class="btn btn-secondary">Enviar acordo</>
+        </div>
     </div>
 </div>
 

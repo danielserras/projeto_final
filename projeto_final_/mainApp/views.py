@@ -55,7 +55,8 @@ def index(response):
     return render(response, "mainApp/home.html", {})
 
 def startsAgreement(response):
-    return render(response, "mainApp/startsAgreementTenent.html", {})
+    #return render(response, "mainApp/startsAgreementTenent.html", {})
+    return render(response, "mainApp/sendAgreementLandlord.html", {})
 
 def profile(response):
     return render(response, "mainApp/profile.html", {})
