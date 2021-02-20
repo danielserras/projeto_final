@@ -92,7 +92,7 @@ img.blur {
     width: 100%;
     min-height: 100%;
     padding: 20px;
-    text-align:center;
+    text-align: center;
 }
 
 #formContent,
@@ -150,7 +150,7 @@ img.blur {
     transform: scale(0.95);
 }
 
-.inputType1{
+.inputType1 {
     background-color: #f6f6f6;
     border: none;
     color: #0d0d0d;
