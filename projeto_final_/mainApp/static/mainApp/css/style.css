@@ -3,9 +3,20 @@ html {
     height: 100%;
 }
 
-#main {
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#main{
     min-height: 100vh;
     position: relative;
+    flex: 1 0 auto;
+}
+
+#footer{
+    margin-top: 1%;
+    flex-shrink: 0;
 }
 
 * {

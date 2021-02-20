@@ -10,41 +10,42 @@
             </div>
         </div>
         <form method='POST' action="{% url 'register_view' %}">
+            {% csrf_token %}
             <div class="row form-group">
                 <div class="col-sm">
-                    <input type="text" class="inputType1 " placeholder="Nome de Utilizador">
+                    <input type="text" name="username" class="inputType1 " placeholder="Nome de Utilizador">
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
-                    <input type="password" class="inputType1 " placeholder="Palavra-passe">
+                    <input type="password" name="password1" class="inputType1 " placeholder="Palavra-passe">
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
-                    <input type="password" class="inputType1 " placeholder="Confirme a palavra-passe">
+                    <input type="password" name="password2" class="inputType1 " placeholder="Confirme a palavra-passe">
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
-                    <input type="text" class="inputType1 " placeholder="Primeiro nome">
-                    <input type="text" class="inputType1 " placeholder="Apelido">
+                    <input type="text" name="first_name" class="inputType1 " placeholder="Primeiro nome">
+                    <input type="text" name="last_name" class="inputType1 " placeholder="Apelido">
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
-                    <input type="email" class="inputType1" placeholder="E-mail">
+                    <input type="email" name="email" class="inputType1" placeholder="E-mail">
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
-                    <input type="text" class="inputType1" placeholder="Número de Telefone">
+                    <input type="text" name="phoneNumber" class="inputType1" placeholder="Número de Telefone">
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
                     <label for="birthdate">Data de Nascimento:</label>
-                    <input type="date" name="birthdate" class="inputType1">
+                    <input type="date" name="birthDate" class="inputType1">
                 </div>
             </div>
             <div class="row form-group">
