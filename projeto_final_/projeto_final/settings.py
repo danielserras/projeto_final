@@ -34,6 +34,8 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'noreply.unihouses@gmail.com'
 EMAIL_HOST_PASSWORD = '9F6E11F58AA76'
+VERIFICATION_SUCCESS_TEMPLATE = None
+LOGIN_URL = '/mainApp/login'
 
 # Application definition
 

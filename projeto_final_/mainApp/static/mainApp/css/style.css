@@ -48,6 +48,14 @@ a:hover {
     list-style-type: none;
 }
 
+
+/* startsAgreementTenent */
+
+.agreementDescription {
+    max-height: 70vh;
+    overflow-y: scroll;
+}
+
 #bottom-home-container {
     margin-top: 100px;
 }
@@ -337,4 +345,15 @@ img.blur {
     /*border-color: #E76F51;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.075) inset, 0 0 80px #E76F51;*/
     outline: 0 none;
+}
+
+
+/* sendAgreementLandlord */
+
+#sendAgreementList {
+    list-style-type: none;
+}
+
+#sendAgreementList>li {
+    margin-top: 1%;
 }
