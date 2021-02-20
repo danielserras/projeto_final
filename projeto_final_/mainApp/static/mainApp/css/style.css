@@ -8,13 +8,13 @@ body {
     flex-direction: column;
 }
 
-#main{
+#main {
     min-height: 100vh;
     position: relative;
     flex: 1 0 auto;
 }
 
-#footer{
+#footer {
     margin-top: 1%;
     flex-shrink: 0;
 }
@@ -30,6 +30,18 @@ i {
 
 a:hover {
     text-decoration: none !important;
+}
+
+.border-3 {
+    border-width: 2px !important;
+}
+
+.border-5 {
+    border-width: 5px !important;
+}
+
+.rounded-10 {
+    border-radius: 10px !important;
 }
 
 #agreementList {
