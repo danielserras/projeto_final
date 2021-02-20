@@ -33,8 +33,8 @@ def register_view(request):
 
         if form.is_valid() and pform.is_valid():
             inactive_user = send_verification_email(request, form)
-            user = form.save()
-            app_user_object = App_user.objects.get(user_id=user)
+            #user = form.save()
+            app_user_object = App_user.objects.get(user_id=inactive_user)
             app_user_object.phoneNumber = pform.cleaned_data['phoneNumber']
             app_user_object.birthDate = pform.cleaned_data['birthDate']
             app_user_object.save()
