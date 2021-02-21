@@ -8,13 +8,13 @@ body {
     flex-direction: column;
 }
 
-#main{
+#main {
     min-height: 100vh;
     position: relative;
     flex: 1 0 auto;
 }
 
-#footer{
+#footer {
     margin-top: 1%;
     flex-shrink: 0;
 }
@@ -32,12 +32,26 @@ a:hover {
     text-decoration: none !important;
 }
 
-/* startsAgreementTenent */
-#agreementListTenent {
+.border-3 {
+    border-width: 2px !important;
+}
+
+.border-5 {
+    border-width: 5px !important;
+}
+
+.rounded-10 {
+    border-radius: 10px !important;
+}
+
+#agreementList {
     list-style-type: none;
 }
 
-.agreementDescription{
+
+/* startsAgreementTenent */
+
+.agreementDescription {
     max-height: 70vh;
     overflow-y: scroll;
 }
@@ -317,6 +331,13 @@ img.blur {
     width: 60%;
 }
 
+
+/*Search Page*/
+
+#advancedSearchDiv {
+    display: none;
+}
+
 .advancedSearchFormButton {
     background-color: Transparent;
     border: none;
@@ -333,12 +354,54 @@ img.blur {
     outline: 0 none;
 }
 
+
+/* slider */
+
+.ui-slider-handle {
+    background: none !important;
+    background-color: #FFF !important;
+    /*background-color: #2A9D8F !important;*/
+    box-sizing: border-box !important;
+    border: 5px solid #264653 !important;
+    border-radius: 30px !important;
+}
+
+.ui-slider {
+    background: none !important;
+    background-color: #DDD!important;
+    border: none !important;
+}
+
+.ui-slider-horizontal .ui-slider-range {
+    background: none !important;
+    background-color: #2A9D8F !important;
+    /* background: #E9C46A !important; */
+}
+
+#rangeLabelDiv {
+    height: 40px;
+    position: relative;
+    border: none;
+}
+
+#labelMin,
+#labelMinToMax,
+#labelMax {
+    background-color: #CCCCCC;
+    position: absolute;
+    padding: 3px;
+    border-radius: 5px;
+    margin-left: -1.4em;
+    text-align: center;
+}
+
+
 /* sendAgreementLandlord */
 
-#sendAgreementList{
+#sendAgreementList {
     list-style-type: none;
 }
 
-#sendAgreementList > li {
-    margin-top:1%;
+#sendAgreementList>li {
+    margin-top: 1%;
 }

@@ -1,31 +1,31 @@
 {% extends 'mainApp/base.html' %} {% block content %}
 <div class="container mt-5">
     <div class="row">
-        <div class="col-sm bg-warning">
-            <h2>Encontra o teu alojamento!</h2>
+        <div class="col-sm mt-5">
+            <h3 class="font-weight-bold mb-4">Encontra o teu alojamento!</h3>
             <form action="" method="POST">
                 {% csrf_token %}
-                <div class="form-row border-border-primary">
-                    <div class="form-group col-sm-7 bg-danger p-2">
+                <div class="form-row border border-primary border-5 rounded-10">
+                    <div class="form-group col-sm-7 my-auto p-2">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text bg-white border-info p-1">
+                                <span class="input-group-text bg-white border-info border-right-0 border-3 p-1">
                                     {% load static %}
                                     <img src='{% static "mainApp/images/map-pin.svg" %}' class='img-fluid' alt='Location pin'>
                                 </span>
                             </div>
-                            <input type="text" class="form-control border-left-0 pl-0 border-info rounded-right" placeholder="Localização">
+                            <input type="text" class="form-control border-left-0 pl-0 border-info border-3 rounded-right" placeholder="Localização">
                         </div>
                     </div>
-                    <div class="form-group col-sm-4 bg-danger p-2">
+                    <div class="form-group col-sm-4 my-auto p-2">
                         <div class="input-group">
-                            <input type="text" class="form-control border-info rounded-left" placeholder="Raio">
+                            <input type="text" class="form-control border-info border-3 rounded-left" placeholder="Raio">
                             <div class="input-group-append">
-                                <span class="input-group-text bg-white border-info p-1">Km</span>
+                                <span class="input-group-text bg-white border-info border-3 border-left-0 p-1">Km</span>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-sm-1 bg-info">
+                    <div class="form-group col-sx-1 mx-auto">
                         <button type="button" class="advancedSearchFormButton btn bg-transparent mt-3 p-0">
                             <svg xmlns="http://www.w3.org/2000/svg" class="" width="28" height="16" fill="none" viewBox="0 0 28 16">
                                 <path stroke="#E76F51" stroke-linecap="round" stroke-linejoin="round" stroke-width="5" d="M25 13L14 3 3 13"/>
@@ -33,46 +33,60 @@
                         </button>
                     </div>
                 </div>
-                <div class="form-row border-border-primary">
-                    <div class="form-group col-sm bg-danger p-2">
-                        <select class="form-select bg-white border-info p-1" aria-label="Tipo de Alojamento">
-                            <option selected>Alojamento</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                <div id="advancedSearchDiv">
+                    <div class="form-row border-border-primary">
+                        <div class="form-group col-sm pt-2">
+                            <select class="form-select form-control border-info border-3 p-1" aria-label="Tipo de Alojamento">
+                            <option value="apartment" selected>Apartamento</option>
+                            <option value="house" selected>Casa</option>
+                            <option value="privateBedroom">Quarto privado</option>
+                            <option value="sharedBedroom">Quarto partilhado</option>
+                            <option value="residence">Residência de estudantes</option>
                         </select>
-                    </div>
-                    <div class="form-group col-sm bg-danger p-2">
-                        <select class="form-select bg-white border-info p-1" aria-label="Número de Inquilinos">
-                            <option selected>Nº inquilinos</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        </div>
+                        <div class="form-group col-sm pt-2">
+                            <select class="form-select form-control border-info border-3 p-1" aria-label="Número de Inquilinos">
+                            <option value="1" selected>1 inquilino</option>
+                            <option value="2">2 inquilinos</option>
+                            <option value="3">3 inquilinos</option>
+                            <option value="4">4 inquilinos</option>
+                            <option value="5+">5+ inquilinos</option>
                         </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-row border-border-primary">
-                    <div class="form-group col-sm bg-danger p-2">
-                        <select class="form-select bg-white border-info p-1" aria-label="Número de Quartos">
-                            <option selected>Nº quartos</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                    <div class="form-row border-border-primary">
+                        <div class="form-group col-sm">
+                            <select class="form-select form-control border-info border-3 p-1" aria-label="Número de Quartos">
+                            <option value="1" selected>1 quarto</option>
+                            <option value="2">2 quartos</option>
+                            <option value="3">3 quartos</option>
+                            <option value="4">4 quartos</option>
+                            <option value="5">5+ quartos</option>
                         </select>
-                    </div>
-                    <div class="form-group col-sm bg-danger p-2">
-                        <input type="date" id="birthday" name="birthday">
-                    </div>
-                    <div class="form-group col-sm bg-danger p-2">
-                        <input type="date" id="birthday" name="birthday">
+                        </div>
+                        <div class="form-group col-sm">
+                            <input placeholder="Entrada" class="form-control border-info border-3 textbox-n" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date-in" />
+                        </div>
+                        <div class="form-group col-sm">
+                            <input placeholder="Saída" class="form-control border-info border-3 textbox-n" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date-out" />
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
-        <div class="col-sm bg-danger p-5">
+        <div class="col-sm  p-5">
             {% load static %}
             <img src='{% static "mainApp/images/searchSvg.svg" %}' class='img-fluid' alt='Boy with a house'>
         </div>
     </div>
+    <div id="rangeLabelDiv">
+        <span id="labelMin"></span>
+        <span id="labelMinToMax"></span>
+        <span id="labelMax"></span>
+    </div>
+    <div id="slider"></div>
+
+    <script>
+    </script>
 </div>
 {% endblock %}
