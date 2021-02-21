@@ -45,8 +45,13 @@ class Property(models.Model):
     cleaning_services = models.BooleanField()
 
 
-
-
-
+class Bathroom(models.Model):
+    associatedProperty = models.ForeignKey(Property, on_delete = models.CASCADE)
+    toilet = models.BooleanField()
+    sink = models.BooleanField()
+    shower = models.BooleanField()
+    window = models.BooleanField()
+    bathtub = models.BooleanField()
+    privateOrshared = models.BooleanField()
 
 # Create your models here.
