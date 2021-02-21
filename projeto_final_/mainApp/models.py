@@ -7,6 +7,8 @@ class App_user(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phoneNumber = models.IntegerField(null=True, blank=True)
     birthDate = models.DateField(null=True, blank=True)
+#rever tipo de notação :)
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -24,5 +26,27 @@ class Tenant(App_user):
 class Landlord(App_user):
     app_user = models.OneToOneField(User, on_delete=models.CASCADE)
     lord_type = models.CharField(max_length=30)
+
+class Property(models.Model):
+    property_type = models.CharField(max_length=20)
+    landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
+    address = models.CharField(max_length=100)
+    floor_area = models.IntegerField()
+    max_capacity =  models.IntegerField()
+    garden = models.BooleanField()
+    garage = models.BooleanField()
+    street_parking = models.BooleanField()
+    internet = models.BooleanField()
+    electricity = models.BooleanField()
+    water = models.BooleanField()
+    gas = models.BooleanField()
+    pets = models.BooleanField()
+    overnight_visits = models.BooleanField()
+    cleaning_services = models.BooleanField()
+
+
+
+
+
 
 # Create your models here.
