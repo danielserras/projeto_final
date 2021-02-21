@@ -28,64 +28,64 @@ class PropertyForm(forms.ModelForm):
     deposit_fee = forms.IntegerField(required=True)
 
     #booleans
-    smoke = forms.BooleanField(required=False)
-    garden = forms.BooleanField(required=False)
-    garage = forms.BooleanField(required=False)
-    street_parking = forms.BooleanField(required=False)
-    internet = forms.BooleanField(required=False)
-    electricity = forms.BooleanField(required=False)            #WTF??
-    water = forms.BooleanField(required=False)                  #WTF??
-    gas = forms.BooleanField(required=False)
-    pets = forms.BooleanField(required=False)
-    overnight_visits = forms.BooleanField(required=False)
-    cleaning_services = forms.BooleanField(required=False)
-    parking_space = forms.BooleanField(required=False)
+    smoke = forms.BooleanField(required=False, initial=False)
+    garden = forms.BooleanField(required=False, initial=False)
+    garage = forms.BooleanField(required=False, initial=False)
+    street_parking = forms.BooleanField(required=False, initial=False)
+    internet = forms.BooleanField(required=False, initial=False)
+    electricity = forms.BooleanField(required=False, initial=False)            #WTF??
+    water = forms.BooleanField(required=False, initial=False)                  #WTF??
+    gas = forms.BooleanField(required=False, initial=False)
+    pets = forms.BooleanField(required=False, initial=False)
+    overnight_visits = forms.BooleanField(required=False, initial=False)
+    cleaning_services = forms.BooleanField(required=False, initial=False)
+    parking_space = forms.BooleanField(required=False, initial=False)
 
     
 class BedroomForm(forms.ModelForm):
 
-    bed = forms.BooleanField(required=False)
-    chair = forms.BooleanField(required=False)
-    window = forms.BooleanField(required=False)
-    drawer = forms.BooleanField(required=False)
-    couch = forms.BooleanField(required=False)
-    wardrobe = forms.BooleanField(required=False)
-    tv =  forms.BooleanField(required=False)
-    desk = forms.BooleanField(required=False)
-    lock = forms.BooleanField(required=False)
+    bed = forms.BooleanField(required=False, initial=False)
+    chair = forms.BooleanField(required=False, initial=False)
+    window = forms.BooleanField(required=False, initial=False)
+    drawer = forms.BooleanField(required=False, initial=False)
+    couch = forms.BooleanField(required=False, initial=False)
+    wardrobe = forms.BooleanField(required=False, initial=False)
+    tv =  forms.BooleanField(required=False, initial=False)
+    desk = forms.BooleanField(required=False, initial=False)
+    lock = forms.BooleanField(required=False, initial=False)
 
 
 class KitchenForm(forms.ModelForm):
     
-    oven = forms.BooleanField(required=False)
-    fridge = forms.BooleanField(required=False)
-    table = forms.BooleanField(required=False)
-    laundering_machine = forms.BooleanField(required=False)
-    freezer = forms.BooleanField(required=False)
-    chairs = forms.BooleanField(required=False)
-    microwave = forms.BooleanField(required=False)
-    window = forms.BooleanField(required=False)
-    balcony = forms.BooleanField(required=False)
-    dishwasher = forms.BooleanField(required=False)
-    dishwasher_machine = forms.BooleanField(required=False)
-    dryer = forms.BooleanField(required=False)
+    oven = forms.BooleanField(required=False, initial=False)
+    fridge = forms.BooleanField(required=False, initial=False)
+    table = forms.BooleanField(required=False, initial=False)
+    laundering_machine = forms.BooleanField(required=False, initial=False)
+    freezer = forms.BooleanField(required=False, initial=False)
+    chairs = forms.BooleanField(required=False, initial=False)
+    microwave = forms.BooleanField(required=False, initial=False)
+    window = forms.BooleanField(required=False, initial=False)
+    balcony = forms.BooleanField(required=False, initial=False)
+    dishwasher = forms.BooleanField(required=False, initial=False)
+    dishwasher_machine = forms.BooleanField(required=False, initial=False)
+    dryer = forms.BooleanField(required=False, initial=False)
 
 
 class BathroomForm(models.ModelForm):
 
-    shower = forms.BooleanField(required=False)
-    bathtub = forms.BooleanField(required=False)
-    bidet = forms.BooleanField(required=False)
-    toilet = forms.BooleanField(required=False)
-    sink = forms.BooleanField(required=False)
-    window = forms.BooleanField(required=False)
+    shower = forms.BooleanField(required=False, initial=False)
+    bathtub = forms.BooleanField(required=False, initial=False)
+    bidet = forms.BooleanField(required=False, initial=False)
+    toilet = forms.BooleanField(required=False, initial=False)
+    sink = forms.BooleanField(required=False, initial=False)
+    window = forms.BooleanField(required=False, initial=False)
 
 
 class LivingroomForm(models.ModelForm):
-    couch = forms.BooleanField(required=False)
-    sofa_bed = forms.BooleanField(required=False)
-    chairs = forms.BooleanField(required=False)
-    window = forms.BooleanField(required=False)
-    table = forms.BooleanField(required=False)
-    desk = forms.BooleanField(required=False)
-    balcony = forms.BooleanField(required=False)
+    couch = forms.BooleanField(required=False, initial=False)
+    sofa_bed = forms.BooleanField(required=False, initial=False)
+    chairs = forms.BooleanField(required=False, initial=False)
+    window = forms.BooleanField(required=False, initial=False)
+    table = forms.BooleanField(required=False, initial=False)
+    desk = forms.BooleanField(required=False, initial=False)
+    balcony = forms.BooleanField(required=False, initial=False)

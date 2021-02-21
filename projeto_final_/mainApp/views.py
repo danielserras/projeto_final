@@ -79,8 +79,8 @@ def register_view(request):
                 if f == live_form:
 
 
-                if f == bed_form: """
-
+                if f == bed_form:
+ """
 
 def index(response):
     return render(response, "mainApp/home.html", {})
