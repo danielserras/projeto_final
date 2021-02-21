@@ -31,14 +31,14 @@ class Property(models.Model):
     property_type = models.CharField(max_length=20)
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
     address = models.CharField(max_length=100)
-    floor_area = models.IntegerField()
+    floor_area = models.IntegerField()              # que eh isto?
     max_capacity =  models.IntegerField()
     garden = models.BooleanField()
     garage = models.BooleanField()
     street_parking = models.BooleanField()
     internet = models.BooleanField()
-    electricity = models.BooleanField()
-    water = models.BooleanField()
+    electricity = models.BooleanField()             # WTF??
+    water = models.BooleanField()                   # WTF??
     gas = models.BooleanField()
     pets = models.BooleanField()
     overnight_visits = models.BooleanField()

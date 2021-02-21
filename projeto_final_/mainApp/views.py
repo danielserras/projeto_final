@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.http import HttpResponse
 from .models import *
-from .forms import CreateUserForm, ProfileForm
+from .forms import *
 from django.conf import settings 
 from django.core.mail import send_mail
 from verify_email.email_handler import send_verification_email
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 def login_view(request):
@@ -20,7 +22,7 @@ def login_view(request):
             return redirect('home_page') #placeholder, alterem depois
         else:
             messages.info(request, 'Username ou password incorretos')
-            return redirect('login') #placeholder
+            return redirect('home') #placeholder
     context = {}
     return render(request,'mainApp/login.html', context) #placeholder
 
@@ -50,6 +52,35 @@ def register_view(request):
     context = {'form':form} #, 'pform':pform
     return render(request, 'mainApp/register.html', context)
 
+""" def introduce_property_view (request):
+
+    if request.method == 'POST':
+        prop_form = PropertyForm(request.POST)
+        bath_form = BathroomForm(request.POST)
+        kitchen_form = KitchenForm(request.POST)
+        live_form = LivingroomForm(request.POST)
+        bed_form = BedroomForm(request.POST)
+
+        form_list = [prop_form, bath_form, kitchen_form, live_form, bed_form]
+
+        for f in form_list:
+            if f.is_bound:
+
+                if f == prop_form:
+                    if f.is_valid():
+                        
+
+                if f == bath_form:
+                    
+
+                if f == kitchen_form:
+
+
+                if f == live_form:
+
+
+                if f == bed_form:
+ """
 
 def index(response):
     return render(response, "mainApp/home.html", {})
