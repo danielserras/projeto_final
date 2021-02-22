@@ -12,13 +12,11 @@ class App_user(models.Model):
 
 class Tenant(models.Model):
 
-    tenant_user = models.ForeignKey(App_user, on_delete=models.CASCADE, primary_key=True)
-    pass
-
+    ten_user = models.ForeignKey(App_user, on_delete=models.CASCADE)
 
 class Landlord(models.Model):
     
-    lord_user = models.ForeignKey(App_user, on_delete=models.CASCADE, primary_key=True)
+    lord_user = models.ForeignKey(App_user, on_delete=models.CASCADE)
     lord_type = models.CharField(max_length=30, default='Particular')
 
 @receiver(post_save, sender=User)
