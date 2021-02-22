@@ -40,6 +40,15 @@ def register_view(request):
             app_user_object.phoneNumber = pform.cleaned_data['phoneNumber']
             app_user_object.birthDate = pform.cleaned_data['birthDate']
             app_user_object.save()
+
+            if request.POST['tipo'] == 'Inquilino':
+                inq = Tenant()
+                inq.tenant_user = app_user_object
+                inq.save()
+            else:
+                lord = Landlord()
+                lord.lord_user = app_user_object
+                lord.save()
             #pform = p_form.save(commit=False)
             #pform.user = user
             #pform.save()

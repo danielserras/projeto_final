@@ -3,12 +3,23 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+    
 class App_user(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phoneNumber = models.IntegerField(null=True, blank=True)
     birthDate = models.DateField(null=True, blank=True)
-#rever tipo de notação :)
+    #rever tipo de notação :)
 
+class Tenant(models.Model):
+
+    tenant_user = models.ForeignKey(App_user, on_delete=models.CASCADE, primary_key=True)
+    pass
+
+
+class Landlord(models.Model):
+    
+    lord_user = models.ForeignKey(App_user, on_delete=models.CASCADE, primary_key=True)
+    lord_type = models.CharField(max_length=30, default='Particular')
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -19,13 +30,6 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.app_user.save()
 
-class Tenant(App_user):
-    app_user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-
-class Landlord(App_user):
-    app_user = models.OneToOneField(User, on_delete=models.CASCADE)
-    lord_type = models.CharField(max_length=30)
 
 class Property(models.Model):
     property_type = models.CharField(max_length=20)
