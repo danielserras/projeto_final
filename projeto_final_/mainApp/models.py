@@ -95,6 +95,11 @@ class Livingroom(models.Model):
     table = models.BooleanField()
     balcony = models.BooleanField()
 
-
+class Agreement(models.Model):
+    associatedListing = models.OneToOneField(Listing on_delete=models.CASCADE)
+    tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
+    landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
+    startsDate = moldels.DateField()
+    endDate = moldels.DateField()
 
 # Create your models here.
