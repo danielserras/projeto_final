@@ -71,7 +71,7 @@ class KitchenForm(forms.ModelForm):
     dryer = forms.BooleanField(required=False, initial=False)
 
 
-class BathroomForm(models.ModelForm):
+class BathroomForm(forms.ModelForm):
 
     shower = forms.BooleanField(required=False, initial=False)
     bathtub = forms.BooleanField(required=False, initial=False)
@@ -81,7 +81,7 @@ class BathroomForm(models.ModelForm):
     window = forms.BooleanField(required=False, initial=False)
 
 
-class LivingroomForm(models.ModelForm):
+class LivingroomForm(forms.ModelForm):
     couch = forms.BooleanField(required=False, initial=False)
     sofa_bed = forms.BooleanField(required=False, initial=False)
     chairs = forms.BooleanField(required=False, initial=False)
