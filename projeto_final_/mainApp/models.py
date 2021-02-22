@@ -31,14 +31,14 @@ class Property(models.Model):
     property_type = models.CharField(max_length=20)
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
     address = models.CharField(max_length=100)
-    floor_area = models.IntegerField()              # que eh isto?
-    max_capacity =  models.IntegerField()
+    floor_area = models.IntegerField()              
+    max_capacity = models.IntegerField()
     garden = models.BooleanField()
     garage = models.BooleanField()
     street_parking = models.BooleanField()
     internet = models.BooleanField()
-    electricity = models.BooleanField()             # WTF??
-    water = models.BooleanField()                   # WTF??
+    electricity = models.BooleanField()             
+    water = models.BooleanField()                   
     gas = models.BooleanField()
     pets = models.BooleanField()
     overnight_visits = models.BooleanField()
@@ -46,12 +46,53 @@ class Property(models.Model):
 
 
 class Bathroom(models.Model):
-    associatedProperty = models.ForeignKey(Property, on_delete = models.CASCADE)
-    toilet = models.BooleanField()
+    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
+    toilet = models.BooleanField() #casa de banho sem sanita?
     sink = models.BooleanField()
     shower = models.BooleanField()
     window = models.BooleanField()
     bathtub = models.BooleanField()
-    privateOrshared = models.BooleanField()
+    private_or_shared = models.BooleanField() #private or shared como em relaçao a que?
+
+class Bedroom(models.Model):
+    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
+    chairs = models.BooleanField()
+    sofa = models.BooleanField()
+    sofa_bed = models.BooleanField()
+    window = models.BooleanField()
+    num_single_beds = models.IntegerField()
+    num_double_beds = models.IntegerField()
+    balcony = models.BooleanField()
+    wardrobe = models.BooleanField()
+    desk = models.BooleanField()
+    chest_of_drawers = models.BooleanField()
+    tv = models.BooleanField()
+    heater = models.BooleanField()
+    air_conditioning = models.BooleanField()
+    ensuite_bathroom = models.BooleanField()
+
+class Kitchen(models.Model):
+    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
+    dish_washer = models.BooleanField()
+    window = models.BooleanField()
+    fridge = models.BooleanField()
+    freezer = models.BooleanField()
+    cooker = models.BooleanField()
+    dishes_cutlery = models.BooleanField()
+    pans_pots = models.BooleanField()
+    washing_machine = models.BooleanField()
+    dryer = models.BooleanField() 
+    oven = models.BooleanField()
+
+class Livingroom(models.Model):
+    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
+    chairs = models.BooleanField()
+    sofa = models.BooleanField()
+    sofa_bed = models.BooleanField()
+    window = models.BooleanField()
+    table = models.BooleanField()
+    balcony = models.BooleanField()
+
+
 
 # Create your models here.
