@@ -17,6 +17,16 @@ class ProfileForm(forms.ModelForm):
         model = App_user
         fields = ['phoneNumber', 'birthDate',]
 
+class ListingForm(forms.ModelForm):
+    
+    allowed_gender = forms.CharField(required=True, max_length=25)
+    monthly_payment = forms.IntegerField(required=True)
+    availabilityStarts = forms.DateField()
+    availabilityEnds = forms.DateField()
+    title = forms.CharField(max_length=50)
+    description = forms.CharField(max_length=100)
+    security_deposit = forms.IntegerField()
+
 class PropertyForm(forms.ModelForm):
 
     property_name = forms.CharField(required=True, max_length=50)
@@ -24,7 +34,7 @@ class PropertyForm(forms.ModelForm):
     address = forms.CharField(required=True, max_length=100)
     rent = forms.IntegerField(required=True)
     max_capacity = forms.IntegerField(required=True)
-    nBedrooms = forms.IntegerField(required=True)
+    nBedrooms = forms.IntegerField(required=True) 
     nBathrooms = forms.IntegerField(required=True)
     deposit_fee = forms.IntegerField(required=True)
 
