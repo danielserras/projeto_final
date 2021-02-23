@@ -34,8 +34,8 @@ class PropertyForm(forms.ModelForm):
     garage = forms.BooleanField(required=False, initial=False)
     street_parking = forms.BooleanField(required=False, initial=False)
     internet = forms.BooleanField(required=False, initial=False)
-    electricity = forms.BooleanField(required=False, initial=False)            #WTF??
-    water = forms.BooleanField(required=False, initial=False)                  #WTF??
+    electricity = forms.BooleanField(required=False, initial=False)            
+    water = forms.BooleanField(required=False, initial=False)                  
     gas = forms.BooleanField(required=False, initial=False)
     pets = forms.BooleanField(required=False, initial=False)
     overnight_visits = forms.BooleanField(required=False, initial=False)
