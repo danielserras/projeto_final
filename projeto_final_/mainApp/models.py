@@ -95,11 +95,29 @@ class Livingroom(models.Model):
     table = models.BooleanField()
     balcony = models.BooleanField()
 
-""" class Agreement(models.Model):
-    associatedListing = models.OneToOneField(Listing on_delete=models.CASCADE)
+class Listing(models.Model):
+    allowed_gender = models.CharField(max_length=20)
+    monthly_payment = models.IntegerField()
+    availability_starts = models.DateField()
+    availability_ending = models.DateField()
+    title = models.CharField(max_length=20)
+    description = models.CharField(max_length=20)
+    security_deposit = models.IntegerField()    
+
+
+class Room_listing(Listing):
+    associated_room = models.OneToOneField(Bedroom, on_delete = models.CASCADE)
+
+class Property_listing(Listing):
+    associated_property = models.OneToOneField(Property, on_delete = models.CASCADE)
+
+
+class Agreement(models.Model):
+    associated_room = models.ForeignKey(Room_listing on_delete=models.CASCADE)
+    associated_room = models.models.ForeignKey(Property_listing on_delete=models.CASCADE)
     tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
-    startsDate = moldels.DateField()
-    endDate = moldels.DateField() """
+    startsDate = models.DateField()
+    endDate = models.DateField()
 
 # Create your models here.
