@@ -15,7 +15,7 @@ class Tenant(models.Model):
     ten_user = models.ForeignKey(App_user, on_delete=models.CASCADE)
 
 class Landlord(models.Model):
-    
+
     lord_user = models.ForeignKey(App_user, on_delete=models.CASCADE)
     lord_type = models.CharField(max_length=30, default='Particular')
 
@@ -40,7 +40,7 @@ class Property(models.Model):
     street_parking = models.BooleanField()
     internet = models.BooleanField()
     electricity = models.BooleanField()             
-    water = models.BooleanField()                   
+    water = models.BooleanField()
     gas = models.BooleanField()
     pets = models.BooleanField()
     overnight_visits = models.BooleanField()
