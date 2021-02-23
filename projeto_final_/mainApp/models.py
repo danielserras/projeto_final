@@ -113,8 +113,8 @@ class Property_listing(Listing):
 
 
 class Agreement(models.Model):
-    associated_room = models.ForeignKey(Room_listing on_delete=models.CASCADE)
-    associated_room = models.models.ForeignKey(Property_listing on_delete=models.CASCADE)
+    associated_room = models.ForeignKey(Room_listing, on_delete=models.CASCADE)
+    associated_room = models.ForeignKey(Property_listing, on_delete=models.CASCADE)
     tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
     startsDate = models.DateField()
