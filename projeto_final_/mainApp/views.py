@@ -22,7 +22,7 @@ def login_view(request):
             return redirect('home_page') #placeholder, alterem depois
         else:
             messages.info(request, 'Username ou password incorretos')
-            return redirect('home') #placeholder
+            return redirect('index') #placeholder
     context = {}
     return render(request,'mainApp/login.html', context) #placeholder
 
@@ -118,8 +118,8 @@ def index(response):
     return render(response, "mainApp/home.html", {})
 
 def startsAgreement(response):
-    #return render(response, "mainApp/startsAgreementTenent.html", {})
-    return render(response, "mainApp/sendAgreementLandlord.html", {})
+    return render(response, "mainApp/startsAgreementTenent.html", {})
+    #return render(response, "mainApp/sendAgreementLandlord.html", {})
 
 def profile(response):
     return render(response, "mainApp/profile.html", {})

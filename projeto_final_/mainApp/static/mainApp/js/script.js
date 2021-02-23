@@ -1,10 +1,10 @@
 $(document).ready(function() {
     //agreement
-    $("#agreementAccept").click(function() {
+    $("#agreementAcceptCheckbox").click(function() {
         if ($(this).prop("checked") == true) {
-            $("#agreementSubmit").prop("disabled", false);
+            $("#agreementAccept").prop("disabled", false);
         } else if ($(this).prop("checked") == false) {
-            $("#agreementSubmit").prop("disabled", true);
+            $("#agreementAccept").prop("disabled", true);
         }
     });
     //Show/Hide advanced search at button press

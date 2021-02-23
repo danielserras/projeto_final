@@ -1,37 +1,49 @@
 {% extends 'mainApp/base.html' %}
+{% load static %}
 
 {% block content %}
     <div class="container mt-5">
         <div class="row bg-info p-2"><h3 class="mx-auto my-auto  text-white ">Perfil</h3></div>
         <div class="row">
             <!-- List of options-->
-            <div class="col-sm-3 bg-secondary ">
+            <div class="col-sm-3 bg-secondary">
                 <div class="row text-white">
                     <!-- Options-->    
-                    <div class="col-sm-12 p-3">
-                        <a class="text-white" href="#">Foto e Nome</a>
+                    <div class="col-sm-12 p-3 text-center border-bottom">
+                        <a class="text-white" href="profile" id="profile"><img src="{% static "mainApp/images/user.svg" %}" alt="" class="img-fluid">
+                            <h3 class="mb-0 text-white">Nome</h3>
+                        </a>
                     </div>
                     <!--If landlord-->
                     <div class="col-sm-12 p-3">
-                        <a class="text-white" href="#">Lista de Alojamentos</a>
+                        <a class="text-white" href="#">Gerir Alojamentos</a>
                     </div>
                     <!--If landlord-->
                     <div class="col-sm-12 p-3">
                         <a class="text-white" href="#">Adicionar Alojamento</a>
                     </div>
+                    <!--If landlord-->
+                    <div class="col-sm-12 p-3">
+                        <a class="text-white" href="#">Gerir Acordos</a>
+                    </div>
+                    {% comment %} <!--If tenant-->
+                    <div class="col-sm-12 p-3">
+                        <a class="text-white" href="#">Ver Acordos</a>
+                    </div>
                     <!--If tenant-->
                     <div class="col-sm-12 p-3">
                         <a class="text-white" href="#">Renovar Acordo</a>
                     </div>
+                    <!--If tenant-->
                     <div class="col-sm-12 p-3">
                         <a class="text-white" href="#">Cancelar Acordo</a>
-                    </div>
+                    </div> {% endcomment %}
                 </div>
             </div>
             <!--Details-->
             <div class="col-sm-9">
                 <div class="row">
-                    <div class="col-sm-12 p-3 border">
+                    <div class="col-sm-12 p-3 ">
                         info do perfil
                     </div>
                 </div>
