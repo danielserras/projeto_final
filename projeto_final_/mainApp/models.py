@@ -47,12 +47,12 @@ class Property(models.Model):
 
 class Bathroom(models.Model):
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
-    toilet = models.BooleanField() #casa de banho sem sanita?
+    toilet = models.BooleanField() 
     sink = models.BooleanField()
     shower = models.BooleanField()
     window = models.BooleanField()
     bathtub = models.BooleanField()
-    private_or_shared = models.BooleanField() #private or shared como em relaçao a que?
+    private_or_shared = models.BooleanField()
 
 class Bedroom(models.Model):
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
