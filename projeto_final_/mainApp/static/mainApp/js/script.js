@@ -20,7 +20,7 @@ $(document).ready(function() {
 
         this.classList.toggle('rotated');
     });
-
+    //Range bar for rent. Search page
     var v = [550, 1500];
     var numTooClose = 150;
     if ($(window).width() < 960) {
