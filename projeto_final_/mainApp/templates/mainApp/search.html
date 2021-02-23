@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="form-group col-sx-1 mx-auto">
-                        <button type="button" class="advancedSearchFormButton btn bg-transparent mt-3 p-0">
+                        <button type="button" class="advancedSearchFormButton rotated btn bg-transparent mt-4 p-0">
                             <svg xmlns="http://www.w3.org/2000/svg" class="" width="28" height="16" fill="none" viewBox="0 0 28 16">
                                 <path stroke="#E76F51" stroke-linecap="round" stroke-linejoin="round" stroke-width="5" d="M25 13L14 3 3 13"/>
                             </svg>
@@ -74,7 +74,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-sm  p-5">
+        <div class="col-sm p-5">
             {% load static %}
             <img src='{% static "mainApp/images/searchSvg.svg" %}' class='img-fluid' alt='Boy with a house'>
         </div>
@@ -87,6 +87,9 @@
             <span id="labelMax"></span>
         </div>
         <div id="slider"></div>
+        <div class="d-none d-lg-block d-xl-block">
+            {% block foo %} {% include "mainApp/ruler.html" %} {% endblock %}
+        </div>
     </div>
     <div class="row mt-5 justify-content-sm-center">
         <h1 class="mx-auto mt-5 font-weight-bold">Resultados</h1>
