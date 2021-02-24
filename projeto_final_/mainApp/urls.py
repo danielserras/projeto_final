@@ -10,4 +10,5 @@ urlpatterns = [
     path('startsAgreement', views.startsAgreement, name='startsAgreement'),
     path('search', views.search, name='search'),
     path('', views.index, name='index'),
+    path('notifications', views.notifications, name='notifications')
 ]

@@ -208,3 +208,6 @@ def search(response):
 
 def addListing(response):
     return render(response, "mainApp/addListing.html", {})
+
+def notifications(response):
+    return render(response, "mainApp/notifications.html", {})
