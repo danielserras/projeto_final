@@ -12,11 +12,11 @@ class App_user(models.Model):
 
 class Tenant(models.Model):
 
-    ten_user = models.ForeignKey(App_user, on_delete=models.CASCADE)
+    ten_user = models.OneToOneField(App_user, on_delete=models.CASCADE)
 
 class Landlord(models.Model):
 
-    lord_user = models.ForeignKey(App_user, on_delete=models.CASCADE)
+    lord_user = models.OneToOneField(App_user, on_delete=models.CASCADE)
     lord_type = models.CharField(max_length=30, default='Particular')
 
 @receiver(post_save, sender=User)
@@ -34,17 +34,17 @@ class Property(models.Model):
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
     address = models.CharField(max_length=100)
     floor_area = models.IntegerField()              
-    max_capacity = models.IntegerField()
-    garden = models.BooleanField()
-    garage = models.BooleanField()
-    street_parking = models.BooleanField()
-    internet = models.BooleanField()
-    electricity = models.BooleanField()             
-    water = models.BooleanField()
-    gas = models.BooleanField()
-    pets = models.BooleanField()
-    overnight_visits = models.BooleanField()
-    cleaning_services = models.BooleanField()
+    garden = models.BooleanField(default=False)
+    garage = models.BooleanField(default=False)
+    street_parking = models.BooleanField(default=False)
+    internet = models.BooleanField(default=False)
+    electricity = models.BooleanField(default=False)             
+    water = models.BooleanField(default=False)
+    gas = models.BooleanField(default=False)
+    pets = models.BooleanField(default=False)
+    overnight_visits = models.BooleanField(default=False)
+    cleaning_services = models.BooleanField(default=False)
+    smoke = models.BooleanField(default=False)
 
 
 class Bathroom(models.Model):
@@ -102,19 +102,21 @@ class Listing(models.Model):
     availability_ending = models.DateField()
     title = models.CharField(max_length=20)
     description = models.CharField(max_length=20)
-    security_deposit = models.IntegerField()    
+    security_deposit = models.IntegerField()
+    max_capacity = models.IntegerField()
 
 
 class Room_listing(Listing):
-    associated_room = models.OneToOneField(Bedroom, on_delete = models.CASCADE)
+    main_listing = models.OneToOneField(Listing, on_delete = models.CASCADE, related_name='r_main')
+    associated_room = models.ForeignKey(Bedroom, on_delete = models.CASCADE)
 
 class Property_listing(Listing):
-    associated_property = models.OneToOneField(Property, on_delete = models.CASCADE)
-
+    main_listing = models.OneToOneField(Listing, on_delete = models.CASCADE, related_name='p_main')
+    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
 
 class Agreement(models.Model):
     associated_room = models.ForeignKey(Room_listing, on_delete=models.CASCADE)
-    associated_room = models.ForeignKey(Property_listing, on_delete=models.CASCADE)
+    associated_property = models.ForeignKey(Property_listing, on_delete=models.CASCADE)
     tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
     startsDate = models.DateField()

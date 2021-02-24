@@ -17,16 +17,23 @@ class ProfileForm(forms.ModelForm):
         model = App_user
         fields = ['phoneNumber', 'birthDate',]
 
+class ListingForm(forms.ModelForm):
+    
+    allowed_gender = forms.CharField(required=True, max_length=25)
+    monthly_payment = forms.IntegerField(required=True)
+    availabilityStarts = forms.DateField()
+    availabilityEnds = forms.DateField()
+    title = forms.CharField(max_length=50)
+    description = forms.CharField(max_length=100)
+    security_deposit = forms.IntegerField()
+    max_capacity = forms.IntegerField(required=True)
+
 class PropertyForm(forms.ModelForm):
 
-    property_name = forms.CharField(required=True, max_length=50)
     property_type = forms.CharField(required=True, max_length=25)
     address = forms.CharField(required=True, max_length=100)
-    rent = forms.IntegerField(required=True)
-    max_capacity = forms.IntegerField(required=True)
-    nBedrooms = forms.IntegerField(required=True)
-    nBathrooms = forms.IntegerField(required=True)
-    deposit_fee = forms.IntegerField(required=True)
+    #nBedrooms = forms.IntegerField(required=True) 
+    #nBathrooms = forms.IntegerField(required=True)
 
     #booleans
     smoke = forms.BooleanField(required=False, initial=False)
@@ -35,12 +42,11 @@ class PropertyForm(forms.ModelForm):
     street_parking = forms.BooleanField(required=False, initial=False)
     internet = forms.BooleanField(required=False, initial=False)
     electricity = forms.BooleanField(required=False, initial=False)            
-    water = forms.BooleanField(required=False, initial=False)                  
+    water = forms.BooleanField(required=False, initial=False)   
     gas = forms.BooleanField(required=False, initial=False)
     pets = forms.BooleanField(required=False, initial=False)
     overnight_visits = forms.BooleanField(required=False, initial=False)
     cleaning_services = forms.BooleanField(required=False, initial=False)
-    parking_space = forms.BooleanField(required=False, initial=False)
     floor_area = forms.BooleanField(required=False, initial=False)
 
 
