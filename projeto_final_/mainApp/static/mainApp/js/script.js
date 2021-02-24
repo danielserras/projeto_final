@@ -7,7 +7,7 @@ $(document).ready(function() {
             $("#agreementAccept").prop("disabled", true);
         }
     });
-    //Show/Hide advanced search at button press
+    /* //Show/Hide advanced search at button press
     document.querySelector('.advancedSearchFormButton').addEventListener('click', function() {
         console.log($("#advancedSearchDiv").css('display'));
         if ($("#advancedSearchDiv").css('display') === 'none') {
@@ -54,5 +54,29 @@ $(document).ready(function() {
             $("#labelMinToMax").css('left', ((ui.values[0] + ui.values[1]) / 50) - 4 + "%").text(ui.values[0] + '€ até ' + ui.values[1] + '€');
             $("#labelMinToMax").css('display', 'none');
         }
-    });
+    }); */
+
+    /* addListing */
+    var pageListing = 1;
+    $("*[class*='pageListing-']").hide();
+    $(".pageListing-"+pageListing).show();
+    if(pageListing == 1){
+        $("#backPageListing").hide();
+    }
+    $("#nextPageListing").click(function(){
+        $(".pageListing-"+pageListing).hide();
+        pageListing ++;
+        $(".pageListing-"+pageListing).show();
+        $("#backPageListing").show();
+
+    })
+    $("#backPageListing").click(function(){
+        $(".pageListing-"+pageListing).hide();
+        pageListing --;
+        $(".pageListing-"+pageListing).show();
+        if(pageListing == 1){
+            $("#backPageListing").hide();
+        }
+
+    })
 });

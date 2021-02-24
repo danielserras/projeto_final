@@ -126,3 +126,6 @@ def profile(response):
 
 def search(response):
     return render(response, "mainApp/search.html", {})
+
+def addListing(response):
+    return render(response, "mainApp/addListing.html", {})
