@@ -333,6 +333,7 @@ img.blur {
 
 /*Search Page*/
 
+
 #advancedSearchDiv {
     display: none;
 }
@@ -353,6 +354,11 @@ img.blur {
     outline: 0 none;
 }
 
+/* map */
+
+#mapid { 
+    height: 480px; 
+}
 
 /* slider */
 
