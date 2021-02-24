@@ -52,61 +52,65 @@ class PropertyForm(forms.ModelForm):
 
 BedroomFormSet = modelformset_factory(
     Bedroom,
-    fields=(
-        "chairs",
-        "sofa",
-        "sofa_bed",
-        "window",
-        "num_single_beds",
-        "num_double_beds",
-        "balcony",
-        "wardrobe",
-        "desk",
-        "chest_of_drawers",
-        "tv",
-        "heater",
-        "air_conditioning",
-        "ensuite_bathroom"),
-    extra=1)
+    fields='__all__',
+    field_classes ={
+        "chairs": forms.BooleanField(required=False, initial=False),
+        "sofa": forms.BooleanField(required=False, initial=False),
+        "sofa_bed": forms.BooleanField(required=False, initial=False),
+        "window": forms.BooleanField(required=False, initial=False),
+        "num_single_beds": forms.IntegerField(required=True),
+        "num_double_beds": forms.IntegerField(required=True),
+        "balcony": forms.BooleanField(required=False, initial=False),
+        "wardrobe": forms.BooleanField(required=False, initial=False),
+        "desk": forms.BooleanField(required=False, initial=False),
+        "chest_of_drawers": forms.BooleanField(required=False, initial=False),
+        "tv": forms.BooleanField(required=False, initial=False),
+        "heater": forms.BooleanField(required=False, initial=False),
+        "air_conditioning": forms.BooleanField(required=False, initial=False),
+        "ensuite_bathroom": forms.BooleanField(required=False, initial=False)},
+    extra=1
+)
 
 KitchenFormSet = modelformset_factory(
     Kitchen, 
-    fields=(
-        "oven",                 
-        "dish_washer",
-        "window", 
-        "fridge",
-        "freezer",
-        "cooker",
-        "dishes_cutlery",
-        "pans_pots",
-        "washing_machine",
-        "dryer",
-        "oven"),
+    fields='__all__',
+    field_classes={
+        "oven": forms.BooleanField(required=False, initial=False),                 
+        "dish_washer": forms.BooleanField(required=False, initial=False),
+        "window": forms.BooleanField(required=False, initial=False), 
+        "fridge": forms.BooleanField(required=False, initial=False),
+        "freezer": forms.BooleanField(required=False, initial=False),
+        "cooker": forms.BooleanField(required=False, initial=False),
+        "dishes_cutlery": forms.BooleanField(required=False, initial=False),
+        "pans_pots": forms.BooleanField(required=False, initial=False),
+        "washing_machine": forms.BooleanField(required=False, initial=False),
+        "dryer": forms.BooleanField(required=False, initial=False)},
     extra=1
 )
 
 BathroomFormSet = modelformset_factory(    
-    Bathroom, 
-    fields=(
-        "toilet", 
-        "sink",
-        "shower",
-        "window",
-        "bathtub",
-        "private_or_shared"),
+    Bathroom,
+    fields='__all__',
+    field_classes={
+        "toilet": forms.BooleanField(required=False, initial=False), 
+        "sink": forms.BooleanField(required=False, initial=False),
+        "shower": forms.BooleanField(required=False, initial=False),
+        "window": forms.BooleanField(required=False, initial=False),
+        "bathtub": forms.BooleanField(required=False, initial=False),
+        "private_or_shared": forms.BooleanField(required=False, initial=False)},
     extra=1
 )
 
 LivingroomFormSet = modelformset_factory(
     Livingroom, 
-    fields=(
-            "chairs",
-            "sofa",
-            "sofa_bed",
-            "window",
-            "table",
-            "balcony"),
+    fields='__all__',
+    field_classes={
+            "chairs": forms.BooleanField(required=False, initial=False),
+            "sofa": forms.BooleanField(required=False, initial=False),
+            "sofa_bed": forms.BooleanField(required=False, initial=False),
+            "window": forms.BooleanField(required=False, initial=False),
+            "table": forms.BooleanField(required=False, initial=False),
+            "balcony": forms.BooleanField(required=False, initial=False)},
     extra=1
 )
 
