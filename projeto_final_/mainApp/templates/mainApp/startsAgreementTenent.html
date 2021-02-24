@@ -1,5 +1,11 @@
 {% extends 'mainApp/base.html' %}
-
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/sendAgreementTenent.css" %}'>
+{% endblock %}
+{% block scripts%}
+    <script src='{% static "mainApp/js/agreement.js" %}'></script>
+{% endblock %}
 {% block content %}
 
 <div class="container mt-5">

@@ -1,5 +1,8 @@
 {% extends 'mainApp/base.html' %}
-
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/login.css" %}'>
+{% endblock %}
 {% block content %}
      <!--<div class="d-flex align-items-center min-vh-100">
         <div class= "container mt-5">

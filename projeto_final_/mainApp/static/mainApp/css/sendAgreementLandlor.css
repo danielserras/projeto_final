@@ -1,0 +1,7 @@
+#sendAgreementList {
+    list-style-type: none;
+}
+
+#sendAgreementList>li {
+    margin-top: 1%;
+}

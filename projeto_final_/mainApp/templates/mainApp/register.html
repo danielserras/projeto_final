@@ -1,5 +1,8 @@
 {% extends 'mainApp/base.html' %}
-
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/register.css" %}'>
+{% endblock %}
 {% block content %}
 
 <div class="wrapper container mt-5">
