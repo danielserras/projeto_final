@@ -9,7 +9,9 @@ from verify_email.email_handler import send_verification_email
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+from paypal.standard.forms import PayPalPaymentsForm
+#tirar debug_mode no fim do proj
+#tirar test_mode do paypal no fim
 
 def login_view(request):
     if request.method == 'POST':
@@ -45,9 +47,7 @@ def register_view(request):
                 app_user_object.tenant_set.create(ten_user=app_user_object)
             else:
                 app_user_object.landlord_set.create(lord_user=app_user_object)
-            #pform = p_form.save(commit=False)
-            #pform.user = user
-            #pform.save()
+                
             user_nameStr = form.cleaned_data.get('username')
             user_first_name = form.cleaned_data.get('first_name')
             messages.success(request, 'Utilizador ' + user_nameStr + ' criado!')
@@ -197,8 +197,15 @@ def index(response):
     return render(response, "mainApp/home.html", {})
 
 def startsAgreement(response):
-    return render(response, "mainApp/startsAgreementTenent.html", {})
+
+    if request.method == 'POST':
+        pass
+        
+    else:
+
+        return render(response, "mainApp/startsAgreementTenent.html", {})
     #return render(response, "mainApp/sendAgreementLandlord.html", {})
+
 
 def profile(response):
     return render(response, "mainApp/profile.html", {})
