@@ -50,7 +50,7 @@ class PropertyForm(forms.ModelForm):
     floor_area = forms.BooleanField(required=False, initial=False)
 
 
-BedroomFormSet = modelformset_factory(
+""" BedroomFormSet = modelformset_factory(
     Bedroom,
     fields='__all__',
     field_classes ={
@@ -112,7 +112,7 @@ LivingroomFormSet = modelformset_factory(
             "table": forms.BooleanField(required=False, initial=False),
             "balcony": forms.BooleanField(required=False, initial=False)},
     extra=1
-)
+) """
 
 
 
