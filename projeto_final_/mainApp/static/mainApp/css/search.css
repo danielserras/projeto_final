@@ -1,4 +1,5 @@
 /*Search Page*/
+
 #advancedSearchDiv {
     display: none;
 }
@@ -18,7 +19,10 @@
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.075) inset, 0 0 80px #E76F51;*/
     outline: 0 none;
 }
+
+
 /* slider */
+
 .ui-slider-handle {
     background: none !important;
     background-color: #FFF !important;
@@ -42,6 +46,7 @@
 
 #rangeLabelDiv {
     height: 75px;
+    width: 100%;
     position: relative;
     border: none;
 }
@@ -55,7 +60,6 @@
     transform: translate(0%, -50%);
     padding: 3px;
     border-radius: 5px;
-    margin-left: -1.4em;
     text-align: center;
 }
 
