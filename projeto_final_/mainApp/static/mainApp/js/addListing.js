@@ -7,6 +7,7 @@ $(document).ready(function(){
     var kitchensNum = 1;
 
     $("#backPageListing").hide();
+    $("#submitListing").hide();
     $("*[class*='pageListing-']").hide();
     $(".pageListing-"+pageListing).show();
 
@@ -32,11 +33,13 @@ $(document).ready(function(){
             else{
                 addAgreementInfoHtml("#pageListing-6");
                 $("#nextPageListing").hide();
+                $("#submitListing").show();
             }
         }
         if(pageListing == 7){
             addAgreementInfoHtml("#pageListing-7");
             $("#nextPageListing").hide();
+            $("#submitListing").show();
         }
 
     })
@@ -64,6 +67,7 @@ $(document).ready(function(){
             else{
                 addAgreementInfoHtml("#pageListing-6");
                 $("nextPageListing").hide();
+                $("#submitListing").show();
             }
         }
         if(pageListing == 7){
