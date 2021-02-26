@@ -177,21 +177,32 @@ def introduce_property_view (request):
         return redirect('home')     #PLACEHOLDER
                         
     else:
-        prop_form = PropertyForm(queryset=Property.objects.none())
+        #prop_form = PropertyForm()
         bath_formset = BathroomFormSet(queryset=Bathroom.objects.none())
         kitchen_formset = KitchenFormSet(queryset=Kitchen.objects.none())
         live_formset = LivingroomFormSet(queryset=Livingroom.objects.none())
         bed_formset = BedroomFormSet(queryset=Bedroom.objects.none())
-        listing_form = ListingForm(queryset=Listing.objects.none())
+        #listing_form = ListingForm(queryset=Listing.objects.none())
 
-        return render_to_response({
-            'property_form': prop_form, 
-            'bath_formset': bath_formset,
+        return render(
+            request,
+            'mainApp/addListing.html',
+            {'bath_formset': bath_formset,
             'kitchen_formset': kitchen_formset,
             'live_formset': live_formset,
-            'bed_formset': bed_formset,
-            'listing_form': listing_form
+            'bed_formset': bed_formset
             })
+
+        """ return render(
+        request,
+        'mainApp/addListing.html',
+        {'property_form': prop_form, 
+        'bath_formset': bath_formset,
+        'kitchen_formset': kitchen_formset,
+        'live_formset': live_formset,
+        'bed_formset': bed_formset,
+        'listing_form': listing_form
+        }) """
 
 def index(response):
     return render(response, "mainApp/home.html", {})
@@ -200,6 +211,10 @@ def startsAgreement(response):
 
     if request.method == 'POST':
         pass
+        #criar o agreement
+        #efetuar o pagamento
+        #apagar o listing
+        #active/inactive no listing de modo a reutilizar
         
     else:
 

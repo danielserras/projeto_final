@@ -51,7 +51,7 @@ class PropertyForm(forms.ModelForm):
 
 
 class BedroomForm(forms.ModelForm):
-    
+
     chairs = forms.BooleanField(required=False, initial=False)
     sofa = forms.BooleanField(required=False, initial=False)
     sofa_bed = forms.BooleanField(required=False, initial=False)
@@ -157,6 +157,20 @@ class LivingroomForm(forms.ModelForm):
             'table',
             'desk',
             'balcony']
+
+class AgreementForm(forms.ModelForm):
+    startsDate = forms.DateField()
+    endDate = forms.DateField()
+    
+    class Meta:
+        model = Agreement
+        fields = [
+            'startsDate',
+            'endDate']
+        
+
+
+
 
 BedroomFormSet = modelformset_factory(model = Bedroom, form = BedroomForm, extra=1)
 

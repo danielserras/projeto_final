@@ -18,26 +18,30 @@ $(document).ready(function(){
         $("#backPageListing").show();
         $("#nextPageListing").show();
         if(pageListing == 3){
-            addBedroomsHtml(bedroomsNum);
+            //addBedroomsHtml(bedroomsNum);
+            for (let i = 0; i < bedroomsNum; i++){
+                addFormBedroom();
+            }
+            
         }
         if(pageListing == 4){
-            addBathroomsHtml(bathroomsNum);
+            //addBathroomsHtml(bathroomsNum);
         }
         if(pageListing == 5){
-            addKitchensHtml(kitchensNum);
+            //addKitchensHtml(kitchensNum);
         }
         if(pageListing == 6){
             if(livingroomsNum > 0){
-                addLivingroomsHtml(livingroomsNum,"#pageListing-6");
+                //addLivingroomsHtml(livingroomsNum,"#pageListing-6");
             }
             else{
-                addAgreementInfoHtml("#pageListing-6");
+                //addAgreementInfoHtml("#pageListing-6");
                 $("#nextPageListing").hide();
                 $("#submitListing").show();
             }
         }
         if(pageListing == 7){
-            addAgreementInfoHtml("#pageListing-7");
+            //addAgreementInfoHtml("#pageListing-7");
             $("#nextPageListing").hide();
             $("#submitListing").show();
         }
@@ -52,20 +56,20 @@ $(document).ready(function(){
             $("#backPageListing").hide();
         }
         if(pageListing == 3){
-            addBedroomsHtml(bedroomsNum);
+            //addBedroomsHtml(bedroomsNum);
         }
         if(pageListing == 4){
-            addBathroomsHtml(bathroomsNum);
+            //addBathroomsHtml(bathroomsNum);
         }
         if(pageListing == 5){
-            addKitchensHtml(kitchensNum);
+            //addKitchensHtml(kitchensNum);
         }
         if(pageListing == 6){
             if(livingroomsNum > 0){
-                addLivingroomsHtml(livingroomsNum, "#pageListing-6");
+                //addLivingroomsHtml(livingroomsNum, "#pageListing-6");
             }
             else{
-                addAgreementInfoHtml("#pageListing-6");
+                //addAgreementInfoHtml("#pageListing-6");
                 $("nextPageListing").hide();
                 $("#submitListing").show();
             }
@@ -110,6 +114,25 @@ $(document).ready(function(){
     })
 
 })
+
+
+
+function addFormBedroom() {
+    //e.preventDefault()
+    let bedroomForm = $(".bedroomF");
+    let bedroomFormContainer = $(".pageListing-3");
+    let totalForms = $("#id_form-TOTAL_FORMS")
+    let bedroomFormNum = bedroomForm.length-1
+
+    let newForm = bedroomForm[0].cloneNode(true);//Clone the bedroom form
+    let formRegex = RegExp(`form-(\\d){1}-`,'g') //Regex to find all instances of the form number
+
+    bedroomFormNum++ //Increment the form number
+    newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${bedroomFormNum}-`) //Update the new form to have the correct form number
+    bedroomFormContainer.append(newForm) //Insert the new form at the end of the list of forms
+
+    totalForms.attr('value', `${bedroomFormNum+1}`) //Increment the number of total forms in the management form
+}
 
 function addBedroomsHtml(n){
     $("#pageListing-3").html("")
