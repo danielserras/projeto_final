@@ -1,7 +1,7 @@
 {% extends 'mainApp/base.html' %} {% load static %} {% block styles %}
 <link rel="stylesheet" href='{% static "mainApp/css/listingPage.css" %}'> {% endblock %} {% block scripts%} {% endblock %} {% block content %}
 <div class="container">
-    <div class="row justify-content-md-center" id="a">
+    <div class="row justify-content-md-center m-5" id="a">
         <div class="col-sm-8">
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
@@ -27,9 +27,260 @@
         </div>
     </div>
 </div>
-<div class="container">
+<div class="container mb-3">
     <div class="row">
-
+        <div class="col-sm-8">
+            <div class="row p-1">
+                <h2 class="text-secondary font-weight-bold">Apartamento no Areeiro</h2>
+            </div>
+            <div class="row ml-2">
+                <div class="col-md-2 my-auto">
+                    <div class="row justify-content-center">
+                        <img src='{% static "mainApp/images/user_listing_icon.svg" %}' width="28px" class='img-fluid' alt='Maximum number of tenants'>
+                        <p class="my-auto font-weight-bold">4 pessoas</p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="row justify-content-center">
+                        <img src='{% static "mainApp/images/bed.svg" %}' width="38px" class='img-fluid' alt='Number of beds'>
+                        <p class="my-auto font-weight-bold">2 camas</p>
+                    </div>
+                </div>
+                <div class="col-md-3 my-auto">
+                    <div class="row justify-content-center">
+                        <img src='{% static "mainApp/images/shower.svg" %}' width="24px" class='img-fluid' alt='Number of beds'>
+                        <p class="my-auto font-weight-bold">2 casas-de-banho</p>
+                    </div>
+                </div>
+                <div class="col-md-1 my-auto">
+                    <div class="row justify-content-center">
+                        <p class="my-auto font-weight-bold">42</p>
+                        <span class="text-primary font-weight-bold mb-1" style="font-size: 24px;">&#13217;</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row ml-2 mr-2">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Arcu mauris etiam dignissim scelerisque tincidunt eget adipiscing in duis. Neque, enim a vel dictum in ac nibh. Arcu, euismod tincidunt lectus donec convallis. Euismod commodo enim, mattis netus
+                    velit, at vel risus.
+                </p>
+            </div>
+        </div>
+        <div class="col-sm-4 bg-danger">
+        </div>
+    </div>
+    <div class="row">
+        <div class="row p-1 mt-5">
+            <h2 class="text-secondary font-weight-bold">Detalhes (25)</h2>
+        </div>
+    </div>
+    <div id='bedroom'>
+        <div class="row">
+            <div class="row p-1 ml-4">
+                <h3 class="text-primary font-weight-bold">Quarto</h3>
+            </div>
+        </div>
+        <div class="row pl-5 ml-5">
+            <div class="col-sm-10">
+                <div class="row mb-3">
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Cama
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Cómoda
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Armário
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Secretária
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Cadeira
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Sofá
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Televisão
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Fechadura
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Janela
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Varanda
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='kitchen'>
+        <div class="row">
+            <div class="row p-1 ml-4">
+                <h3 class="text-primary font-weight-bold">Cozinha</h3>
+            </div>
+        </div>
+        <div class="row pl-5 ml-5">
+            <div class="col-sm-10">
+                <div class="row mb-3">
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Fogão
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Forno
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Microondas
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Lava-louças
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Frigorífico
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Congelador
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Janela
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Varanda
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Mesa
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Cadeiras
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Máquina de Lavar Roupa
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Máquina de Secar Roupa
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Máquina de Lavar-Louça
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='bathroom'>
+        <div class="row">
+            <div class="row p-1 ml-4">
+                <h3 class="text-primary font-weight-bold">Casa de Banho</h3>
+            </div>
+        </div>
+        <div class="row pl-5 ml-5">
+            <div class="col-sm-10">
+                <div class="row mb-3">
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Chuveiro
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Banheira
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Lavatório
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Janela
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Bidé
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Sanita
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='outside'>
+        <div class="row">
+            <div class="row p-1 ml-4">
+                <h3 class="text-primary font-weight-bold">Exterior</h3>
+            </div>
+        </div>
+        <div class="row pl-5 ml-5">
+            <div class="col-sm-10">
+                <div class="row mb-3">
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Jardim
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Garagem
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Estacionamento na rua
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='rent_included'>
+        <div class="row">
+            <div class="row p-1 ml-4">
+                <h3 class="text-primary font-weight-bold">Despesas incluídas</h3>
+            </div>
+        </div>
+        <div class="row pl-5 ml-5">
+            <div class="col-sm-10">
+                <div class="row mb-3">
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Internet
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Água
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Eletricidade
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Gás
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='listing_rules'>
+        <div class="row">
+            <div class="row p-1 ml-4 mt-4">
+                <h3 class="text-primary font-weight-bold">Regras</h3>
+            </div>
+        </div>
+        <div class="row pl-5 ml-5">
+            <div class="col-sm-10">
+                <div class="row mb-3">
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Fumar
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Animais de estimação
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Prenoita de visitas ocasionalmente
+                    </div>
+                    <div class="col-sm-3 room-detail-item">
+                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Caução
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
