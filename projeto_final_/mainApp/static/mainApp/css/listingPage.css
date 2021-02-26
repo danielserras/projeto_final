@@ -1,0 +1,7 @@
+.carousel-item {
+    overflow: hidden;
+}
+
+.carousel-item img {
+    height: 50vh;
+}

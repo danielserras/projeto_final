@@ -10,5 +10,6 @@ urlpatterns = [
     path('startsAgreement', views.startsAgreement, name='startsAgreement'),
     path('search', views.search, name='search'),
     path('', views.index, name='index'),
-    path('notifications', views.notifications, name='notifications')
+    path('notifications', views.notifications, name='notifications'),
+    path('listing', views.listing, name='listing')
 ]

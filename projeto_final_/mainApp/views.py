@@ -211,3 +211,6 @@ def addListing(response):
 
 def notifications(response):
     return render(response, "mainApp/notifications.html", {})
+
+def listing(response):
+    return render(response, "mainApp/listingPage.html", {})
