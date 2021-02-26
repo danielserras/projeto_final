@@ -38,7 +38,7 @@ class ImageAlbum(models.Model):
 class Image(models.Model):
     name = models.CharField(max_length=250)
     is_cover = models.BooleanField(default=False)
-    image = models.ImageField(upload_to="images")
+    image = models.ImageField(upload_to=get_upload_path)
     album = models.ForeignKey(ImageAlbum, related_name="images", on_delete=models.CASCADE)
 
 
