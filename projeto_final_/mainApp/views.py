@@ -63,8 +63,7 @@ def introduce_property_view (request):
 
     if request.method == 'POST':
 
-        test_user = User.objects.filter(id=6)
-        print(test_user)
+        test_user = User.objects.filter(id=1)
         a_user = App_user.objects.get(user_id__in=test_user)
         
         prop_form = PropertyForm(data=request.POST)
@@ -73,6 +72,8 @@ def introduce_property_view (request):
         live_form = LivingroomFormSet(data=request.POST)
         bed_form = BedroomFormSet(data=request.POST)
         listing_form = ListingForm(data=request.POST)
+
+        print(bed_form)
 
         form_list = [prop_form, bath_form, kitchen_form, live_form, bed_form, listing_form]
 
@@ -101,62 +102,74 @@ def introduce_property_view (request):
                         prop_object.save()
 
                 elif f == bath_form:
+                    print(f)
                     for sub_form in f:
                         bath_object = Bathroom(
                             associated_property = prop_object,
                             toilet = sub_form.cleaned_data.get('toilet'),
                             sink = sub_form.cleaned_data.get('sink'),
                             shower = sub_form.cleaned_data.get('shower'),
-                            window = sub_form.cleaned_data.get('window'),
+                            b_window = sub_form.cleaned_data.get('b_window'),
                             bathtub = sub_form.cleaned_data.get('bathtub'),
-                            private_or_shared = sub_form.cleaned_data.get('private_or_shared')
+                            bidet = sub_form.cleaned_data.get('bidet')
                         )
                         bath_object.save()
 
 
                 elif f == kitchen_form:
+                    print(f)
                     for sub_form in f:
+                        #print(sub_form.)
                         kitchen_obj = Kitchen(
                             associated_property = prop_object,
                             oven = sub_form.cleaned_data.get("oven"),            
                             dish_washer = sub_form.cleaned_data.get("dish_washer"),  
-                            window = sub_form.cleaned_data.get("window"),  
+                            k_window = sub_form.cleaned_data.get("k_window"),  
                             fridge = sub_form.cleaned_data.get("fridge"),  
                             freezer = sub_form.cleaned_data.get("freezer"),  
                             cooker = sub_form.cleaned_data.get("cooker"),  
                             dishes_cutlery = sub_form.cleaned_data.get("dishes_cutlery"),  
                             pans_pots = sub_form.cleaned_data.get("pans_pots"),  
-                            washing_machine = sub_form.cleaned_data.get("washing_machine"),  
+                            dishwasher_machine = sub_form.cleaned_data.get("dishwasher_machine"),  
                             dryer = sub_form.cleaned_data.get("dryer"),
+                            k_table = sub_form.cleaned_data.get("k_table"),
+                            laundering_machine = sub_form.cleaned_data.get("laundering_machine"),
+                            k_chairs = sub_form.cleaned_data.get("k_chairs"),
+                            microwave = sub_form.cleaned_data.get("microwave"),
+                            k_balcony = sub_form.cleaned_data.get("k_balcony")
                         )
                         kitchen_obj.save()
 
                 elif f == live_form:
+                    print(f)
                     for sub_form in f:
                         live_obj = Livingroom(
                             associated_property = prop_object,
-                            chairs = sub_form.cleaned_data.get('chairs'),
-                            sofa = sub_form.cleaned_data.get('sofa'),
-                            sofa_bed = sub_form.cleaned_data.get('sofa_bed'),
-                            window = sub_form.cleaned_data.get('window'),
-                            table = sub_form.cleaned_data.get('table'),
-                            balcony = sub_form.cleaned_data.get('balcony')
+                            l_chairs = sub_form.cleaned_data.get('l_chairs'),
+                            l_sofa = sub_form.cleaned_data.get('l_sofa'),
+                            l_sofa_bed = sub_form.cleaned_data.get('l_sofa_bed'),
+                            l_window = sub_form.cleaned_data.get('l_window'),
+                            l_table = sub_form.cleaned_data.get('l_table'),
+                            l_balcony = sub_form.cleaned_data.get('l_balcony'),
+                            l_desk = sub_form.cleaned_data.get('l_desk')
                         )
                         live_obj.save()
 
                 elif f == bed_form:
+                    print(f)
                     for sub_form in f:
+                        print(sub_form)
                         bed_obj = Bedroom(
                             associated_property = prop_object,
-                            chairs = sub_form.cleaned_data.get('chairs'),
-                            sofa = sub_form.cleaned_data.get('sofa'),
-                            sofa_bed = sub_form.cleaned_data.get('sofa_bed'),
-                            window = sub_form.cleaned_data.get('window'),
+                            be_chairs = sub_form.cleaned_data.get('be_chairs'),
+                            be_sofa = sub_form.cleaned_data.get('be_sofa'),
+                            be_sofa_bed = sub_form.cleaned_data.get('be_sofa_bed'),
+                            be_window = sub_form.cleaned_data.get('be_window'),
                             num_single_beds = sub_form.cleaned_data.get('num_single_beds'),
                             num_double_beds = sub_form.cleaned_data.get('num_double_beds'),
-                            balcony = sub_form.cleaned_data.get('balcony'),
+                            be_balcony = sub_form.cleaned_data.get('be_balcony'),
                             wardrobe = sub_form.cleaned_data.get('wardrobe'),
-                            desk = sub_form.cleaned_data.get('desk'),
+                            be_desk = sub_form.cleaned_data.get('be_desk'),
                             chest_of_drawers = sub_form.cleaned_data.get('chest_of_drawers'),
                             tv = sub_form.cleaned_data.get('tv'),
                             heater = sub_form.cleaned_data.get('heater'),
@@ -167,12 +180,13 @@ def introduce_property_view (request):
                         bed_obj.save()
                 
                 elif f == listing_form:
+                    print(f)
                     if f.is_valid():
                         listing_obj = Listing(
                             allowed_gender = f.cleaned_data.get('allowed_gender'),
                             monthly_payment =  f.cleaned_data.get('monthly_payment'),
-                            availabilityStarts =  f.cleaned_data.get('availabilityStarts'),
-                            availabilityEnds =  f.cleaned_data.get('availabilityEnds'),
+                            availability_starts =  f.cleaned_data.get('availability_starts'),
+                            availability_ending =  f.cleaned_data.get('availability_ending'),
                             title =  f.cleaned_data.get('title'),
                             description =  f.cleaned_data.get('description'),
                             security_deposit =  f.cleaned_data.get('security_deposit'),

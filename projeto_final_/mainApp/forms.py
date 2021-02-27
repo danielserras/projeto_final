@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import *
 from django.forms import modelformset_factory
+from django.forms.models import inlineformset_factory
 
 
 class CreateUserForm(UserCreationForm):
@@ -21,8 +22,8 @@ class ListingForm(forms.ModelForm):
     
     allowed_gender = forms.CharField(required=True, max_length=25)
     monthly_payment = forms.IntegerField(required=True)
-    availabilityStarts = forms.DateField()
-    availabilityEnds = forms.DateField()
+    availability_starts = forms.DateField()
+    availability_ending = forms.DateField()
     title = forms.CharField(max_length=50)
     description = forms.CharField(max_length=100)
     security_deposit = forms.IntegerField()
@@ -33,8 +34,8 @@ class ListingForm(forms.ModelForm):
         fields = [
             'allowed_gender',
             'monthly_payment',
-            'availabilityStarts',
-            'availabilityEnds',
+            'availability_starts',
+            'availability_ending',
             'title',
             'description',
             'security_deposit',
@@ -83,16 +84,16 @@ class PropertyForm(forms.ModelForm):
 
 class BedroomForm(forms.ModelForm):
 
-    chairs = forms.BooleanField(required=False, initial=False)
-    sofa = forms.BooleanField(required=False, initial=False)
-    sofa_bed = forms.BooleanField(required=False, initial=False)
-    window = forms.BooleanField(required=False, initial=False)
+    be_chairs = forms.BooleanField(required=False, initial=False)
+    be_sofa = forms.BooleanField(required=False, initial=False)
+    be_sofa_bed = forms.BooleanField(required=False, initial=False)
+    be_window = forms.BooleanField(required=False, initial=False)
     num_single_beds = forms.IntegerField(required=True)
     num_double_beds = forms.IntegerField(required=True)
     max_occupacity = forms.IntegerField(required=True)
-    balcony = forms.BooleanField(required=False, initial=False)
+    be_balcony = forms.BooleanField(required=False, initial=False)
     wardrobe = forms.BooleanField(required=False, initial=False)
-    desk = forms.BooleanField(required=False, initial=False)
+    be_desk = forms.BooleanField(required=False, initial=False)
     chest_of_drawers = forms.BooleanField(required=False, initial=False)
     tv = forms.BooleanField(required=False, initial=False)
     heater = forms.BooleanField(required=False, initial=False)
@@ -102,16 +103,16 @@ class BedroomForm(forms.ModelForm):
     class Meta:
         model = Bedroom
         fields = [
-            "chairs",
-            "sofa",
-            "sofa_bed",
-            "window",
+            "be_chairs",
+            "be_sofa",
+            "be_sofa_bed",
+            "be_window",
             "num_single_beds",
             "num_double_beds",
             "max_occupacity",
-            "balcony",
+            "be_balcony",
             "wardrobe",
-            "desk",
+            "be_desk",
             "chest_of_drawers",
             "tv",
             "heater",
@@ -123,13 +124,13 @@ class KitchenForm(forms.ModelForm):
     
     oven = forms.BooleanField(required=False, initial=False)
     fridge = forms.BooleanField(required=False, initial=False)
-    table = forms.BooleanField(required=False, initial=False)
+    k_table = forms.BooleanField(required=False, initial=False)
     laundering_machine = forms.BooleanField(required=False, initial=False)
     freezer = forms.BooleanField(required=False, initial=False)
-    chairs = forms.BooleanField(required=False, initial=False)
+    k_chairs = forms.BooleanField(required=False, initial=False)
     microwave = forms.BooleanField(required=False, initial=False)
-    window = forms.BooleanField(required=False, initial=False)
-    balcony = forms.BooleanField(required=False, initial=False)
+    k_window = forms.BooleanField(required=False, initial=False)
+    k_balcony = forms.BooleanField(required=False, initial=False)
     dish_washer = forms.BooleanField(required=False, initial=False)
     dishwasher_machine = forms.BooleanField(required=False, initial=False)
     dryer = forms.BooleanField(required=False, initial=False)
@@ -141,13 +142,13 @@ class KitchenForm(forms.ModelForm):
         fields = [
             'oven',
             'fridge',
-            'table',
+            'k_table',
             'laundering_machine',
             'freezer',
-            'chairs',
+            'k_chairs',
             'microwave',
-            'window',
-            'balcony',
+            'k_window',
+            'k_balcony',
             'dish_washer',
             'dishwasher_machine',
             'dryer',
@@ -163,7 +164,7 @@ class BathroomForm(forms.ModelForm):
     bidet = forms.BooleanField(required=False, initial=False)
     toilet = forms.BooleanField(required=False, initial=False)
     sink = forms.BooleanField(required=False, initial=False)
-    window = forms.BooleanField(required=False, initial=False)
+    b_window = forms.BooleanField(required=False, initial=False)
     class Meta:
         model = Bathroom
         fields = [
@@ -172,28 +173,28 @@ class BathroomForm(forms.ModelForm):
             'bidet',
             'toilet',
             'sink',
-            'window']
+            'b_window']
 
 
 class LivingroomForm(forms.ModelForm):
-    sofa = forms.BooleanField(required=False, initial=False)
-    sofa_bed = forms.BooleanField(required=False, initial=False)
-    chairs = forms.BooleanField(required=False, initial=False)
-    window = forms.BooleanField(required=False, initial=False)
-    table = forms.BooleanField(required=False, initial=False)
-    desk = forms.BooleanField(required=False, initial=False)
-    balcony = forms.BooleanField(required=False, initial=False)
+    l_sofa = forms.BooleanField(required=False, initial=False)
+    l_sofa_bed = forms.BooleanField(required=False, initial=False)
+    l_chairs = forms.BooleanField(required=False, initial=False)
+    l_window = forms.BooleanField(required=False, initial=False)
+    l_table = forms.BooleanField(required=False, initial=False)
+    l_desk = forms.BooleanField(required=False, initial=False)
+    l_balcony = forms.BooleanField(required=False, initial=False)
 
     class Meta:
         model = Livingroom
         fields = [
-            'sofa',
-            'sofa_bed',
-            'chairs',
-            'window',
-            'table',
-            'desk',
-            'balcony']
+            'l_sofa',
+            'l_sofa_bed',
+            'l_chairs',
+            'l_window',
+            'l_table',
+            'l_desk',
+            'l_balcony']
 
 class AgreementForm(forms.ModelForm):
     startsDate = forms.DateField()

@@ -33,7 +33,7 @@ $(document).ready(function(){
         }
         if(pageListing == 5){
             //addKitchensHtml(kitchensNum);
-            console.log(kitchensNum)
+            //console.log(kitchensNum)
             for (let k = 1; k < kitchensNum; k++){
                 addFormKitchen();
             }
@@ -136,7 +136,7 @@ function addFormBedroom() {
     //e.preventDefault()
     let bedroomForm = $(".bedroomF");
     let bedroomFormContainer = $(".pageListing-3");
-    let totalForms = $("#id_form-TOTAL_FORMS")
+    let totalForms = $(".pageListing-3").children()[0];
     let bedroomFormNum = bedroomForm.length-1
 
     let newForm = bedroomForm[0].cloneNode(true);//Clone the bedroom form
@@ -146,16 +146,17 @@ function addFormBedroom() {
     newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${bedroomFormNum}-`) //Update the new form to have the correct form number
     bedroomFormContainer.append(newForm) //Insert the new form at the end of the list of forms
 
-    totalForms.attr('value', `${bedroomFormNum+1}`) //Increment the number of total forms in the management form
+    totalForms.val = bedroomFormNum+1 //Increment the number of total forms in the management form
+    //console.log(totalForms);
 }
 
 function addFormBathroom() {
     //e.preventDefault()
     let bathroomForm = $(".bathroomF");
     let bathroomFormContainer = $(".pageListing-4");
-    let totalForms = $("#id_form-TOTAL_FORMS")
+    let totalForms = $(".pageListing-4").children()[0];
     let bathroomFormNum = bathroomForm.length-1
-
+    
     let newForm = bathroomForm[0].cloneNode(true);//Clone the bathroom form
     let formRegex = RegExp(`form-(\\d){1}-`,'g') //Regex to find all instances of the form number
 
@@ -163,14 +164,14 @@ function addFormBathroom() {
     newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${bathroomFormNum}-`) //Update the new form to have the correct form number
     bathroomFormContainer.append(newForm) //Insert the new form at the end of the list of forms
 
-    totalForms.attr('value', `${bathroomFormNum+1}`) //Increment the number of total forms in the management form
+    totalForms.val = bathroomFormNum+1 //Increment the number of total forms in the management form
 }
 
 function addFormKitchen() {
     //e.preventDefault()
     let kitchenForm = $(".kitchenF");
     let kitchenFormContainer = $(".pageListing-5");
-    let totalForms = $("#id_form-TOTAL_FORMS")
+    let totalForms = $(".pageListing-5").children()[0];
     let kitchenFormNum = kitchenForm.length-1
 
     let newForm = kitchenForm[0].cloneNode(true);//Clone the kitchen form
@@ -180,14 +181,17 @@ function addFormKitchen() {
     newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${kitchenFormNum}-`) //Update the new form to have the correct form number
     kitchenFormContainer.append(newForm) //Insert the new form at the end of the list of forms
 
-    totalForms.attr('value', `${kitchenFormNum+1}`) //Increment the number of total forms in the management form
+    totalForms.val = kitchenFormNum+1 //Increment the number of total forms in the management form
+
+    console.log('TESTE');
+    console.log($('[id=id_form-TOTAL_FORMS]'));
 }
 
 function addFormLiving() {
     //e.preventDefault()
     let livingroomForm = $(".livingroomF");
     let livingroomFormContainer = $(".pageListing-5");
-    let totalForms = $("#id_form-TOTAL_FORMS")
+    let totalForms = $(".pageListing-6").children()[0];
     let livingroomFormNum = livingroomForm.length-1
 
     let newForm = livingroomForm[0].cloneNode(true);//Clone the livingroom form
@@ -197,7 +201,7 @@ function addFormLiving() {
     newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${livingroomFormNum}-`) //Update the new form to have the correct form number
     livingroomFormContainer.append(newForm) //Insert the new form at the end of the list of forms
 
-    totalForms.attr('value', `${livingroomFormNum+1}`) //Increment the number of total forms in the management form
+    totalForms.val = livingroomFormNum+1 //Increment the number of total forms in the management form
 }
 
 function addBedroomsHtml(n){
