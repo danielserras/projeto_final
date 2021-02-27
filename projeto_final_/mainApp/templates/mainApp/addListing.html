@@ -9,14 +9,14 @@
 
 {% block content %}
 
-    <form class="container mt-5">
+    <!-- <form class="container mt-5"> -->
         <div class="row" >
             <div class="col-sm-12 bg-secondary">
             Timeline
             </div>
         </div>
 
-        <form action="" method="POST" id="formContainer">
+        <form action="{% url 'addListing' %}" method="POST" id="formContainer">
             {% csrf_token %}
             <div class="row justify-content-md-center pageListing-1">
                <div class="form-group col-sm-7">
@@ -37,16 +37,16 @@
                 <div class="form-group col-sm-7">
                     <h4>O que pretende anunciar?</h4><br>
                     <label for="" class="radio-inline">
-                        <input type="radio" name="listingType" class="" value="Home"> Casa
+                        <input type="radio" name="property_type" class="" value="Home"> Casa
                     </label> <br>
                     <label for="" class="radio-inline">
-                        <input type="radio" name="listingType" class="" value="Studio"> Estúdio
+                        <input type="radio" name="property_type" class="" value="Studio"> Estúdio
                     </label><br>
                     <label for="" class="radio-inline">
-                        <input type="radio" name="listingType" class="" value="Apartatement"> Apartamento
+                        <input type="radio" name="property_type" class="" value="Apartatement"> Apartamento
                     </label><br>
                     <label for="" class="radio-inline">
-                        <input type="radio" name="listingType" class="" value="Bedroom"> Quarto
+                        <input type="radio" name="property_type" class="" value="Bedroom"> Quarto
                     </label><br>
                 </div>
             </div>

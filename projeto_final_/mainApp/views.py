@@ -44,9 +44,11 @@ def register_view(request):
             app_user_object.save()
 
             if request.POST['tipo'] == 'Inquilino':
-                app_user_object.tenant_set.create(ten_user=app_user_object)
+                ten = Tenant(ten_user=app_user_object)
+                ten.save()
             else:
-                app_user_object.landlord_set.create(lord_user=app_user_object)
+                lord = Landlord(lord_user=app_user_object)
+                lord.save()
                 
             user_nameStr = form.cleaned_data.get('username')
             user_first_name = form.cleaned_data.get('first_name')
@@ -60,8 +62,11 @@ def register_view(request):
 def introduce_property_view (request):
 
     if request.method == 'POST':
-        a_user = App_user.objects.get(user_id=request.user)
 
+        test_user = User.objects.filter(id=6)
+        print(test_user)
+        a_user = App_user.objects.get(user_id__in=test_user)
+        
         prop_form = PropertyForm(data=request.POST)
         bath_form = BathroomFormSet(data=request.POST)
         kitchen_form = KitchenFormSet(data=request.POST)
@@ -178,20 +183,22 @@ def introduce_property_view (request):
         return redirect('home')     #PLACEHOLDER
                         
     else:
-        #prop_form = PropertyForm()
+        prop_form = PropertyForm()
         bath_formset = BathroomFormSet(queryset=Bathroom.objects.none())
         kitchen_formset = KitchenFormSet(queryset=Kitchen.objects.none())
         live_formset = LivingroomFormSet(queryset=Livingroom.objects.none())
         bed_formset = BedroomFormSet(queryset=Bedroom.objects.none())
-        #listing_form = ListingForm(queryset=Listing.objects.none())
+        listing_form = ListingForm()
 
         return render(
             request,
             'mainApp/addListing.html',
-            {'bath_formset': bath_formset,
+            {'property_form': prop_form,
+            'bath_formset': bath_formset,
             'kitchen_formset': kitchen_formset,
             'live_formset': live_formset,
-            'bed_formset': bed_formset
+            'bed_formset': bed_formset,
+            'listing_form': listing_form
             })
 
         """ return render(

@@ -28,6 +28,19 @@ class ListingForm(forms.ModelForm):
     security_deposit = forms.IntegerField()
     max_capacity = forms.IntegerField(required=True)
 
+    class Meta:
+        model = Bedroom
+        fields = [
+            'allowed_gender',
+            'monthly_payment',
+            'availabilityStarts',
+            'availabilityEnds',
+            'title',
+            'description',
+            'security_deposit',
+            'max_capacity'
+        ]
+
 class PropertyForm(forms.ModelForm):
 
     property_type = forms.CharField(required=True, max_length=25)
@@ -48,6 +61,24 @@ class PropertyForm(forms.ModelForm):
     overnight_visits = forms.BooleanField(required=False, initial=False)
     cleaning_services = forms.BooleanField(required=False, initial=False)
     floor_area = forms.BooleanField(required=False, initial=False)
+
+    class Meta:
+        model = Property
+        fields = [
+            'property_type',
+            'address',
+            'smoke',
+            'garden',
+            'garage',
+            'street_parking',
+            'internet',
+            'electricity',            
+            'water',  
+            'gas',
+            'pets',
+            'overnight_visits',
+            'cleaning_services',
+            'floor_area']
 
 
 class BedroomForm(forms.ModelForm):
