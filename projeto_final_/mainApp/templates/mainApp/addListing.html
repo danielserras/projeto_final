@@ -68,30 +68,402 @@
             {{bed_formset.management_form}}
             <div class="row pageListing-3">
                 {% for form in bed_formset%}
-                <div class="bedroomF" id="pageListing-3">
-                    {{form.as_p}}
+                <div class="col-sm-12 bedroomF" id="pageListing-3">
+                    <div class="row mt-2 mb-2 justify-content-md-center">
+                        <button class="btn bg-transparent col-sm-7 bedroomHideShow">Quarto 1</button>
+                    </div>
+                    <div class="row justify-content-md-center mb-2">
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{form.heater}}
+                                    <label for="{{ form.heater.id_for_label }}">Aquecedor</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.air_conditioning}}
+                                    <label for="{{ form.air_conditioning.id_for_label }}">Ar condicionado</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.chairs}}
+                                    <label for="{{ form.chairs.id_for_label }}">Cadeira</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{form.ensuite_bathroom}}
+                                    <label for="{{ form.ensuite_bathroom.id_for_label }}">Casa de Banho Privada</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.chest_of_drawers}}
+                                    <label for="{{ form.chest_of_drawers.id_for_label }}">Cómoda</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.wardrobe}}
+                                    <label for="{{ form.wardrobe.id_for_label }}">Guarda Roupa</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{form.window}}
+                                    <label for="{{ form.window.id_for_label }}">window</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.desk}}
+                                    <label for="{{ form.desk.id_for_label }}">Secretária</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.sofa}}
+                                    <label for="{{ form.sofa.id_for_label }}">Sofá</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{form.sofa_bed}}
+                                    <label for="{{ form.sofa_bed.id_for_label }}">Sofá-Cama</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.tv}}
+                                    <label for="{{ form.tv.id_for_label }}">Tv</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.balcony}}
+                                    <label for="{{ form.balcony.id_for_label }}">Varanda</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label for="{{ form.num_double_beds.id_for_label }}">Camas de Casal</label>
+                                    {{form.num_double_beds}}
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="{{ form.num_single_beds.id_for_label }}">Camas de Solteiro</label>
+                                    {{form.num_single_beds}}
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="{{ form.max_occupacity.id_for_label }}">Ocupação máxima</label>
+                                    {{form.max_occupacity}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
 
+            {{bath_formset.management_form}}
             <div class="row pageListing-4">
-                <div class="col-sm-12" id="pageListing-4">
+                {% for form in bath_formset%}
+                <div class="col-sm-12 bathroomF" id="pageListing-4">
+                    <div class="row mt-2 mb-2 justify-content-md-center">
+                        <button class="btn bg-transparent col-sm-7 bedroomHideShow">Casa de Banho 1</button>
+                    </div>
+                    <div class="row justify-content-md-center mb-2">
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{form.bathub}}
+                                    <label for="{{ form.bathub.id_for_label }}">Banheira</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.bidet}}
+                                    <label for="{{ form.bidet.id_for_label }}">Bidé</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.shower}}
+                                    <label for="{{ form.shower.id_for_label }}">Chuveiro</label>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{form.window}}
+                                    <label for="{{ form.window.id_for_label }}">Janela</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.sink}}
+                                    <label for="{{ form.sink.id_for_label }}">Lavatório</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.toilet}}
+                                    <label for="{{ form.toilet.id_for_label }}">Sanita</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
 
+            {{kitchen_formset.management_form}}
             <div class="row pageListing-5">
-                <div class="col-sm-12" id="pageListing-5">
+                {% for form in kitchen_formset %}
+                <div class="col-sm-12 kitchenF" id="pageListing-5">
+                    <div class="row mt-2 mb-2 justify-content-md-center">
+                        <button class="btn bg-transparent col-sm-7 bedroomHideShow">Cozinha 1</button>
+                    </div>
+                    <div class="row justify-content-md-center mb-2">
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{form.chairs}}
+                                    <label for="{{ form.chairs.id_for_label }}">Cadeiras</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.freezer}}
+                                    <label for="{{ form.freezer.id_for_label }}">Congelador</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.cooker}}
+                                    <label for="{{ form.cooker.id_for_label }}">Fogão</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{form.oven}}
+                                    <label for="{{ form.oven.id_for_label }}">Forno</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.fridge}}
+                                    <label for="{{ form.fridge.id_for_label }}">Frigorífico</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.window}}
+                                    <label for="{{ form.window.id_for_label }}">Janela</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{form.diswashwer}}
+                                    <label for="{{ form.diswasher_machine.id_for_label }}">Máquina de Lavar Loiça</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.toilet}}
+                                    <label for="{{ form.laudering_machine.id_for_label }}">Máquina de Lavar Roupa</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.dryer}}
+                                    <label for="{{ form.dryer.id_for_label }}">Máquina de Secar Roupa</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{form.table}}
+                                    <label for="{{ form.table.id_for_label }}">Mesa</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.microwave}}
+                                    <label for="{{ form.microwaves.id_for_label }}">Microondas</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.diswasher}}
+                                    <label for="{{ form.diswasher.id_for_label }}">Lava Loiças</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{form.pans_pots}}
+                                    <label for="{{ form.pans_pots.id_for_label }}">Panelas e Frigideiras</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.dishes_cutlery}}
+                                    <label for="{{ form.dishes_cutlery.id_for_label }}">Pratos e Talheres</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.balcony}}
+                                    <label for="{{ form.balcony.id_for_label }}">Varanda</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
 
+            {{live_formset.management_form}}
             <div class="row pageListing-6">
-                <div class="col-sm-12" id="pageListing-6">
+                {% for form in live_formset%}
+                <div class="col-sm-12 livingroomF" id="pageListing-6">
+                    <div class="row mt-2 mb-2 justify-content-md-center">
+                        <button class="btn bg-transparent col-sm-7 bedroomHideShow">Sala 1</button>
+                    </div>
+                    <div class="row justify-content-md-center mb-2">
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{form.chairs}}
+                                    <label for="{{ form.chairs.id_for_label }}">Cadeiras</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.window}}
+                                    <label for="{{ form.window.id_for_label }}">Janela</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.table}}
+                                    <label for="{{ form.talbe.id_for_label }}">Mesa</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{form.sofa}}
+                                    <label for="{{ form.sofa.id_for_label }}">Sofá</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.sofa_bed}}
+                                    <label for="{{ form.sofa_bed.id_for_label }}">Sofá-cama</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.desk}}
+                                    <label for="{{ form.desk.id_for_label }}">Secretária</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{form.balcony}}
+                                    <label for="{{ form.balcony.id_for_label }}">Varanda</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
 
             <div class="row pageListing-7">
                 <div class="col-sm-12" id="pageListing-7">
-
+                    <div class="row mt-2 mb-2 justify-content-md-center">
+                    <div class="col-sm-7">
+                        <h3>Outras informações</h3>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center mb-2">
+                    <div class="col-sm-7">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="title">Título:</label>
+                                <input type="text" name="title" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="description">Descrição:</label>
+                                <textarea name="description"  rows="6" class="w-100"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="availabilityStarts">Disponível de:</label>
+                                <input type="date" name="availabilityStarts" >
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="availabilityEnds">até:</label>
+                                <input type="date" name="availabilityEnds" >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="monthly_payment">Renda:</label>
+                                <input type="number" name="monthly_payment"  min="0">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="security_deposit">Caução:</label>
+                                <input type="number" name="security_deposit"  min="0">
+                            </div>
+                        </div>
+                        <div class="row">
+                            {% comment %} <div class="col-sm-6">
+                                <label for="cleaningServices">Frequência dos Serviçoes de limpeza:</label>
+                                <input type="text" name="cleaningServices" >
+                            </div> {% endcomment %}
+                            <div class="col-sm-6">
+                                <label for="max_capacity">Ocupação máxima:</label>
+                                <input type="number" name="max_capacity"  min="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2 mb-2 justify-content-md-center">
+                    <div class="col-sm-7">
+                        <h3>Regras</h3>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center mb-2">
+                    <div class="col-sm-7">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <input type="checkbox" name="pets" >
+                                <label for="pets">Animais de Estimação</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="checkbox" name="smoke" >
+                                <label for="smoke">Fumar</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="checkbox" name="overnightVisits" >
+                                <label for="overnight_visits">Visitas podem pernoitar ocasionalmente</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="allowed_gender">Género Permitido</label>
+                                <select name="allowed_gender" >
+                                    <option value="Ambos">Ambos</option>
+                                    <option value="onlyWomens">Apenas Mulheres</option>
+                                    <option value="onlyMens">Apenas Homens</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2 mb-2 justify-content-md-center">
+                    <div class="col-sm-7">
+                        <h3>Despesas Incluídas</h3>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center mb-2">
+                    <div class="col-sm-7">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <input type="checkbox" name="water" >
+                                <label for="water">Água</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="checkbox" name="eletricity" >
+                                <label for="eletricity">Eletrecidade</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="checkbox" name="internet" >
+                                <label for="internet">Internet</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="checkbox" name="gas" >
+                                <label for="gas">Gás</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2 mb-2 justify-content-md-center">
+                    <div class="col-sm-7">
+                        <h3>Exterior</h3>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center mb-2">
+                    <div class="col-sm-7">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <input type="checkbox" name="street_parking" >
+                                <label for="street_parking">Estacionamento</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="checkbox" name="garage" >
+                                <label for="garage">Garagem</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="checkbox" name="garden" >
+                                <label for="garden">Jardim</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
 

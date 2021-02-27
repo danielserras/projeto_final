@@ -157,6 +157,7 @@ def introduce_property_view (request):
                             heater = sub_form.cleaned_data.get('heater'),
                             air_conditioning = sub_form.cleaned_data.get('air_conditioning'),
                             ensuite_bathroom = sub_form.cleaned_data.get('ensuite_bathroom'),
+                            max_occupacity = sub_form.cleaned_data.get('max_occupacity'),
                         )
                         bed_obj.save()
                 

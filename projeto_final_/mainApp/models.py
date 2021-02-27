@@ -54,7 +54,7 @@ class Bathroom(models.Model):
     shower = models.BooleanField()
     window = models.BooleanField()
     bathtub = models.BooleanField()
-    private_or_shared = models.BooleanField()
+    bidet = models.BooleanField()
 
 class Bedroom(models.Model):
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
@@ -64,6 +64,7 @@ class Bedroom(models.Model):
     window = models.BooleanField()
     num_single_beds = models.IntegerField()
     num_double_beds = models.IntegerField()
+    max_occupacity = models.IntegerField()
     balcony = models.BooleanField()
     wardrobe = models.BooleanField()
     desk = models.BooleanField()
@@ -82,9 +83,16 @@ class Kitchen(models.Model):
     cooker = models.BooleanField()
     dishes_cutlery = models.BooleanField()
     pans_pots = models.BooleanField()
-    washing_machine = models.BooleanField()
+    dishwasher_machine = models.BooleanField()
     dryer = models.BooleanField() 
     oven = models.BooleanField()
+    table = models.BooleanField()
+    laundering_machine = models.BooleanField()
+    chairs = models.BooleanField()
+    microwave = models.BooleanField()
+    balcony = models.BooleanField()
+
+
 
 class Livingroom(models.Model):
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
@@ -94,6 +102,7 @@ class Livingroom(models.Model):
     window = models.BooleanField()
     table = models.BooleanField()
     balcony = models.BooleanField()
+    desk = models.BooleanField()
 
 class Listing(models.Model):
     allowed_gender = models.CharField(max_length=20)
@@ -115,8 +124,8 @@ class Property_listing(Listing):
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
 
 class Agreement(models.Model):
-    associated_room = models.ForeignKey(Room_listing, on_delete=models.CASCADE)
-    associated_property = models.ForeignKey(Property_listing, on_delete=models.CASCADE)
+    associated_room = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)
+    associated_property = models.ForeignKey(Property_listing, null=True, on_delete=models.CASCADE)
     tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
     startsDate = models.DateField()

@@ -17,25 +17,38 @@ $(document).ready(function(){
         $(".pageListing-"+pageListing).show();
         $("#backPageListing").show();
         $("#nextPageListing").show();
+        $("#submitListing").hide();
         if(pageListing == 3){
             //addBedroomsHtml(bedroomsNum);
-            for (let i = 0; i < bedroomsNum; i++){
+            for (let i = 1; i < bedroomsNum; i++){
                 addFormBedroom();
             }
             
         }
         if(pageListing == 4){
             //addBathroomsHtml(bathroomsNum);
+            for (let j = 1; j < bathroomsNum; j++){
+                addFormBathroom();
+            }
         }
         if(pageListing == 5){
             //addKitchensHtml(kitchensNum);
+            console.log(kitchensNum)
+            for (let k = 1; k < kitchensNum; k++){
+                addFormKitchen();
+            }
         }
         if(pageListing == 6){
             if(livingroomsNum > 0){
                 //addLivingroomsHtml(livingroomsNum,"#pageListing-6");
+                for (let k = 1; k < livingroomsNum; k++){
+                    addFormLiving();
+                }
             }
             else{
                 //addAgreementInfoHtml("#pageListing-6");
+                $(".pageListing-7").show();
+                $(".pageListing-6").html("")
                 $("#nextPageListing").hide();
                 $("#submitListing").show();
             }
@@ -49,9 +62,11 @@ $(document).ready(function(){
     })
     $("#backPageListing").click(function(){
         $("#nextPageListing").show();
+        $(".pageListing-7").hide();
         $(".pageListing-"+pageListing).hide();
         pageListing --;
         $(".pageListing-"+pageListing).show();
+        $("#submitListing").hide();
         if(pageListing == 1){
             $("#backPageListing").hide();
         }
@@ -90,7 +105,7 @@ $(document).ready(function(){
     $("#livingroomsNum").change(function(){
         livingroomsNum = $(this).val();
         if(livingroomsNum == 0){
-            $(element).html('');
+            $("#pagelisting-6").html('');
         }        
     })
 
@@ -132,6 +147,57 @@ function addFormBedroom() {
     bedroomFormContainer.append(newForm) //Insert the new form at the end of the list of forms
 
     totalForms.attr('value', `${bedroomFormNum+1}`) //Increment the number of total forms in the management form
+}
+
+function addFormBathroom() {
+    //e.preventDefault()
+    let bathroomForm = $(".bathroomF");
+    let bathroomFormContainer = $(".pageListing-4");
+    let totalForms = $("#id_form-TOTAL_FORMS")
+    let bathroomFormNum = bathroomForm.length-1
+
+    let newForm = bathroomForm[0].cloneNode(true);//Clone the bathroom form
+    let formRegex = RegExp(`form-(\\d){1}-`,'g') //Regex to find all instances of the form number
+
+    bathroomFormNum++ //Increment the form number
+    newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${bathroomFormNum}-`) //Update the new form to have the correct form number
+    bathroomFormContainer.append(newForm) //Insert the new form at the end of the list of forms
+
+    totalForms.attr('value', `${bathroomFormNum+1}`) //Increment the number of total forms in the management form
+}
+
+function addFormKitchen() {
+    //e.preventDefault()
+    let kitchenForm = $(".kitchenF");
+    let kitchenFormContainer = $(".pageListing-5");
+    let totalForms = $("#id_form-TOTAL_FORMS")
+    let kitchenFormNum = kitchenForm.length-1
+
+    let newForm = kitchenForm[0].cloneNode(true);//Clone the kitchen form
+    let formRegex = RegExp(`form-(\\d){1}-`,'g') //Regex to find all instances of the form number
+
+    kitchenFormNum++ //Increment the form number
+    newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${kitchenFormNum}-`) //Update the new form to have the correct form number
+    kitchenFormContainer.append(newForm) //Insert the new form at the end of the list of forms
+
+    totalForms.attr('value', `${kitchenFormNum+1}`) //Increment the number of total forms in the management form
+}
+
+function addFormLiving() {
+    //e.preventDefault()
+    let livingroomForm = $(".livingroomF");
+    let livingroomFormContainer = $(".pageListing-5");
+    let totalForms = $("#id_form-TOTAL_FORMS")
+    let livingroomFormNum = livingroomForm.length-1
+
+    let newForm = livingroomForm[0].cloneNode(true);//Clone the livingroom form
+    let formRegex = RegExp(`form-(\\d){1}-`,'g') //Regex to find all instances of the form number
+
+    livingroomFormNum++ //Increment the form number
+    newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${livingroomFormNum}-`) //Update the new form to have the correct form number
+    livingroomFormContainer.append(newForm) //Insert the new form at the end of the list of forms
+
+    totalForms.attr('value', `${livingroomFormNum+1}`) //Increment the number of total forms in the management form
 }
 
 function addBedroomsHtml(n){
