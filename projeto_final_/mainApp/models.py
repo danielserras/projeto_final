@@ -100,7 +100,6 @@ class Kitchen(models.Model):
     dishwasher_machine = models.BooleanField()
     dryer = models.BooleanField() 
     oven = models.BooleanField()
-<<<<<<< HEAD
     table = models.BooleanField()
     laundering_machine = models.BooleanField()
     chairs = models.BooleanField()
@@ -108,12 +107,6 @@ class Kitchen(models.Model):
     balcony = models.BooleanField()
 
 
-=======
-    balcony = models.BooleanField(default=False)
-    table = models.BooleanField(default=False)
-    chairs = models.BooleanField(default=False)
-    microwave = models.BooleanField(default=False)
->>>>>>> c2a549eda5aef537920a2f9991d62542f64f4173
 
 class Livingroom(models.Model):
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
