@@ -3,15 +3,17 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-    
+def get_upload_path(instance, filename):
+    path = instance.album.ListingAlbum.id
+    return f'{path}/{filename}'
+
+
 class App_user(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phoneNumber = models.IntegerField(null=True, blank=True)
     birthDate = models.DateField(null=True, blank=True)
-    #rever tipo de notação :)
 
 class Tenant(models.Model):
-
     ten_user = models.OneToOneField(App_user, on_delete=models.CASCADE)
 
 class Landlord(models.Model):
@@ -27,6 +29,17 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.app_user.save()
+
+
+class ImageAlbum(models.Model):
+    name = models.CharField(max_length=250)
+
+
+class Image(models.Model):
+    name = models.CharField(max_length=250)
+    is_cover = models.BooleanField(default=False)
+    image = models.ImageField(upload_to=get_upload_path)
+    album = models.ForeignKey(ImageAlbum, related_name="images", on_delete=models.CASCADE)
 
 
 class Property(models.Model):
@@ -55,6 +68,7 @@ class Bathroom(models.Model):
     window = models.BooleanField()
     bathtub = models.BooleanField()
     bidet = models.BooleanField()
+
 
 class Bedroom(models.Model):
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
@@ -86,6 +100,7 @@ class Kitchen(models.Model):
     dishwasher_machine = models.BooleanField()
     dryer = models.BooleanField() 
     oven = models.BooleanField()
+<<<<<<< HEAD
     table = models.BooleanField()
     laundering_machine = models.BooleanField()
     chairs = models.BooleanField()
@@ -93,6 +108,12 @@ class Kitchen(models.Model):
     balcony = models.BooleanField()
 
 
+=======
+    balcony = models.BooleanField(default=False)
+    table = models.BooleanField(default=False)
+    chairs = models.BooleanField(default=False)
+    microwave = models.BooleanField(default=False)
+>>>>>>> c2a549eda5aef537920a2f9991d62542f64f4173
 
 class Livingroom(models.Model):
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
@@ -113,6 +134,7 @@ class Listing(models.Model):
     description = models.CharField(max_length=20)
     security_deposit = models.IntegerField()
     max_capacity = models.IntegerField()
+    album = models.OneToOneField(ImageAlbum, related_name="ListingAlbum", on_delete=models.CASCADE, blank=True, null=True)
 
 
 class Room_listing(Listing):
@@ -130,5 +152,6 @@ class Agreement(models.Model):
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
     startsDate = models.DateField()
     endDate = models.DateField()
+
 
 # Create your models here.

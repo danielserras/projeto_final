@@ -1,18 +1,11 @@
-{% extends 'mainApp/base.html' %} 
-{% load static %}
-{% block styles %}
-    <link rel="stylesheet" href='{% static "mainApp/css/ruler.css" %}'>
-    <link rel="stylesheet" href='{% static "mainApp/css/search.css" %}'>
-    <link rel="stylesheet" href='{% static "mainApp/css/map.css" %}'>
-{% endblock %}
-{% block scripts%}
-    <script src='{% static "mainApp/js/map.js" %}'></script>
-     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
-    <script src='{% static "mainApp/js/search.js" %}'></script>
-{% endblock %}
-{% block content %}
+{% extends 'mainApp/base.html' %} {% load static %} {% block styles %}
+<link rel="stylesheet" href='{% static "mainApp/css/ruler.css" %}'>
+<link rel="stylesheet" href='{% static "mainApp/css/search.css" %}'>
+<link rel="stylesheet" href='{% static "mainApp/css/map.css" %}'> {% endblock %} {% block scripts%}
+<script src='{% static "mainApp/js/map.js" %}'></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<script src='{% static "mainApp/js/search.js" %}'></script>
+{% endblock %} {% block content %}
 <div class="container mt-5">
     <div class="row">
         <div class="col-sm mt-5">
@@ -102,7 +95,7 @@
         </div>
         <div id="slider"></div>
         <div class="d-none d-lg-block d-xl-block">
-            {% block foo %} {% include "mainApp/ruler.html" %} {% endblock %}
+            {% block ruler %} {% include "mainApp/ruler.html" %} {% endblock %}
         </div>
     </div>
     <div id="mapid"></div>

@@ -45,6 +45,7 @@ a:hover {
 
 
 /*  */
+
 #bottom-home-container {
     margin-top: 100px;
 }
@@ -79,6 +80,7 @@ img.blur {
     top: 0;
     width: 100%;
     height: 100%;
+<<<<<<< HEAD
 }
 
 .agreementDescription {
@@ -96,3 +98,6 @@ img.blur {
 
 
 
+=======
+}
+>>>>>>> c2a549eda5aef537920a2f9991d62542f64f4173

@@ -1,0 +1,15 @@
+.carousel-item {
+    overflow: hidden;
+}
+
+.carousel-item img {
+    height: 50vh;
+}
+
+.text-green {
+    color: #44be54;
+}
+
+.room-detail-item {
+    font-size: 20px;
+}
