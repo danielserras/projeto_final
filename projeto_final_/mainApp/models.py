@@ -122,18 +122,19 @@ class Listing(models.Model):
     monthly_payment = models.IntegerField()
     availability_starts = models.DateField()
     availability_ending = models.DateField()
-    title = models.CharField(max_length=20)
-    description = models.CharField(max_length=20)
+    title = models.CharField(max_length=50)
+    description = models.CharField(max_length=280)
     security_deposit = models.IntegerField()
     max_capacity = models.IntegerField()
     album = models.OneToOneField(ImageAlbum, related_name="ListingAlbum", on_delete=models.CASCADE, blank=True, null=True)
 
 
-class Room_listing(Listing):
+
+class Room_listing(models.Model):
     main_listing = models.OneToOneField(Listing, on_delete = models.CASCADE, related_name='r_main')
     associated_room = models.ForeignKey(Bedroom, on_delete = models.CASCADE)
 
-class Property_listing(Listing):
+class Property_listing(models.Model):
     main_listing = models.OneToOneField(Listing, on_delete = models.CASCADE, related_name='p_main')
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
 
