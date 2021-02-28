@@ -64,9 +64,9 @@
                     <input type="number" name="livingroomsNum" id="livingroomsNum" min="0"> <br>
                 </div>
             </div>
-
-            {{bed_formset.management_form}}
             <div class="row pageListing-3">
+            {{bed_formset.management_form}}
+            
                 {% for form in bed_formset%}
                 <div class="col-sm-12 bedroomF" id="pageListing-3">
                     <div class="row mt-2 mb-2 justify-content-md-center">
@@ -84,8 +84,8 @@
                                     <label for="{{ form.air_conditioning.id_for_label }}">Ar condicionado</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    {{form.chairs}}
-                                    <label for="{{ form.chairs.id_for_label }}">Cadeira</label>
+                                    {{form.be_chairs}}
+                                    <label for="{{ form.be_chairs.id_for_label }}">Cadeira</label>
                                 </div>
                             </div>
                             <div class="row">
@@ -104,30 +104,30 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    {{form.window}}
-                                    <label for="{{ form.window.id_for_label }}">window</label>
+                                    {{form.be_window}}
+                                    <label for="{{ form.be_window.id_for_label }}">window</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    {{form.desk}}
-                                    <label for="{{ form.desk.id_for_label }}">Secretária</label>
+                                    {{form.be_desk}}
+                                    <label for="{{ form.be_desk.id_for_label }}">Secretária</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    {{form.sofa}}
-                                    <label for="{{ form.sofa.id_for_label }}">Sofá</label>
+                                    {{form.be_sofa}}
+                                    <label for="{{ form.be_sofa.id_for_label }}">Sofá</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    {{form.sofa_bed}}
-                                    <label for="{{ form.sofa_bed.id_for_label }}">Sofá-Cama</label>
+                                    {{form.be_sofa_bed}}
+                                    <label for="{{ form.be_sofa_bed.id_for_label }}">Sofá-Cama</label>
                                 </div>
                                 <div class="col-sm-4">
                                     {{form.tv}}
                                     <label for="{{ form.tv.id_for_label }}">Tv</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    {{form.balcony}}
-                                    <label for="{{ form.balcony.id_for_label }}">Varanda</label>
+                                    {{form.be_balcony}}
+                                    <label for="{{ form.be_balcony.id_for_label }}">Varanda</label>
                                 </div>
                             </div>
                             <div class="row">
@@ -161,8 +161,8 @@
                         <div class="col-sm-7">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    {{form.bathub}}
-                                    <label for="{{ form.bathub.id_for_label }}">Banheira</label>
+                                    {{form.bathtub}}
+                                    <label for="{{ form.bathtub.id_for_label }}">Banheira</label>
                                 </div>
                                 <div class="col-sm-4">
                                     {{form.bidet}}
@@ -176,8 +176,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    {{form.window}}
-                                    <label for="{{ form.window.id_for_label }}">Janela</label>
+                                    {{form.b_window}}
+                                    <label for="{{ form.b_window.id_for_label }}">Janela</label>
                                 </div>
                                 <div class="col-sm-4">
                                     {{form.sink}}
@@ -205,8 +205,8 @@
                         <div class="col-sm-7">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    {{form.chairs}}
-                                    <label for="{{ form.chairs.id_for_label }}">Cadeiras</label>
+                                    {{form.k_chairs}}
+                                    <label for="{{ form.k_chairs.id_for_label }}">Cadeiras</label>
                                 </div>
                                 <div class="col-sm-4">
                                     {{form.freezer}}
@@ -227,18 +227,18 @@
                                     <label for="{{ form.fridge.id_for_label }}">Frigorífico</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    {{form.window}}
-                                    <label for="{{ form.window.id_for_label }}">Janela</label>
+                                    {{form.k_window}}
+                                    <label for="{{ form.k_window.id_for_label }}">Janela</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    {{form.diswashwer}}
-                                    <label for="{{ form.diswasher_machine.id_for_label }}">Máquina de Lavar Loiça</label>
+                                    {{form.dishwasher_machine}}
+                                    <label for="{{ form.dishwasher_machine.id_for_label }}">Máquina de Lavar Loiça</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    {{form.toilet}}
-                                    <label for="{{ form.laudering_machine.id_for_label }}">Máquina de Lavar Roupa</label>
+                                    {{form.laundering_machine}}
+                                    <label for="{{ form.laundering_machine.id_for_label }}">Máquina de Lavar Roupa</label>
                                 </div>
                                 <div class="col-sm-4">
                                     {{form.dryer}}
@@ -247,16 +247,16 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    {{form.table}}
-                                    <label for="{{ form.table.id_for_label }}">Mesa</label>
+                                    {{form.k_table}}
+                                    <label for="{{ form.k_table.id_for_label }}">Mesa</label>
                                 </div>
                                 <div class="col-sm-4">
                                     {{form.microwave}}
                                     <label for="{{ form.microwaves.id_for_label }}">Microondas</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    {{form.diswasher}}
-                                    <label for="{{ form.diswasher.id_for_label }}">Lava Loiças</label>
+                                    {{form.dish_washer}}
+                                    <label for="{{ form.dish_washer.id_for_label }}">Lava Loiças</label>
                                 </div>
                             </div>
                             <div class="row">
@@ -269,8 +269,8 @@
                                     <label for="{{ form.dishes_cutlery.id_for_label }}">Pratos e Talheres</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    {{form.balcony}}
-                                    <label for="{{ form.balcony.id_for_label }}">Varanda</label>
+                                    {{form.k_balcony}}
+                                    <label for="{{ form.k_balcony.id_for_label }}">Varanda</label>
                                 </div>
                             </div>
                         </div>
@@ -290,36 +290,36 @@
                         <div class="col-sm-7">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    {{form.chairs}}
-                                    <label for="{{ form.chairs.id_for_label }}">Cadeiras</label>
+                                    {{form.l_chairs}}
+                                    <label for="{{ form.l_chairs.id_for_label }}">Cadeiras</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    {{form.window}}
-                                    <label for="{{ form.window.id_for_label }}">Janela</label>
+                                    {{form.l_window}}
+                                    <label for="{{ form.l_window.id_for_label }}">Janela</label>
                                 </div>
                                 <div class="col-sm-4">
-                                    {{form.table}}
-                                    <label for="{{ form.talbe.id_for_label }}">Mesa</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {{form.sofa}}
-                                    <label for="{{ form.sofa.id_for_label }}">Sofá</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.sofa_bed}}
-                                    <label for="{{ form.sofa_bed.id_for_label }}">Sofá-cama</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.desk}}
-                                    <label for="{{ form.desk.id_for_label }}">Secretária</label>
+                                    {{form.l_table}}
+                                    <label for="{{ form.l_table.id_for_label }}">Mesa</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    {{form.balcony}}
-                                    <label for="{{ form.balcony.id_for_label }}">Varanda</label>
+                                    {{form.l_sofa}}
+                                    <label for="{{ form.l_sofa.id_for_label }}">Sofá</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.l_sofa_bed}}
+                                    <label for="{{ form.l_sofa_bed.id_for_label }}">Sofá-cama</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    {{form.l_desk}}
+                                    <label for="{{ form.l_desk.id_for_label }}">Secretária</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    {{form.l_balcony}}
+                                    <label for="{{ form.l_balcony.id_for_label }}">Varanda</label>
                                 </div>
                             </div>
                         </div>
@@ -351,12 +351,12 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
-                                <label for="availabilityStarts">Disponível de:</label>
-                                <input type="date" name="availabilityStarts" >
+                                <label for="availability_starts">Disponível de:</label>
+                                <input type="date" name="availability_starts" >
                             </div>
                             <div class="col-sm-6">
-                                <label for="availabilityEnds">até:</label>
-                                <input type="date" name="availabilityEnds" >
+                                <label for="availability_ending">até:</label>
+                                <input type="date" name="availability_ending" >
                             </div>
                         </div>
                         <div class="row">

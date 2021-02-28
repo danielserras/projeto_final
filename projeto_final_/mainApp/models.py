@@ -15,7 +15,6 @@ class App_user(models.Model):
 
 class Tenant(models.Model):
     ten_user = models.OneToOneField(App_user, on_delete=models.CASCADE)
-
 class Landlord(models.Model):
 
     lord_user = models.OneToOneField(App_user, on_delete=models.CASCADE)
@@ -65,23 +64,23 @@ class Bathroom(models.Model):
     toilet = models.BooleanField() 
     sink = models.BooleanField()
     shower = models.BooleanField()
-    window = models.BooleanField()
+    b_window = models.BooleanField()
     bathtub = models.BooleanField()
     bidet = models.BooleanField()
 
 
 class Bedroom(models.Model):
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
-    chairs = models.BooleanField()
-    sofa = models.BooleanField()
-    sofa_bed = models.BooleanField()
-    window = models.BooleanField()
+    be_chairs = models.BooleanField()
+    be_sofa = models.BooleanField()
+    be_sofa_bed = models.BooleanField()
+    be_window = models.BooleanField()
     num_single_beds = models.IntegerField()
     num_double_beds = models.IntegerField()
     max_occupacity = models.IntegerField()
-    balcony = models.BooleanField()
+    be_balcony = models.BooleanField()
     wardrobe = models.BooleanField()
-    desk = models.BooleanField()
+    be_desk = models.BooleanField()
     chest_of_drawers = models.BooleanField()
     tv = models.BooleanField()
     heater = models.BooleanField()
@@ -91,7 +90,7 @@ class Bedroom(models.Model):
 class Kitchen(models.Model):
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
     dish_washer = models.BooleanField()
-    window = models.BooleanField()
+    k_window = models.BooleanField()
     fridge = models.BooleanField()
     freezer = models.BooleanField()
     cooker = models.BooleanField()
@@ -100,23 +99,23 @@ class Kitchen(models.Model):
     dishwasher_machine = models.BooleanField()
     dryer = models.BooleanField() 
     oven = models.BooleanField()
-    table = models.BooleanField()
+    k_table = models.BooleanField()
     laundering_machine = models.BooleanField()
-    chairs = models.BooleanField()
+    k_chairs = models.BooleanField()
     microwave = models.BooleanField()
-    balcony = models.BooleanField()
+    k_balcony = models.BooleanField()
 
 
 
 class Livingroom(models.Model):
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
-    chairs = models.BooleanField()
-    sofa = models.BooleanField()
-    sofa_bed = models.BooleanField()
-    window = models.BooleanField()
-    table = models.BooleanField()
-    balcony = models.BooleanField()
-    desk = models.BooleanField()
+    l_chairs = models.BooleanField()
+    l_sofa = models.BooleanField()
+    l_sofa_bed = models.BooleanField()
+    l_window = models.BooleanField()
+    l_table = models.BooleanField()
+    l_balcony = models.BooleanField()
+    l_desk = models.BooleanField()
 
 class Listing(models.Model):
     allowed_gender = models.CharField(max_length=20)
@@ -146,5 +145,13 @@ class Agreement(models.Model):
     startsDate = models.DateField()
     endDate = models.DateField()
 
-
+class Agreement_Request(models.Model):
+    associated_room = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)
+    associated_property = models.ForeignKey(Property_listing, null=True, on_delete=models.CASCADE)
+    tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
+    landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
+    startsDate = models.DateField()
+    endDate = models.DateField()
+    message = models.TextField(null=True, blank=True)
+    accepted = models.BooleanField(null=True, blank=True)
 # Create your models here.
