@@ -15,7 +15,6 @@ class App_user(models.Model):
 
 class Tenant(models.Model):
     ten_user = models.OneToOneField(App_user, on_delete=models.CASCADE)
-
 class Landlord(models.Model):
 
     lord_user = models.OneToOneField(App_user, on_delete=models.CASCADE)
