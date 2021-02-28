@@ -73,7 +73,8 @@ def introduce_property_view (request):
         bed_form = BedroomFormSet(data=request.POST)
         listing_form = ListingForm(data=request.POST)
 
-        print(bed_form)
+        for f in bed_form:
+            print(f)
 
         form_list = [prop_form, bath_form, kitchen_form, live_form, bed_form, listing_form]
 
@@ -102,7 +103,7 @@ def introduce_property_view (request):
                         prop_object.save()
 
                 elif f == bath_form:
-                    print(f)
+                    #print(f)
                     for sub_form in f:
                         bath_object = Bathroom(
                             associated_property = prop_object,
@@ -117,7 +118,7 @@ def introduce_property_view (request):
 
 
                 elif f == kitchen_form:
-                    print(f)
+                    #print(f)
                     for sub_form in f:
                         #print(sub_form.)
                         kitchen_obj = Kitchen(
@@ -141,7 +142,7 @@ def introduce_property_view (request):
                         kitchen_obj.save()
 
                 elif f == live_form:
-                    print(f)
+                    #print(f)
                     for sub_form in f:
                         live_obj = Livingroom(
                             associated_property = prop_object,
@@ -156,9 +157,9 @@ def introduce_property_view (request):
                         live_obj.save()
 
                 elif f == bed_form:
-                    print(f)
+                    #print(f)
                     for sub_form in f:
-                        print(sub_form)
+                        #print(sub_form)
                         bed_obj = Bedroom(
                             associated_property = prop_object,
                             be_chairs = sub_form.cleaned_data.get('be_chairs'),
@@ -180,7 +181,7 @@ def introduce_property_view (request):
                         bed_obj.save()
                 
                 elif f == listing_form:
-                    print(f)
+                    #print(f)
                     if f.is_valid():
                         listing_obj = Listing(
                             allowed_gender = f.cleaned_data.get('allowed_gender'),
