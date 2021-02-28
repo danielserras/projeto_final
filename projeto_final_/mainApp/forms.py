@@ -205,6 +205,16 @@ class AgreementForm(forms.ModelForm):
         fields = [
             'startsDate',
             'endDate']
+
+class Agreement_Request_Form(forms.ModelForm):
+    associated_room = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)
+    associated_property = models.ForeignKey(Property_listing, null=True, on_delete=models.CASCADE)
+    tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
+    landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
+    startsDate = models.DateField()
+    endDate = models.DateField()
+    message = models.TextField(null=True, blank=True)
+    accepted = models.BooleanField(null=True, blank=True)
         
 
 
