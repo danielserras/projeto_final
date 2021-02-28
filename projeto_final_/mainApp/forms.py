@@ -196,7 +196,7 @@ class LivingroomForm(forms.ModelForm):
             'l_desk',
             'l_balcony']
 
-class AgreementForm(forms.ModelForm):
+"""class AgreementForm(forms.ModelForm):
     startsDate = forms.DateField()
     endDate = forms.DateField()
     
@@ -204,17 +204,33 @@ class AgreementForm(forms.ModelForm):
         model = Agreement
         fields = [
             'startsDate',
-            'endDate']
+            'endDate'] """ #expandiu-se para dentro do agreement request
 
 class Agreement_Request_Form(forms.ModelForm):
-    associated_room = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)
-    associated_property = models.ForeignKey(Property_listing, null=True, on_delete=models.CASCADE)
-    tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
-    landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
-    startsDate = models.DateField()
-    endDate = models.DateField()
-    message = models.TextField(null=True, blank=True)
-    accepted = models.BooleanField(null=True, blank=True)
+
+    startsDate = forms.DateField()
+    endDate = forms.DateField()
+    message = forms.CharField(widget=forms.Textarea, required=False)
+    accepted = forms.BooleanField(required=False)
+
+    class Meta:
+        model = Agreement_Request
+        fields = [
+            'associated_room',
+            'associated_property',
+            'tenant',
+            'landlord',
+            'startsDate',
+            'endDate',
+            'message',
+            'accepted']
+        widgets = {
+            'associated_room': forms.HiddenInput(),
+            'associated_property': forms.HiddenInput(),
+            'tenant': forms.HiddenInput(),
+            'landlord': forms.HiddenInput(),
+            'accepted': forms.HiddenInput()
+        }
         
 
 

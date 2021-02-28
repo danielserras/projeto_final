@@ -245,6 +245,26 @@ def startsAgreement(response):
     #return render(response, "mainApp/sendAgreementLandlord.html", {})
 
 
+def create_request(request):
+
+    if request.method == 'POST':
+        ag_form = Agreement_Request_Form()
+        #popular campos do form com info do search sobre a propriedade
+
+        context = {'ag_form': ag_form}
+        return render(request, 'mainApp/sendRequest.html', context)
+
+        
+def send_request(request):
+
+    if request.method == 'POST':
+        #inq ja preencheu tudo no form, falta criar agreement_request
+        ag_form = Agreement_Request_Form(data=request.POST)
+        if ag_form.is_valid():
+            ag_form.save()
+            return redirect('home_page')
+
+
 def profile(response):
     return render(response, "mainApp/profile.html", {})
 
