@@ -42,7 +42,6 @@ class Image(models.Model):
 
 
 class Property(models.Model):
-    property_type = models.CharField(max_length=20)
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
     address = models.CharField(max_length=100)
     floor_area = models.IntegerField()              
@@ -126,6 +125,7 @@ class Listing(models.Model):
     description = models.CharField(max_length=280)
     security_deposit = models.IntegerField()
     max_capacity = models.IntegerField()
+    listing_type = models.CharField(max_length=20)
     album = models.OneToOneField(ImageAlbum, related_name="ListingAlbum", on_delete=models.CASCADE, blank=True, null=True)
 
 

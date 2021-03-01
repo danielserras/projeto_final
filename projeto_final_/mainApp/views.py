@@ -99,10 +99,10 @@ def introduce_property_view (request):
                             smoke = f.cleaned_data.get('smoke')
                         )
                         prop_object.save()
-                        bed_formset = BedroomFormSet(queryset=Bedroom.objects.none(), initial=[{'prop_id': prop_object.id,}])
-
+                        bed_formset = BedroomFormSet(queryset=Bedroom.objects.none())
+                        print(prop_object.id)
                         bed_formset.extra = int(f.cleaned_data.get('bedrooms_num'))
-                        context = {'property_form': prop_form, 'bed_formset': bed_formset}
+                        context = {'property_form': prop_form, 'bed_formset': bed_formset, 'prop_id':prop_object.id}
                         return render(
                             request,
                             'mainApp/addBedroom.html',
@@ -174,9 +174,10 @@ def introduce_property_view (request):
                 elif f == bed_form:
                     print('entrou-----------------------------------')
                     for sub_form in f:
-                        print(sub_form.initial)
+                        print(sub_form)
+                        print(request.POST['prop_id'])
                         bed_obj = Bedroom(
-                            associated_property = Property.objects.get(id=sub_form.cleaned_data['prop_id']),
+                            associated_property = Property.objects.get(id=int(request.POST['prop_id'])),
                             be_chairs = sub_form.cleaned_data.get('be_chairs'),
                             be_sofa = sub_form.cleaned_data.get('be_sofa'),
                             be_sofa_bed = sub_form.cleaned_data.get('be_sofa_bed'),
@@ -301,5 +302,7 @@ def search(response):
 def notifications(response):
     return render(response, "mainApp/notifications.html", {})
 
-def listing(response):
+def listing(response, listing_id):
+    listing = Listing.objects.get(pk=listing_id)
+    print(listing)
     return render(response, "mainApp/listingPage.html", {})
