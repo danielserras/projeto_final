@@ -1,15 +1,15 @@
 {% extends 'mainApp/base.html' %}
 {% load static %}
 {% block styles %}
-    <link rel="stylesheet" href='{% static "mainApp/css/addListing.css" %}'>
+    <link rel="stylesheet" href='{% static "mainApp/css/addProperty.css" %}'>
 {% endblock %}
 {% block scripts%}
-    <script src='{% static "mainApp/js/addListing.js" %}'></script>
+    <script src='{% static "mainApp/js/addProperty.js" %}'></script>
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <form action="{% url 'addListing' %}" method="POST" id="formContainer">
+    <form action="{% url 'addProperty' %}" method="POST" id="formContainer">
         {% csrf_token %}
         <div class="row justify-content-md-center pageListing-1">
             <div class="form-group col-sm-7">
@@ -132,7 +132,7 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-md-center pageListing-2">
+        <div class="row justify-content-md-center ">
             <div class="form-group col-sm-auto">
                 <br>
                 <label for="" class="">Número de Quartos</label><br>
@@ -142,7 +142,7 @@
                 <label for="" class="">Número de Cozinhas</label><br>
                 <input type="number" name="kitchens_num" id="kitchensNum" min="1"><br>
                 <label for="" class="">Número de Salas</label><br>
-                <input type="number" name="livingrooms_um" id="livingroomsNum" min="0"> <br>
+                <input type="number" name="livingrooms_num" id="livingroomsNum" min="0"> <br>
             </div>
         </div>
         <div class="row justify-content-md-center text-center">

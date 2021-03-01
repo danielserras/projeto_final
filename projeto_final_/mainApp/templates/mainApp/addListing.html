@@ -10,7 +10,8 @@
 {% block content %}
 <div class="container">
     <form action="" method="POST">
-        <div class="row pageListing-7">
+        {% csrf_token %}
+        <div class="row ">
             <div class="col-sm-12" id="pageListing-7">
                 <div class="row mt-2 mb-2 justify-content-md-center">
                     <div class="col-sm-7">
