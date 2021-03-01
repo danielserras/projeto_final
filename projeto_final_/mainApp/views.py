@@ -302,5 +302,7 @@ def search(response):
 def notifications(response):
     return render(response, "mainApp/notifications.html", {})
 
-def listing(response):
+def listing(response, listing_id):
+    listing = Listing.objects.get(pk=listing_id)
+    print(listing)
     return render(response, "mainApp/listingPage.html", {})
