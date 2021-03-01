@@ -1,16 +1,17 @@
 {% extends 'mainApp/base.html' %}
 {% load static %}
 {% block styles %}
-    <link rel="stylesheet" href='{% static "mainApp/css/addListing.css" %}'>
+    <link rel="stylesheet" href='{% static "mainApp/css/addProperty.css" %}'>
 {% endblock %}
 {% block scripts%}
-    <script src='{% static "mainApp/js/addListing.js" %}'></script>
+    <script src='{% static "mainApp/js/addProperty.js" %}'></script>
 {% endblock %}
 
 {% block content %}
 <div class="container">
     <form action="" method="POST">
-        <div class="row pageListing-7">
+        {% csrf_token %}
+        <div class="row ">
             <div class="col-sm-12" id="pageListing-7">
                 <div class="row mt-2 mb-2 justify-content-md-center">
                     <div class="col-sm-7">
@@ -105,7 +106,7 @@
                             </div>
                         </div>
                     </div>
-                </div
+                </div>
             </div>
         </div>
         <div class="row justify-content-md-center text-center">

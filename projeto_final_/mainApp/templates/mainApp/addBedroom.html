@@ -10,7 +10,8 @@
 {% block content %}
 <div class="container">
     <form method="POST">
-        <div class="row pageListing-3">
+        {% csrf_token %}
+        <div class="row ">
         {{bed_formset.management_form}}
         
             {% for form in bed_formset%}

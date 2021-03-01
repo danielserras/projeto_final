@@ -10,8 +10,9 @@
 {% block content %}
 <div class="container">
     <form action="" method="POST">
+        {% csrf_token %}
         {{kitchen_formset.management_form}}
-        <div class="row pageListing-5">
+        <div class="row">
             {% for form in kitchen_formset %}
             <div class="col-sm-12 kitchenF" id="pageListing-5">
                 <div class="row mt-2 mb-2 justify-content-md-center">
