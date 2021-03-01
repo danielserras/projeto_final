@@ -9,13 +9,7 @@
 
 {% block content %}
 
-    <!-- <form class="container mt-5"> -->
-        <div class="row" >
-            <div class="col-sm-12 bg-secondary">
-            Timeline
-            </div>
-        </div>
-
+    <div class="container">
         <form action="{% url 'addListing' %}" method="POST" id="formContainer">
             {% csrf_token %}
             <div class="row justify-content-md-center pageListing-1">
@@ -51,19 +45,111 @@
                 </div>
             </div>
 
-            <div class="row justify-content-md-center pageListing-2">
-                <div class="form-group col-sm-auto">
-                    <br>
-                    <label for="" class="">Número de Quartos</label><br>
-                    <input type="number" name="bedroomsNum" id="bedroomsNum" min="1"> <br>
-                    <label for="" class="">Número de Casas de Banho</label><br>
-                    <input type="number" name="bathroomsNum" id="bathroomsNum" min="1"><br>
-                    <label for="" class="">Número de Cozinhas</label><br>
-                    <input type="number" name="kitchensNum" id="kitchensNum" min="1"><br>
-                    <label for="" class="">Número de Salas</label><br>
-                    <input type="number" name="livingroomsNum" id="livingroomsNum" min="0"> <br>
+            <div class="row pageListing-1">
+                <div class="col-sm-12" id="pageListing-7">                
+                    <div class="row mt-2 mb-2 justify-content-md-center">
+                        <div class="col-sm-7">
+                            <h3>Regras</h3>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-md-center mb-2">
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <input type="checkbox" name="pets" >
+                                    <label for="pets" class="d-inline">Animais de Estimação</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="checkbox" name="smoke" >
+                                    <label for="smoke">Fumar</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="checkbox" name="overnight_visits" >
+                                    <label for="overnight_visits" class="d-inline">Visitas podem pernoitar ocasionalmente</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2 mb-2 justify-content-md-center">
+                        <div class="col-sm-7">
+                            <h3>Despesas Incluídas</h3>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-md-center mb-2">
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <input type="checkbox" name="water" >
+                                    <label for="water">Água</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="checkbox" name="eletricity" >
+                                    <label for="eletricity">Eletrecidade</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="checkbox" name="internet" >
+                                    <label for="internet">Internet</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="checkbox" name="gas" >
+                                    <label for="gas">Gás</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <input type="checkbox" name="cleaning_services" >
+                                    <label for="cleaning_services" class="d-inline">Serviços de Limpeza</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2 mb-2 justify-content-md-center">
+                        <div class="col-sm-7">
+                            <h3>Exterior</h3>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-md-center mb-2">
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <input type="checkbox" name="street_parking" >
+                                    <label for="street_parking">Estacionamento</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="checkbox" name="garage" >
+                                    <label for="garage">Garagem</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="checkbox" name="garden" >
+                                    <label for="garden">Jardim</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </form>
+    
+        <div class="row justify-content-md-center pageListing-2">
+            <div class="form-group col-sm-auto">
+                <br>
+                <label for="" class="">Número de Quartos</label><br>
+                <input type="number" name="bedroomsNum" id="bedroomsNum" min="1"> <br>
+                <label for="" class="">Número de Casas de Banho</label><br>
+                <input type="number" name="bathroomsNum" id="bathroomsNum" min="1"><br>
+                <label for="" class="">Número de Cozinhas</label><br>
+                <input type="number" name="kitchensNum" id="kitchensNum" min="1"><br>
+                <label for="" class="">Número de Salas</label><br>
+                <input type="number" name="livingroomsNum" id="livingroomsNum" min="0"> <br>
+            </div>
+        </div>
+
+        <form method="POST">
             <div class="row pageListing-3">
             {{bed_formset.management_form}}
             
@@ -149,7 +235,9 @@
                 </div>
                 {% endfor %}
             </div>
+        </form>
 
+        <form action="" method="POST">
             {{bath_formset.management_form}}
             <div class="row pageListing-4">
                 {% for form in bath_formset%}
@@ -278,7 +366,9 @@
                 </div>
                 {% endfor %}
             </div>
+        </form>
 
+        <form action="" method="POST">
             {{live_formset.management_form}}
             <div class="row pageListing-6">
                 {% for form in live_formset%}
@@ -327,143 +417,105 @@
                 </div>
                 {% endfor %}
             </div>
+        </form>
 
+        <form action="" method="POST">
             <div class="row pageListing-7">
                 <div class="col-sm-12" id="pageListing-7">
                     <div class="row mt-2 mb-2 justify-content-md-center">
-                    <div class="col-sm-7">
-                        <h3>Outras informações</h3>
-                    </div>
-                </div>
-                <div class="row justify-content-md-center mb-2">
-                    <div class="col-sm-7">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <label for="title">Título:</label>
-                                <input type="text" name="title" >
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <label for="description">Descrição:</label>
-                                <textarea name="description"  rows="6" class="w-100"></textarea>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label for="availability_starts">Disponível de:</label>
-                                <input type="date" name="availability_starts" >
-                            </div>
-                            <div class="col-sm-6">
-                                <label for="availability_ending">até:</label>
-                                <input type="date" name="availability_ending" >
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label for="monthly_payment">Renda:</label>
-                                <input type="number" name="monthly_payment"  min="0">
-                            </div>
-                            <div class="col-sm-6">
-                                <label for="security_deposit">Caução:</label>
-                                <input type="number" name="security_deposit"  min="0">
-                            </div>
-                        </div>
-                        <div class="row">
-                            {% comment %} <div class="col-sm-6">
-                                <label for="cleaningServices">Frequência dos Serviçoes de limpeza:</label>
-                                <input type="text" name="cleaningServices" >
-                            </div> {% endcomment %}
-                            <div class="col-sm-6">
-                                <label for="max_capacity">Ocupação máxima:</label>
-                                <input type="number" name="max_capacity"  min="1">
-                            </div>
+                        <div class="col-sm-7">
+                            <h3>Outras informações</h3>
                         </div>
                     </div>
-                </div>
-                <div class="row mt-2 mb-2 justify-content-md-center">
-                    <div class="col-sm-7">
-                        <h3>Regras</h3>
-                    </div>
-                </div>
-                <div class="row justify-content-md-center mb-2">
-                    <div class="col-sm-7">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <input type="checkbox" name="pets" >
-                                <label for="pets">Animais de Estimação</label>
+                    <div class="row justify-content-md-center mb-2">
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label for="title">Título:</label>
+                                    <input type="text" name="title" >
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <input type="checkbox" name="smoke" >
-                                <label for="smoke">Fumar</label>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label for="description">Descrição:</label>
+                                    <textarea name="description"  rows="6" class="w-100"></textarea>
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <input type="checkbox" name="overnightVisits" >
-                                <label for="overnight_visits">Visitas podem pernoitar ocasionalmente</label>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="availability_starts">Disponível de:</label>
+                                    <input type="date" name="availability_starts" >
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="availability_ending">até:</label>
+                                    <input type="date" name="availability_ending" >
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <label for="allowed_gender">Género Permitido</label>
-                                <select name="allowed_gender" >
-                                    <option value="Ambos">Ambos</option>
-                                    <option value="onlyWomens">Apenas Mulheres</option>
-                                    <option value="onlyMens">Apenas Homens</option>
-                                </select>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="monthly_payment">Renda:</label>
+                                    <input type="number" name="monthly_payment"  min="0">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="security_deposit">Caução:</label>
+                                    <input type="number" name="security_deposit"  min="0">
+                                </div>
+                            </div>
+                            <div class="row">
+                                {% comment %} <div class="col-sm-6">
+                                    <label for="cleaningServices">Frequência dos Serviçoes de limpeza:</label>
+                                    <input type="text" name="cleaningServices" >
+                                </div> {% endcomment %}
+                                <div class="col-sm-6">
+                                    <label for="max_capacity">Ocupação máxima:</label>
+                                    <input type="number" name="max_capacity"  min="1">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label for="allowed_gender">Género Permitido</label>
+                                    <select name="allowed_gender" >
+                                        <option value="Ambos">Ambos</option>
+                                        <option value="onlyWomens">Apenas Mulheres</option>
+                                        <option value="onlyMens">Apenas Homens</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row mt-2 mb-2 justify-content-md-center">
-                    <div class="col-sm-7">
-                        <h3>Despesas Incluídas</h3>
-                    </div>
-                </div>
-                <div class="row justify-content-md-center mb-2">
-                    <div class="col-sm-7">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <input type="checkbox" name="water" >
-                                <label for="water">Água</label>
-                            </div>
-                            <div class="col-sm-3">
-                                <input type="checkbox" name="eletricity" >
-                                <label for="eletricity">Eletrecidade</label>
-                            </div>
-                            <div class="col-sm-3">
-                                <input type="checkbox" name="internet" >
-                                <label for="internet">Internet</label>
-                            </div>
-                            <div class="col-sm-3">
-                                <input type="checkbox" name="gas" >
-                                <label for="gas">Gás</label>
-                            </div>
+                    <div class="row mt-2 mb-2 justify-content-md-center">
+                        <div class="col-sm-7">
+                            <h3>Regras</h3>
                         </div>
                     </div>
-                </div>
-                <div class="row mt-2 mb-2 justify-content-md-center">
-                    <div class="col-sm-7">
-                        <h3>Exterior</h3>
-                    </div>
-                </div>
-                <div class="row justify-content-md-center mb-2">
-                    <div class="col-sm-7">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <input type="checkbox" name="street_parking" >
-                                <label for="street_parking">Estacionamento</label>
+                    <div class="row justify-content-md-center mb-2">
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <input type="checkbox" name="pets" >
+                                    <label for="pets">Animais de Estimação</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="checkbox" name="smoke" >
+                                    <label for="smoke">Fumar</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="checkbox" name="overnightVisits" >
+                                    <label for="overnight_visits">Visitas podem pernoitar ocasionalmente</label>
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                                <input type="checkbox" name="garage" >
-                                <label for="garage">Garagem</label>
-                            </div>
-                            <div class="col-sm-4">
-                                <input type="checkbox" name="garden" >
-                                <label for="garden">Jardim</label>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label for="allowed_gender">Género Permitido</label>
+                                    <select name="allowed_gender" >
+                                        <option value="Ambos">Ambos</option>
+                                        <option value="onlyWomens">Apenas Mulheres</option>
+                                        <option value="onlyMens">Apenas Homens</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div
                 </div>
             </div>
 
