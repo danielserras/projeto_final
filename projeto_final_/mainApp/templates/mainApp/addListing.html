@@ -1,16 +1,16 @@
 {% extends 'mainApp/base.html' %}
 {% load static %}
 {% block styles %}
-    <link rel="stylesheet" href='{% static "mainApp/css/addListing.css" %}'>
+    <link rel="stylesheet" href='{% static "mainApp/css/addProperty.css" %}'>
 {% endblock %}
 {% block scripts%}
-    <script src='{% static "mainApp/js/addListing.js" %}'></script>
+    <script src='{% static "mainApp/js/addProperty.js" %}'></script>
 {% endblock %}
 
 {% block content %}
 
     <div class="container">
-        <form action="{% url 'addListing' %}" method="POST" id="formContainer">
+        <form action="{% url 'addProperty' %}" method="POST" id="propertyForm">
             {% csrf_token %}
             <div class="row justify-content-md-center pageListing-1">
                <div class="form-group col-sm-7">
@@ -149,7 +149,8 @@
             </div>
         </div>
 
-        <form method="POST">
+        <form method="POST" id="bedroomForm">
+            {% csrf_token %}
             <div class="row pageListing-3">
             {{bed_formset.management_form}}
             
@@ -237,7 +238,8 @@
             </div>
         </form>
 
-        <form action="" method="POST">
+        <form method="POST" id="bathroomForm">
+            {% csrf_token %}
             {{bath_formset.management_form}}
             <div class="row pageListing-4">
                 {% for form in bath_formset%}
@@ -281,7 +283,10 @@
                 </div>
                 {% endfor %}
             </div>
+        </form>
 
+        <form method="POST" id="kitchenForm">
+            {% csrf_token %}
             {{kitchen_formset.management_form}}
             <div class="row pageListing-5">
                 {% for form in kitchen_formset %}
@@ -368,7 +373,8 @@
             </div>
         </form>
 
-        <form action="" method="POST">
+        <form action="" method="POST" id="livingroomForm">
+            {% csrf_token %}
             {{live_formset.management_form}}
             <div class="row pageListing-6">
                 {% for form in live_formset%}
@@ -419,7 +425,8 @@
             </div>
         </form>
 
-        <form action="" method="POST">
+        <form action="{% url 'addProperty' %}" method="POST" id="listingForm">
+            {% csrf_token %}
             <div class="row pageListing-7">
                 <div class="col-sm-12" id="pageListing-7">
                     <div class="row mt-2 mb-2 justify-content-md-center">
@@ -462,10 +469,6 @@
                                 </div>
                             </div>
                             <div class="row">
-                                {% comment %} <div class="col-sm-6">
-                                    <label for="cleaningServices">Frequência dos Serviçoes de limpeza:</label>
-                                    <input type="text" name="cleaningServices" >
-                                </div> {% endcomment %}
                                 <div class="col-sm-6">
                                     <label for="max_capacity">Ocupação máxima:</label>
                                     <input type="number" name="max_capacity"  min="1">
@@ -483,53 +486,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-2 mb-2 justify-content-md-center">
-                        <div class="col-sm-7">
-                            <h3>Regras</h3>
-                        </div>
-                    </div>
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-sm-7">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <input type="checkbox" name="pets" >
-                                    <label for="pets">Animais de Estimação</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="checkbox" name="smoke" >
-                                    <label for="smoke">Fumar</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="checkbox" name="overnightVisits" >
-                                    <label for="overnight_visits">Visitas podem pernoitar ocasionalmente</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <label for="allowed_gender">Género Permitido</label>
-                                    <select name="allowed_gender" >
-                                        <option value="Ambos">Ambos</option>
-                                        <option value="onlyWomens">Apenas Mulheres</option>
-                                        <option value="onlyMens">Apenas Homens</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div
-                </div>
-            </div>
-
-            <div class="row justify-content-md-center text-center">
-                <div class="col-sm-auto">
-                    <button type="button" id="backPageListing" class="btn btn-info">Anterior</button>
-                </div>
-                <div class="col-sm-auto">
-                    <button type="button" class="btn btn-secondary" id="nextPageListing">Seguinte</button>
-                </div>
-                <div class="col-sm-auto">
-                    <button type="submit" class="btn btn-secondary" id="submitListing">Terminar</button>
                 </div>
             </div>
         </form>
+        <div class="row justify-content-md-center text-center">
+            <div class="col-sm-auto">
+                <button type="button" id="backPageListing" class="btn btn-info">Anterior</button>
+            </div>
+            <div class="col-sm-auto">
+                <button type="button" class="btn btn-secondary" id="nextPageListing">Seguinte</button>
+            </div>
+            <div class="col-sm-auto">
+                <button type="button" class="btn btn-secondary" id="submitListing">Terminar</button>
+            </div>
+        </div>
     </div>
 {% endblock %}

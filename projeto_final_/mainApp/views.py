@@ -67,14 +67,13 @@ def introduce_property_view (request):
         a_user = App_user.objects.get(user_id__in=test_user)
         
         prop_form = PropertyForm(data=request.POST)
+        bed_form = BedroomFormSet(data=request.POST)
         bath_form = BathroomFormSet(data=request.POST)
         kitchen_form = KitchenFormSet(data=request.POST)
         live_form = LivingroomFormSet(data=request.POST)
-        bed_form = BedroomFormSet(data=request.POST)
         listing_form = ListingForm(data=request.POST)
 
-        for f in bed_form:
-            print(f)
+        print(request.POST)
 
         form_list = [prop_form, bath_form, kitchen_form, live_form, bed_form, listing_form]
 
@@ -100,7 +99,19 @@ def introduce_property_view (request):
                             cleaning_services = f.cleaned_data.get('cleaning_services'),
                             smoke = f.cleaned_data.get('smoke')
                         )
+                        print('entrou+++++++++++++++')
                         prop_object.save()
+                        context = {'property_form': prop_form,
+                            'bath_formset': bath_formset,
+                            'kitchen_formset': kitchen_formset,
+                            'live_formset': live_formset,
+                            'bed_formset': bed_formset,
+                            'listing_form': listing_form
+                            }
+                        return render(
+                            request,
+                            'mainApp/addProperty/addBedroom.html',
+                            context)
 
                 elif f == bath_form:
                     #print(f)
@@ -157,7 +168,7 @@ def introduce_property_view (request):
                         live_obj.save()
 
                 elif f == bed_form:
-                    #print(f)
+                    print('entrou-----------------------------------')
                     for sub_form in f:
                         #print(sub_form)
                         bed_obj = Bedroom(
@@ -207,7 +218,7 @@ def introduce_property_view (request):
 
         return render(
             request,
-            'mainApp/addListing.html',
+            'mainApp/addProperty.html',
             {'property_form': prop_form,
             'bath_formset': bath_formset,
             'kitchen_formset': kitchen_formset,
@@ -271,8 +282,8 @@ def profile(response):
 def search(response):
     return render(response, "mainApp/search.html", {})
 
-def addListing(response):
-    return render(response, "mainApp/addListing.html", {})
+""" def addListing(response):
+    return render(response, "mainApp/addListing.html", {}) """
 
 def notifications(response):
     return render(response, "mainApp/notifications.html", {})

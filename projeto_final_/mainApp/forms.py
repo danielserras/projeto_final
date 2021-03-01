@@ -46,9 +46,10 @@ class PropertyForm(forms.ModelForm):
 
     property_type = forms.CharField(required=True, max_length=25)
     address = forms.CharField(required=True, max_length=100)
-    #nBedrooms = forms.IntegerField(required=True) 
-    #nBathrooms = forms.IntegerField(required=True)
-
+    bedrooms_num = forms.IntegerField(required=True) 
+    bathrooms_num = forms.IntegerField(required=True)
+    kitchens_num = forms.IntegerField(required=True)
+    livingrooms_num = forms.IntegerField(required=True)
     #booleans
     smoke = forms.BooleanField(required=False, initial=False)
     garden = forms.BooleanField(required=False, initial=False)
@@ -66,8 +67,13 @@ class PropertyForm(forms.ModelForm):
     class Meta:
         model = Property
         fields = [
+            'id',
             'property_type',
             'address',
+            'bedrooms_num',
+            'bathrooms_num',
+            'kitchens_num',
+            'livingrooms_num',
             'smoke',
             'garden',
             'garage',
@@ -80,6 +86,9 @@ class PropertyForm(forms.ModelForm):
             'overnight_visits',
             'cleaning_services',
             'floor_area']
+        widgets = {
+            'id': forms.HiddenInput()
+        }
 
 
 class BedroomForm(forms.ModelForm):
@@ -203,8 +212,8 @@ class LivingroomForm(forms.ModelForm):
     class Meta:
         model = Agreement
         fields = [
-            'startsDate',
-            'endDate'] """ #expandiu-se para dentro do agreement request
+            'startsDate',   
+            'endDate'] """ #expandiu-se para dentro do agreement request #yolo
 
 class Agreement_Request_Form(forms.ModelForm):
 

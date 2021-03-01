@@ -11,6 +11,18 @@ $(document).ready(function(){
     $("*[class*='pageListing-']").hide();
     $(".pageListing-"+pageListing).show();
 
+    $("#submitListing").click(function(){
+        $("#propertyForm").submit();
+        setTimeout(function(){
+            $("#bedroomForm").submit();
+            $("#bathroomForm").submit();
+            $("#kitchenForm").submit();
+            $("#listingForm").submit();
+            if(livingroomsNum > 0){
+                $("#livingroomForm").submit();
+            }
+        }, 1000);
+    })
     $("#nextPageListing").click(function(){
         $(".pageListing-"+pageListing).hide();
         pageListing ++;
