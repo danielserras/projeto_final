@@ -8,497 +8,111 @@
 {% endblock %}
 
 {% block content %}
-
-    <div class="container">
-        <form action="{% url 'addProperty' %}" method="POST" id="propertyForm">
-            {% csrf_token %}
-            <div class="row justify-content-md-center pageListing-1">
-               <div class="form-group col-sm-7">
-                    <label for="address"><h4>Morada</h4></label><br>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text bg-white border-info border-right-0 border-3 p-1">
-                                {% load static %}
-                                <img src='{% static "mainApp/images/map-pin.svg" %}' class='img-fluid' alt='Location pin'>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control border-left-0 pl-0 border-info border-3 rounded-right" name="address">
+<div class="container">
+    <form action="" method="POST">
+        <div class="row pageListing-7">
+            <div class="col-sm-12" id="pageListing-7">
+                <div class="row mt-2 mb-2 justify-content-md-center">
+                    <div class="col-sm-7">
+                        <h3>Outras informações</h3>
                     </div>
                 </div>
-            </div>
-
-            <div class="row justify-content-md-center pageListing-1">
-                <div class="form-group col-sm-7">
-                    <h4>O que pretende anunciar?</h4><br>
-                    <label for="" class="radio-inline">
-                        <input type="radio" name="property_type" class="" value="Home"> Casa
-                    </label> <br>
-                    <label for="" class="radio-inline">
-                        <input type="radio" name="property_type" class="" value="Studio"> Estúdio
-                    </label><br>
-                    <label for="" class="radio-inline">
-                        <input type="radio" name="property_type" class="" value="Apartatement"> Apartamento
-                    </label><br>
-                    <label for="" class="radio-inline">
-                        <input type="radio" name="property_type" class="" value="Bedroom"> Quarto
-                    </label><br>
-                </div>
-            </div>
-
-            <div class="row pageListing-1">
-                <div class="col-sm-12" id="pageListing-7">                
-                    <div class="row mt-2 mb-2 justify-content-md-center">
-                        <div class="col-sm-7">
-                            <h3>Regras</h3>
-                        </div>
-                    </div>
-
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-sm-7">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <input type="checkbox" name="pets" >
-                                    <label for="pets" class="d-inline">Animais de Estimação</label>
-                                </div>
-                                <div class="col-sm-3">
-                                    <input type="checkbox" name="smoke" >
-                                    <label for="smoke">Fumar</label>
-                                </div>
-                                <div class="col-sm-3">
-                                    <input type="checkbox" name="overnight_visits" >
-                                    <label for="overnight_visits" class="d-inline">Visitas podem pernoitar ocasionalmente</label>
-                                </div>
+                <div class="row justify-content-md-center mb-2">
+                    <div class="col-sm-7">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="title">Título:</label>
+                                <input type="text" name="title" >
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row mt-2 mb-2 justify-content-md-center">
-                        <div class="col-sm-7">
-                            <h3>Despesas Incluídas</h3>
-                        </div>
-                    </div>
-
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-sm-7">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <input type="checkbox" name="water" >
-                                    <label for="water">Água</label>
-                                </div>
-                                <div class="col-sm-3">
-                                    <input type="checkbox" name="eletricity" >
-                                    <label for="eletricity">Eletrecidade</label>
-                                </div>
-                                <div class="col-sm-3">
-                                    <input type="checkbox" name="internet" >
-                                    <label for="internet">Internet</label>
-                                </div>
-                                <div class="col-sm-3">
-                                    <input type="checkbox" name="gas" >
-                                    <label for="gas">Gás</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <input type="checkbox" name="cleaning_services" >
-                                    <label for="cleaning_services" class="d-inline">Serviços de Limpeza</label>
-                                </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="description">Descrição:</label>
+                                <textarea name="description"  rows="6" class="w-100"></textarea>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row mt-2 mb-2 justify-content-md-center">
-                        <div class="col-sm-7">
-                            <h3>Exterior</h3>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="availability_starts">Disponível de:</label>
+                                <input type="date" name="availability_starts" >
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="availability_ending">até:</label>
+                                <input type="date" name="availability_ending" >
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-sm-7">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <input type="checkbox" name="street_parking" >
-                                    <label for="street_parking">Estacionamento</label>
-                                </div>
-                                <div class="col-sm-3">
-                                    <input type="checkbox" name="garage" >
-                                    <label for="garage">Garagem</label>
-                                </div>
-                                <div class="col-sm-3">
-                                    <input type="checkbox" name="garden" >
-                                    <label for="garden">Jardim</label>
-                                </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="monthly_payment">Renda:</label>
+                                <input type="number" name="monthly_payment"  min="0">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="security_deposit">Caução:</label>
+                                <input type="number" name="security_deposit"  min="0">
+                            </div>
+                        </div>
+                        <div class="row">
+                            {% comment %} <div class="col-sm-6">
+                                <label for="cleaningServices">Frequência dos Serviçoes de limpeza:</label>
+                                <input type="text" name="cleaningServices" >
+                            </div> {% endcomment %}
+                            <div class="col-sm-6">
+                                <label for="max_capacity">Ocupação máxima:</label>
+                                <input type="number" name="max_capacity"  min="1">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="allowed_gender">Género Permitido</label>
+                                <select name="allowed_gender" >
+                                    <option value="Ambos">Ambos</option>
+                                    <option value="onlyWomens">Apenas Mulheres</option>
+                                    <option value="onlyMens">Apenas Homens</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
-    
-        <div class="row justify-content-md-center pageListing-2">
-            <div class="form-group col-sm-auto">
-                <br>
-                <label for="" class="">Número de Quartos</label><br>
-                <input type="number" name="bedroomsNum" id="bedroomsNum" min="1"> <br>
-                <label for="" class="">Número de Casas de Banho</label><br>
-                <input type="number" name="bathroomsNum" id="bathroomsNum" min="1"><br>
-                <label for="" class="">Número de Cozinhas</label><br>
-                <input type="number" name="kitchensNum" id="kitchensNum" min="1"><br>
-                <label for="" class="">Número de Salas</label><br>
-                <input type="number" name="livingroomsNum" id="livingroomsNum" min="0"> <br>
+                <div class="row mt-2 mb-2 justify-content-md-center">
+                    <div class="col-sm-7">
+                        <h3>Regras</h3>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center mb-2">
+                    <div class="col-sm-7">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <input type="checkbox" name="pets" >
+                                <label for="pets">Animais de Estimação</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="checkbox" name="smoke" >
+                                <label for="smoke">Fumar</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="checkbox" name="overnightVisits" >
+                                <label for="overnight_visits">Visitas podem pernoitar ocasionalmente</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="allowed_gender">Género Permitido</label>
+                                <select name="allowed_gender" >
+                                    <option value="Ambos">Ambos</option>
+                                    <option value="onlyWomens">Apenas Mulheres</option>
+                                    <option value="onlyMens">Apenas Homens</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <form method="POST" id="bedroomForm">
-            {% csrf_token %}
-            <div class="row pageListing-3">
-            {{bed_formset.management_form}}
-            
-                {% for form in bed_formset%}
-                <div class="col-sm-12 bedroomF" id="pageListing-3">
-                    <div class="row mt-2 mb-2 justify-content-md-center">
-                        <button class="btn bg-transparent col-sm-7 bedroomHideShow">Quarto 1</button>
-                    </div>
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-sm-7">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {{form.heater}}
-                                    <label for="{{ form.heater.id_for_label }}">Aquecedor</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.air_conditioning}}
-                                    <label for="{{ form.air_conditioning.id_for_label }}">Ar condicionado</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.be_chairs}}
-                                    <label for="{{ form.be_chairs.id_for_label }}">Cadeira</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {{form.ensuite_bathroom}}
-                                    <label for="{{ form.ensuite_bathroom.id_for_label }}">Casa de Banho Privada</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.chest_of_drawers}}
-                                    <label for="{{ form.chest_of_drawers.id_for_label }}">Cómoda</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.wardrobe}}
-                                    <label for="{{ form.wardrobe.id_for_label }}">Guarda Roupa</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {{form.be_window}}
-                                    <label for="{{ form.be_window.id_for_label }}">window</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.be_desk}}
-                                    <label for="{{ form.be_desk.id_for_label }}">Secretária</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.be_sofa}}
-                                    <label for="{{ form.be_sofa.id_for_label }}">Sofá</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {{form.be_sofa_bed}}
-                                    <label for="{{ form.be_sofa_bed.id_for_label }}">Sofá-Cama</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.tv}}
-                                    <label for="{{ form.tv.id_for_label }}">Tv</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.be_balcony}}
-                                    <label for="{{ form.be_balcony.id_for_label }}">Varanda</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <label for="{{ form.num_double_beds.id_for_label }}">Camas de Casal</label>
-                                    {{form.num_double_beds}}
-                                </div>
-                                <div class="col-sm-4">
-                                    <label for="{{ form.num_single_beds.id_for_label }}">Camas de Solteiro</label>
-                                    {{form.num_single_beds}}
-                                </div>
-                                <div class="col-sm-4">
-                                    <label for="{{ form.max_occupacity.id_for_label }}">Ocupação máxima</label>
-                                    {{form.max_occupacity}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </form>
-
-        <form method="POST" id="bathroomForm">
-            {% csrf_token %}
-            {{bath_formset.management_form}}
-            <div class="row pageListing-4">
-                {% for form in bath_formset%}
-                <div class="col-sm-12 bathroomF" id="pageListing-4">
-                    <div class="row mt-2 mb-2 justify-content-md-center">
-                        <button class="btn bg-transparent col-sm-7 bedroomHideShow">Casa de Banho 1</button>
-                    </div>
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-sm-7">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {{form.bathtub}}
-                                    <label for="{{ form.bathtub.id_for_label }}">Banheira</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.bidet}}
-                                    <label for="{{ form.bidet.id_for_label }}">Bidé</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.shower}}
-                                    <label for="{{ form.shower.id_for_label }}">Chuveiro</label>
-                                </div>
-                                
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {{form.b_window}}
-                                    <label for="{{ form.b_window.id_for_label }}">Janela</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.sink}}
-                                    <label for="{{ form.sink.id_for_label }}">Lavatório</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.toilet}}
-                                    <label for="{{ form.toilet.id_for_label }}">Sanita</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </form>
-
-        <form method="POST" id="kitchenForm">
-            {% csrf_token %}
-            {{kitchen_formset.management_form}}
-            <div class="row pageListing-5">
-                {% for form in kitchen_formset %}
-                <div class="col-sm-12 kitchenF" id="pageListing-5">
-                    <div class="row mt-2 mb-2 justify-content-md-center">
-                        <button class="btn bg-transparent col-sm-7 bedroomHideShow">Cozinha 1</button>
-                    </div>
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-sm-7">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {{form.k_chairs}}
-                                    <label for="{{ form.k_chairs.id_for_label }}">Cadeiras</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.freezer}}
-                                    <label for="{{ form.freezer.id_for_label }}">Congelador</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.cooker}}
-                                    <label for="{{ form.cooker.id_for_label }}">Fogão</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {{form.oven}}
-                                    <label for="{{ form.oven.id_for_label }}">Forno</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.fridge}}
-                                    <label for="{{ form.fridge.id_for_label }}">Frigorífico</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.k_window}}
-                                    <label for="{{ form.k_window.id_for_label }}">Janela</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {{form.dishwasher_machine}}
-                                    <label for="{{ form.dishwasher_machine.id_for_label }}">Máquina de Lavar Loiça</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.laundering_machine}}
-                                    <label for="{{ form.laundering_machine.id_for_label }}">Máquina de Lavar Roupa</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.dryer}}
-                                    <label for="{{ form.dryer.id_for_label }}">Máquina de Secar Roupa</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {{form.k_table}}
-                                    <label for="{{ form.k_table.id_for_label }}">Mesa</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.microwave}}
-                                    <label for="{{ form.microwaves.id_for_label }}">Microondas</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.dish_washer}}
-                                    <label for="{{ form.dish_washer.id_for_label }}">Lava Loiças</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {{form.pans_pots}}
-                                    <label for="{{ form.pans_pots.id_for_label }}">Panelas e Frigideiras</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.dishes_cutlery}}
-                                    <label for="{{ form.dishes_cutlery.id_for_label }}">Pratos e Talheres</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.k_balcony}}
-                                    <label for="{{ form.k_balcony.id_for_label }}">Varanda</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </form>
-
-        <form action="" method="POST" id="livingroomForm">
-            {% csrf_token %}
-            {{live_formset.management_form}}
-            <div class="row pageListing-6">
-                {% for form in live_formset%}
-                <div class="col-sm-12 livingroomF" id="pageListing-6">
-                    <div class="row mt-2 mb-2 justify-content-md-center">
-                        <button class="btn bg-transparent col-sm-7 bedroomHideShow">Sala 1</button>
-                    </div>
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-sm-7">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {{form.l_chairs}}
-                                    <label for="{{ form.l_chairs.id_for_label }}">Cadeiras</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.l_window}}
-                                    <label for="{{ form.l_window.id_for_label }}">Janela</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.l_table}}
-                                    <label for="{{ form.l_table.id_for_label }}">Mesa</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {{form.l_sofa}}
-                                    <label for="{{ form.l_sofa.id_for_label }}">Sofá</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.l_sofa_bed}}
-                                    <label for="{{ form.l_sofa_bed.id_for_label }}">Sofá-cama</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    {{form.l_desk}}
-                                    <label for="{{ form.l_desk.id_for_label }}">Secretária</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    {{form.l_balcony}}
-                                    <label for="{{ form.l_balcony.id_for_label }}">Varanda</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </form>
-
-        <form action="{% url 'addProperty' %}" method="POST" id="listingForm">
-            {% csrf_token %}
-            <div class="row pageListing-7">
-                <div class="col-sm-12" id="pageListing-7">
-                    <div class="row mt-2 mb-2 justify-content-md-center">
-                        <div class="col-sm-7">
-                            <h3>Outras informações</h3>
-                        </div>
-                    </div>
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-sm-7">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <label for="title">Título:</label>
-                                    <input type="text" name="title" >
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <label for="description">Descrição:</label>
-                                    <textarea name="description"  rows="6" class="w-100"></textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <label for="availability_starts">Disponível de:</label>
-                                    <input type="date" name="availability_starts" >
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="availability_ending">até:</label>
-                                    <input type="date" name="availability_ending" >
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <label for="monthly_payment">Renda:</label>
-                                    <input type="number" name="monthly_payment"  min="0">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="security_deposit">Caução:</label>
-                                    <input type="number" name="security_deposit"  min="0">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <label for="max_capacity">Ocupação máxima:</label>
-                                    <input type="number" name="max_capacity"  min="1">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <label for="allowed_gender">Género Permitido</label>
-                                    <select name="allowed_gender" >
-                                        <option value="Ambos">Ambos</option>
-                                        <option value="onlyWomens">Apenas Mulheres</option>
-                                        <option value="onlyMens">Apenas Homens</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
         <div class="row justify-content-md-center text-center">
             <div class="col-sm-auto">
-                <button type="button" id="backPageListing" class="btn btn-info">Anterior</button>
-            </div>
-            <div class="col-sm-auto">
-                <button type="button" class="btn btn-secondary" id="nextPageListing">Seguinte</button>
-            </div>
-            <div class="col-sm-auto">
-                <button type="button" class="btn btn-secondary" id="submitListing">Terminar</button>
+                <button type="submit" class="btn btn-secondary" >Seguinte</button>
             </div>
         </div>
-    </div>
+    </form>
+</div>  
 {% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'mainApp/base.html' %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/addListing.css" %}'>
+{% endblock %}
+{% block scripts%}
+    <script src='{% static "mainApp/js/addListing.js" %}'></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form action="" method="POST">
+        {{bath_formset.management_form}}
+        <div class="row pageListing-4">
+            {% for form in bath_formset%}
+            <div class="col-sm-12 bathroomF" id="pageListing-4">
+                <div class="row mt-2 mb-2 justify-content-md-center">
+                    <button class="btn bg-transparent col-sm-7 bedroomHideShow">Casa de Banho 1</button>
+                </div>
+                <div class="row justify-content-md-center mb-2">
+                    <div class="col-sm-7">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                {{form.bathtub}}
+                                <label for="{{ form.bathtub.id_for_label }}">Banheira</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{form.bidet}}
+                                <label for="{{ form.bidet.id_for_label }}">Bidé</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{form.shower}}
+                                <label for="{{ form.shower.id_for_label }}">Chuveiro</label>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                {{form.b_window}}
+                                <label for="{{ form.b_window.id_for_label }}">Janela</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{form.sink}}
+                                <label for="{{ form.sink.id_for_label }}">Lavatório</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{form.toilet}}
+                                <label for="{{ form.toilet.id_for_label }}">Sanita</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row justify-content-md-center text-center">
+            <div class="col-sm-auto">
+                <button type="submit" class="btn btn-secondary" >Seguinte</button>
+            </div>
+        </div>
+    </form>
+</div>   
+{% endblock %}
