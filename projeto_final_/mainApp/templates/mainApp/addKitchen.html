@@ -1,0 +1,104 @@
+{% extends 'mainApp/base.html' %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/addListing.css" %}'>
+{% endblock %}
+{% block scripts%}
+    <script src='{% static "mainApp/js/addListing.js" %}'></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form action="" method="POST">
+        {{kitchen_formset.management_form}}
+        <div class="row pageListing-5">
+            {% for form in kitchen_formset %}
+            <div class="col-sm-12 kitchenF" id="pageListing-5">
+                <div class="row mt-2 mb-2 justify-content-md-center">
+                    <button class="btn bg-transparent col-sm-7 bedroomHideShow">Cozinha 1</button>
+                </div>
+                <div class="row justify-content-md-center mb-2">
+                    <div class="col-sm-7">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                {{form.k_chairs}}
+                                <label for="{{ form.k_chairs.id_for_label }}">Cadeiras</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{form.freezer}}
+                                <label for="{{ form.freezer.id_for_label }}">Congelador</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{form.cooker}}
+                                <label for="{{ form.cooker.id_for_label }}">Fogão</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                {{form.oven}}
+                                <label for="{{ form.oven.id_for_label }}">Forno</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{form.fridge}}
+                                <label for="{{ form.fridge.id_for_label }}">Frigorífico</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{form.k_window}}
+                                <label for="{{ form.k_window.id_for_label }}">Janela</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                {{form.dishwasher_machine}}
+                                <label for="{{ form.dishwasher_machine.id_for_label }}">Máquina de Lavar Loiça</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{form.laundering_machine}}
+                                <label for="{{ form.laundering_machine.id_for_label }}">Máquina de Lavar Roupa</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{form.dryer}}
+                                <label for="{{ form.dryer.id_for_label }}">Máquina de Secar Roupa</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                {{form.k_table}}
+                                <label for="{{ form.k_table.id_for_label }}">Mesa</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{form.microwave}}
+                                <label for="{{ form.microwaves.id_for_label }}">Microondas</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{form.dish_washer}}
+                                <label for="{{ form.dish_washer.id_for_label }}">Lava Loiças</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                {{form.pans_pots}}
+                                <label for="{{ form.pans_pots.id_for_label }}">Panelas e Frigideiras</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{form.dishes_cutlery}}
+                                <label for="{{ form.dishes_cutlery.id_for_label }}">Pratos e Talheres</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{form.k_balcony}}
+                                <label for="{{ form.k_balcony.id_for_label }}">Varanda</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row justify-content-md-center text-center">
+            <div class="col-sm-auto">
+                <button type="submit" class="btn btn-secondary" >Seguinte</button>
+            </div>
+        </div>
+    </form>
+</div>   
+{% endblock %}
