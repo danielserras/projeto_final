@@ -99,8 +99,8 @@ def introduce_property_view (request):
                             smoke = f.cleaned_data.get('smoke')
                         )
                         prop_object.save()
-                        bed_formset = BedroomFormSet(queryset=Bedroom.objects.none(), initial=[{'prop_id': str(prop_object.id),}])
-                        print(prop_object.id)
+                        bed_formset = BedroomFormSet(queryset=Bedroom.objects.none(), initial=[{'prop_id': prop_object.id,}])
+
                         bed_formset.extra = int(f.cleaned_data.get('bedrooms_num'))
                         context = {'property_form': prop_form, 'bed_formset': bed_formset}
                         return render(
@@ -174,9 +174,9 @@ def introduce_property_view (request):
                 elif f == bed_form:
                     print('entrou-----------------------------------')
                     for sub_form in f:
-                        print(sub_form)
+                        print(sub_form.initial)
                         bed_obj = Bedroom(
-                            associated_property = Property.objects.get(id=int(sub_form.cleaned_data.get('prop_id'))),
+                            associated_property = Property.objects.get(id=sub_form.cleaned_data['prop_id']),
                             be_chairs = sub_form.cleaned_data.get('be_chairs'),
                             be_sofa = sub_form.cleaned_data.get('be_sofa'),
                             be_sofa_bed = sub_form.cleaned_data.get('be_sofa_bed'),
