@@ -38,19 +38,19 @@
                 <div class="col-md-2 my-auto">
                     <div class="row justify-content-center">
                         <img src='{% static "mainApp/images/user_listing_icon.svg" %}' width="28px" class='img-fluid' alt='Maximum number of tenants'>
-                        <p class="my-auto font-weight-bold">{{listing.max_capacity}} pessoas</p>
+                        <p class="my-auto font-weight-bold">{{listing.max_capacity}}  {% if listing.max_capacity > 1 %} pessoas {% else %} pessoa {% endif %} </p>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="row justify-content-center">
                         <img src='{% static "mainApp/images/bed.svg" %}' width="38px" class='img-fluid' alt='Number of beds'>
-                        <p class="my-auto font-weight-bold">{{num_beds}} camas</p>
+                        <p class="my-auto font-weight-bold">{{num_beds}}  {% if num_beds > 1 %} camas {% else %} cama {% endif %}</p>
                     </div>
                 </div>
                 <div class="col-md-3 my-auto">
                     <div class="row justify-content-center">
                         <img src='{% static "mainApp/images/shower.svg" %}' width="24px" class='img-fluid' alt='Number of bathrooms'>
-                        <p class="my-auto font-weight-bold">{{bathrooms|length}} casas-de-banho</p>
+                        <p class="my-auto font-weight-bold">{{bathrooms|length}} {% if bathrooms|length > 1 %} casas-de-banho {% else %} casa-de-banho {% endif %} </p>
                     </div>
                 </div>
                 <div class="col-md-1 my-auto">
@@ -144,6 +144,24 @@
                 </div>
                 <div class="row mb-3">
                     {% get_checkmark bathroom.bidet "Bidé" %} {% get_checkmark bathroom.b_window "Janela" %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {%endfor%} {%for livingroom in livingrooms%}
+    <div id='livingroom'>
+        <div class="row">
+            <div class="row p-1 ml-4">
+                <h3 class="text-primary font-weight-bold">Sala de estar {% if livingrooms|length > 1 %} {{forloop.counter}} {% endif %}</h3>
+            </div>
+        </div>
+        <div class="row pl-5 ml-5">
+            <div class="col-sm-10">
+                <div class="row mb-3">
+                    {% get_checkmark livingroom.l_chairs "Cadeiras" %} {% get_checkmark livingroom.l_sofa "Sofá" %} {% get_checkmark livingroom.l_sofa_bed "Sofá-cama" %} {% get_checkmark livingroom.l_window "Janela" %}
+                </div>
+                <div class="row mb-3">
+                    {% get_checkmark livingroom.l_table "Mesa" %} {% get_checkmark livingroom.l_balcony "Varanda" %} {% get_checkmark livingroom.l_desk "Secretária" %}
                 </div>
             </div>
         </div>

@@ -380,6 +380,7 @@ def listing(response, listing_id):
         "property": parent_property,
         "kitchens": kitchens,
         "numDetails": num_details,
+        "livingrooms": livingrooms,
     }
     return render(response, "mainApp/listingPage.html", context)
 

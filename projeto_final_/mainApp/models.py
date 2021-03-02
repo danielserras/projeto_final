@@ -5,7 +5,7 @@ from django.dispatch import receiver
 
 def get_upload_path(instance, filename):
     path = instance.album.ListingAlbum.id
-    return f'{path}/{filename}'
+    return f'mainApp/static/mainApp/listings/{path}/{filename}'
 
 
 class App_user(models.Model):
