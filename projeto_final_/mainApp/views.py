@@ -320,6 +320,16 @@ def send_request(request):
 def profile(response):
     return render(response, "mainApp/profile.html", {})
 
+def notifications2(response):
+    return render(response, "mainApp/notifications2.html", {})
+
+def notifications3(response):
+    return render(response, "mainApp/notifications3.html", {})
+
+
+def intent(response):
+    return render(response, "mainApp/intent.html", {})
+
 def search(response):
     return render(response, "mainApp/search.html", {})
 
