@@ -1,4 +1,6 @@
 {% extends 'mainApp/base.html' %} {% load static %} {% block styles %}
+{% load app_extras %}
+
 <link rel="stylesheet" href='{% static "mainApp/css/listingPage.css" %}'> {% endblock %} {% block scripts%} {% endblock %} {% block content %}
 <div class="container">
     <div class="row justify-content-md-center m-5" id="a">
@@ -84,53 +86,70 @@
             <h2 class="text-secondary font-weight-bold">Detalhes (25)</h2>
         </div>
     </div>
+    {%for room in bedrooms%}
     <div id='bedroom'>
         <div class="row">
             <div class="row p-1 ml-4">
-                <h3 class="text-primary font-weight-bold">Quarto</h3>
+                <h3 class="text-primary font-weight-bold">Quarto
+                    {% if bedrooms|length > 1 %} 
+                        {{forloop.counter}}
+                    {% endif %} </h3>
             </div>
         </div>
         <div class="row pl-5 ml-5">
             <div class="col-sm-10">
                 <div class="row mb-3">
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Cama
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Cómoda
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Armário
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Secretária
-                    </div>
+                    {% get_checkmark room.be_window "Cama" %}
+                    {% get_checkmark room.chest_of_drawers "Cómoda" %}
+                    {% get_checkmark room.wardrobe "Armário" %}
+                    {% get_checkmark room.be_desk "Secretária" %}
                 </div>
                 <div class="row mb-3">
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Cadeira
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Sofá
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Televisão
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Fechadura
-                    </div>
+                    {% get_checkmark room.be_chairs "Cadeira" %}
+                    {% get_checkmark room.be_sofa "Sofá" %}
+                    {% get_checkmark room.tv "Televisão" %}
+                    {% get_checkmark room.be_sofa_bed "Sofá Cama" %}
                 </div>
                 <div class="row mb-3">
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Janela
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Varanda
-                    </div>
+                    {% get_checkmark room.be_window "Janela" %}
+                    {% get_checkmark room.be_balcony "Varanda" %}
                 </div>
             </div>
         </div>
     </div>
+    {%endfor%}
+    {%for kitchen in kitchens%}
+    <div id='kitchen'>
+        <div class="row">
+            <div class="row p-1 ml-4">
+                <h3 class="text-primary font-weight-bold">Cozinha
+                {% if kitchens|length > 1 %} 
+                    {{forloop.counter}}
+                {% endif %}</h3>
+            </div>
+        </div>
+        <div class="row pl-5 ml-5">
+            <div class="col-sm-10">
+                <div class="row mb-3">
+                    {% get_checkmark kitchen.cooker "Fogão" %}
+                    {% get_checkmark kitchen.oven "Forno" %}
+                    {% get_checkmark kitchen.microwave "Microondas" %}
+                    {% get_checkmark kitchen.dish_washer "Máquina de lavar loiça" %}
+                </div>
+                <div class="row mb-3">
+                    {% get_checkmark room.fridge "Frigorífico" %}
+                    {% get_checkmark room.freezer "Congelador" %}
+                    {% get_checkmark room.k_window "Janela" %}
+                    {% get_checkmark room.k_balcony "Varanda" %}
+                </div>
+                <div class="row mb-3">
+                    {% get_checkmark room.be_window "Janela" %}
+                    {% get_checkmark room.be_balcony "Varanda" %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {%endfor%}
     <div id='kitchen'>
         <div class="row">
             <div class="row p-1 ml-4">
@@ -179,9 +198,6 @@
                     </div>
                     <div class="col-sm-3 room-detail-item">
                         <i class="fa fa-times text-primary" aria-hidden="no"></i> Máquina de Secar Roupa
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Máquina de Lavar-Louça
                     </div>
                 </div>
             </div>

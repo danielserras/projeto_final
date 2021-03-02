@@ -349,6 +349,7 @@ def listing(response, listing_id):
         num_beds += (bedroom.num_double_beds + bedroom.num_single_beds)
     
     bathrooms = list(Bathroom.objects.filter(associated_property = parent_property))
+    kitchens = list(Kitchen.objects.filter(associated_property = parent_property))
     landlord = parent_property.landlord
     landlord_user = landlord.lord_user.user
     context  = {
@@ -358,6 +359,7 @@ def listing(response, listing_id):
         "num_beds": num_beds,
         "bathrooms": bathrooms,
         "property": parent_property,
+        "kitchens": kitchens,
     }
     print(listing)
     return render(response, "mainApp/listingPage.html", context)

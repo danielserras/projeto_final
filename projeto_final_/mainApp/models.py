@@ -67,9 +67,7 @@ class Bathroom(models.Model):
     bathtub = models.BooleanField()
     bidet = models.BooleanField()
 
-
 class Bedroom(models.Model):
-<<<<<<< HEAD
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE, related_name="bedroom")
     be_chairs = models.BooleanField()
     be_sofa = models.BooleanField()
@@ -104,47 +102,10 @@ class Kitchen(models.Model):
     k_chairs = models.BooleanField()
     microwave = models.BooleanField()
     k_balcony = models.BooleanField()
-=======
-    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
-    be_chairs = models.BooleanField(default=False)
-    be_sofa = models.BooleanField(default=False)
-    be_sofa_bed = models.BooleanField(default=False)
-    be_window = models.BooleanField(default=False)
-    num_single_beds = models.IntegerField(default=False)
-    num_double_beds = models.IntegerField(default=False)
-    max_occupacity = models.IntegerField(default=False)
-    be_balcony = models.BooleanField(default=False)
-    wardrobe = models.BooleanField(default=False)
-    be_desk = models.BooleanField(default=False)
-    chest_of_drawers = models.BooleanField(default=False)
-    tv = models.BooleanField(default=False)
-    heater = models.BooleanField(default=False)
-    air_conditioning = models.BooleanField(default=False)
-    ensuite_bathroom = models.BooleanField(default=False)
-
-class Kitchen(models.Model):
-    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
-    dish_washer = models.BooleanField(default=False)
-    k_window = models.BooleanField(default=False)
-    fridge = models.BooleanField(default=False)
-    freezer = models.BooleanField(default=False)
-    cooker = models.BooleanField(default=False)
-    dishes_cutlery = models.BooleanField(default=False)
-    pans_pots = models.BooleanField(default=False)
-    dishwasher_machine = models.BooleanField(default=False)
-    dryer = models.BooleanField(default=False) 
-    oven = models.BooleanField(default=False)
-    k_table = models.BooleanField(default=False)
-    laundering_machine = models.BooleanField(default=False)
-    k_chairs = models.BooleanField(default=False)
-    microwave = models.BooleanField(default=False)
-    k_balcony = models.BooleanField(default=False)
->>>>>>> 1f36b4a64426db5069b8cd891168b9b3ff0b4d11
 
 
 
 class Livingroom(models.Model):
-<<<<<<< HEAD
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE, related_name="livingroom")
     l_chairs = models.BooleanField()
     l_sofa = models.BooleanField()
@@ -153,16 +114,6 @@ class Livingroom(models.Model):
     l_table = models.BooleanField()
     l_balcony = models.BooleanField()
     l_desk = models.BooleanField()
-=======
-    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
-    l_chairs = models.BooleanField(default=False)
-    l_sofa = models.BooleanField(default=False)
-    l_sofa_bed = models.BooleanField(default=False)
-    l_window = models.BooleanField(default=False)
-    l_table = models.BooleanField(default=False)
-    l_balcony = models.BooleanField(default=False)
-    l_desk = models.BooleanField(default=False)
->>>>>>> 1f36b4a64426db5069b8cd891168b9b3ff0b4d11
 
 class Listing(models.Model):
     allowed_gender = models.CharField(max_length=20)
