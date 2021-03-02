@@ -16,5 +16,8 @@ urlpatterns = [
     path('search', views.search, name='search'),
     path('', views.index, name='index'),
     path('notifications', views.notifications, name='notifications'),
+    path('notifications2', views.notifications2, name='notifications2'),
+    path('notifications3', views.notifications3, name='notifications3'),
+    path('intent', views.intent, name='intent'),
     path('listing/<int:listing_id>', views.listing, name='listing')
 ]

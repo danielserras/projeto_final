@@ -1,4 +1,5 @@
-{% extends 'mainApp/base.html' %} {% load static %} {% block styles %}
+{% extends 'mainApp/base.html' %} {% load static %} {% block styles %} {% load app_extras %}
+
 <link rel="stylesheet" href='{% static "mainApp/css/listingPage.css" %}'> {% endblock %} {% block scripts%} {% endblock %} {% block content %}
 <div class="container">
     <div class="row justify-content-md-center m-5" id="a">
@@ -31,48 +32,47 @@
     <div class="row">
         <div class="col-sm-8">
             <div class="row p-1">
-                <h2 class="text-secondary font-weight-bold">Apartamento no Areeiro</h2>
+                <h2 class="text-secondary font-weight-bold">{{listing.title}}</h2>
             </div>
             <div class="row ml-2">
                 <div class="col-md-2 my-auto">
                     <div class="row justify-content-center">
                         <img src='{% static "mainApp/images/user_listing_icon.svg" %}' width="28px" class='img-fluid' alt='Maximum number of tenants'>
-                        <p class="my-auto font-weight-bold">4 pessoas</p>
+                        <p class="my-auto font-weight-bold">{{listing.max_capacity}} pessoas</p>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="row justify-content-center">
                         <img src='{% static "mainApp/images/bed.svg" %}' width="38px" class='img-fluid' alt='Number of beds'>
-                        <p class="my-auto font-weight-bold">2 camas</p>
+                        <p class="my-auto font-weight-bold">{{num_beds}} camas</p>
                     </div>
                 </div>
                 <div class="col-md-3 my-auto">
                     <div class="row justify-content-center">
                         <img src='{% static "mainApp/images/shower.svg" %}' width="24px" class='img-fluid' alt='Number of bathrooms'>
-                        <p class="my-auto font-weight-bold">2 casas-de-banho</p>
+                        <p class="my-auto font-weight-bold">{{bathrooms|length}} casas-de-banho</p>
                     </div>
                 </div>
                 <div class="col-md-1 my-auto">
                     <div class="row justify-content-center">
-                        <p class="my-auto font-weight-bold">42</p>
+                        <p class="my-auto font-weight-bold">{{property.floor_area}}</p>
                         <span class="text-primary font-weight-bold text-size-24 mb-1">&#13217;</span>
                     </div>
                 </div>
             </div>
             <div class="row ml-2 mr-2">
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Arcu mauris etiam dignissim scelerisque tincidunt eget adipiscing in duis. Neque, enim a vel dictum in ac nibh. Arcu, euismod tincidunt lectus donec convallis. Euismod commodo enim, mattis netus
-                    velit, at vel risus.
+                    {{listing.description}}
                 </p>
             </div>
         </div>
         <div class="col-sm-3 bg-secondary rounded-10 m-4">
             <div class="row justify-content-center mt-3">
-                <p class="text-white text-size-40 font-weight-bold">450€</p>
+                <p class="text-white text-size-40 font-weight-bold">{{listing.monthly_payment}}€</p>
                 <p class="text-white my-auto h-100">/mês</p>
             </div>
             <div class="row justify-content-center">
-                <p class="text-white my-auto mr-2">Nome</p>
+                <p class="text-white my-auto mr-2">{{landlord_user.first_name}} {{landlord_user.last_name}}</p>
                 <img src='{% static "mainApp/images/user.svg" %}' width='13%'>
             </div>
             <div class="row justify-content-center">
@@ -85,142 +85,70 @@
             <h2 class="text-secondary font-weight-bold">Detalhes (25)</h2>
         </div>
     </div>
+    {%for room in bedrooms%}
     <div id='bedroom'>
         <div class="row">
             <div class="row p-1 ml-4">
-                <h3 class="text-primary font-weight-bold">Quarto</h3>
+                <h3 class="text-primary font-weight-bold">Quarto {% if bedrooms|length > 1 %} {{forloop.counter}} {% endif %} </h3>
             </div>
         </div>
         <div class="row pl-5 ml-5">
             <div class="col-sm-10">
                 <div class="row mb-3">
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Cama
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Cómoda
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Armário
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Secretária
-                    </div>
+                    {% get_checkmark room.be_window "Cama" %} {% get_checkmark room.chest_of_drawers "Cómoda" %} {% get_checkmark room.wardrobe "Armário" %} {% get_checkmark room.be_desk "Secretária" %}
                 </div>
                 <div class="row mb-3">
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Cadeira
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Sofá
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Televisão
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Fechadura
-                    </div>
+                    {% get_checkmark room.be_chairs "Cadeira" %} {% get_checkmark room.be_sofa "Sofá" %} {% get_checkmark room.tv "Televisão" %} {% get_checkmark room.be_sofa_bed "Sofá Cama" %}
                 </div>
                 <div class="row mb-3">
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Janela
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Varanda
-                    </div>
+                    {% get_checkmark room.heater "Aquecedor" %} {% get_checkmark room.air_conditioning "Ar Condicionado" %} {% get_checkmark room.be_window "Janela" %} {% get_checkmark room.be_balcony "Varanda" %}
                 </div>
             </div>
         </div>
     </div>
+    {%endfor%} {%for kitchen in kitchens%}
     <div id='kitchen'>
         <div class="row">
             <div class="row p-1 ml-4">
-                <h3 class="text-primary font-weight-bold">Cozinha</h3>
+                <h3 class="text-primary font-weight-bold">Cozinha {% if kitchens|length > 1 %} {{forloop.counter}} {% endif %}</h3>
             </div>
         </div>
         <div class="row pl-5 ml-5">
             <div class="col-sm-10">
                 <div class="row mb-3">
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Fogão
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Forno
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Microondas
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Lava-louças
-                    </div>
+                    {% get_checkmark kitchen.cooker "Fogão" %} {% get_checkmark kitchen.oven "Forno" %} {% get_checkmark kitchen.microwave "Microondas" %} {% get_checkmark kitchen.fridge "Frigorífico" %}
                 </div>
                 <div class="row mb-3">
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Frigorífico
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Congelador
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Janela
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Varanda
-                    </div>
+                    {% get_checkmark kitchen.freezer "Congelador" %} {% get_checkmark kitchen.k_table "Mesa" %} {% get_checkmark kitchen.k_chairs "Cadeiras" %} {% get_checkmark kitchen.k_balcony "Lava Louças" %}
                 </div>
                 <div class="row mb-3">
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Mesa
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Cadeiras
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Máquina de Lavar Roupa
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Máquina de Secar Roupa
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Máquina de Lavar-Louça
-                    </div>
+                    {% get_checkmark kitchen.k_balcony "Varanda" %} {% get_checkmark kitchen.k_window "Janela" %} {% get_checkmark kitchen.dishes_cutlery "Pratos e Talheres" %} {% get_checkmark kitchen.pans_pots "Tachos e Panelas" %}
+                </div>
+                <div class="row mb-3">
+                    {% get_checkmark kitchen.dishwasher_machine "Máquina de Lavar Loiça" %} {% get_checkmark kitchen.laundering_machine "Máquina de Lavar Roupa" %} {% get_checkmark kitchen.dryer "Máquina de Secar Roupa"%}
                 </div>
             </div>
         </div>
     </div>
+    {%endfor%} {%for bathroom in bathrooms%}
     <div id='bathroom'>
         <div class="row">
             <div class="row p-1 ml-4">
-                <h3 class="text-primary font-weight-bold">Casa de Banho</h3>
+                <h3 class="text-primary font-weight-bold">Casa de Banho {% if bathrooms|length > 1 %} {{forloop.counter}} {% endif %}</h3>
             </div>
         </div>
         <div class="row pl-5 ml-5">
             <div class="col-sm-10">
                 <div class="row mb-3">
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Chuveiro
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Banheira
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Lavatório
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Janela
-                    </div>
+                    {% get_checkmark bathroom.toilet "Sanita" %} {% get_checkmark bathroom.sink "Lavatório" %} {% get_checkmark bathroom.shower "Chuveiro" %} {% get_checkmark bathroom.bathtub "Banheira" %}
                 </div>
                 <div class="row mb-3">
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Bidé
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Sanita
-                    </div>
+                    {% get_checkmark bathroom.bidet "Bidé" %} {% get_checkmark bathroom.b_window "Janela" %}
                 </div>
             </div>
         </div>
     </div>
+    {%endfor%}
     <div id='outside'>
         <div class="row">
             <div class="row p-1 ml-4">
@@ -230,15 +158,7 @@
         <div class="row pl-5 ml-5">
             <div class="col-sm-10">
                 <div class="row mb-3">
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Jardim
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Garagem
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Estacionamento na rua
-                    </div>
+                    {% get_checkmark property.garden "Jardim" %} {% get_checkmark property.garage "Garagem" %} {% get_checkmark property.street_parking "Estacionamento na rua" %}
                 </div>
             </div>
         </div>
@@ -252,18 +172,10 @@
         <div class="row pl-5 ml-5">
             <div class="col-sm-10">
                 <div class="row mb-3">
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Internet
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Água
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Eletricidade
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Gás
-                    </div>
+                    {% get_checkmark property.internet "Internet" %} {% get_checkmark property.water "Água" %} {% get_checkmark property.electricity "Eletricidade" %} {% get_checkmark property.gas "Gás" %}
+                </div>
+                <div class="row mb-3">
+                    {% get_checkmark property.cleaning_services "Serviço de Limpeza" %}
                 </div>
             </div>
         </div>
@@ -277,18 +189,7 @@
         <div class="row pl-5 ml-5">
             <div class="col-sm-10">
                 <div class="row mb-3">
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-check text-green" aria-hidden="yes"></i> Fumar
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Animais de estimação
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Prenoita de visitas ocasionalmente
-                    </div>
-                    <div class="col-sm-3 room-detail-item">
-                        <i class="fa fa-times text-primary" aria-hidden="no"></i> Caução
-                    </div>
+                    {% get_checkmark property.smoke "Fumar" %} {% get_checkmark property.pets "Animais de estimação" %} {% get_checkmark property.overnight_visits "Prenoita de visitas ocasionalmente" %} {% get_checkmark listing.security_deposit "Caução" %}
                 </div>
             </div>
         </div>
