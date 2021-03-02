@@ -331,5 +331,33 @@ def notifications(response):
 
 def listing(response, listing_id):
     listing = Listing.objects.get(pk=listing_id)
+    listing_type = listing.listing_type
+    bedrooms = []
+    if listing_type == "Bedroom":
+        associated_object = listing.r_main.associated_room #associated object is a Bedroom
+        parent_property = associated_object.associated_property
+        bedrooms.append(associated_object)
+
+    else:
+        associated_object = listing.p_main.associated_property #associated object is a property
+        parent_property = associated_object
+
+        bedrooms = list(Bedroom.objects.filter(associated_property = parent_property))
+        
+    num_beds = 0
+    for bedroom in bedrooms:
+        num_beds += (bedroom.num_double_beds + bedroom.num_single_beds)
+    
+    bathrooms = list(Bathroom.objects.filter(associated_property = parent_property))
+    landlord = parent_property.landlord
+    landlord_user = landlord.lord_user.user
+    context  = {
+        "listing" : listing,
+        "landlord_user" : landlord_user,
+        "bedrooms" : bedrooms,
+        "num_beds": num_beds,
+        "bathrooms": bathrooms,
+        "property": parent_property,
+    }
     print(listing)
-    return render(response, "mainApp/listingPage.html", {})
+    return render(response, "mainApp/listingPage.html", context)
