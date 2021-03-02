@@ -19,7 +19,8 @@ class ProfileForm(forms.ModelForm):
         fields = ['phoneNumber', 'birthDate',]
 
 class ListingForm(forms.ModelForm):
-    
+
+    property_type = forms.CharField(required=True, max_length=25)
     allowed_gender = forms.CharField(required=True, max_length=25)
     monthly_payment = forms.IntegerField(required=True)
     availability_starts = forms.DateField()
@@ -32,6 +33,7 @@ class ListingForm(forms.ModelForm):
     class Meta:
         model = Bedroom
         fields = [
+            'property_type',
             'allowed_gender',
             'monthly_payment',
             'availability_starts',
@@ -44,7 +46,6 @@ class ListingForm(forms.ModelForm):
 
 class PropertyForm(forms.ModelForm):
 
-    property_type = forms.CharField(required=True, max_length=25)
     address = forms.CharField(required=True, max_length=100)
     bedrooms_num = forms.IntegerField(required=True) 
     bathrooms_num = forms.IntegerField(required=True)
@@ -67,7 +68,6 @@ class PropertyForm(forms.ModelForm):
     class Meta:
         model = Property
         fields = [
-            'property_type',
             'address',
             'smoke',
             'garden',

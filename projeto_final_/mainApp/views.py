@@ -63,7 +63,7 @@ def introduce_property_view (request):
 
     if request.method == 'POST':
 
-        test_user = User.objects.filter(id=1)
+        test_user = User.objects.filter(id=2)
         a_user = App_user.objects.get(user_id__in=test_user)
         
         prop_form = PropertyForm(data=request.POST)
@@ -82,7 +82,6 @@ def introduce_property_view (request):
                 if f == prop_form:
                     if f.is_valid():
                         prop_object = Property(
-                            property_type = f.cleaned_data.get('property_type'),
                             landlord = Landlord.objects.get(lord_user=a_user),
                             address = f.cleaned_data.get('address'),
                             floor_area = f.cleaned_data.get('floor_area'),
@@ -100,19 +99,30 @@ def introduce_property_view (request):
                         )
                         prop_object.save()
                         bed_formset = BedroomFormSet(queryset=Bedroom.objects.none())
-                        print(prop_object.id)
                         bed_formset.extra = int(f.cleaned_data.get('bedrooms_num'))
-                        context = {'property_form': prop_form, 'bed_formset': bed_formset, 'prop_id':prop_object.id}
+                        
+                        request.session['bedrooms_num'] =  f.cleaned_data.get('bedrooms_num')
+                        request.session['bathrooms_num'] =  f.cleaned_data.get('bathrooms_num')
+                        request.session['kitchens_num'] =  f.cleaned_data.get('kitchens_num')
+                        request.session['livingrooms_num'] =  f.cleaned_data.get('livingrooms_num')
+                        request.session['prop_id'] = prop_object.id
+
+                        context = {
+                            'property_form': prop_form,
+                            'bed_formset': bed_formset
+                            }
+                        
                         return render(
                             request,
                             'mainApp/addBedroom.html',
                             context)
 
                 elif f == bath_form:
-                    #print(f)
+                    print(f)
+                    print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
                     for sub_form in f:
                         bath_object = Bathroom(
-                            associated_property = prop_object,
+                            associated_property = Property.objects.get(id=int(request.session['prop_id'])),
                             toilet = sub_form.cleaned_data.get('toilet'),
                             sink = sub_form.cleaned_data.get('sink'),
                             shower = sub_form.cleaned_data.get('shower'),
@@ -120,16 +130,19 @@ def introduce_property_view (request):
                             bathtub = sub_form.cleaned_data.get('bathtub'),
                             bidet = sub_form.cleaned_data.get('bidet')
                         )
+                        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
                         bath_object.save()
-                        """kitchen_formset = KitchenFormSet(queryset=Kitchen.objects.none())
-                        kitchen_formset.extra = int(f.cleaned_data.get('kitchens_num'))
-                        kitchen_formset[0].prop_id = prop_object.id
-                        
-                        context = {'property_form': prop_form, 'kitchen_formset': kitchen_formset}
-                        return render(
-                            request,
-                            'mainApp/addKitchen.html',
-                            context)"""
+
+                    kitchen_formset = KitchenFormSet(queryset=Kitchen.objects.none())
+                    kitchen_formset.extra = int(request.session['kitchens_num'])
+
+                    context = {
+                        'kitchen_formset': kitchen_formset}
+
+                    return render(
+                        request,
+                        'mainApp/addKitchen.html',
+                        context)
 
 
                 elif f == kitchen_form:
@@ -172,12 +185,11 @@ def introduce_property_view (request):
                         live_obj.save()
                 
                 elif f == bed_form:
-                    print('entrou-----------------------------------')
+                    print(f)
                     for sub_form in f:
-                        print(sub_form)
-                        print(request.POST['prop_id'])
+
                         bed_obj = Bedroom(
-                            associated_property = Property.objects.get(id=int(request.POST['prop_id'])),
+                            associated_property = Property.objects.get(id=int(request.session['prop_id'])),
                             be_chairs = sub_form.cleaned_data.get('be_chairs'),
                             be_sofa = sub_form.cleaned_data.get('be_sofa'),
                             be_sofa_bed = sub_form.cleaned_data.get('be_sofa_bed'),
@@ -195,20 +207,24 @@ def introduce_property_view (request):
                             max_occupacity = sub_form.cleaned_data.get('max_occupacity'),
                         )
                         bed_obj.save()
-                        bath_formset = BathroomFormSet(queryset=Bathroom.objects.none())
-                        bath_formset.extra = int(f.cleaned_data.get('bathrooms_num'))
-                        bath_formset[0].prop_id = prop_object.id
 
-                        context = {'property_form': prop_form, 'bath_formset': bath_formset}
-                        return render(
-                            request,
-                            'mainApp/addBathroom.html',
-                            context)
+                    bath_formset = BathroomFormSet(queryset=Bathroom.objects.none())
+                    #print(request.POST)
+                    bath_formset.extra = int(request.session['bathrooms_num'])
+
+                    context = {
+                        'bath_formset': bath_formset}
+
+                    return render(
+                        request,
+                        'mainApp/addBathroom.html',
+                        context)
                 
                 elif f == listing_form:
                     #print(f)
                     if f.is_valid():
                         listing_obj = Listing(
+                            property_type = f.cleaned_data.get('property_type'),
                             allowed_gender = f.cleaned_data.get('allowed_gender'),
                             monthly_payment =  f.cleaned_data.get('monthly_payment'),
                             availability_starts =  f.cleaned_data.get('availability_starts'),

@@ -10,6 +10,7 @@
 {% block content %}
 <div class="container">
     <form action="" method="POST">
+        {% csrf_token %}
         {{bath_formset.management_form}}
         <div class="row">
             {% for form in bath_formset%}
