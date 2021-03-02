@@ -64,22 +64,44 @@ def introduce_property_view (request):
 
     if request.method == 'POST':
 
-        test_user = User.objects.filter(id=1)
+        test_user = User.objects.filter(id=2)
         a_user = App_user.objects.get(user_id__in=test_user)
-        
+        form_list = []
+        bed_form = ''
+        bath_form = ''
+        kitchen_form = ''
+        live_form = ''
+        listing_form = ''
+
         prop_form = PropertyForm(data=request.POST)
-        bed_form = BedroomFormSet(data=request.POST)
-        bath_form = BathroomFormSet(data=request.POST)
-        kitchen_form = KitchenFormSet(data=request.POST)
-        live_form = LivingroomFormSet(data=request.POST)
-        listing_form = ListingForm(data=request.POST)
+        form_list.append(prop_form)
+
+        if 'bedrooms_num' in request.session.keys():
+            bed_form = BedroomFormSet(data=request.POST)
+            form_list.append(bed_form)
+            print(request.session.keys())
+        elif 'bathrooms_num' in request.session.keys():
+            bath_form = BathroomFormSet(data=request.POST)
+            form_list.append(bath_form)
+            print('entrei1')
+        elif 'kitchens_num' in request.session.keys():
+            kitchen_form = KitchenFormSet(data=request.POST)
+            form_list.append(kitchen_form)
+            print('entrei2')
+        elif 'livingrooms_num' in request.session.keys():
+            live_form = LivingroomFormSet(data=request.POST)
+            form_list.append(live_form)
+            print('entrei3')
+        elif 'listing' in request.session.keys():
+            listing_form = ListingForm(data=request.POST)
+            form_list.append(listing_form)
 
 
-        form_list = [prop_form, bed_form, bath_form, kitchen_form, live_form, listing_form]
+        
 
         for f in form_list:
             if f.is_bound:
-                
+
                 if f == prop_form:
                     if f.is_valid():
                         prop_object = Property(
@@ -120,8 +142,8 @@ def introduce_property_view (request):
 
                 elif f == bath_form:
                     print(f)
-                    print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
                     for sub_form in f:
+
                         bath_object = Bathroom(
                             associated_property = Property.objects.get(id=int(request.session['prop_id'])),
                             toilet = sub_form.cleaned_data.get('toilet'),
@@ -131,11 +153,12 @@ def introduce_property_view (request):
                             bathtub = sub_form.cleaned_data.get('bathtub'),
                             bidet = sub_form.cleaned_data.get('bidet')
                         )
-                        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
                         bath_object.save()
 
                     kitchen_formset = KitchenFormSet(queryset=Kitchen.objects.none())
+
                     kitchen_formset.extra = int(request.session['kitchens_num'])
+                    del request.session['bathrooms_num']
 
                     context = {
                         'kitchen_formset': kitchen_formset}
@@ -147,11 +170,11 @@ def introduce_property_view (request):
 
 
                 elif f == kitchen_form:
-                    #print(f)
+                    print(f)
                     for sub_form in f:
-                        #print(sub_form.)
+
                         kitchen_obj = Kitchen(
-                            associated_property = prop_object,
+                            associated_property = Property.objects.get(id=int(request.session['prop_id'])),
                             oven = sub_form.cleaned_data.get("oven"),            
                             dish_washer = sub_form.cleaned_data.get("dish_washer"),  
                             k_window = sub_form.cleaned_data.get("k_window"),  
@@ -169,22 +192,32 @@ def introduce_property_view (request):
                             k_balcony = sub_form.cleaned_data.get("k_balcony")
                         )
                         kitchen_obj.save()
-                    live_formset = LivingroomFormSet(queryset=Livingroom.objects.none())
-                    live_formset.extra = int(request.session['livingrooms_num'])
 
-                    context = {
-                        'live_formset': live_formset}
+                    if request.session['livingrooms_num'] > 0:
+                        live_formset = LivingroomFormSet(queryset=Livingroom.objects.none())
 
-                    return render(
-                        request,
-                        'mainApp/addLivingroom.html',
-                        context)
+                        live_formset.extra = int(request.session['livingrooms_num'])
+                        del request.session['kitchens_num']
+
+                        context = {'live_formset': live_formset}
+                        return render(request, 'mainApp/addLivingroom.html', context)
+                    else:
+                        del request.session['kitchens_num']
+                        del request.session['livingrooms_num']
+
+                        listing_form = ListingForm()
+                        request.session['listing'] =  True
+                        
+                        context = {'listing_form': listing_form}
+                        return render(request, 'mainApp/addListing.html', context)
+
 
                 elif f == live_form:
-                    #print(f)
+                    print(f)
                     for sub_form in f:
+                        
                         live_obj = Livingroom(
-                            associated_property = prop_object,
+                            associated_property = Property.objects.get(id=int(request.session['prop_id'])),
                             l_chairs = sub_form.cleaned_data.get('l_chairs'),
                             l_sofa = sub_form.cleaned_data.get('l_sofa'),
                             l_sofa_bed = sub_form.cleaned_data.get('l_sofa_bed'),
@@ -194,13 +227,24 @@ def introduce_property_view (request):
                             l_desk = sub_form.cleaned_data.get('l_desk')
                         )
                         live_obj.save()
+
+                    listing_form = ListingForm()
+
+                    request.session['listing'] =  True
+                    del request.session['livingrooms_num']
+
+                    context = {'listing_form': listing_form}
+
+                    return render(
+                        request,
+                        'mainApp/addListing.html',
+                        context)
                     
                 
                 elif f == bed_form:
                     print(f)
                     for sub_form in f:
                         
-
                         bed_obj = Bedroom(
                             associated_property = Property.objects.get(id=int(request.session['prop_id'])),
                             be_chairs = sub_form.cleaned_data.get('be_chairs'),
@@ -224,19 +268,19 @@ def introduce_property_view (request):
                     bath_formset = BathroomFormSet(queryset=Bathroom.objects.none())
                     
                     bath_formset.extra = int(request.session['bathrooms_num'])
+                    del request.session['bedrooms_num']
 
-                    context = {
-                        'bath_formset': bath_formset}
-                    print("OLAOLAOLAOLAOLAOLAOALOALAO")
+                    
+                    context = {'bath_formset': bath_formset}
                     return render(request,'mainApp/addBathroom.html',context)
                     
                         
                 
                 elif f == listing_form:
-                    #print(f)
+
                     if f.is_valid():
                         listing_obj = Listing(
-                            property_type = f.cleaned_data.get('property_type'),
+                            listing_type = f.cleaned_data.get('listing_type'),
                             allowed_gender = f.cleaned_data.get('allowed_gender'),
                             monthly_payment =  f.cleaned_data.get('monthly_payment'),
                             availability_starts =  f.cleaned_data.get('availability_starts'),
@@ -247,6 +291,20 @@ def introduce_property_view (request):
                             max_capacity =  f.cleaned_data.get('max_capacity')
                         )
                         listing_obj.save()
+                        main_listing = listing_obj
+                        del request.session['listing']
+
+                        if f.cleaned_data.get('listing_type') == 'Apartment':
+                            apart_obj = Property_listing(main_listing = main_listing, associated_property = Property.objects.get(id=int(request.session['prop_id'])))
+                            apart_obj.save()
+                            return redirect('index')
+
+                        elif f.cleaned_data.get('listing_type') == 'Bedroom':
+                            room_obj = Room_listing(
+                                main_listing = main_listing,
+                                associated_room = Bedroom.objects.get(associated_property = Property.objects.get(id=int(request.session['prop_id']))))
+                            room_obj.save()
+                            return redirect('index')
 
         return redirect('home')     #PLACEHOLDER
                         
@@ -269,16 +327,6 @@ def introduce_property_view (request):
             'listing_form': listing_form
             })
 
-        """ return render(
-        request,
-        'mainApp/addListing.html',
-        {'property_form': prop_form, 
-        'bath_formset': bath_formset,
-        'kitchen_formset': kitchen_formset,
-        'live_formset': live_formset,
-        'bed_formset': bed_formset,
-        'listing_form': listing_form
-        }) """
 
 def index(response):
     return render(response, "mainApp/home.html", {})

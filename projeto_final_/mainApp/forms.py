@@ -20,7 +20,7 @@ class ProfileForm(forms.ModelForm):
 
 class ListingForm(forms.ModelForm):
 
-    property_type = forms.CharField(required=True, max_length=25)
+    listing_type = forms.CharField(required=True, max_length=25)
     allowed_gender = forms.CharField(required=True, max_length=25)
     monthly_payment = forms.IntegerField(required=True)
     availability_starts = forms.DateField()
@@ -31,9 +31,9 @@ class ListingForm(forms.ModelForm):
     max_capacity = forms.IntegerField(required=True)
 
     class Meta:
-        model = Bedroom
+        model = Listing
         fields = [
-            'property_type',
+            'listing_type',
             'allowed_gender',
             'monthly_payment',
             'availability_starts',
@@ -85,7 +85,6 @@ class PropertyForm(forms.ModelForm):
 
 class BedroomForm(forms.ModelForm):
 
-    prop_id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
     be_chairs = forms.BooleanField(required=False, initial=False)
     be_sofa = forms.BooleanField(required=False, initial=False)
     be_sofa_bed = forms.BooleanField(required=False, initial=False)
@@ -125,7 +124,6 @@ class BedroomForm(forms.ModelForm):
 
 class KitchenForm(forms.ModelForm):
     
-    prop_id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
     oven = forms.BooleanField(required=False, initial=False)
     fridge = forms.BooleanField(required=False, initial=False)
     k_table = forms.BooleanField(required=False, initial=False)
@@ -164,7 +162,6 @@ class KitchenForm(forms.ModelForm):
 
 class BathroomForm(forms.ModelForm):
 
-    prop_id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
     shower = forms.BooleanField(required=False, initial=False)
     bathtub = forms.BooleanField(required=False, initial=False)
     bidet = forms.BooleanField(required=False, initial=False)
@@ -185,7 +182,6 @@ class BathroomForm(forms.ModelForm):
 
 class LivingroomForm(forms.ModelForm):
 
-    prop_id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
     l_sofa = forms.BooleanField(required=False, initial=False)
     l_sofa_bed = forms.BooleanField(required=False, initial=False)
     l_chairs = forms.BooleanField(required=False, initial=False)
