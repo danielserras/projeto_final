@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from paypal.standard.forms import PayPalPaymentsForm
+from django.forms.models import model_to_dict
 #tirar debug_mode no fim do proj
 #tirar test_mode do paypal no fim
 
@@ -343,6 +344,7 @@ def listing(response, listing_id):
     listing = Listing.objects.get(pk=listing_id)
     listing_type = listing.listing_type
     bedrooms = []
+
     if listing_type == "Bedroom":
         associated_object = listing.r_main.associated_room #associated object is a Bedroom
         parent_property = associated_object.associated_property
@@ -360,16 +362,33 @@ def listing(response, listing_id):
     
     bathrooms = list(Bathroom.objects.filter(associated_property = parent_property))
     kitchens = list(Kitchen.objects.filter(associated_property = parent_property))
+    livingrooms = list(Livingroom.objects.filter(associated_property = parent_property))
     landlord = parent_property.landlord
     landlord_user = landlord.lord_user.user
+    rooms_count_details = [bathrooms, bedrooms, kitchens, livingrooms, [parent_property]]
+    num_details = 0
+
+    for room in rooms_count_details:
+        num_details += countRoomDetails(room)
+
     context  = {
-        "listing" : listing,
-        "landlord_user" : landlord_user,
-        "bedrooms" : bedrooms,
+        "listing": listing,
+        "landlord_user": landlord_user,
+        "bedrooms": bedrooms,
         "num_beds": num_beds,
         "bathrooms": bathrooms,
         "property": parent_property,
         "kitchens": kitchens,
+        "numDetails": num_details,
     }
-    print(listing)
     return render(response, "mainApp/listingPage.html", context)
+
+def countRoomDetails(rooms):
+     
+    num_details = 0
+    for room in rooms:
+        for k, v in model_to_dict(room).items():
+            if v == True and isinstance(v, bool):
+                num_details+=1
+    
+    return num_details
