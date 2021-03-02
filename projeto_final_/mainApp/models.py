@@ -59,7 +59,7 @@ class Property(models.Model):
 
 
 class Bathroom(models.Model):
-    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
+    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE, related_name = "bathroom")
     toilet = models.BooleanField() 
     sink = models.BooleanField()
     shower = models.BooleanField()
@@ -69,7 +69,7 @@ class Bathroom(models.Model):
 
 
 class Bedroom(models.Model):
-    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
+    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE, related_name="bedroom")
     be_chairs = models.BooleanField()
     be_sofa = models.BooleanField()
     be_sofa_bed = models.BooleanField()
@@ -87,7 +87,7 @@ class Bedroom(models.Model):
     ensuite_bathroom = models.BooleanField()
 
 class Kitchen(models.Model):
-    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
+    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE, related_name="kitchen")
     dish_washer = models.BooleanField()
     k_window = models.BooleanField()
     fridge = models.BooleanField()
@@ -107,7 +107,7 @@ class Kitchen(models.Model):
 
 
 class Livingroom(models.Model):
-    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
+    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE, related_name="livingroom")
     l_chairs = models.BooleanField()
     l_sofa = models.BooleanField()
     l_sofa_bed = models.BooleanField()
