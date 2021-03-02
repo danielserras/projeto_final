@@ -63,7 +63,7 @@ def introduce_property_view (request):
 
     if request.method == 'POST':
 
-        test_user = User.objects.filter(id=2)
+        test_user = User.objects.filter(id=1)
         a_user = App_user.objects.get(user_id__in=test_user)
         
         prop_form = PropertyForm(data=request.POST)
@@ -168,6 +168,16 @@ def introduce_property_view (request):
                             k_balcony = sub_form.cleaned_data.get("k_balcony")
                         )
                         kitchen_obj.save()
+                    live_formset = LivingroomFormSet(queryset=Livingroom.objects.none())
+                    live_formset.extra = int(request.session['livingrooms_num'])
+
+                    context = {
+                        'live_formset': live_formset}
+
+                    return render(
+                        request,
+                        'mainApp/addLivingroom.html',
+                        context)
 
                 elif f == live_form:
                     #print(f)
@@ -183,10 +193,12 @@ def introduce_property_view (request):
                             l_desk = sub_form.cleaned_data.get('l_desk')
                         )
                         live_obj.save()
+                    
                 
                 elif f == bed_form:
                     print(f)
                     for sub_form in f:
+                        
 
                         bed_obj = Bedroom(
                             associated_property = Property.objects.get(id=int(request.session['prop_id'])),
@@ -209,16 +221,15 @@ def introduce_property_view (request):
                         bed_obj.save()
 
                     bath_formset = BathroomFormSet(queryset=Bathroom.objects.none())
-                    #print(request.POST)
+                    
                     bath_formset.extra = int(request.session['bathrooms_num'])
 
                     context = {
                         'bath_formset': bath_formset}
-
-                    return render(
-                        request,
-                        'mainApp/addBathroom.html',
-                        context)
+                    print("OLAOLAOLAOLAOLAOLAOALOALAO")
+                    return render(request,'mainApp/addBathroom.html',context)
+                    
+                        
                 
                 elif f == listing_form:
                     #print(f)
