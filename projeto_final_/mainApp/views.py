@@ -55,9 +55,9 @@ def register_view(request):
             user_first_name = form.cleaned_data.get('first_name')
             messages.success(request, 'Utilizador ' + user_nameStr + ' criado!')
 
-            return redirect('search') #placeholder, alterem depois   
+            return redirect('login_view') #placeholder, alterem depois   
 
-    context = {'form':form} #, 'pform':pform
+    context = {'form':form, 'errors':form.errors} #, 'pform':pform
     return render(request, 'mainApp/register.html', context)
 
 def introduce_property_view (request):
