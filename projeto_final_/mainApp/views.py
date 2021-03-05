@@ -63,9 +63,9 @@ def register_view(request):
 def introduce_property_view (request):
 
     if request.method == 'POST':
-        #print(request.user)
-        test_user = User.objects.filter(id=2)
-        a_user = App_user.objects.get(user_id__in=test_user)
+        
+        current_user = request.user
+        a_user = App_user.objects.get(user_id=current_user)
         form_list = []
         bed_form = ''
         bath_form = ''
