@@ -83,6 +83,7 @@ class Bedroom(models.Model):
     tv = models.BooleanField()
     heater = models.BooleanField()
     air_conditioning = models.BooleanField()
+    lock = models.BooleanField()
     ensuite_bathroom = models.BooleanField()
 
 class Kitchen(models.Model):

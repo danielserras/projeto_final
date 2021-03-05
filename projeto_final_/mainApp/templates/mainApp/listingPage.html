@@ -94,15 +94,18 @@
         </div>
         <div class="row pl-5 ml-5">
             <div class="col-sm-10">
-                <div class="row mb-3">
-                    {% get_checkmark room.be_window "Cama" %} {% get_checkmark room.chest_of_drawers "Cómoda" %} {% get_checkmark room.wardrobe "Armário" %} {% get_checkmark room.be_desk "Secretária" %}
+                <div class="row mb-3">  
+                     {% get_checkmark room.be_desk "Secretária" %} {% get_checkmark room.be_chairs "Cadeira" %} {% get_checkmark room.chest_of_drawers "Cómoda" %} {% get_checkmark room.wardrobe "Armário" %} 
                 </div>
                 <div class="row mb-3">
-                    {% get_checkmark room.be_chairs "Cadeira" %} {% get_checkmark room.be_sofa "Sofá" %} {% get_checkmark room.tv "Televisão" %} {% get_checkmark room.be_sofa_bed "Sofá Cama" %}
+                     {% get_checkmark room.be_sofa "Sofá" %} {% get_checkmark room.tv "Televisão" %} {% get_checkmark room.be_sofa_bed "Sofá Cama" %} {% get_checkmark room.heater "Aquecedor" %}
                 </div>
                 <div class="row mb-3">
-                    {% get_checkmark room.heater "Aquecedor" %} {% get_checkmark room.air_conditioning "Ar Condicionado" %} {% get_checkmark room.be_window "Janela" %} {% get_checkmark room.be_balcony "Varanda" %}
+                     {% get_checkmark room.air_conditioning "Ar Condicionado" %} {% get_checkmark room.be_window "Janela" %} {% get_checkmark room.be_balcony "Varanda" %} {% get_checkmark room.lock "Fechadura" %}
                 </div>
+                <div class="row mb-3">
+                     {% get_checkmark room.num_single_beds "Cama de Solteiro" %} {% get_checkmark room.num_double_beds "Cama de Casado" %}
+               </div>
             </div>
         </div>
     </div>

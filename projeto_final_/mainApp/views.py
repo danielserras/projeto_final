@@ -64,7 +64,7 @@ def introduce_property_view (request):
 
     if request.method == 'POST':
 
-        test_user = User.objects.filter(id=2)
+        test_user = User.objects.filter(id=1)
         a_user = App_user.objects.get(user_id__in=test_user)
         form_list = []
         bed_form = ''
@@ -256,6 +256,7 @@ def introduce_property_view (request):
                             be_balcony = sub_form.cleaned_data.get('be_balcony'),
                             wardrobe = sub_form.cleaned_data.get('wardrobe'),
                             be_desk = sub_form.cleaned_data.get('be_desk'),
+                            lock = sub_form.cleaned_data.get('lock'),
                             chest_of_drawers = sub_form.cleaned_data.get('chest_of_drawers'),
                             tv = sub_form.cleaned_data.get('tv'),
                             heater = sub_form.cleaned_data.get('heater'),
@@ -429,6 +430,7 @@ def listing(response, listing_id):
         "kitchens": kitchens,
         "numDetails": num_details,
         "livingrooms": livingrooms,
+        "security_deposit": listing.security_deposit,
     }
     return render(response, "mainApp/listingPage.html", context)
 
