@@ -95,6 +95,7 @@ class BedroomForm(forms.ModelForm):
     be_balcony = forms.BooleanField(required=False, initial=False)
     wardrobe = forms.BooleanField(required=False, initial=False)
     be_desk = forms.BooleanField(required=False, initial=False)
+    lock = forms.BooleanField(required=False, initial=False)
     chest_of_drawers = forms.BooleanField(required=False, initial=False)
     tv = forms.BooleanField(required=False, initial=False)
     heater = forms.BooleanField(required=False, initial=False)
@@ -114,6 +115,7 @@ class BedroomForm(forms.ModelForm):
             "be_balcony",
             "wardrobe",
             "be_desk",
+            "lock",
             "chest_of_drawers",
             "tv",
             "heater",
