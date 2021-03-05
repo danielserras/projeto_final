@@ -122,6 +122,9 @@ class BedroomForm(forms.ModelForm):
             "air_conditioning",
             "ensuite_bathroom"]
 
+        widget={
+            'be_chairs' : forms.CheckboxInput(attrs={'class':'custom-control-input'})}
+
 
 
 class KitchenForm(forms.ModelForm):
