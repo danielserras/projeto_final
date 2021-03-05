@@ -22,7 +22,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             request.session['username'] = username
-            return redirect('home_page') #placeholder, alterem depois
+            return redirect('index') #placeholder, alterem depois
         else:
             messages.info(request, 'Username ou password incorretos')
             return redirect('index') #placeholder
@@ -63,8 +63,8 @@ def register_view(request):
 def introduce_property_view (request):
 
     if request.method == 'POST':
-
-        test_user = User.objects.filter(id=1)
+        #print(request.user)
+        test_user = User.objects.filter(id=2)
         a_user = App_user.objects.get(user_id__in=test_user)
         form_list = []
         bed_form = ''
