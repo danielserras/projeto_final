@@ -6,28 +6,29 @@ register = template.Library()
 def get_checkmark(feature, feature_name):
     #takes a given object boolean property and returns the apropriate checkmark icon and text
     #based on it's value
-    if type(feature) == int or type(feature) == float:
-        print(feature)
-        if feature > 0:
-            return numberIten('green', feature, feature_name)
-        else:
-            return numberIten('primary', feature, feature_name)
+    if feature:
+        return check(feature_name)
     else:
-        if feature:
-            return check(feature_name)
-        else:
-            return cross(feature_name)  
+        return cross(feature_name)  
+
+@register.simple_tag
+def get_number_beds(feature, feature_name):
+    if feature > 0:
+            return numberIten('green', feature, feature_name)
+    else:
+        return numberIten('primary', feature, feature_name)
 
 def numberIten(color, feature, feature_name):
     return format_html('<div class="col-sm-3 room-detail-item">\
                         <div class="row">\
-                            <div class="col-sm-1">\
+                            <div class="col-sm-2 p-0 pl-3">\
                                 <p class="font-weight-bold text-{}">{}</p>\
                             </div>\
-                            <div class="col-sm-8 pl-1"> <p>{}</p> \
+                            <div class="col-sm-10 p-0"> <p>{}</p> \
                             </div>\
                         </div>\
                     </div>', color, feature, feature_name)
+
 def check(feature_name):
     return format_html('<div class="col-sm-3 room-detail-item">\
             <i class="fa fa-check text-green" aria-hidden="yes"></i> {}\
