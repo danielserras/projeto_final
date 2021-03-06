@@ -77,14 +77,14 @@
                         </div>
                     
                 </div>
-                <div class="row mt-2 mb-2 justify-content-md-center">
+                <!-- <div class="row mt-2 mb-2 justify-content-md-center">
                     <div class="col-sm-7">
                         <h3>Regras</h3>
                     </div>
-                </div>
+                </div> -->
                 </div>
                 <div class="row justify-content-md-center ">
-                    <div class="form-group col-sm-7">
+                    <div class="form-group col-sm-4">
                         <h4>O que pretende anunciar?</h4><br>
                         <label for="" class="radio-inline">
                             <input type="radio" name="listing_type" class="" value="Home"> Casa
@@ -99,11 +99,17 @@
                             <input type="radio" name="listing_type" class="" value="Bedroom"> Quarto
                         </label><br>
                     </div>
-                    {{imgformset.management_form}}
-        
-                    {% for form in imgformset%}
-                    {{form.images}}
-                    {% endfor %}
+                    <div class="form-group col-sm-3">
+                        <h4>Album de fotografias</h4><br>
+                            <div class="form-group imgF">
+                            {{imgformset.management_form}}
+                
+                            {% for form in imgformset%}
+                            {{form.images}}
+                            {% endfor %}
+                            </div>
+                        <button type="button" class="addImg">+</button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -328,7 +328,6 @@ def introduce_property_view (request):
                             apart_obj = Property_listing(main_listing = main_listing, associated_property = assoc_prop)
                             apart_obj.save()
 
-                            #imgformset = modelformset_factory(Image, form=ImageForm, extra=1)
                             context = {'imgformset': imgformset}
                             return redirect('index')
                             
@@ -339,10 +338,8 @@ def introduce_property_view (request):
                                 associated_room = Bedroom.objects.get(associated_property = assoc_prop))
                             room_obj.save()
                             
-                            #imgformset = modelformset_factory(Image, form=ImageForm, extra=1)
                             context = {'imgformset': imgformset}
                             return redirect('index')
-                            #return render(request,'mainApp/addAlbum.html',context)
 
 
         return redirect('index')     #PLACEHOLDER
