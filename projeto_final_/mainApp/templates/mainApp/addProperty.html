@@ -2,9 +2,12 @@
 {% load static %}
 {% block styles %}
     <link rel="stylesheet" href='{% static "mainApp/css/addProperty.css" %}'>
+    <link rel="stylesheet" href='{% static "mainApp/css/map.css" %}'> 
 {% endblock %}
 {% block scripts%}
     <script src='{% static "mainApp/js/addProperty.js" %}'></script>
+    <script src='{% static "mainApp/js/map.js" %}'></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 {% endblock %}
 
 {% block content %}
@@ -24,10 +27,13 @@
                             <img src='{% static "mainApp/images/map-pin.svg" %}' class='img-fluid' alt='Location pin'>
                         </span>
                     </div>
-                    <input type="text" class="form-control border-left-0 pl-0 border-info border-3 rounded-right" name="address" required>
+                    <input type="text" id="address" class="form-control border-left-0 pl-0 border-info border-3 rounded-right" name="address" required>
                 </div>
             </div>
         </div>
+
+        <div class= "mt-3 mb-3" id="mapid"></div>
+
 
         <div class="row">
             <div class="col-sm-12" >                
