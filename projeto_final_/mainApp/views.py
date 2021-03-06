@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from paypal.standard.forms import PayPalPaymentsForm
 from django.forms.models import model_to_dict
+import time
 #tirar debug_mode no fim do proj
 #tirar test_mode do paypal no fim
 
@@ -25,6 +26,7 @@ def login_view(request):
             return redirect('index') #placeholder, alterem depois
         else:
             messages.info(request, 'Username ou password incorretos')
+            request.session['popUp'] =  False
             return redirect('index') #placeholder
     context = {}
     return render(request,'mainApp/login.html', context) #placeholder
@@ -54,7 +56,8 @@ def register_view(request):
             user_nameStr = form.cleaned_data.get('username')
             user_first_name = form.cleaned_data.get('first_name')
             messages.success(request, 'Utilizador ' + user_nameStr + ' criado!')
-
+            
+            request.session['popUp'] =  True
             return redirect('login_view') #placeholder, alterem depois   
 
     context = {'form':form, 'errors':form.errors} #, 'pform':pform
