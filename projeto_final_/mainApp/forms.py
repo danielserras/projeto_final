@@ -93,6 +93,9 @@ class BedroomForm(forms.ModelForm):
                     field.widget.attrs['class'] += 'custom-control-input'
                 else:
                     field.widget.attrs['class']='custom-control-input'
+            else:
+                field.widget.attrs['value'] = 0
+                
 
     be_chairs = forms.BooleanField(required=False, initial=False)
     be_sofa = forms.BooleanField(required=False, initial=False)
@@ -137,6 +140,13 @@ class BedroomForm(forms.ModelForm):
 
 
 class KitchenForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(KitchenForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if field.widget.attrs.get('class'):
+                field.widget.attrs['class'] += 'custom-control-input'
+            else:
+                field.widget.attrs['class']='custom-control-input'
     
     oven = forms.BooleanField(required=False, initial=False)
     fridge = forms.BooleanField(required=False, initial=False)
@@ -176,6 +186,14 @@ class KitchenForm(forms.ModelForm):
 
 class BathroomForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super(BathroomForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if field.widget.attrs.get('class'):
+                field.widget.attrs['class'] += 'custom-control-input'
+            else:
+                field.widget.attrs['class']='custom-control-input'
+
     shower = forms.BooleanField(required=False, initial=False)
     bathtub = forms.BooleanField(required=False, initial=False)
     bidet = forms.BooleanField(required=False, initial=False)
@@ -195,6 +213,13 @@ class BathroomForm(forms.ModelForm):
 
 
 class LivingroomForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(LivingroomForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if field.widget.attrs.get('class'):
+                field.widget.attrs['class'] += 'custom-control-input'
+            else:
+                field.widget.attrs['class']='custom-control-input'
 
     l_sofa = forms.BooleanField(required=False, initial=False)
     l_sofa_bed = forms.BooleanField(required=False, initial=False)
