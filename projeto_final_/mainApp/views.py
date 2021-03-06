@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from paypal.standard.forms import PayPalPaymentsForm
 from django.forms.models import model_to_dict
+import time
 #tirar debug_mode no fim do proj
 #tirar test_mode do paypal no fim
 
@@ -25,6 +26,7 @@ def login_view(request):
             return redirect('index') #placeholder, alterem depois
         else:
             messages.info(request, 'Username ou password incorretos')
+            request.session['popUp'] =  False
             return redirect('index') #placeholder
     context = {}
     return render(request,'mainApp/login.html', context) #placeholder
@@ -54,7 +56,8 @@ def register_view(request):
             user_nameStr = form.cleaned_data.get('username')
             user_first_name = form.cleaned_data.get('first_name')
             messages.success(request, 'Utilizador ' + user_nameStr + ' criado!')
-
+            
+            request.session['popUp'] =  True
             return redirect('login_view') #placeholder, alterem depois   
 
     context = {'form':form, 'errors':form.errors} #, 'pform':pform
@@ -63,9 +66,9 @@ def register_view(request):
 def introduce_property_view (request):
 
     if request.method == 'POST':
-        #print(request.user)
-        test_user = User.objects.filter(id=2)
-        a_user = App_user.objects.get(user_id__in=test_user)
+
+        current_user = request.user
+        a_user = App_user.objects.get(user_id=current_user)
         form_list = []
         bed_form = ''
         bath_form = ''
@@ -93,7 +96,7 @@ def introduce_property_view (request):
             form_list.append(live_form)
             #print('entrei3')
         elif 'listing' in request.session.keys():
-            listing_form = ListingForm(data=request.POST)
+            listing_form = ListingForm(request.POST, request.FILES)
             form_list.append(listing_form)
 
 
@@ -208,7 +211,9 @@ def introduce_property_view (request):
                         listing_form = ListingForm()
                         request.session['listing'] =  True
                         
-                        context = {'listing_form': listing_form}
+                        imgformset = ImgFormSet(queryset=Image.objects.none())
+                        context = {'listing_form': listing_form, 'imgformset' : imgformset}
+
                         return render(request, 'mainApp/addListing.html', context)
 
 
@@ -233,12 +238,10 @@ def introduce_property_view (request):
                     request.session['listing'] =  True
                     del request.session['livingrooms_num']
 
-                    context = {'listing_form': listing_form}
+                    imgformset = ImgFormSet(queryset=Image.objects.none())
+                    context = {'listing_form': listing_form, 'imgformset' : imgformset}
 
-                    return render(
-                        request,
-                        'mainApp/addListing.html',
-                        context)
+                    return render(request, 'mainApp/addListing.html', context)
                     
                 
                 elif f == bed_form:
@@ -278,8 +281,12 @@ def introduce_property_view (request):
                         
                 
                 elif f == listing_form:
-
+                    print(f)
                     if f.is_valid():
+
+                        prop_album = ImageAlbum(name=f.cleaned_data.get('title'))
+                        prop_album.save()
+
                         listing_obj = Listing(
                             listing_type = f.cleaned_data.get('listing_type'),
                             allowed_gender = f.cleaned_data.get('allowed_gender'),
@@ -289,23 +296,51 @@ def introduce_property_view (request):
                             title =  f.cleaned_data.get('title'),
                             description =  f.cleaned_data.get('description'),
                             security_deposit =  f.cleaned_data.get('security_deposit'),
-                            max_capacity =  f.cleaned_data.get('max_capacity')
+                            max_capacity =  f.cleaned_data.get('max_capacity'),
+                            album = prop_album
                         )
                         listing_obj.save()
+
+                        
+                        assoc_prop = Property.objects.get(id=int(request.session['prop_id']))
                         main_listing = listing_obj
                         del request.session['listing']
 
+                        imgformset = ImgFormSet(request.POST, request.FILES)
+                        imgs = imgformset.cleaned_data
+
+                        for d in imgs:
+                            cover = False
+                            if d == imgs[0]:
+                                cover = True
+
+                            for i in d.values():
+                                if i != None:
+                                    
+                                    img = Image(
+                                        name= listing_obj.title+'_'+str(assoc_prop.id),
+                                        is_cover = cover,
+                                        image = i,
+                                        album = prop_album)
+                                    img.save()
+
                         if f.cleaned_data.get('listing_type') == 'Apartment':
-                            apart_obj = Property_listing(main_listing = main_listing, associated_property = Property.objects.get(id=int(request.session['prop_id'])))
+                            apart_obj = Property_listing(main_listing = main_listing, associated_property = assoc_prop)
                             apart_obj.save()
+
+                            context = {'imgformset': imgformset}
                             return redirect('index')
+                            
 
                         elif f.cleaned_data.get('listing_type') == 'Bedroom':
                             room_obj = Room_listing(
                                 main_listing = main_listing,
-                                associated_room = Bedroom.objects.get(associated_property = Property.objects.get(id=int(request.session['prop_id']))))
+                                associated_room = Bedroom.objects.get(associated_property = assoc_prop))
                             room_obj.save()
+                            
+                            context = {'imgformset': imgformset}
                             return redirect('index')
+
 
         return redirect('index')     #PLACEHOLDER
                         
@@ -380,8 +415,23 @@ def notifications3(response):
 def intent(response):
     return render(response, "mainApp/intent.html", {})
 
-def search(response):
-    return render(response, "mainApp/search.html", {})
+def search(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        print(form.errors)
+        form = SearchForm(data=request.POST)
+        if form.is_valid():
+            print(form.cleaned_data.get('location'))
+            print(form.cleaned_data.get('radius'))
+            print(form.cleaned_data.get('type'))
+            print(form.cleaned_data.get('num_tenants'))
+            print(form.cleaned_data.get('num_bedrooms'))
+            print(form.cleaned_data.get('date_in'))
+            print(form.cleaned_data.get('date_out'))
+            print(form.cleaned_data.get('minPrice'))
+            print(form.cleaned_data.get('maxPrice'))
+
+    return render(request, "mainApp/search.html", {})
 
 """ def addListing(response):
     return render(response, "mainApp/addListing.html", {}) """

@@ -11,7 +11,7 @@
 <div class="container">
     {% if request.session.livingrooms_num > 0%}
         <div class="progress mt-5 mb-3">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:80%"></div>
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:80%">80%</div>
         </div>
     {% endif %}
     <form action="" method="POST">
@@ -21,42 +21,42 @@
             {% for form in live_formset%}
             <div class="col-sm-12 livingroomF" id="pageListing-6">
                 <div class="row mt-2 mb-2 justify-content-md-center">
-                    <button class="btn bg-transparent col-sm-7 bedroomHideShow">Sala 1</button>
+                    <h3>Sala {{forloop.counter}}</h3>
                 </div>
                 <div class="row justify-content-md-center mb-2">
                     <div class="col-sm-7">
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.l_chairs}}
-                                <label for="{{ form.l_chairs.id_for_label }}">Cadeiras</label>
+                                <label for="{{ form.l_chairs.id_for_label }}" class="custom-control-label">Cadeiras</label>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.l_window}}
-                                <label for="{{ form.l_window.id_for_label }}">Janela</label>
+                                <label for="{{ form.l_window.id_for_label }}" class="custom-control-label">Janela</label>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.l_table}}
-                                <label for="{{ form.l_table.id_for_label }}">Mesa</label>
+                                <label for="{{ form.l_table.id_for_label }}" class="custom-control-label">Mesa</label>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.l_sofa}}
-                                <label for="{{ form.l_sofa.id_for_label }}">Sofá</label>
+                                <label for="{{ form.l_sofa.id_for_label }}" class="custom-control-label">Sofá</label>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.l_sofa_bed}}
-                                <label for="{{ form.l_sofa_bed.id_for_label }}">Sofá-cama</label>
+                                <label for="{{ form.l_sofa_bed.id_for_label }}" class="custom-control-label">Sofá-cama</label>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.l_desk}}
-                                <label for="{{ form.l_desk.id_for_label }}">Secretária</label>
+                                <label for="{{ form.l_desk.id_for_label }}" class="custom-control-label">Secretária</label>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.l_balcony}}
-                                <label for="{{ form.l_balcony.id_for_label }}">Varanda</label>
+                                <label for="{{ form.l_balcony.id_for_label }}" class="custom-control-label">Varanda</label>
                             </div>
                         </div>
                     </div>

@@ -5,17 +5,33 @@
 {% endblock %}
 {% block content %}
 
+
+
+
 <div class="wrapper container">
     <div id="formContent2">
-        <div class="row">
-            <div class='alert alert-danger'>
-                {{errors}}
-            </div>
-        </div>
+        
         <div class="row">
             <div class="col-sm-12">
                 <h2 class="text-center mt-3 mb-4">Registo</h2>
             </div>
+        </div>
+        <div class="row">
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+            <div class='mx-auto col-sm-8 alert alert-danger' id="errorBox">
+                <!--{{errors}}-->
+                <strong>{{ error|escape }}</strong>
+            </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
         <form method='POST' action="{% url 'register_view' %}">
             {% csrf_token %}
@@ -68,7 +84,7 @@
                 </div>
             </div>
             <div class="row form-group">
-                <input type="submit" class="inputType2 w-50 btn btn-secondary font-weight-bold mx-auto" value="Registar">
+                <input type="submit" id="registerSubmit" class="inputType2 w-50 btn btn-secondary font-weight-bold mx-auto"  value="Registar">
             </div>
         </form>
     </div>

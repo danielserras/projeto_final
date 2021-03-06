@@ -5,6 +5,9 @@ from django.contrib.auth.models import User
 from .models import *
 from django.forms import modelformset_factory
 from django.forms.models import inlineformset_factory
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.forms import inlineformset_factory
+from PIL import *
 
 
 class CreateUserForm(UserCreationForm):
@@ -41,8 +44,7 @@ class ListingForm(forms.ModelForm):
             'title',
             'description',
             'security_deposit',
-            'max_capacity'
-        ]
+            'max_capacity']
 
 class PropertyForm(forms.ModelForm):
 
@@ -85,6 +87,18 @@ class PropertyForm(forms.ModelForm):
 
 class BedroomForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super(BedroomForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if "num_" not in field_name and field_name != "max_occupacity":
+                if field.widget.attrs.get('class'):
+                    field.widget.attrs['class'] += 'custom-control-input'
+                else:
+                    field.widget.attrs['class']='custom-control-input'
+            else:
+                field.widget.attrs['value'] = 0
+                
+
     be_chairs = forms.BooleanField(required=False, initial=False)
     be_sofa = forms.BooleanField(required=False, initial=False)
     be_sofa_bed = forms.BooleanField(required=False, initial=False)
@@ -122,12 +136,19 @@ class BedroomForm(forms.ModelForm):
             "air_conditioning",
             "ensuite_bathroom"]
 
-        widget={
-            'be_chairs' : forms.CheckboxInput(attrs={'class':'custom-control-input'})}
+        """ widget={
+            'be_chairs' : forms.CheckboxInput(attrs={'class':'custom-control-input'})} """
 
 
 
 class KitchenForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(KitchenForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if field.widget.attrs.get('class'):
+                field.widget.attrs['class'] += 'custom-control-input'
+            else:
+                field.widget.attrs['class']='custom-control-input'
     
     oven = forms.BooleanField(required=False, initial=False)
     fridge = forms.BooleanField(required=False, initial=False)
@@ -167,6 +188,14 @@ class KitchenForm(forms.ModelForm):
 
 class BathroomForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super(BathroomForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if field.widget.attrs.get('class'):
+                field.widget.attrs['class'] += 'custom-control-input'
+            else:
+                field.widget.attrs['class']='custom-control-input'
+
     shower = forms.BooleanField(required=False, initial=False)
     bathtub = forms.BooleanField(required=False, initial=False)
     bidet = forms.BooleanField(required=False, initial=False)
@@ -186,6 +215,13 @@ class BathroomForm(forms.ModelForm):
 
 
 class LivingroomForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(LivingroomForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if field.widget.attrs.get('class'):
+                field.widget.attrs['class'] += 'custom-control-input'
+            else:
+                field.widget.attrs['class']='custom-control-input'
 
     l_sofa = forms.BooleanField(required=False, initial=False)
     l_sofa_bed = forms.BooleanField(required=False, initial=False)
@@ -242,9 +278,48 @@ class Agreement_Request_Form(forms.ModelForm):
             'landlord': forms.HiddenInput(),
             'accepted': forms.HiddenInput()
         }
-        
 
+class ImageForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ImageForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if field.widget.attrs.get('class'):
+                field.widget.attrs['class'] += 'imgfield'
+            else:
+                field.widget.attrs['class']='imgfield'
 
+    images = forms.ImageField()
+
+    class Meta:
+        model = Image
+        fields = ['images' ]
+
+TYPE_CHOICES =( 
+    ("", "Zero"), 
+    ("apartment", "One"), 
+    ("house", "Two"), 
+    ("privateBedroom", "Three"), 
+    ("sharedBedroom", "Four"), 
+    ("residence", "Five"), 
+) 
+NUM_CHOICES =( 
+    ("", "Zero"), 
+    ("1", "One"), 
+    ("2", "Two"), 
+    ("3", "Three"), 
+    ("4", "Four"), 
+    ("5", "Five"), 
+) 
+class SearchForm(forms.Form):
+    location = forms.CharField(required=False, max_length=100)
+    radius = forms.IntegerField(required=False)
+    type = forms.ChoiceField(choices = TYPE_CHOICES, required=False)
+    num_tenants = forms.ChoiceField(choices = NUM_CHOICES, required=False)
+    num_bedrooms = forms.ChoiceField(choices = NUM_CHOICES, required=False)
+    date_in = forms.DateField(required=False)
+    date_out = forms.DateField(required=False)
+    minPrice = forms.CharField(required=True)
+    maxPrice = forms.CharField(required=True)
 
 
 BedroomFormSet = modelformset_factory(model = Bedroom, form = BedroomForm, extra=1)
@@ -254,3 +329,5 @@ KitchenFormSet = modelformset_factory(model = Kitchen, form = KitchenForm, extra
 BathroomFormSet = modelformset_factory(model = Bathroom, form = BathroomForm, extra=1)
 
 LivingroomFormSet = modelformset_factory(model = Livingroom, form = LivingroomForm, extra=1)
+
+ImgFormSet = modelformset_factory(model = Image, form = ImageForm, extra=1)

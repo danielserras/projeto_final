@@ -5,6 +5,12 @@ $(document).ready(function(){
     var bathroomsNum = 1;
     var livingroomsNum = 0;
     var kitchensNum = 1;
+    var imgSlots = 0;
+
+    $(".addImg").click(function(){
+        imgSlots++;
+        addimgSlot(imgSlots);
+    })
 
     $("#backPageListing").hide();
     $("#submitListing").hide();
@@ -215,5 +221,21 @@ function addFormLiving() {
 
     totalForms.value = livingroomFormNum+1 //Increment the number of total forms in the management form
     
+}
+
+function addimgSlot(slots) {
+
+    let imgFormContainer = $(".imgF");
+    let totalForms = $('[id=id_form-TOTAL_FORMS]')[0];
+    let imgFormNum = slots-1;
+
+    let newForm = imgFormContainer.children()[4].cloneNode(true);
+
+    imgFormNum++;
+    newForm.setAttribute('id', 'id_form-'+imgFormNum.toString()+'-images');
+    newForm.setAttribute('name', `form-${imgFormNum.toString()}-images`);
+    imgFormContainer.append(newForm) //Insert the new form at the end of the list of forms
+
+    totalForms.value = imgFormNum+1;
 }
 
