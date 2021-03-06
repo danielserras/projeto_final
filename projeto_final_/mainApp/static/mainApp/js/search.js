@@ -30,16 +30,19 @@ $(document).ready(function() {
         values: v,
         slide: function(event, ui) {
             if ((ui.values[1] - ui.values[0]) < numTooClose) {
+                $('#minPrice').val(ui.values[0])
+                $('#maxPrice').val(ui.values[1])
                 $("#labelMin").css('display', 'none');
                 $("#labelMax").css('display', 'none');
                 $("#labelMinToMax").css('display', 'block');
                 $("#labelMinToMax").css('left', ((ui.values[0] + ui.values[1]) / (r * 2)) - 4.5 + "%").text(ui.values[0] + '€ até ' + ui.values[1] + '€');
             } else {
+                $('#minPrice').val(ui.values[0])
+                $('#maxPrice').val(ui.values[1])
                 $("#labelMinToMax").css('display', 'none');
                 $("#labelMin").css('margin-left', ShiftLeftValues[$("#labelMin").text().length] + 'em').css('display', 'block');
                 $("#labelMax").css('margin-left', ShiftLeftValues[$("#labelMax").text().length] + 'em').css('display', 'block');
                 $("#labelMin").css('left', (ui.values[0] / r) + "%").text(ui.values[0] + '€');
-                console.log($("#labelMax").css('margin-left'));
                 if (ui.values[1] == 2000) {
                     $("#labelMax").css('left', (ui.values[1] / r) + "%").text(ui.values[1] + '€ +');
                 } else {
@@ -48,6 +51,8 @@ $(document).ready(function() {
             }
         },
         create: function(event, ui) {
+            $('#minPrice').val(v[0])
+            $('#maxPrice').val(v[1])
             $("#labelMin").css('left', v[0] / r + "%").text(v[0] + '€').css('margin-left', '-0.5em');
             $("#labelMax").css('left', v[1] / r + "%").text(v[1] + '€').css('margin-left', '-0.8em');
         }

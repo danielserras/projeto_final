@@ -418,8 +418,23 @@ def notifications3(response):
 def intent(response):
     return render(response, "mainApp/intent.html", {})
 
-def search(response):
-    return render(response, "mainApp/search.html", {})
+def search(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        print(form.errors)
+        form = SearchForm(data=request.POST)
+        if form.is_valid():
+            print(form.cleaned_data.get('location'))
+            print(form.cleaned_data.get('radius'))
+            print(form.cleaned_data.get('type'))
+            print(form.cleaned_data.get('num_tenants'))
+            print(form.cleaned_data.get('num_bedrooms'))
+            print(form.cleaned_data.get('date_in'))
+            print(form.cleaned_data.get('date_out'))
+            print(form.cleaned_data.get('minPrice'))
+            print(form.cleaned_data.get('maxPrice'))
+
+    return render(request, "mainApp/search.html", {})
 
 """ def addListing(response):
     return render(response, "mainApp/addListing.html", {}) """
