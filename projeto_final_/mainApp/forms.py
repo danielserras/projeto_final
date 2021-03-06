@@ -5,6 +5,10 @@ from django.contrib.auth.models import User
 from .models import *
 from django.forms import modelformset_factory
 from django.forms.models import inlineformset_factory
+from django.core.files.uploadedfile import SimpleUploadedFile
+from multiupload.fields import MultiImageField                      #tirar daqui
+from django.forms import inlineformset_factory
+from PIL import *
 
 
 class CreateUserForm(UserCreationForm):
@@ -41,8 +45,7 @@ class ListingForm(forms.ModelForm):
             'title',
             'description',
             'security_deposit',
-            'max_capacity'
-        ]
+            'max_capacity']
 
 class PropertyForm(forms.ModelForm):
 
@@ -242,7 +245,13 @@ class Agreement_Request_Form(forms.ModelForm):
             'landlord': forms.HiddenInput(),
             'accepted': forms.HiddenInput()
         }
-        
+
+class ImageForm(forms.ModelForm):
+    images = forms.ImageField()
+
+    class Meta:
+        model = Image
+        fields = ['images' ]
 
 
 
@@ -254,3 +263,5 @@ KitchenFormSet = modelformset_factory(model = Kitchen, form = KitchenForm, extra
 BathroomFormSet = modelformset_factory(model = Bathroom, form = BathroomForm, extra=1)
 
 LivingroomFormSet = modelformset_factory(model = Livingroom, form = LivingroomForm, extra=1)
+
+ImgFormSet = modelformset_factory(model = Image, form = ImageForm, extra=2)

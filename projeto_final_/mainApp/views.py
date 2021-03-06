@@ -63,7 +63,7 @@ def register_view(request):
 def introduce_property_view (request):
 
     if request.method == 'POST':
-        
+
         current_user = request.user
         a_user = App_user.objects.get(user_id=current_user)
         form_list = []
@@ -93,7 +93,7 @@ def introduce_property_view (request):
             form_list.append(live_form)
             #print('entrei3')
         elif 'listing' in request.session.keys():
-            listing_form = ListingForm(data=request.POST)
+            listing_form = ListingForm(request.POST, request.FILES)
             form_list.append(listing_form)
 
 
@@ -208,7 +208,9 @@ def introduce_property_view (request):
                         listing_form = ListingForm()
                         request.session['listing'] =  True
                         
-                        context = {'listing_form': listing_form}
+                        imgformset = ImgFormSet(queryset=Image.objects.none())
+                        context = {'listing_form': listing_form, 'imgformset' : imgformset}
+
                         return render(request, 'mainApp/addListing.html', context)
 
 
@@ -233,12 +235,10 @@ def introduce_property_view (request):
                     request.session['listing'] =  True
                     del request.session['livingrooms_num']
 
-                    context = {'listing_form': listing_form}
+                    imgformset = ImgFormSet(queryset=Image.objects.none())
+                    context = {'listing_form': listing_form, 'imgformset' : imgformset}
 
-                    return render(
-                        request,
-                        'mainApp/addListing.html',
-                        context)
+                    return render(request, 'mainApp/addListing.html', context)
                     
                 
                 elif f == bed_form:
@@ -278,8 +278,12 @@ def introduce_property_view (request):
                         
                 
                 elif f == listing_form:
-
+                    print(f)
                     if f.is_valid():
+
+                        prop_album = ImageAlbum(name=f.cleaned_data.get('title'))
+                        prop_album.save()
+
                         listing_obj = Listing(
                             listing_type = f.cleaned_data.get('listing_type'),
                             allowed_gender = f.cleaned_data.get('allowed_gender'),
@@ -289,23 +293,54 @@ def introduce_property_view (request):
                             title =  f.cleaned_data.get('title'),
                             description =  f.cleaned_data.get('description'),
                             security_deposit =  f.cleaned_data.get('security_deposit'),
-                            max_capacity =  f.cleaned_data.get('max_capacity')
+                            max_capacity =  f.cleaned_data.get('max_capacity'),
+                            album = prop_album
                         )
                         listing_obj.save()
+
+                        
+                        assoc_prop = Property.objects.get(id=int(request.session['prop_id']))
                         main_listing = listing_obj
                         del request.session['listing']
 
+                        imgformset = ImgFormSet(request.POST, request.FILES)
+                        imgs = imgformset.cleaned_data
+
+                        for d in imgs:
+                            cover = False
+                            if d == imgs[0]:
+                                cover = True
+
+                            for i in d.values():
+                                if i != None:
+                                    
+                                    img = Image(
+                                        name= listing_obj.title+'_'+str(assoc_prop.id),
+                                        is_cover = cover,
+                                        image = i,
+                                        album = prop_album)
+                                    img.save()
+
                         if f.cleaned_data.get('listing_type') == 'Apartment':
-                            apart_obj = Property_listing(main_listing = main_listing, associated_property = Property.objects.get(id=int(request.session['prop_id'])))
+                            apart_obj = Property_listing(main_listing = main_listing, associated_property = assoc_prop)
                             apart_obj.save()
+
+                            #imgformset = modelformset_factory(Image, form=ImageForm, extra=1)
+                            context = {'imgformset': imgformset}
                             return redirect('index')
+                            
 
                         elif f.cleaned_data.get('listing_type') == 'Bedroom':
                             room_obj = Room_listing(
                                 main_listing = main_listing,
-                                associated_room = Bedroom.objects.get(associated_property = Property.objects.get(id=int(request.session['prop_id']))))
+                                associated_room = Bedroom.objects.get(associated_property = assoc_prop))
                             room_obj.save()
+                            
+                            #imgformset = modelformset_factory(Image, form=ImageForm, extra=1)
+                            context = {'imgformset': imgformset}
                             return redirect('index')
+                            #return render(request,'mainApp/addAlbum.html',context)
+
 
         return redirect('index')     #PLACEHOLDER
                         
