@@ -9,6 +9,11 @@
 
 {% block content %}
 <div class="container">
+    {% if request.session.livingrooms_num > 0%}
+        <div class="progress mt-5 mb-3">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:80%"></div>
+        </div>
+    {% endif %}
     <form action="" method="POST">
         {% csrf_token %}
         {{live_formset.management_form}}

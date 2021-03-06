@@ -9,6 +9,9 @@
 
 {% block content %}
 <div class="container">
+    <div class="progress mt-5 mb-3">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:100%"></div>
+    </div>
     <form action="{% url 'addListing' %}" method="POST">
         {% csrf_token %}
         <div class="row ">
@@ -79,33 +82,6 @@
                         <h3>Regras</h3>
                     </div>
                 </div>
-                <div class="row justify-content-md-center mb-2">
-                    <div class="col-sm-7">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <input type="checkbox" name="pets" >
-                                <label for="pets">Animais de Estimação</label>
-                            </div>
-                            <div class="col-sm-4">
-                                <input type="checkbox" name="smoke" >
-                                <label for="smoke">Fumar</label>
-                            </div>
-                            <div class="col-sm-4">
-                                <input type="checkbox" name="overnightVisits" >
-                                <label for="overnight_visits">Visitas podem pernoitar ocasionalmente</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <label for="allowed_gender">Género Permitido</label>
-                                <select name="allowed_gender" >
-                                    <option value="Ambos">Ambos</option>
-                                    <option value="onlyWomens">Apenas Mulheres</option>
-                                    <option value="onlyMens">Apenas Homens</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="row justify-content-md-center ">
                     <div class="form-group col-sm-7">

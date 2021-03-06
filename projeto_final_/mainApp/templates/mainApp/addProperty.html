@@ -8,7 +8,10 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container ">
+    <div class="progress mt-5 mb-3">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
     <form action="{% url 'addProperty' %}" method="POST" id="formContainer">
         {% csrf_token %}
         <div class="row justify-content-md-center pageListing-1">
@@ -21,33 +24,33 @@
                             <img src='{% static "mainApp/images/map-pin.svg" %}' class='img-fluid' alt='Location pin'>
                         </span>
                     </div>
-                    <input type="text" class="form-control border-left-0 pl-0 border-info border-3 rounded-right" name="address">
+                    <input type="text" class="form-control border-left-0 pl-0 border-info border-3 rounded-right" name="address" required>
                 </div>
             </div>
         </div>
 
-        <div class="row pageListing-1">
-            <div class="col-sm-12" id="pageListing-7">                
+        <div class="row">
+            <div class="col-sm-12" >                
                 <div class="row mt-2 mb-2 justify-content-md-center">
                     <div class="col-sm-7">
                         <h3>Regras</h3>
                     </div>
                 </div>
 
-                <div class="row justify-content-md-center mb-2">
+                <div class="row justify-content-md-center mb-2 ">
                     <div class="col-sm-7">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <input type="checkbox" name="pets" >
-                                <label for="pets" class="d-inline">Animais de Estimação</label>
+                        <div class="row p-3">
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="pets" class="custom-control-input" id="pets">
+                                <label for="pets" class="custom-control-label">Animais de Estimação</label>
                             </div>
-                            <div class="col-sm-3">
-                                <input type="checkbox" name="smoke" >
-                                <label for="smoke">Fumar</label>
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="smoke" class="custom-control-input" id="smoke">
+                                <label for="smoke" class="custom-control-label">Fumar</label>
                             </div>
-                            <div class="col-sm-3">
-                                <input type="checkbox" name="overnight_visits" >
-                                <label for="overnight_visits" class="d-inline">Visitas podem pernoitar ocasionalmente</label>
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="overnight_visits"class="custom-control-input" id="overnight_visits">
+                                <label for="overnight_visits" class="custom-control-label">Visitas podem pernoitar ocasionalmente</label>
                             </div>
                         </div>
                     </div>
@@ -61,28 +64,28 @@
 
                 <div class="row justify-content-md-center mb-2">
                     <div class="col-sm-7">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <input type="checkbox" name="water" >
-                                <label for="water">Água</label>
+                        <div class="row p-3">
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="water" class="custom-control-input" id="water">
+                                <label for="water" class="custom-control-label">Água</label>
                             </div>
-                            <div class="col-sm-3">
-                                <input type="checkbox" name="eletricity" >
-                                <label for="eletricity">Eletrecidade</label>
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="eletricity" class="custom-control-input" id="eletricity">
+                                <label for="eletricity" class="custom-control-label">Eletricidade</label>
                             </div>
-                            <div class="col-sm-3">
-                                <input type="checkbox" name="internet" >
-                                <label for="internet">Internet</label>
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="internet" class="custom-control-input" id="internet">
+                                <label for="internet" class="custom-control-label">Internet</label>
                             </div>
-                            <div class="col-sm-3">
-                                <input type="checkbox" name="gas" >
-                                <label for="gas">Gás</label>
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="gas" class="custom-control-input" id="gas">
+                                <label for="gas" class="custom-control-label">Gás</label>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <input type="checkbox" name="cleaning_services" >
-                                <label for="cleaning_services" class="d-inline">Serviços de Limpeza</label>
+                        <div class="row p-3">
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="cleaning_services" class="custom-control-input" id="cleaning_services">
+                                <label for="cleaning_services" class="custom-control-label">Serviços de Limpeza</label>
                             </div>
                         </div>
                     </div>
@@ -96,38 +99,42 @@
 
                 <div class="row justify-content-md-center mb-2">
                     <div class="col-sm-7">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <input type="checkbox" name="street_parking" >
-                                <label for="street_parking">Estacionamento</label>
+                        <div class="row p-3">
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="street_parking" class="custom-control-input" id="street_parking">
+                                <label for="street_parking" class="custom-control-label">Estacionamento</label>
                             </div>
-                            <div class="col-sm-3">
-                                <input type="checkbox" name="garage" >
-                                <label for="garage">Garagem</label>
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="garage" class="custom-control-input" id="garage">
+                                <label for="garage" class="custom-control-label">Garagem</label>
                             </div>
-                            <div class="col-sm-3">
-                                <input type="checkbox" name="garden" >
-                                <label for="garden">Jardim</label>
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="garden" class="custom-control-input" id="garden">
+                                <label for="garden" class="custom-control-label">Jardim</label>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row justify-content-md-center ">
-            <div class="form-group col-sm-auto">
-                <br>
-                <label for="" class="">Número de Quartos</label><br>
-                <input type="number" name="bedrooms_num" id="bedroomsNum" min="1"> <br>
-                <label for="" class="">Número de Casas de Banho</label><br>
-                <input type="number" name="bathrooms_num" id="bathroomsNum" min="1"><br>
-                <label for="" class="">Número de Cozinhas</label><br>
-                <input type="number" name="kitchens_num" id="kitchensNum" min="1"><br>
-                <label for="" class="">Número de Salas</label><br>
-                <input type="number" name="livingrooms_num" id="livingroomsNum" min="0"> <br>
+        <div class="row mt-2  justify-content-md-center">
+            <div class="col-sm-7">
+                <h3>Características da Casa</h3>
             </div>
         </div>
-        <div class="row justify-content-md-center text-center">
+        <div class="row justify-content-md-center">
+            <div class="col-sm-7">
+                <label for="bedroomsNum" >Número de Quartos</label>
+                <input type="number" name="bedrooms_num" id="bedroomsNum" min="1" class="form-control border-info border-3 rounded" required> <br>
+                <label for="bathroomsNum" >Número de Casas de Banho</label><br>
+                <input type="number" name="bathrooms_num" id="bathroomsNum" min="1" class="form-control border-info border-3 rounded-right" required><br>
+                <label for="kitchensNum" >Número de Cozinhas</label><br>
+                <input type="number" name="kitchens_num" id="kitchensNum" min="1" class="form-control border-info border-3 rounded-right" required><br>
+                <label for="livingroomsNum" >Número de Salas</label><br>
+                <input type="number" name="livingrooms_num" id="livingroomsNum" min="0" class="form-control border-info border-3 rounded-right" required> <br>
+            </div>
+        </div>
+        <div class="row justify-content-md-center text-center mb-3">
             <div class="col-sm-auto">
                 <button type="submit" class="btn btn-secondary" >Seguinte</button>
             </div>

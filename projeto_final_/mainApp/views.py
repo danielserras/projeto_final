@@ -23,7 +23,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             request.session['username'] = username
-            return redirect('home_page') #placeholder, alterem depois
+            return redirect('index') #placeholder, alterem depois
         else:
             messages.info(request, 'Username ou password incorretos')
             request.session['popUp'] =  False
@@ -66,9 +66,9 @@ def register_view(request):
 def introduce_property_view (request):
 
     if request.method == 'POST':
-
-        test_user = User.objects.filter(id=1)
-        a_user = App_user.objects.get(user_id__in=test_user)
+        
+        current_user = request.user
+        a_user = App_user.objects.get(user_id=current_user)
         form_list = []
         bed_form = ''
         bath_form = ''
@@ -82,19 +82,19 @@ def introduce_property_view (request):
         if 'bedrooms_num' in request.session.keys():
             bed_form = BedroomFormSet(data=request.POST)
             form_list.append(bed_form)
-            print(request.session.keys())
+            #print(request.session.keys())
         elif 'bathrooms_num' in request.session.keys():
             bath_form = BathroomFormSet(data=request.POST)
             form_list.append(bath_form)
-            print('entrei1')
+            #print('entrei1')
         elif 'kitchens_num' in request.session.keys():
             kitchen_form = KitchenFormSet(data=request.POST)
             form_list.append(kitchen_form)
-            print('entrei2')
+            #print('entrei2')
         elif 'livingrooms_num' in request.session.keys():
             live_form = LivingroomFormSet(data=request.POST)
             form_list.append(live_form)
-            print('entrei3')
+            #print('entrei3')
         elif 'listing' in request.session.keys():
             listing_form = ListingForm(data=request.POST)
             form_list.append(listing_form)
@@ -310,7 +310,7 @@ def introduce_property_view (request):
                             room_obj.save()
                             return redirect('index')
 
-        return redirect('home')     #PLACEHOLDER
+        return redirect('index')     #PLACEHOLDER
                         
     else:
         prop_form = PropertyForm()

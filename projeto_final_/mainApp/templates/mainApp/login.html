@@ -77,8 +77,8 @@
           </div>
           <form method='POST' action="{% url 'login_view' %}">
             {% csrf_token %}
-            <input type="text" id="username" class="inputType1 fadeIn second" name="login" placeholder="Nome de Utilizador">
-            <input type="password" id="password" class="inputType1 fadeIn third" name="login" placeholder="Palavra-passe">
+            <input type="text" id="username" class="inputType1 fadeIn second" name="username" placeholder="Nome de Utilizador">
+            <input type="password" id="password" class="inputType1 fadeIn third" name="password" placeholder="Palavra-passe">
             <button type="submit" class="inputType2 fadeIn fourth btn btn-secondary m-2 font-weight-bold">Login</button>
           </form>
           <div id="formFooter">
