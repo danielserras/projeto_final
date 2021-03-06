@@ -280,6 +280,14 @@ class Agreement_Request_Form(forms.ModelForm):
         }
 
 class ImageForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ImageForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if field.widget.attrs.get('class'):
+                field.widget.attrs['class'] += 'imgfield'
+            else:
+                field.widget.attrs['class']='imgfield'
+
     images = forms.ImageField()
 
     class Meta:
@@ -322,4 +330,4 @@ BathroomFormSet = modelformset_factory(model = Bathroom, form = BathroomForm, ex
 
 LivingroomFormSet = modelformset_factory(model = Livingroom, form = LivingroomForm, extra=1)
 
-ImgFormSet = modelformset_factory(model = Image, form = ImageForm, extra=2)
+ImgFormSet = modelformset_factory(model = Image, form = ImageForm, extra=1)
