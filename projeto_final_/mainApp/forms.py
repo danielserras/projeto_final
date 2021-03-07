@@ -47,12 +47,14 @@ class ListingForm(forms.ModelForm):
             'max_capacity']
 
 class PropertyForm(forms.ModelForm):
-
     address = forms.CharField(required=True, max_length=100)
     bedrooms_num = forms.IntegerField(required=True) 
     bathrooms_num = forms.IntegerField(required=True)
     kitchens_num = forms.IntegerField(required=True)
     livingrooms_num = forms.IntegerField(required=True)
+    latitude = forms.CharField(required=True, max_length=100)
+    longitude = forms.CharField(required=True, max_length=100)
+
     #booleans
     smoke = forms.BooleanField(required=False, initial=False)
     garden = forms.BooleanField(required=False, initial=False)
@@ -70,6 +72,8 @@ class PropertyForm(forms.ModelForm):
     class Meta:
         model = Property
         fields = [
+            'latitude',
+            'longitude',
             'address',
             'smoke',
             'garden',
@@ -258,26 +262,14 @@ class Agreement_Request_Form(forms.ModelForm):
     startsDate = forms.DateField()
     endDate = forms.DateField()
     message = forms.CharField(widget=forms.Textarea, required=False)
-    accepted = forms.BooleanField(required=False)
+
 
     class Meta:
         model = Agreement_Request
         fields = [
-            'associated_room',
-            'associated_property',
-            'tenant',
-            'landlord',
             'startsDate',
             'endDate',
-            'message',
-            'accepted']
-        widgets = {
-            'associated_room': forms.HiddenInput(),
-            'associated_property': forms.HiddenInput(),
-            'tenant': forms.HiddenInput(),
-            'landlord': forms.HiddenInput(),
-            'accepted': forms.HiddenInput()
-        }
+            'message']
 
 class ImageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -296,11 +288,11 @@ class ImageForm(forms.ModelForm):
 
 TYPE_CHOICES =( 
     ("", "Zero"), 
-    ("apartment", "One"), 
-    ("house", "Two"), 
-    ("privateBedroom", "Three"), 
-    ("sharedBedroom", "Four"), 
-    ("residence", "Five"), 
+    ("Apartment", "One"), 
+    ("House", "Two"), 
+    ("Studio", "One"), 
+    ("Bedroom", "Three"), 
+    ("Residence", "Four"), 
 ) 
 NUM_CHOICES =( 
     ("", "Zero"), 

@@ -15,8 +15,8 @@ class App_user(models.Model):
 
 class Tenant(models.Model):
     ten_user = models.OneToOneField(App_user, on_delete=models.CASCADE)
-class Landlord(models.Model):
 
+class Landlord(models.Model):
     lord_user = models.OneToOneField(App_user, on_delete=models.CASCADE)
     lord_type = models.CharField(max_length=30, default='Particular')
 
@@ -56,13 +56,14 @@ class Property(models.Model):
     overnight_visits = models.BooleanField(default=False)
     cleaning_services = models.BooleanField(default=False)
     smoke = models.BooleanField(default=False)
-    latitude = models.DecimalField(max_digits=20, decimal_places=14)
-    longitude = models.DecimalField(max_digits=20, decimal_places=14)
+    address = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+
     
 
 
 class Bathroom(models.Model):
-    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE, related_name = "bathroom")
+    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE, related_name = "bathroom", null=True, blank=True)
     toilet = models.BooleanField() 
     sink = models.BooleanField()
     shower = models.BooleanField()
@@ -71,7 +72,7 @@ class Bathroom(models.Model):
     bidet = models.BooleanField()
 
 class Bedroom(models.Model):
-    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE, related_name="bedroom")
+    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE, related_name="bedroom", null=True, blank=True)
     be_chairs = models.BooleanField()
     be_sofa = models.BooleanField()
     be_sofa_bed = models.BooleanField()
@@ -90,7 +91,7 @@ class Bedroom(models.Model):
     ensuite_bathroom = models.BooleanField()
 
 class Kitchen(models.Model):
-    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE, related_name="kitchen")
+    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE, related_name="kitchen", null=True, blank=True)
     dish_washer = models.BooleanField()
     k_window = models.BooleanField()
     fridge = models.BooleanField()
@@ -110,7 +111,7 @@ class Kitchen(models.Model):
 
 
 class Livingroom(models.Model):
-    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE, related_name="livingroom")
+    associated_property = models.ForeignKey(Property, on_delete = models.CASCADE, related_name="livingroom", null=True, blank=True)
     l_chairs = models.BooleanField()
     l_sofa = models.BooleanField()
     l_sofa_bed = models.BooleanField()
@@ -142,16 +143,16 @@ class Property_listing(models.Model):
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
 
 class Agreement(models.Model):
-    associated_room = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)
-    associated_property = models.ForeignKey(Property_listing, null=True, on_delete=models.CASCADE)
+    associated_room_listing = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)
+    associated_property_listing = models.ForeignKey(Property_listing, null=True, on_delete=models.CASCADE)
     tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
     startsDate = models.DateField()
     endDate = models.DateField()
 
 class Agreement_Request(models.Model):
-    associated_room = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)
-    associated_property = models.ForeignKey(Property_listing, null=True, on_delete=models.CASCADE)
+    associated_room_listing = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)
+    associated_property_listing = models.ForeignKey(Property_listing, null=True, on_delete=models.CASCADE)
     tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
     startsDate = models.DateField()

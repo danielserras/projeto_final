@@ -7,7 +7,8 @@
 
 <div class="container mt-5 mb-5 p-0 intent">
     <div class= "row" id="datesIntent">
-        <div class="col-sm-8 pl-0 pr-0" style="background-color:white;">
+        <form method="POST" action="{% url 'create_request' %}" class="col-sm-8 pl-0 pr-0" style="background-color:white;">
+            {% csrf_token %}
             <div class="row col-sm-12 mb-0 mt-2 p-0 pl-0 ml-0 bg-warning">
                 <img src='{% static "mainApp/images/arrow.jpg" %}' class="rounded housesMsg mt-0" alt="arrow" width="45" height="50">
                 <h4 class="text-right text-info mt-3 mb-2 pl-2"> Estou interessado! </h4>
@@ -15,32 +16,29 @@
             <div class="form-group row pl-4 mt-4 mb-2">
                 <label for="example-date-input" class="col-2 col-form-label">Data de Início</label>
                 <div class="col-4">
-                  <input class="form-control" type="date" value="">
+                  <input class="form-control" type="date" name="startsDate" value="">
                 </div>
             </div>
             <div class="form-group row pl-4 mt-4 mb-2">
                 <label for="example-date-input" class="col-2 col-form-label">Data de Fim</label>
                 <div class="col-4">
-                  <input class="form-control" type="date" value="">
+                  <input class="form-control" type="date" name="endDate" value="">
                 </div>
             </div>
             <div class="row">
                 <h6 class="text-info font-weight-bold mb-3 mt-3 pl-4">Mensagem a enviar ao senhorio:</h6>
             </div>
 
-            <div class="container border border-info border-3 p-3">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <p> Estou interessado em alugar o seu alojamento!</p>
-                        <p> Congue nisi vitae suscipit tellus mauris a. Donec enim diam vulputate ut pharetra sit. Pellentesque adipiscing commodo elit at imperdiet dui. Et egestas quis ipsum suspendisse. Senectus et netus et malesuada. Mollis nunc sed id semper risus in. Non curabitur gravida arcu ac tortor dignissim convallis aenean. Sapien pellentesque habitant morbi tristique. Mauris a diam maecenas sed enim ut sem viverra. Sed felis eget velit aliquet. Gravida quis blandit turpis cursus in hac habitasse.</p>
-                        <p>Porttitor eget dolor morbi non arcu risus quis. In ante metus dictum at. Faucibus nisl tincidunt eget nullam. Blandit cursus risus at ultrices mi tempus imperdiet nulla. Quis hendrerit dolor magna eget. A scelerisque purus semper eget. Neque volutpat ac tincidunt vitae semper. Sit amet consectetur adipiscing elit. Nibh ipsum consequat nisl vel pretium lectus. Enim nec dui nunc mattis enim ut tellus elementum sagittis.</p>
-                    </div>
-                </div>
-            </div> 
+            
+                
+                    <textarea id="msg" class="row container border border-info border-3 p-3 mx-auto "name="message" rows="15" cols="50">
+                        Introduza aqui uma mensagem a enviar ao proprietário
+                    </textarea>
+                
             <div class="row mt-4 ml-3">
-                <button type="button" class="btn btn-secondary btn-lg pull-right">enviar</button>
+                <button type="submit" class="btn btn-secondary btn-lg pull-right">enviar</button>
             </div>
-        </div>
+        </form>
         <div class="col-sm-4 pl-0 pr-0" style="background-color:white;">
             <img src='{% static "mainApp/images/houses.jpg" %}' class="rounded housesMsg mt-5 pl-5 mx-auto" alt="houses" width="440" height="415"> 
         </div>
