@@ -38,7 +38,7 @@ def login_view(request):
 @login_required(login_url='/')
 def logout_view(request):
     logout(request)
-    return redirect('index')
+    return redirect('login_view')
 
 
 def register_view(request):
@@ -393,33 +393,27 @@ def startsAgreement(response):
 
 
 def create_request(request):
-
     if request.method == 'POST':
-        ag_form = Agreement_Request_Form()
-        #popular campos do form de antemao com info sobre a propriedade
 
-        context = {'ag_form': ag_form}
-        return render(request, 'mainApp/intent.html', context)
-    
-    else:
-        #nao deve cair aqui
-        return redirect('index')
-
-        
-def send_request(request):
-
-    if request.method == 'POST':
-        #inq ja preencheu tudo no form, falta criar agreement_request
         ag_form = Agreement_Request_Form(data=request.POST)
-        if ag_form.is_valid():
 
-            room_id = ag_form.cleaned_data.get('associated_room_listing')
-            prop_id = ag_form.cleaned_data.get('associated_property_listing')
-            tenant_id = ag_form.cleaned_data.get('tenant')
-            landlord_id = ag_form.cleaned_data.get('landlord')
+        if ag_form.is_valid():
+            room_id = request.session.get('room_listing')
+            prop_id = request.session.get('property_listing')
+            tenant_id = request.session.get('tenant')
+            landlord_id = request.session.get('landlord')
             start_date = ag_form.cleaned_data.get('startsDate')
             end_date = ag_form.cleaned_data.get('endDate')
             message = ag_form.cleaned_data.get('message')
+
+            if 'room_listing' in request.session:
+                del request.session['room_listing']
+                del request.session['tenant']
+                del request.session['landlord']
+            elif 'property_listing' in request.session:
+                del request.session['property_listing']
+                del request.session['tenant']
+                del request.session['landlord']
 
             if room_id:
                 
@@ -456,7 +450,8 @@ def send_request(request):
 
                 return redirect('index')
 
-    return redirect('home_page')
+    else:
+        return render(request, 'mainApp/intent.html')
 
 
 def profile(response):
@@ -509,17 +504,26 @@ def search(request):
 def notifications(response):
     return render(response, "mainApp/notifications.html", {})
 
-def listing(response, listing_id):
+def listing(request, listing_id):
     listing = Listing.objects.get(pk=listing_id)
     listing_type = listing.listing_type
     bedrooms = []
+    print(listing.id)
+    if 'room_listing' in request.session:
+        del request.session['room_listing']
+        del request.session['tenant']
+        del request.session['landlord']
+    elif 'property_listing' in request.session:
+        del request.session['property_listing']
+        del request.session['tenant']
+        del request.session['landlord']
 
     if listing_type == "Bedroom":
         associated_object = listing.r_main.associated_room #associated object is a Bedroom
         parent_property = associated_object.associated_property
         bedrooms.append(associated_object)
 
-        request.session['room_listing'] = Room_listing.objects.filter(associated_room=associated_object)
+        request.session['room_listing'] = Room_listing.objects.get(associated_room=associated_object).id
     
 
     else:
@@ -528,7 +532,7 @@ def listing(response, listing_id):
 
         bedrooms = list(Bedroom.objects.filter(associated_property = parent_property))
 
-        request.session['property_listing'] = Property_listing.objects.filter(associated_property=associated_object)
+        request.session['property_listing'] = Property_listing.objects.get(associated_property=associated_object).id
         
     num_beds = 0
     for bedroom in bedrooms:
@@ -545,11 +549,11 @@ def listing(response, listing_id):
     for room in rooms_count_details:
         num_details += countRoomDetails(room)
 
-    app_user = App_user.objects.filter(user=request.user)
-    tenant = Tenant.objects.filter(ten_user=app_user)
+    app_user = App_user.objects.get(user=request.user)
+    tenant = Tenant.objects.get(ten_user=app_user)
 
-    request.session['tenant'] = tenant
-    request.session['landlord'] = landlord
+    request.session['tenant'] = tenant.id
+    request.session['landlord'] = landlord.id
 
     context  = {
         "listing": listing,
@@ -563,7 +567,7 @@ def listing(response, listing_id):
         "livingrooms": livingrooms,
         "security_deposit": listing.security_deposit,
     }
-    return render(response, "mainApp/listingPage.html", context)
+    return render(request, "mainApp/listingPage.html", context)
 
 def countRoomDetails(rooms):
      

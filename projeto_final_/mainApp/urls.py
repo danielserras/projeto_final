@@ -19,6 +19,6 @@ urlpatterns = [
     path('notifications', views.notifications, name='notifications'),
     path('notifications2', views.notifications2, name='notifications2'),
     path('notifications3', views.notifications3, name='notifications3'),
-    path('intent', views.intent, name='intent'),
+    path('listing/application', views.create_request, name='create_request'),
     path('listing/<int:listing_id>', views.listing, name='listing')
 ]
