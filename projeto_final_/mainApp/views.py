@@ -13,6 +13,7 @@ from paypal.standard.forms import PayPalPaymentsForm
 from django.forms.models import model_to_dict
 from django.db import connection
 import time
+import json
 #tirar debug_mode no fim do proj
 #tirar test_mode do paypal no fim
 
@@ -117,23 +118,7 @@ def introduce_property_view (request):
 
                 if f == prop_form:
                     if f.is_valid():
-                        prop_object = Property(
-                            landlord = Landlord.objects.get(lord_user=a_user),
-                            address = f.cleaned_data.get('address'),
-                            floor_area = f.cleaned_data.get('floor_area'),
-                            garden = f.cleaned_data.get('garden'),
-                            garage = f.cleaned_data.get('garage'),
-                            street_parking = f.cleaned_data.get('street_parking'),
-                            internet = f.cleaned_data.get('internet'),
-                            electricity = f.cleaned_data.get('electricity'),
-                            water = f.cleaned_data.get('water'),
-                            gas = f.cleaned_data.get('gas'),
-                            pets = f.cleaned_data.get('pets'),
-                            overnight_visits = f.cleaned_data.get('overnight_visits'),
-                            cleaning_services = f.cleaned_data.get('cleaning_services'),
-                            smoke = f.cleaned_data.get('smoke')
-                        )
-                        prop_object.save()
+
                         bed_formset = BedroomFormSet(queryset=Bedroom.objects.none())
                         bed_formset.extra = int(f.cleaned_data.get('bedrooms_num'))
                         
@@ -141,7 +126,9 @@ def introduce_property_view (request):
                         request.session['bathrooms_num'] =  f.cleaned_data.get('bathrooms_num')
                         request.session['kitchens_num'] =  f.cleaned_data.get('kitchens_num')
                         request.session['livingrooms_num'] =  f.cleaned_data.get('livingrooms_num')
-                        request.session['prop_id'] = prop_object.id
+
+                        prop_serial = json.dumps(f.cleaned_data)
+                        request.session['prop_id'] = prop_serial
 
                         context = {
                             'property_form': prop_form,
@@ -155,19 +142,12 @@ def introduce_property_view (request):
 
                 elif f == bath_form:
                     print(f)
+                    bath_serial_list = []
                     for sub_form in f:
+                        bath_serial_list.append(sub_form.cleaned_data)
 
-                        bath_object = Bathroom(
-                            associated_property = Property.objects.get(id=int(request.session['prop_id'])),
-                            toilet = sub_form.cleaned_data.get('toilet'),
-                            sink = sub_form.cleaned_data.get('sink'),
-                            shower = sub_form.cleaned_data.get('shower'),
-                            b_window = sub_form.cleaned_data.get('b_window'),
-                            bathtub = sub_form.cleaned_data.get('bathtub'),
-                            bidet = sub_form.cleaned_data.get('bidet')
-                        )
-                        bath_object.save()
-
+                    bathroom_serial = json.dumps(bath_serial_list)
+                    request.session['bathroom_serial'] = bathroom_serial
                     kitchen_formset = KitchenFormSet(queryset=Kitchen.objects.none())
 
                     kitchen_formset.extra = int(request.session['kitchens_num'])
@@ -184,29 +164,13 @@ def introduce_property_view (request):
 
                 elif f == kitchen_form:
                     print(f)
+                    kit_serial_list = []
                     for sub_form in f:
-
-                        kitchen_obj = Kitchen(
-                            associated_property = Property.objects.get(id=int(request.session['prop_id'])),
-                            oven = sub_form.cleaned_data.get("oven"),            
-                            dish_washer = sub_form.cleaned_data.get("dish_washer"),  
-                            k_window = sub_form.cleaned_data.get("k_window"),  
-                            fridge = sub_form.cleaned_data.get("fridge"),  
-                            freezer = sub_form.cleaned_data.get("freezer"),  
-                            cooker = sub_form.cleaned_data.get("cooker"),  
-                            dishes_cutlery = sub_form.cleaned_data.get("dishes_cutlery"),  
-                            pans_pots = sub_form.cleaned_data.get("pans_pots"),  
-                            dishwasher_machine = sub_form.cleaned_data.get("dishwasher_machine"),  
-                            dryer = sub_form.cleaned_data.get("dryer"),
-                            k_table = sub_form.cleaned_data.get("k_table"),
-                            laundering_machine = sub_form.cleaned_data.get("laundering_machine"),
-                            k_chairs = sub_form.cleaned_data.get("k_chairs"),
-                            microwave = sub_form.cleaned_data.get("microwave"),
-                            k_balcony = sub_form.cleaned_data.get("k_balcony")
-                        )
-                        kitchen_obj.save()
+                        kit_serial_list.append(sub_form.cleaned_data)
 
                     if request.session['livingrooms_num'] > 0:
+                        kitchen_serial = json.dumps(kit_serial_list)
+                        request.session['kitchen_serial'] = kitchen_serial
                         live_formset = LivingroomFormSet(queryset=Livingroom.objects.none())
 
                         live_formset.extra = int(request.session['livingrooms_num'])
@@ -218,6 +182,8 @@ def introduce_property_view (request):
                         del request.session['kitchens_num']
                         del request.session['livingrooms_num']
 
+                        kitchen_serial = json.dumps(kit_serial_list)
+                        request.session['kitchen_serial'] = kitchen_serial
                         listing_form = ListingForm()
                         request.session['listing'] =  True
                         
@@ -229,20 +195,12 @@ def introduce_property_view (request):
 
                 elif f == live_form:
                     print(f)
+                    liv_serial_list = []
                     for sub_form in f:
-                        
-                        live_obj = Livingroom(
-                            associated_property = Property.objects.get(id=int(request.session['prop_id'])),
-                            l_chairs = sub_form.cleaned_data.get('l_chairs'),
-                            l_sofa = sub_form.cleaned_data.get('l_sofa'),
-                            l_sofa_bed = sub_form.cleaned_data.get('l_sofa_bed'),
-                            l_window = sub_form.cleaned_data.get('l_window'),
-                            l_table = sub_form.cleaned_data.get('l_table'),
-                            l_balcony = sub_form.cleaned_data.get('l_balcony'),
-                            l_desk = sub_form.cleaned_data.get('l_desk')
-                        )
-                        live_obj.save()
+                        liv_serial_list.append(sub_form.cleaned_data)
 
+                    livingroom_serial = json.dumps(liv_serial_list)
+                    request.session['livingroom_serial'] = livingroom_serial
                     listing_form = ListingForm()
 
                     request.session['listing'] =  True
@@ -251,40 +209,24 @@ def introduce_property_view (request):
                     imgformset = ImgFormSet(queryset=Image.objects.none())
                     context = {'listing_form': listing_form, 'imgformset' : imgformset}
 
+                    print(json.loads(request.session['prop_id']))
+                    print(json.loads(request.session['kitchen_serial']))
                     return render(request, 'mainApp/addListing.html', context)
                     
                 
                 elif f == bed_form:
                     print(f)
+                    bed_serial_list = []
                     for sub_form in f:
-                        
-                        bed_obj = Bedroom(
-                            associated_property = Property.objects.get(id=int(request.session['prop_id'])),
-                            be_chairs = sub_form.cleaned_data.get('be_chairs'),
-                            be_sofa = sub_form.cleaned_data.get('be_sofa'),
-                            be_sofa_bed = sub_form.cleaned_data.get('be_sofa_bed'),
-                            be_window = sub_form.cleaned_data.get('be_window'),
-                            num_single_beds = sub_form.cleaned_data.get('num_single_beds'),
-                            num_double_beds = sub_form.cleaned_data.get('num_double_beds'),
-                            be_balcony = sub_form.cleaned_data.get('be_balcony'),
-                            wardrobe = sub_form.cleaned_data.get('wardrobe'),
-                            be_desk = sub_form.cleaned_data.get('be_desk'),
-                            lock = sub_form.cleaned_data.get('lock'),
-                            chest_of_drawers = sub_form.cleaned_data.get('chest_of_drawers'),
-                            tv = sub_form.cleaned_data.get('tv'),
-                            heater = sub_form.cleaned_data.get('heater'),
-                            air_conditioning = sub_form.cleaned_data.get('air_conditioning'),
-                            ensuite_bathroom = sub_form.cleaned_data.get('ensuite_bathroom'),
-                            max_occupacity = sub_form.cleaned_data.get('max_occupacity'),
-                        )
-                        bed_obj.save()
+                        bed_serial_list.append(sub_form.cleaned_data)
 
+                    bedroom_serial = json.dumps(bed_serial_list)
+                    request.session['bedroom_serial'] = bedroom_serial
                     bath_formset = BathroomFormSet(queryset=Bathroom.objects.none())
                     
                     bath_formset.extra = int(request.session['bathrooms_num'])
                     del request.session['bedrooms_num']
 
-                    
                     context = {'bath_formset': bath_formset}
                     return render(request,'mainApp/addBathroom.html',context)
                     
@@ -296,6 +238,97 @@ def introduce_property_view (request):
 
                         prop_album = ImageAlbum(name=f.cleaned_data.get('title'))
                         prop_album.save()
+
+                        prop_content = json.loads(request.session['prop_id'])
+                        prop_obj = Property(
+                            landlord = Landlord.objects.get(lord_user=a_user),
+                            address = prop_content.get('address'),
+                            floor_area = prop_content.get('floor_area'),
+                            garden = prop_content.get('garden'),
+                            garage = prop_content.get('garage'),
+                            street_parking = prop_content.get('street_parking'),
+                            internet = prop_content.get('internet'),
+                            electricity = prop_content.get('electricity'),
+                            water = prop_content.get('water'),
+                            gas = prop_content.get('gas'),
+                            pets = prop_content.get('pets'),
+                            overnight_visits = prop_content.get('overnight_visits'),
+                            cleaning_services = prop_content.get('cleaning_services'),
+                            smoke = prop_content.get('smoke')
+                        )
+                        prop_obj.save()
+
+                        bed_content = json.loads(request.session['bedroom_serial'])
+                        for c in bed_content:
+                            bed_obj = Bedroom(
+                                associated_property = prop_obj,
+                                be_chairs = c.get('be_chairs'),
+                                be_sofa = c.get('be_sofa'),
+                                be_sofa_bed = c.get('be_sofa_bed'),
+                                be_window = c.get('be_window'),
+                                num_single_beds = c.get('num_single_beds'),
+                                num_double_beds = c.get('num_double_beds'),
+                                be_balcony = c.get('be_balcony'),
+                                wardrobe = c.get('wardrobe'),
+                                be_desk = c.get('be_desk'),
+                                lock = c.get('lock'),
+                                chest_of_drawers = c.get('chest_of_drawers'),
+                                tv = c.get('tv'),
+                                heater = c.get('heater'),
+                                air_conditioning = c.get('air_conditioning'),
+                                ensuite_bathroom = c.get('ensuite_bathroom'),
+                                max_occupacity = c.get('max_occupacity'),
+                            )
+                            bed_obj.save()
+
+                        bath_content = json.loads(request.session['bathroom_serial'])
+                        for c in bath_content:
+                            bath_obj = Bathroom(
+                                associated_property = prop_obj,
+                                toilet = c.get('toilet'),
+                                sink = c.get('sink'),
+                                shower = c.get('shower'),
+                                b_window = c.get('b_window'),
+                                bathtub = c.get('bathtub'),
+                                bidet = c.get('bidet')
+                            )
+                            bath_obj.save()
+
+                        kit_content = json.loads(request.session['kitchen_serial'])
+                        for c in kit_content:
+                            kit_obj = Kitchen(
+                                associated_property = prop_obj,
+                                oven = c.get("oven"),            
+                                dish_washer = c.get("dish_washer"),  
+                                k_window = c.get("k_window"),  
+                                fridge = c.get("fridge"),  
+                                freezer = c.get("freezer"),  
+                                cooker = c.get("cooker"),  
+                                dishes_cutlery = c.get("dishes_cutlery"),  
+                                pans_pots = c.get("pans_pots"),  
+                                dishwasher_machine = c.get("dishwasher_machine"),  
+                                dryer = c.get("dryer"),
+                                k_table = c.get("k_table"),
+                                laundering_machine = c.get("laundering_machine"),
+                                k_chairs = c.get("k_chairs"),
+                                microwave = c.get("microwave"),
+                                k_balcony = c.get("k_balcony")
+                            )
+                            kit_obj.save()
+
+                        liv_content = json.loads(request.session['livingroom_serial'])
+                        for c in liv_content:
+                            liv_obj = Livingroom(
+                                associated_property = prop_obj,
+                                l_chairs = c.get('l_chairs'),
+                                l_sofa = c.get('l_sofa'),
+                                l_sofa_bed = c.get('l_sofa_bed'),
+                                l_window = c.get('l_window'),
+                                l_table = c.get('l_table'),
+                                l_balcony = c.get('l_balcony'),
+                                l_desk = c.get('l_desk')
+                            )
+                            liv_obj.save()
 
                         listing_obj = Listing(
                             listing_type = f.cleaned_data.get('listing_type'),
@@ -312,7 +345,7 @@ def introduce_property_view (request):
                         listing_obj.save()
 
                         
-                        assoc_prop = Property.objects.get(id=int(request.session['prop_id']))
+                        assoc_prop = prop_obj
                         main_listing = listing_obj
                         del request.session['listing']
 
@@ -334,6 +367,13 @@ def introduce_property_view (request):
                                         album = prop_album)
                                     img.save()
 
+                        del request.session['prop_id']
+                        del request.session['bedroom_serial']
+                        del request.session['bathroom_serial']
+                        del request.session['kitchen_serial']
+                        if 'livingroom_serial' in request.session:
+                            del request.session['livingroom_serial']
+                            
                         if f.cleaned_data.get('listing_type') == 'Apartment' or f.cleaned_data.get('listing_type') == 'House' or f.cleaned_data.get('listing_type') == 'Studio':
                             apart_obj = Property_listing(main_listing = main_listing, associated_property = assoc_prop)
                             apart_obj.save()
@@ -508,7 +548,7 @@ def listing(request, listing_id):
     listing = Listing.objects.get(pk=listing_id)
     listing_type = listing.listing_type
     bedrooms = []
-    print(listing.id)
+    
     if 'room_listing' in request.session:
         del request.session['room_listing']
         del request.session['tenant']
