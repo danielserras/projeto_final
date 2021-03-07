@@ -15,8 +15,8 @@ class App_user(models.Model):
 
 class Tenant(models.Model):
     ten_user = models.OneToOneField(App_user, on_delete=models.CASCADE)
-class Landlord(models.Model):
 
+class Landlord(models.Model):
     lord_user = models.OneToOneField(App_user, on_delete=models.CASCADE)
     lord_type = models.CharField(max_length=30, default='Particular')
 

@@ -20,7 +20,7 @@ def login_view(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-        print(user)
+
         if user is not None:
             login(request, user)
             request.session['username'] = username
@@ -505,11 +505,16 @@ def listing(response, listing_id):
         parent_property = associated_object.associated_property
         bedrooms.append(associated_object)
 
+        request.session['room_listing'] = Room_listing.objects.filter(associated_room=associated_object)
+    
+
     else:
         associated_object = listing.p_main.associated_property #associated object is a property
         parent_property = associated_object
 
         bedrooms = list(Bedroom.objects.filter(associated_property = parent_property))
+
+        request.session['property_listing'] = Property_listing.objects.filter(associated_property=associated_object)
         
     num_beds = 0
     for bedroom in bedrooms:
@@ -525,6 +530,12 @@ def listing(response, listing_id):
 
     for room in rooms_count_details:
         num_details += countRoomDetails(room)
+
+    app_user = App_user.objects.filter(user=request.user)
+    tenant = Tenant.objects.filter(ten_user=app_user)
+
+    request.session['tenant'] = tenant
+    request.session['landlord'] = landlord
 
     context  = {
         "listing": listing,
