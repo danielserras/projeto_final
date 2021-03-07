@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from paypal.standard.forms import PayPalPaymentsForm
 from django.forms.models import model_to_dict
+from django.db import connection
 import time
 #tirar debug_mode no fim do proj
 #tirar test_mode do paypal no fim
@@ -333,7 +334,7 @@ def introduce_property_view (request):
                                         album = prop_album)
                                     img.save()
 
-                        if f.cleaned_data.get('listing_type') == 'Apartment':
+                        if f.cleaned_data.get('listing_type') == 'Apartment' or f.cleaned_data.get('listing_type') == 'House' or f.cleaned_data.get('listing_type') == 'Studio':
                             apart_obj = Property_listing(main_listing = main_listing, associated_property = assoc_prop)
                             apart_obj.save()
 
@@ -341,7 +342,7 @@ def introduce_property_view (request):
                             return redirect('index')
                             
 
-                        elif f.cleaned_data.get('listing_type') == 'Bedroom':
+                        elif f.cleaned_data.get('listing_type') == 'Bedroom' or f.cleaned_data.get('listing_type') == 'Bedroom':
                             room_obj = Room_listing(
                                 main_listing = main_listing,
                                 associated_room = Bedroom.objects.get(associated_property = assoc_prop))
@@ -474,9 +475,11 @@ def intent(response):
 def search(request):
     form = CreateUserForm()
     if request.method == 'POST':
-        print(form.errors)
         form = SearchForm(data=request.POST)
+        print(form.errors)
+        print(form.is_valid())
         if form.is_valid():
+
             print(form.cleaned_data.get('location'))
             print(form.cleaned_data.get('radius'))
             print(form.cleaned_data.get('type'))
@@ -486,6 +489,17 @@ def search(request):
             print(form.cleaned_data.get('date_out'))
             print(form.cleaned_data.get('minPrice'))
             print(form.cleaned_data.get('maxPrice'))
+
+            #listing_obj = Property.objects.raw('SELECT * FROM mainapp_property')
+            #print(listing_obj)
+
+            cursor = connection.cursor()
+            cursor.execute("SELECT *\
+                            FROM mainapp_property AS p, mainapp_listing AS l, mainapp_property_listing AS pl\
+                            WHERE pl.main_listing_id = l.id AND\
+                            l.listing_type = '" + form.cleaned_data.get('type') +"'")
+            row = cursor.fetchall()
+            print(row)
 
     return render(request, "mainApp/search.html", {})
 

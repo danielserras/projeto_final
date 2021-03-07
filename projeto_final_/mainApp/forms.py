@@ -284,11 +284,11 @@ class ImageForm(forms.ModelForm):
 
 TYPE_CHOICES =( 
     ("", "Zero"), 
-    ("apartment", "One"), 
-    ("house", "Two"), 
-    ("privateBedroom", "Three"), 
-    ("sharedBedroom", "Four"), 
-    ("residence", "Five"), 
+    ("Apartment", "One"), 
+    ("House", "Two"), 
+    ("Studio", "One"), 
+    ("Bedroom", "Three"), 
+    ("Residence", "Four"), 
 ) 
 NUM_CHOICES =( 
     ("", "Zero"), 
