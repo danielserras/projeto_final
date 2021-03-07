@@ -209,8 +209,6 @@ def introduce_property_view (request):
                     imgformset = ImgFormSet(queryset=Image.objects.none())
                     context = {'listing_form': listing_form, 'imgformset' : imgformset}
 
-                    print(json.loads(request.session['prop_id']))
-                    print(json.loads(request.session['kitchen_serial']))
                     return render(request, 'mainApp/addListing.html', context)
                     
                 
@@ -316,19 +314,20 @@ def introduce_property_view (request):
                             )
                             kit_obj.save()
 
-                        liv_content = json.loads(request.session['livingroom_serial'])
-                        for c in liv_content:
-                            liv_obj = Livingroom(
-                                associated_property = prop_obj,
-                                l_chairs = c.get('l_chairs'),
-                                l_sofa = c.get('l_sofa'),
-                                l_sofa_bed = c.get('l_sofa_bed'),
-                                l_window = c.get('l_window'),
-                                l_table = c.get('l_table'),
-                                l_balcony = c.get('l_balcony'),
-                                l_desk = c.get('l_desk')
-                            )
-                            liv_obj.save()
+                        if 'livingroom_serial' in request.session:
+                            liv_content = json.loads(request.session['livingroom_serial'])
+                            for c in liv_content:
+                                liv_obj = Livingroom(
+                                    associated_property = prop_obj,
+                                    l_chairs = c.get('l_chairs'),
+                                    l_sofa = c.get('l_sofa'),
+                                    l_sofa_bed = c.get('l_sofa_bed'),
+                                    l_window = c.get('l_window'),
+                                    l_table = c.get('l_table'),
+                                    l_balcony = c.get('l_balcony'),
+                                    l_desk = c.get('l_desk')
+                                )
+                                liv_obj.save()
 
                         listing_obj = Listing(
                             listing_type = f.cleaned_data.get('listing_type'),
@@ -373,7 +372,7 @@ def introduce_property_view (request):
                         del request.session['kitchen_serial']
                         if 'livingroom_serial' in request.session:
                             del request.session['livingroom_serial']
-                            
+
                         if f.cleaned_data.get('listing_type') == 'Apartment' or f.cleaned_data.get('listing_type') == 'House' or f.cleaned_data.get('listing_type') == 'Studio':
                             apart_obj = Property_listing(main_listing = main_listing, associated_property = assoc_prop)
                             apart_obj.save()
