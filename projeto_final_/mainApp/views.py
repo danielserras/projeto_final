@@ -84,7 +84,7 @@ def introduce_property_view (request):
     except:
         return redirect('index')
 
-        
+
     if request.user.is_active:
 
         if request.method == 'POST':
@@ -237,31 +237,90 @@ def introduce_property_view (request):
                         context = {'bath_formset': bath_formset}
                         return render(request,'mainApp/addBathroom.html',context)
                         
-                            
-                    
-                    elif f == listing_form:
-                        print(f)
-                        if f.is_valid():
+                
+                elif f == listing_form:
+                    print(f)
+                    if f.is_valid():
 
-                            prop_album = ImageAlbum(name=f.cleaned_data.get('title'))
-                            prop_album.save()
+                        prop_album = ImageAlbum(name=f.cleaned_data.get('title'))
+                        prop_album.save()
 
-                            prop_content = json.loads(request.session['prop_id'])
-                            prop_obj = Property(
-                                landlord = Landlord.objects.get(lord_user=a_user),
-                                address = prop_content.get('address'),
-                                floor_area = prop_content.get('floor_area'),
-                                garden = prop_content.get('garden'),
-                                garage = prop_content.get('garage'),
-                                street_parking = prop_content.get('street_parking'),
-                                internet = prop_content.get('internet'),
-                                electricity = prop_content.get('electricity'),
-                                water = prop_content.get('water'),
-                                gas = prop_content.get('gas'),
-                                pets = prop_content.get('pets'),
-                                overnight_visits = prop_content.get('overnight_visits'),
-                                cleaning_services = prop_content.get('cleaning_services'),
-                                smoke = prop_content.get('smoke')
+                        prop_content = json.loads(request.session['prop_id'])
+                        prop_obj = Property(
+                            landlord = Landlord.objects.get(lord_user=a_user),
+                            address = prop_content.get('address'),
+                            latitude = prop_content.get('latitude'),
+                            longitude = prop_content.get('longitude'),
+                            floor_area = prop_content.get('floor_area'),
+                            garden = prop_content.get('garden'),
+                            garage = prop_content.get('garage'),
+                            street_parking = prop_content.get('street_parking'),
+                            internet = prop_content.get('internet'),
+                            electricity = prop_content.get('electricity'),
+                            water = prop_content.get('water'),
+                            gas = prop_content.get('gas'),
+                            pets = prop_content.get('pets'),
+                            overnight_visits = prop_content.get('overnight_visits'),
+                            cleaning_services = prop_content.get('cleaning_services'),
+                            smoke = prop_content.get('smoke')
+                        )
+                        prop_obj.save()
+
+                        bed_content = json.loads(request.session['bedroom_serial'])
+                        for c in bed_content:
+                            bed_obj = Bedroom(
+                                associated_property = prop_obj,
+                                be_chairs = c.get('be_chairs'),
+                                be_sofa = c.get('be_sofa'),
+                                be_sofa_bed = c.get('be_sofa_bed'),
+                                be_window = c.get('be_window'),
+                                num_single_beds = c.get('num_single_beds'),
+                                num_double_beds = c.get('num_double_beds'),
+                                be_balcony = c.get('be_balcony'),
+                                wardrobe = c.get('wardrobe'),
+                                be_desk = c.get('be_desk'),
+                                lock = c.get('lock'),
+                                chest_of_drawers = c.get('chest_of_drawers'),
+                                tv = c.get('tv'),
+                                heater = c.get('heater'),
+                                air_conditioning = c.get('air_conditioning'),
+                                ensuite_bathroom = c.get('ensuite_bathroom'),
+                                max_occupacity = c.get('max_occupacity'),
+                            )
+                            bed_obj.save()
+
+                        bath_content = json.loads(request.session['bathroom_serial'])
+                        for c in bath_content:
+                            bath_obj = Bathroom(
+                                associated_property = prop_obj,
+                                toilet = c.get('toilet'),
+                                sink = c.get('sink'),
+                                shower = c.get('shower'),
+                                b_window = c.get('b_window'),
+                                bathtub = c.get('bathtub'),
+                                bidet = c.get('bidet')
+                            )
+                            bath_obj.save()
+
+                        kit_content = json.loads(request.session['kitchen_serial'])
+                        for c in kit_content:
+                            kit_obj = Kitchen(
+                                associated_property = prop_obj,
+                                oven = c.get("oven"),            
+                                dish_washer = c.get("dish_washer"),  
+                                k_window = c.get("k_window"),  
+                                fridge = c.get("fridge"),  
+                                freezer = c.get("freezer"),  
+                                cooker = c.get("cooker"),  
+                                dishes_cutlery = c.get("dishes_cutlery"),  
+                                pans_pots = c.get("pans_pots"),  
+                                dishwasher_machine = c.get("dishwasher_machine"),  
+                                dryer = c.get("dryer"),
+                                k_table = c.get("k_table"),
+                                laundering_machine = c.get("laundering_machine"),
+                                k_chairs = c.get("k_chairs"),
+                                microwave = c.get("microwave"),
+                                k_balcony = c.get("k_balcony")
                             )
                             prop_obj.save()
 
