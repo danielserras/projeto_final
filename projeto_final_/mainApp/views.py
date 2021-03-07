@@ -35,15 +35,12 @@ def login_view(request):
     context = {}
     return render(request,'mainApp/login.html', context) #placeholder
 
-<<<<<<< HEAD
-=======
 @login_required(login_url='/')
 def logout_view(request):
     logout(request)
     return redirect('index')
 
 
->>>>>>> 2e51aa65631d46a5785ed30235a94dfd62efabb3
 def register_view(request):
     form = CreateUserForm()
     if request.method == 'POST':
