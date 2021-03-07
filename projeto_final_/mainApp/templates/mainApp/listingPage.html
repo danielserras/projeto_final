@@ -76,7 +76,9 @@
                 <img src='{% static "mainApp/images/user.svg" %}' width='13%'>
             </div>
             <div class="row justify-content-center">
-                <button class="btn text-info bg-warning m-4">Mostrar Interesse</button>
+                <form action="{% url 'create_request' %}">
+                    <button type="submit" class="btn text-info bg-warning m-4">Mostrar Interesse</button>
+                </form>
             </div>
         </div>
     </div>
