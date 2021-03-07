@@ -241,6 +241,8 @@ def introduce_property_view (request):
                         prop_obj = Property(
                             landlord = Landlord.objects.get(lord_user=a_user),
                             address = prop_content.get('address'),
+                            latitude = prop_content.get('latitude'),
+                            longitude = prop_content.get('longitude'),
                             floor_area = prop_content.get('floor_area'),
                             garden = prop_content.get('garden'),
                             garage = prop_content.get('garage'),

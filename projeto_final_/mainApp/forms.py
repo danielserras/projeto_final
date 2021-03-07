@@ -32,8 +32,6 @@ class ListingForm(forms.ModelForm):
     description = forms.CharField(max_length=100)
     security_deposit = forms.IntegerField()
     max_capacity = forms.IntegerField(required=True)
-    latitude = forms.CharField(required=True, max_length=100)
-    longitude = forms.CharField(required=True, max_length=100)
 
     class Meta:
         model = Listing
@@ -49,12 +47,14 @@ class ListingForm(forms.ModelForm):
             'max_capacity']
 
 class PropertyForm(forms.ModelForm):
-
     address = forms.CharField(required=True, max_length=100)
     bedrooms_num = forms.IntegerField(required=True) 
     bathrooms_num = forms.IntegerField(required=True)
     kitchens_num = forms.IntegerField(required=True)
     livingrooms_num = forms.IntegerField(required=True)
+    latitude = forms.CharField(required=True, max_length=100)
+    longitude = forms.CharField(required=True, max_length=100)
+
     #booleans
     smoke = forms.BooleanField(required=False, initial=False)
     garden = forms.BooleanField(required=False, initial=False)
@@ -72,6 +72,8 @@ class PropertyForm(forms.ModelForm):
     class Meta:
         model = Property
         fields = [
+            'latitude',
+            'longitude',
             'address',
             'smoke',
             'garden',
