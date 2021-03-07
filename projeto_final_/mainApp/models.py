@@ -139,16 +139,16 @@ class Property_listing(models.Model):
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
 
 class Agreement(models.Model):
-    associated_room = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)
-    associated_property = models.ForeignKey(Property_listing, null=True, on_delete=models.CASCADE)
+    associated_room_listing = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)
+    associated_property_listing = models.ForeignKey(Property_listing, null=True, on_delete=models.CASCADE)
     tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
     startsDate = models.DateField()
     endDate = models.DateField()
 
 class Agreement_Request(models.Model):
-    associated_room = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)
-    associated_property = models.ForeignKey(Property_listing, null=True, on_delete=models.CASCADE)
+    associated_room_listing = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)
+    associated_property_listing = models.ForeignKey(Property_listing, null=True, on_delete=models.CASCADE)
     tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
     startsDate = models.DateField()

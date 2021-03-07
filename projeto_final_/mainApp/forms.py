@@ -258,26 +258,14 @@ class Agreement_Request_Form(forms.ModelForm):
     startsDate = forms.DateField()
     endDate = forms.DateField()
     message = forms.CharField(widget=forms.Textarea, required=False)
-    accepted = forms.BooleanField(required=False)
+
 
     class Meta:
         model = Agreement_Request
         fields = [
-            'associated_room',
-            'associated_property',
-            'tenant',
-            'landlord',
             'startsDate',
             'endDate',
-            'message',
-            'accepted']
-        widgets = {
-            'associated_room': forms.HiddenInput(),
-            'associated_property': forms.HiddenInput(),
-            'tenant': forms.HiddenInput(),
-            'landlord': forms.HiddenInput(),
-            'accepted': forms.HiddenInput()
-        }
+            'message']
 
 class ImageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
