@@ -131,7 +131,8 @@ def introduce_property_view (request):
                             pets = f.cleaned_data.get('pets'),
                             overnight_visits = f.cleaned_data.get('overnight_visits'),
                             cleaning_services = f.cleaned_data.get('cleaning_services'),
-                            smoke = f.cleaned_data.get('smoke')
+                            smoke = f.cleaned_data.get('smoke'),
+                            bedrooms_num = f.cleaned_data.get('bedrooms_num')
                         )
                         prop_object.save()
                         bed_formset = BedroomFormSet(queryset=Bedroom.objects.none())
@@ -334,7 +335,7 @@ def introduce_property_view (request):
                                         album = prop_album)
                                     img.save()
 
-                        if f.cleaned_data.get('listing_type') == 'Apartment' or f.cleaned_data.get('listing_type') == 'House' or f.cleaned_data.get('listing_type') == 'Studio':
+                        if f.cleaned_data.get('listing_type') == 'Apartment' or f.cleaned_data.get('listing_type') == 'House':
                             apart_obj = Property_listing(main_listing = main_listing, associated_property = assoc_prop)
                             apart_obj.save()
 
@@ -342,7 +343,7 @@ def introduce_property_view (request):
                             return redirect('index')
                             
 
-                        elif f.cleaned_data.get('listing_type') == 'Bedroom' or f.cleaned_data.get('listing_type') == 'Bedroom':
+                        elif f.cleaned_data.get('listing_type') == 'Bedroom' or f.cleaned_data.get('listing_type') == 'Residency' or f.cleaned_data.get('listing_type') == 'Studio':
                             room_obj = Room_listing(
                                 main_listing = main_listing,
                                 associated_room = Bedroom.objects.get(associated_property = assoc_prop))
@@ -476,28 +477,53 @@ def search(request):
     form = CreateUserForm()
     if request.method == 'POST':
         form = SearchForm(data=request.POST)
-        print(form.errors)
-        print(form.is_valid())
         if form.is_valid():
 
-            print(form.cleaned_data.get('location'))
-            print(form.cleaned_data.get('radius'))
-            print(form.cleaned_data.get('type'))
-            print(form.cleaned_data.get('num_tenants'))
-            print(form.cleaned_data.get('num_bedrooms'))
-            print(form.cleaned_data.get('date_in'))
-            print(form.cleaned_data.get('date_out'))
-            print(form.cleaned_data.get('minPrice'))
-            print(form.cleaned_data.get('maxPrice'))
+            querySelect = 'SELECT *'
+            queryFrom = ' FROM mainapp_listing AS l'
+            queryWhere = ' WHERE '
+            
+            #Checks if the price is within range
+            queryWhere += " l.monthly_payment BETWEEN '" + form.cleaned_data.get('minPrice') + "' AND '" + form.cleaned_data.get('maxPrice') + "'"
 
-            #listing_obj = Property.objects.raw('SELECT * FROM mainapp_property')
-            #print(listing_obj)
+            #Number of tenants is filled
+            if any(form.cleaned_data.get('num_tenants') == x for x in ('1','2','3','4')):
+                if 'mainapp_listing AS l' not in queryFrom:
+                    queryFrom += 'mainapp_listing AS l'
+                queryWhere += " AND l.max_capacity = '" + form.cleaned_data.get('num_tenants') + "'"
+            
+            #Date in is filled
+            if form.cleaned_data.get('date_in') is not None:
+                if 'mainapp_listing AS l' not in queryFrom:
+                    queryFrom += 'mainapp_listing AS l'
+                queryWhere += " AND '" + str(form.cleaned_data.get('date_in')) + "' >= l.availability_starts"
+            
+            #Date out is filled
+            if form.cleaned_data.get('date_out') is not None:
+                if 'mainapp_listing AS l' not in queryFrom:
+                    queryFrom += 'mainapp_listing AS l'
+                queryWhere += " AND '" + str(form.cleaned_data.get('date_out')) + "' <= l.availability_ending"
 
+            #Number of bedrooms is filled
+            if any(form.cleaned_data.get('num_bedrooms') == x for x in ('1','2','3','4')):
+                queryFrom += ', mainapp_property as p '
+                queryWhere += " AND p.bedrooms_num = '" + form.cleaned_data.get('num_bedrooms') + "'"
+            
+            #Property type is filled and is either Bedroom, Studio or Residency
+            if any( form.cleaned_data.get('type') == x for x in ('Bedroom', 'Studio', 'Residency')):
+                queryFrom += 'mainapp_listing AS l, mainapp_room_listing AS rl'
+                queryWhere += " AND rl.main_listing_id = l.id AND l.listing_type = '" + form.cleaned_data.get('type') + "'\
+                                AND rl.associated_room_id = p.id AND rl.main_listing_id = l.id"
+
+            #Property type is filled and is either Apartment or House
+            elif any( form.cleaned_data.get('type') == x for x in ('Apartment', 'House')):
+                queryFrom += ', mainapp_property_listing AS pl'
+                queryWhere += " AND pl.main_listing_id = l.id AND l.listing_type = '" + form.cleaned_data.get('type') + "'\
+                                AND pl.associated_property_id = p.id AND pl.main_listing_id = l.id"
+                
             cursor = connection.cursor()
-            cursor.execute("SELECT *\
-                            FROM mainapp_property AS p, mainapp_listing AS l, mainapp_property_listing AS pl\
-                            WHERE pl.main_listing_id = l.id AND\
-                            l.listing_type = '" + form.cleaned_data.get('type') +"'")
+            print(querySelect + queryFrom + queryWhere)
+            cursor.execute(querySelect + queryFrom + queryWhere)
             row = cursor.fetchall()
             print(row)
 
@@ -514,7 +540,7 @@ def listing(response, listing_id):
     listing_type = listing.listing_type
     bedrooms = []
 
-    if listing_type == "Bedroom":
+    if listing_type == "Bedroom" or listing_type == "Residency" or listing_type == "Studio":
         associated_object = listing.r_main.associated_room #associated object is a Bedroom
         parent_property = associated_object.associated_property
         bedrooms.append(associated_object)

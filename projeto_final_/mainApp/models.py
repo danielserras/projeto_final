@@ -58,6 +58,7 @@ class Property(models.Model):
     smoke = models.BooleanField(default=False)
     latitude = models.DecimalField(max_digits=20, decimal_places=14)
     longitude = models.DecimalField(max_digits=20, decimal_places=14)
+    bedrooms_num = models.IntegerField()
     
 
 

@@ -71,6 +71,7 @@ class PropertyForm(forms.ModelForm):
         model = Property
         fields = [
             'address',
+            'bedrooms_num',
             'smoke',
             'garden',
             'garage',
@@ -288,7 +289,7 @@ TYPE_CHOICES =(
     ("House", "Two"), 
     ("Studio", "One"), 
     ("Bedroom", "Three"), 
-    ("Residence", "Four"), 
+    ("Residency", "Four"), 
 ) 
 NUM_CHOICES =( 
     ("", "Zero"), 
