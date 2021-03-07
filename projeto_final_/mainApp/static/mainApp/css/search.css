@@ -147,3 +147,8 @@
     bottom: 4px;
     left: 20px;
 }
+
+/* Map */
+#mapid{
+    height: 50vh;
+}

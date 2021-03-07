@@ -282,7 +282,32 @@ class ImageForm(forms.ModelForm):
         model = Image
         fields = ['images' ]
 
-
+TYPE_CHOICES =( 
+    ("", "Zero"), 
+    ("apartment", "One"), 
+    ("house", "Two"), 
+    ("privateBedroom", "Three"), 
+    ("sharedBedroom", "Four"), 
+    ("residence", "Five"), 
+) 
+NUM_CHOICES =( 
+    ("", "Zero"), 
+    ("1", "One"), 
+    ("2", "Two"), 
+    ("3", "Three"), 
+    ("4", "Four"), 
+    ("5", "Five"), 
+) 
+class SearchForm(forms.Form):
+    location = forms.CharField(required=False, max_length=100)
+    radius = forms.IntegerField(required=False)
+    type = forms.ChoiceField(choices = TYPE_CHOICES, required=False)
+    num_tenants = forms.ChoiceField(choices = NUM_CHOICES, required=False)
+    num_bedrooms = forms.ChoiceField(choices = NUM_CHOICES, required=False)
+    date_in = forms.DateField(required=False)
+    date_out = forms.DateField(required=False)
+    minPrice = forms.CharField(required=True)
+    maxPrice = forms.CharField(required=True)
 
 
 BedroomFormSet = modelformset_factory(model = Bedroom, form = BedroomForm, extra=1)
