@@ -21,6 +21,7 @@ def login_view(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
+        print(user)
         if user is not None:
             login(request, user)
             request.session['username'] = username
@@ -28,10 +29,21 @@ def login_view(request):
         else:
             messages.info(request, 'Username ou password incorretos')
             request.session['popUp'] =  False
-            return redirect('index') #placeholder
+
+            context = {}
+            return render(request, 'mainApp/login.html', context) #placeholder
     context = {}
     return render(request,'mainApp/login.html', context) #placeholder
 
+<<<<<<< HEAD
+=======
+@login_required(login_url='/')
+def logout_view(request):
+    logout(request)
+    return redirect('index')
+
+
+>>>>>>> 2e51aa65631d46a5785ed30235a94dfd62efabb3
 def register_view(request):
     form = CreateUserForm()
     if request.method == 'POST':
@@ -63,6 +75,7 @@ def register_view(request):
     context = {'form':form, 'errors':form.errors} #, 'pform':pform
     return render(request, 'mainApp/register.html', context)
 
+@login_required(login_url='/')
 def introduce_property_view (request):
 
     if request.method == 'POST':
@@ -82,19 +95,19 @@ def introduce_property_view (request):
         if 'bedrooms_num' in request.session.keys():
             bed_form = BedroomFormSet(data=request.POST)
             form_list.append(bed_form)
-            #print(request.session.keys())
+
         elif 'bathrooms_num' in request.session.keys():
             bath_form = BathroomFormSet(data=request.POST)
             form_list.append(bath_form)
-            #print('entrei1')
+
         elif 'kitchens_num' in request.session.keys():
             kitchen_form = KitchenFormSet(data=request.POST)
             form_list.append(kitchen_form)
-            #print('entrei2')
+
         elif 'livingrooms_num' in request.session.keys():
             live_form = LivingroomFormSet(data=request.POST)
             form_list.append(live_form)
-            #print('entrei3')
+
         elif 'listing' in request.session.keys():
             listing_form = ListingForm(request.POST, request.FILES)
             form_list.append(listing_form)
@@ -386,10 +399,14 @@ def create_request(request):
 
     if request.method == 'POST':
         ag_form = Agreement_Request_Form()
-        #popular campos do form com info do search sobre a propriedade
+        #popular campos do form de antemao com info sobre a propriedade
 
         context = {'ag_form': ag_form}
-        return render(request, 'mainApp/sendRequest.html', context)
+        return render(request, 'mainApp/intent.html', context)
+    
+    else:
+        #nao deve cair aqui
+        return redirect('index')
 
         
 def send_request(request):
@@ -398,8 +415,51 @@ def send_request(request):
         #inq ja preencheu tudo no form, falta criar agreement_request
         ag_form = Agreement_Request_Form(data=request.POST)
         if ag_form.is_valid():
-            ag_form.save()
-            return redirect('home_page')
+
+            room_id = ag_form.cleaned_data.get('associated_room_listing')
+            prop_id = ag_form.cleaned_data.get('associated_property_listing')
+            tenant_id = ag_form.cleaned_data.get('tenant')
+            landlord_id = ag_form.cleaned_data.get('landlord')
+            start_date = ag_form.cleaned_data.get('startsDate')
+            end_date = ag_form.cleaned_data.get('endDate')
+            message = ag_form.cleaned_data.get('message')
+
+            if room_id:
+                
+                assoc_listing = Room_listing.objects.get(id=room_id)
+                tenant = Tenant.objects.get(id=tenant_id)
+                landlord = Landlord.objects.get(id=landlord_id)
+
+                ag_request = Agreement_Request(
+                    associated_room_listing = assoc_listing,
+                    tenant=tenant,
+                    landlord=landlord,
+                    startsDate=start_date,
+                    endDate=end_date,
+                    message=message
+                )
+                ag_request.save()
+
+                return redirect('index')
+
+            else:
+                assoc_listing = Property_listing.objects.get(id=prop_id)
+                tenant = Tenant.objects.get(id=tenant_id)
+                landlord = Landlord.objects.get(id=landlord_id)
+
+                ag_request = Agreement_Request(
+                    associated_property_listing = assoc_listing,
+                    tenant=tenant,
+                    landlord=landlord,
+                    startsDate=start_date,
+                    endDate=end_date,
+                    message=message
+                )
+                ag_request.save()
+
+                return redirect('index')
+
+    return redirect('home_page')
 
 
 def profile(response):
