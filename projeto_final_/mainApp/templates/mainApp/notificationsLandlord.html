@@ -1,0 +1,157 @@
+{% extends 'mainApp/base.html' %} 
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/notifications.css" %}'>
+{% endblock %}
+{% block content %}
+
+<div class="container py-5 px-4 mt-5">
+    <div class="row rounded-lg overflow-hidden shadow border border-warning border-5">
+      <!-- Users box-->
+      <div class="col-5 px-0">
+        <div class="bg-white">
+  
+          <div class="recenteNotificacoes px-4 py-2">
+            <p class="h5 mb-0 py-1 text-white">Recentemente</p>
+          </div>
+  
+          <div class="messages-box">
+            <div class="list-group rounded-0">
+              <a class="list-group-item list-group-item-action active text-white rounded-0">
+                {% load static %}
+                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                  <div class="media-body ml-4">
+                    <div class="d-flex align-items-center justify-content-between mb-1">
+                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">25 Dec</small>
+                    </div>
+                    <p class="font-italic mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                  </div>
+                </div>
+              </a>
+  
+              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
+                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                  <div class="media-body ml-4">
+                    <div class="d-flex align-items-center justify-content-between mb-1">
+                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">14 Dec</small>
+                    </div>
+                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur. incididunt ut labore.</p>
+                  </div>
+                </div>
+              </a>
+  
+              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
+                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                  <div class="media-body ml-4">
+                    <div class="d-flex align-items-center justify-content-between mb-1">
+                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">9 Nov</small>
+                    </div>
+                    <p class="font-italic text-muted mb-0 text-small">consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                  </div>
+                </div>
+              </a>
+  
+              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
+                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                  <div class="media-body ml-4">
+                    <div class="d-flex align-items-center justify-content-between mb-1">
+                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">18 Oct</small>
+                    </div>
+                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                  </div>
+                </div>
+              </a>
+  
+              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
+                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                  <div class="media-body ml-4">
+                    <div class="d-flex align-items-center justify-content-between mb-1">
+                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">17 Oct</small>
+                    </div>
+                    <p class="font-italic text-muted mb-0 text-small">consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                  </div>
+                </div>
+              </a>
+  
+              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
+                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                  <div class="media-body ml-4">
+                    <div class="d-flex align-items-center justify-content-between mb-1">
+                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">2 Sep</small>
+                    </div>
+                    <p class="font-italic text-muted mb-0 text-small">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                  </div>
+                </div>
+              </a>
+  
+              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
+                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                  <div class="media-body ml-4">
+                    <div class="d-flex align-items-center justify-content-between mb-1">
+                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">30 Aug</small>
+                    </div>
+                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                  </div>
+                </div>
+              </a>
+  
+              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
+                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                  <div class="media-body ml-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">21 Aug</small>
+                    </div>
+                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                  </div>
+                </div>
+              </a>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Caixa de notificações-->
+      
+
+     <div class="col-7 px-0" style="background-color:white;" id="msgEmDetalhe">
+        <div class="row col-sm-12 mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary">
+            <h4 class="text-white mt-3 pl-3"> Assunto </h4>
+        </div>
+        <div class="row m-2">
+            <p class= "text-info">Data: 10/02/2020</p>
+        </div>
+        <div class="row m-2">
+            <p class= "text-info">Hora: 10:10</p>
+        </div>
+        <div class="row m-2">
+            <p class= "text-info">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam elit vitae venenatis mollis. Donec eu risus ex. Cras tempus elit ex, vitae suscipit dolor commodo in. Cras felis lorem, fringilla vel eros quis, tincidunt maximus elit. Suspendisse luctus nunc id iaculis rhoncus. In volutpat turpis sed ipsum congue, et fermentum magna feugiat. Vivamus gravida justo vitae nunc iaculis elementum. Duis pulvinar nulla turpis, sed dignissim mi gravida nec. Nulla leo orci, rhoncus a lectus ac, consectetur congue nisi. Curabitur nec cursus turpis, quis viverra libero. Etiam non bibendum lorem, in vehicula ante. Morbi tristique mi a justo dapibus laoreet. Quisque ut metus nec arcu tempus cursus. Cras facilisis dolor nec urna commodo commodo. Proin accumsan ante quis est ultricies, commodo accumsan diam sodales. Vivamus tincidunt orci quis suscipit pretium.
+            </p>
+            <div class="row mx-auto mt-5">
+                <button type="button" class="btn btn-info">Anúncio</button>
+            </div>
+     </div>
+    </div>
+
+
+
+
+     
+        <!-- Zona para aceitar e recusar -->
+        <!----
+        <form action="#" class="bg-light">
+          <div class="input-group">
+            <input type="text" placeholder="Type a message" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+            <div class="input-group-append">
+              <button id="button-addon2" type="submit" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </form>
+    -->
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

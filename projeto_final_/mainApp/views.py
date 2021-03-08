@@ -377,7 +377,7 @@ def introduce_property_view (request):
 def index(response):
     return render(response, "mainApp/home.html", {})
 
-def startsAgreement(response):
+def startsAgreement(request):
 
     if request.method == 'POST':
         pass
@@ -388,8 +388,8 @@ def startsAgreement(response):
         
     else:
 
-        return render(response, "mainApp/startsAgreementTenent.html", {})
-    #return render(response, "mainApp/sendAgreementLandlord.html", {})
+        #return render(request, "mainApp/startsAgreementTenent.html", {})
+        return render(request, "mainApp/sendAgreementLandlord.html", {})
 
 
 def create_request(request):
@@ -457,8 +457,8 @@ def create_request(request):
 def profile(response):
     return render(response, "mainApp/profile.html", {})
 
-def notifications2(response):
-    return render(response, "mainApp/notifications2.html", {})
+def notificationsLandlord(response):
+    return render(response, "mainApp/notificationsLandlord.html", {})
 
 def notifications3(response):
     return render(response, "mainApp/notifications3.html", {})
@@ -501,8 +501,10 @@ def search(request):
 """ def addListing(response):
     return render(response, "mainApp/addListing.html", {}) """
 
-def notifications(response):
-    return render(response, "mainApp/notifications.html", {})
+def notificationsTenent(request):
+
+
+    return render(request, "mainApp/notificationsTenent.html", {})
 
 def listing(request, listing_id):
     listing = Listing.objects.get(pk=listing_id)
