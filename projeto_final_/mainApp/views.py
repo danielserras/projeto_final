@@ -238,89 +238,32 @@ def introduce_property_view (request):
                         return render(request,'mainApp/addBathroom.html',context)
                         
                 
-                elif f == listing_form:
-                    print(f)
-                    if f.is_valid():
+                    elif f == listing_form:
+                        print(f)
+                        if f.is_valid():
 
-                        prop_album = ImageAlbum(name=f.cleaned_data.get('title'))
-                        prop_album.save()
+                            prop_album = ImageAlbum(name=f.cleaned_data.get('title'))
+                            prop_album.save()
 
-                        prop_content = json.loads(request.session['prop_id'])
-                        prop_obj = Property(
-                            landlord = Landlord.objects.get(lord_user=a_user),
-                            address = prop_content.get('address'),
-                            latitude = prop_content.get('latitude'),
-                            longitude = prop_content.get('longitude'),
-                            floor_area = prop_content.get('floor_area'),
-                            garden = prop_content.get('garden'),
-                            garage = prop_content.get('garage'),
-                            street_parking = prop_content.get('street_parking'),
-                            internet = prop_content.get('internet'),
-                            electricity = prop_content.get('electricity'),
-                            water = prop_content.get('water'),
-                            gas = prop_content.get('gas'),
-                            pets = prop_content.get('pets'),
-                            overnight_visits = prop_content.get('overnight_visits'),
-                            cleaning_services = prop_content.get('cleaning_services'),
-                            smoke = prop_content.get('smoke')
-                        )
-                        prop_obj.save()
-
-                        bed_content = json.loads(request.session['bedroom_serial'])
-                        for c in bed_content:
-                            bed_obj = Bedroom(
-                                associated_property = prop_obj,
-                                be_chairs = c.get('be_chairs'),
-                                be_sofa = c.get('be_sofa'),
-                                be_sofa_bed = c.get('be_sofa_bed'),
-                                be_window = c.get('be_window'),
-                                num_single_beds = c.get('num_single_beds'),
-                                num_double_beds = c.get('num_double_beds'),
-                                be_balcony = c.get('be_balcony'),
-                                wardrobe = c.get('wardrobe'),
-                                be_desk = c.get('be_desk'),
-                                lock = c.get('lock'),
-                                chest_of_drawers = c.get('chest_of_drawers'),
-                                tv = c.get('tv'),
-                                heater = c.get('heater'),
-                                air_conditioning = c.get('air_conditioning'),
-                                ensuite_bathroom = c.get('ensuite_bathroom'),
-                                max_occupacity = c.get('max_occupacity'),
-                            )
-                            bed_obj.save()
-
-                        bath_content = json.loads(request.session['bathroom_serial'])
-                        for c in bath_content:
-                            bath_obj = Bathroom(
-                                associated_property = prop_obj,
-                                toilet = c.get('toilet'),
-                                sink = c.get('sink'),
-                                shower = c.get('shower'),
-                                b_window = c.get('b_window'),
-                                bathtub = c.get('bathtub'),
-                                bidet = c.get('bidet')
-                            )
-                            bath_obj.save()
-
-                        kit_content = json.loads(request.session['kitchen_serial'])
-                        for c in kit_content:
-                            kit_obj = Kitchen(
-                                associated_property = prop_obj,
-                                oven = c.get("oven"),            
-                                dish_washer = c.get("dish_washer"),  
-                                k_window = c.get("k_window"),  
-                                fridge = c.get("fridge"),  
-                                freezer = c.get("freezer"),  
-                                cooker = c.get("cooker"),  
-                                dishes_cutlery = c.get("dishes_cutlery"),  
-                                pans_pots = c.get("pans_pots"),  
-                                dishwasher_machine = c.get("dishwasher_machine"),  
-                                dryer = c.get("dryer"),
-                                k_table = c.get("k_table"),
-                                laundering_machine = c.get("laundering_machine"),
-                                k_chairs = c.get("k_chairs"),
-                                microwave = c.get("microwave"),
-                                k_balcony = c.get("k_balcony")
+                            prop_content = json.loads(request.session['prop_id'])
+                            prop_obj = Property(
+                                landlord = Landlord.objects.get(lord_user=a_user),
+                                address = prop_content.get('address'),
+                                latitude = prop_content.get('latitude'),
+                                longitude = prop_content.get('longitude'),
+                                floor_area = prop_content.get('floor_area'),
+                                garden = prop_content.get('garden'),
+                                garage = prop_content.get('garage'),
+                                street_parking = prop_content.get('street_parking'),
+                                internet = prop_content.get('internet'),
+                                electricity = prop_content.get('electricity'),
+                                water = prop_content.get('water'),
+                                gas = prop_content.get('gas'),
+                                pets = prop_content.get('pets'),
+                                overnight_visits = prop_content.get('overnight_visits'),
+                                cleaning_services = prop_content.get('cleaning_services'),
+                                smoke = prop_content.get('smoke'),
+                                bedrooms_num = prop_content.get('bedrooms_num')
                             )
                             prop_obj.save()
 
@@ -382,6 +325,7 @@ def introduce_property_view (request):
                                 )
                                 kit_obj.save()
 
+
                             if 'livingroom_serial' in request.session:
                                 liv_content = json.loads(request.session['livingroom_serial'])
                                 for c in liv_content:
@@ -411,7 +355,7 @@ def introduce_property_view (request):
                             )
                             listing_obj.save()
 
-                            
+                                
                             assoc_prop = prop_obj
                             main_listing = listing_obj
                             del request.session['listing']
@@ -441,7 +385,7 @@ def introduce_property_view (request):
                             if 'livingroom_serial' in request.session:
                                 del request.session['livingroom_serial']
 
-                            if f.cleaned_data.get('listing_type') == 'Apartment' or f.cleaned_data.get('listing_type') == 'House' or f.cleaned_data.get('listing_type') == 'Studio':
+                            if f.cleaned_data.get('listing_type') == 'Apartment' or f.cleaned_data.get('listing_type') == 'House':
                                 apart_obj = Property_listing(main_listing = main_listing, associated_property = assoc_prop)
                                 apart_obj.save()
 
@@ -449,7 +393,7 @@ def introduce_property_view (request):
                                 return redirect('index')
                                 
 
-                            elif f.cleaned_data.get('listing_type') == 'Bedroom' or f.cleaned_data.get('listing_type') == 'Bedroom':
+                            elif f.cleaned_data.get('listing_type') == 'Bedroom' or f.cleaned_data.get('listing_type') == 'Residency' or f.cleaned_data.get('listing_type') == 'Studio':
                                 room_obj = Room_listing(
                                     main_listing = main_listing,
                                     associated_room = Bedroom.objects.get(associated_property = assoc_prop))
@@ -484,12 +428,12 @@ def introduce_property_view (request):
 
     
 
-@login_required(login_url='login_view')
-def index(response):
-    return render(response, "mainApp/home.html", {})
+#@login_required(login_url='login_view')
+def index(request):
+    return render(request, "mainApp/home.html", {})
 
 @login_required(login_url='login_view')
-def startsAgreement(response):
+def startsAgreement(request):
 
     if request.method == 'POST':
         pass
@@ -500,8 +444,8 @@ def startsAgreement(response):
         
     else:
 
-        return render(response, "mainApp/startsAgreementTenent.html", {})
-    #return render(response, "mainApp/sendAgreementLandlord.html", {})
+        #return render(request, "mainApp/startsAgreementTenent.html", {})
+        return render(request, "mainApp/sendAgreementLandlord.html", {})
 
 @login_required(login_url='login_view')
 def create_request(request):
@@ -566,12 +510,14 @@ def create_request(request):
         return render(request, 'mainApp/intent.html')
 
 @login_required(login_url='login_view')
-def profile(response):
-    return render(response, "mainApp/profile.html", {})
+def profile(request):
+    return render(request, "mainApp/profile.html", {})
 
+def listing_management_view(request):
+    return render(request, "mainApp/listingsManagement.html", {})
 
-def notifications2(response):
-    return render(response, "mainApp/notifications2.html", {})
+def notificationsLandlord(response):
+    return render(response, "mainApp/notificationsLandlord.html", {})
 
 def notifications3(response):
     return render(response, "mainApp/notifications3.html", {})
@@ -581,39 +527,63 @@ def search(request):
     form = CreateUserForm()
     if request.method == 'POST':
         form = SearchForm(data=request.POST)
-        print(form.errors)
-        print(form.is_valid())
         if form.is_valid():
 
-            print(form.cleaned_data.get('location'))
-            print(form.cleaned_data.get('radius'))
-            print(form.cleaned_data.get('type'))
-            print(form.cleaned_data.get('num_tenants'))
-            print(form.cleaned_data.get('num_bedrooms'))
-            print(form.cleaned_data.get('date_in'))
-            print(form.cleaned_data.get('date_out'))
-            print(form.cleaned_data.get('minPrice'))
-            print(form.cleaned_data.get('maxPrice'))
+            querySelect = 'SELECT *'
+            queryFrom = ' FROM mainapp_listing AS l'
+            queryWhere = ' WHERE '
+            
+            #Checks if the price is within range
+            queryWhere += " l.monthly_payment BETWEEN '" + form.cleaned_data.get('minPrice') + "' AND '" + form.cleaned_data.get('maxPrice') + "'"
 
-            #listing_obj = Property.objects.raw('SELECT * FROM mainapp_property')
-            #print(listing_obj)
+            #Number of tenants is filled
+            if any(form.cleaned_data.get('num_tenants') == x for x in ('1','2','3','4')):
+                if 'mainapp_listing AS l' not in queryFrom:
+                    queryFrom += 'mainapp_listing AS l'
+                queryWhere += " AND l.max_capacity = '" + form.cleaned_data.get('num_tenants') + "'"
+            
+            #Date in is filled
+            if form.cleaned_data.get('date_in') is not None:
+                if 'mainapp_listing AS l' not in queryFrom:
+                    queryFrom += 'mainapp_listing AS l'
+                queryWhere += " AND '" + str(form.cleaned_data.get('date_in')) + "' >= l.availability_starts"
+            
+            #Date out is filled
+            if form.cleaned_data.get('date_out') is not None:
+                if 'mainapp_listing AS l' not in queryFrom:
+                    queryFrom += 'mainapp_listing AS l'
+                queryWhere += " AND '" + str(form.cleaned_data.get('date_out')) + "' <= l.availability_ending"
 
+            #Number of bedrooms is filled
+            if any(form.cleaned_data.get('num_bedrooms') == x for x in ('1','2','3','4')):
+                queryFrom += ', mainapp_property as p '
+                queryWhere += " AND p.bedrooms_num = '" + form.cleaned_data.get('num_bedrooms') + "'"
+            
+            #Property type is filled and is either Bedroom, Studio or Residency
+            if any( form.cleaned_data.get('type') == x for x in ('Bedroom', 'Studio', 'Residency')):
+                queryFrom += ', mainapp_room_listing AS rl, mainapp_property AS p'
+                queryWhere += " AND rl.main_listing_id = l.id AND l.listing_type = '" + form.cleaned_data.get('type') + "'\
+                                AND rl.associated_room_id = p.id AND rl.main_listing_id = l.id"
+
+            #Property type is filled and is either Apartment or House
+            elif any( form.cleaned_data.get('type') == x for x in ('Apartment', 'House')):
+                queryFrom += ', mainapp_property_listing AS pl, mainapp_property AS p'
+                queryWhere += " AND pl.main_listing_id = l.id AND l.listing_type = '" + form.cleaned_data.get('type') + "'\
+                                AND pl.associated_property_id = p.id AND pl.main_listing_id = l.id"
+                
             cursor = connection.cursor()
-            cursor.execute("SELECT *\
-                            FROM mainapp_property AS p, mainapp_listing AS l, mainapp_property_listing AS pl\
-                            WHERE pl.main_listing_id = l.id AND\
-                            l.listing_type = '" + form.cleaned_data.get('type') +"'")
+            #print(querySelect + queryFrom + queryWhere)
+            cursor.execute(querySelect + queryFrom + queryWhere)
             row = cursor.fetchall()
-            print(row)
+            #print(row)
 
     return render(request, "mainApp/search.html", {})
 
-""" def addListing(response):
-    return render(response, "mainApp/addListing.html", {}) """
 
-@login_required(login_url='login_view')
-def notifications(response):
-    return render(response, "mainApp/notifications.html", {})
+def notificationsTenent(request):
+
+
+    return render(request, "mainApp/notificationsTenent.html", {})
 
 def listing(request, listing_id):
     listing = Listing.objects.get(pk=listing_id)
@@ -629,7 +599,7 @@ def listing(request, listing_id):
         del request.session['tenant']
         del request.session['landlord']
 
-    if listing_type == "Bedroom":
+    if listing_type == "Bedroom" or listing_type == "Residency" or listing_type == "Studio":
         associated_object = listing.r_main.associated_room #associated object is a Bedroom
         parent_property = associated_object.associated_property
         bedrooms.append(associated_object)

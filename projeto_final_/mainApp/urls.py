@@ -3,6 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('profile/listingsManagement', views.listing_management_view, name='listings_management'),
     path('addProperty', views.introduce_property_view, name='addProperty'),
     path('addProperty/bedroom/', views.introduce_property_view, name='addBedroom'),
     path('addProperty/bathroom/', views.introduce_property_view, name='addBathroom'),
@@ -16,8 +17,8 @@ urlpatterns = [
     path('startsAgreement', views.startsAgreement, name='startsAgreement'),
     path('search', views.search, name='search'),
     path('', views.index, name='index'),
-    path('notifications', views.notifications, name='notifications'),
-    path('notifications2', views.notifications2, name='notifications2'),
+    path('notificationsTenent', views.notificationsTenent, name='notificationsTenent'),
+    path('notificationsLandlord', views.notificationsLandlord, name='notificationsLandlord'),
     path('notifications3', views.notifications3, name='notifications3'),
     path('listing/application', views.create_request, name='create_request'),
     path('listing/<int:listing_id>', views.listing, name='listing')

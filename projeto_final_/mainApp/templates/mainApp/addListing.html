@@ -26,49 +26,49 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <label for="title">Título:</label>
-                                <input type="text" name="title" >
+                                <input type="text" name="title" class="form-control border-info border-3 rounded" required>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-sm-12">
                                 <label for="description">Descrição:</label>
-                                <textarea name="description"  rows="6" class="w-100"></textarea>
+                                <textarea name="description" class="form-control border-info border-3 rounded" rows="6" class="w-100"></textarea>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-sm-6">
                                 <label for="availability_starts">Disponível de:</label>
-                                <input type="date" name="availability_starts" >
+                                <input type="date"  class="form-control border-info border-3 rounded" name="availability_starts" required>
                             </div>
                             <div class="col-sm-6">
                                 <label for="availability_ending">até:</label>
-                                <input type="date" name="availability_ending" >
+                                <input type="date" class="form-control border-info border-3 rounded" name="availability_ending" required >
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-sm-6">
                                 <label for="monthly_payment">Renda:</label>
-                                <input type="number" name="monthly_payment"  min="0">
+                                <input type="number" class="form-control border-info border-3 rounded" name="monthly_payment"  min="0" required>
                             </div>
                             <div class="col-sm-6">
                                 <label for="security_deposit">Caução:</label>
-                                <input type="number" name="security_deposit"  min="0">
+                                <input type="number" class="form-control border-info border-3 rounded" name="security_deposit"  min="0" required>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                             {% comment %} <div class="col-sm-6">
                                 <label for="cleaningServices">Frequência dos Serviçoes de limpeza:</label>
                                 <input type="text" name="cleaningServices" >
                             </div> {% endcomment %}
                             <div class="col-sm-6">
                                 <label for="max_capacity">Ocupação máxima:</label>
-                                <input type="number" name="max_capacity"  min="1">
+                                <input type="number" class="form-control border-info border-3 rounded" name="max_capacity"  min="1">
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-sm-4">
                                 <label for="allowed_gender">Género Permitido</label>
-                                <select name="allowed_gender" >
+                                <select name="allowed_gender" class="custom-select border-info border-3" required >
                                     <option value="Ambos">Ambos</option>
                                     <option value="onlyWomens">Apenas Mulheres</option>
                                     <option value="onlyMens">Apenas Homens</option>
@@ -99,7 +99,7 @@
                             <input type="radio" name="listing_type" class="" value="Bedroom"> Quarto
                         </label><br>
                         <label for="" class="radio-inline">
-                            <input type="radio" name="listing_type" class="" value="Residence"> Residência
+                            <input type="radio" name="listing_type" class="" value="Residency"> Residência
                         </label><br>
                     </div>
                     <div class="form-group col-sm-3">
@@ -111,12 +111,12 @@
                             {{form.images}}
                             {% endfor %}
                             </div>
-                        <button type="button" class="addImg">+</button>
+                        <button type="button" class="addImg btn btn-info">+</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row justify-content-md-center text-center">
+        <div class="row justify-content-md-center text-center mb-3">
             <div class="col-sm-auto">
                 <button type="submit" class="btn btn-secondary" >Seguinte</button>
             </div>

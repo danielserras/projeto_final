@@ -13,12 +13,12 @@
                     <!-- Options-->    
                     <div class="col-sm-12 p-3 text-center border-bottom">
                         <a class="text-white" href="profile" id="profile"><img src="{% static "mainApp/images/user.svg" %}" alt="" class="img-fluid">
-                            <h3 class="mb-0 text-white">Nome</h3>
+                            <h3 class="mb-0 text-white">{{user.first_name}} {{user.last_name}}</h3>
                         </a>
                     </div>
                     <!--If landlord-->
                     <div class="col-sm-12 p-3">
-                        <a class="text-white" href="#">Gerir Alojamentos</a>
+                        <a class="text-white" href="profile/listingsManagement">Gerir Alojamentos</a>
                     </div>
                     <!--If landlord-->
                     <div class="col-sm-12 p-3">
