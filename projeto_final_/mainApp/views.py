@@ -12,6 +12,8 @@ from django.contrib.auth.decorators import login_required
 from paypal.standard.forms import PayPalPaymentsForm
 from django.forms.models import model_to_dict
 from django.db import connection
+from decouple import config
+from geopy.geocoders import MapBox
 from copy import deepcopy
 import time
 import json
@@ -530,14 +532,31 @@ def search(request):
         form = SearchForm(data=request.POST)
         if form.is_valid():
 
+            geolocator = MapBox(config('MAPBOX_KEY'), scheme=None, user_agent=None, domain='api.mapbox.com')
+                    
+            location = geolocator.geocode(form.cleaned_data.get('location'))
+
             querySelect = 'SELECT l.monthly_payment, l.title, p.address, p.latitude, p.longitude'
             queryFrom = ' FROM mainapp_listing AS l, mainapp_property as p'
-            queryWhere = ' WHERE '
+            queryWhere = " WHERE (acos(sin(p.latitude * 0.0175) * sin(38.7057409 * 0.0175) \
+                            + cos(p.latitude * 0.0175) * cos(38.7057409 * 0.0175) *    \
+                                cos((-9.16016118661616 * 0.0175) - (p.longitude * 0.0175))\
+                            ) * 6371 <='" + str(form.cleaned_data.get('radius')) + "')"
+            
+            '''
+                SELECT * FROM mainapp_property p 
+                WHERE (
+                        acos(sin(p.latitude * 0.0175) * sin(38.7057409 * 0.0175) 
+                            + cos(p.latitude * 0.0175) * cos(38.7057409 * 0.0175) *    
+                                cos((-9.16016118661616 * 0.0175) - (p.longitude * 0.0175))
+                            ) * 6371 <= 23
+                    )
+            '''
 
             cursor = connection.cursor()
             
             #Checks if the price is within range
-            queryWhere += " l.monthly_payment BETWEEN '" + form.cleaned_data.get('minPrice') + "' AND '" + form.cleaned_data.get('maxPrice') + "'"
+            queryWhere += " AND l.monthly_payment BETWEEN '" + form.cleaned_data.get('minPrice') + "' AND '" + form.cleaned_data.get('maxPrice') + "'"
 
             #Number of tenants is filled
             if any(form.cleaned_data.get('num_tenants') == x for x in ('1','2','3','4')):
@@ -581,6 +600,7 @@ def search(request):
                 queryFromRoom = deepcopy(queryFrom) + ', mainapp_room_listing AS rl'
                 queryWhereRoom = deepcopy(queryWhere) + ' AND rl.associated_room_id = p.id AND rl.main_listing_id = l.id'
 
+                
                 #print(querySelect + queryFromProperty + queryWhereProperty)
                 #print(querySelect + queryFromRoom+ queryWhereRoom)
 
@@ -591,7 +611,7 @@ def search(request):
                 row_room = cursor.fetchall()
 
                 row = row_property + row_room
-                
+
     return render(request, "mainApp/search.html", {})
 
 
