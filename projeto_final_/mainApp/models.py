@@ -56,8 +56,6 @@ class Property(models.Model):
     overnight_visits = models.BooleanField(default=False)
     cleaning_services = models.BooleanField(default=False)
     smoke = models.BooleanField(default=False)
-    address = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
 
     
 
