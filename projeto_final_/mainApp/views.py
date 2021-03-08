@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from paypal.standard.forms import PayPalPaymentsForm
 from django.forms.models import model_to_dict
 from django.db import connection
+from copy import deepcopy
 import time
 import json
 #tirar debug_mode no fim do proj
@@ -584,54 +585,68 @@ def search(request):
         form = SearchForm(data=request.POST)
         if form.is_valid():
 
-            querySelect = 'SELECT *'
-            queryFrom = ' FROM mainapp_listing AS l'
+            querySelect = 'SELECT l.monthly_payment, l.title, p.address, p.latitude, p.longitude'
+            queryFrom = ' FROM mainapp_listing AS l, mainapp_property as p'
             queryWhere = ' WHERE '
+
+            cursor = connection.cursor()
             
             #Checks if the price is within range
             queryWhere += " l.monthly_payment BETWEEN '" + form.cleaned_data.get('minPrice') + "' AND '" + form.cleaned_data.get('maxPrice') + "'"
 
             #Number of tenants is filled
             if any(form.cleaned_data.get('num_tenants') == x for x in ('1','2','3','4')):
-                if 'mainapp_listing AS l' not in queryFrom:
-                    queryFrom += 'mainapp_listing AS l'
                 queryWhere += " AND l.max_capacity = '" + form.cleaned_data.get('num_tenants') + "'"
             
             #Date in is filled
             if form.cleaned_data.get('date_in') is not None:
-                if 'mainapp_listing AS l' not in queryFrom:
-                    queryFrom += 'mainapp_listing AS l'
                 queryWhere += " AND '" + str(form.cleaned_data.get('date_in')) + "' >= l.availability_starts"
             
             #Date out is filled
             if form.cleaned_data.get('date_out') is not None:
-                if 'mainapp_listing AS l' not in queryFrom:
-                    queryFrom += 'mainapp_listing AS l'
                 queryWhere += " AND '" + str(form.cleaned_data.get('date_out')) + "' <= l.availability_ending"
 
             #Number of bedrooms is filled
             if any(form.cleaned_data.get('num_bedrooms') == x for x in ('1','2','3','4')):
-                queryFrom += ', mainapp_property as p '
                 queryWhere += " AND p.bedrooms_num = '" + form.cleaned_data.get('num_bedrooms') + "'"
             
             #Property type is filled and is either Bedroom, Studio or Residency
             if any( form.cleaned_data.get('type') == x for x in ('Bedroom', 'Studio', 'Residency')):
-                queryFrom += ', mainapp_room_listing AS rl, mainapp_property AS p'
-                queryWhere += " AND rl.main_listing_id = l.id AND l.listing_type = '" + form.cleaned_data.get('type') + "'\
+                queryFrom += ', mainapp_room_listing AS rl'
+                queryWhere += " AND l.listing_type = '" + form.cleaned_data.get('type') + "'\
                                 AND rl.associated_room_id = p.id AND rl.main_listing_id = l.id"
+                #print(querySelect + queryFrom + queryWhere)
+                cursor.execute(querySelect + queryFrom + queryWhere)
+                row = cursor.fetchall()
 
             #Property type is filled and is either Apartment or House
             elif any( form.cleaned_data.get('type') == x for x in ('Apartment', 'House')):
-                queryFrom += ', mainapp_property_listing AS pl, mainapp_property AS p'
-                queryWhere += " AND pl.main_listing_id = l.id AND l.listing_type = '" + form.cleaned_data.get('type') + "'\
+                queryFrom += ', mainapp_property_listing AS pl'
+                queryWhere += " AND l.listing_type = '" + form.cleaned_data.get('type') + "'\
                                 AND pl.associated_property_id = p.id AND pl.main_listing_id = l.id"
-                
-            cursor = connection.cursor()
-            #print(querySelect + queryFrom + queryWhere)
-            cursor.execute(querySelect + queryFrom + queryWhere)
-            row = cursor.fetchall()
-            #print(row)
+                #print(querySelect + queryFrom + queryWhere)
+                cursor.execute(querySelect + queryFrom + queryWhere)
+                row = cursor.fetchall()
+            
+            #Property type is empty
+            else:            
+                queryFromProperty = deepcopy(queryFrom) + ', mainapp_property_listing AS pl'
+                queryWhereProperty = deepcopy(queryWhere) + ' AND pl.associated_property_id = p.id AND pl.main_listing_id = l.id'
 
+                queryFromRoom = deepcopy(queryFrom) + ', mainapp_room_listing AS rl'
+                queryWhereRoom = deepcopy(queryWhere) + ' AND rl.associated_room_id = p.id AND rl.main_listing_id = l.id'
+
+                #print(querySelect + queryFromProperty + queryWhereProperty)
+                #print(querySelect + queryFromRoom+ queryWhereRoom)
+
+                cursor.execute(querySelect + queryFromProperty + queryWhereProperty)
+                row_property = cursor.fetchall()
+
+                cursor.execute(querySelect + queryFromRoom+ queryWhereRoom)
+                row_room = cursor.fetchall()
+
+                row = row_property + row_room
+                
     return render(request, "mainApp/search.html", {})
 
 
