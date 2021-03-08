@@ -56,9 +56,9 @@ class Property(models.Model):
     overnight_visits = models.BooleanField(default=False)
     cleaning_services = models.BooleanField(default=False)
     smoke = models.BooleanField(default=False)
-    address = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-
+    latitude = models.DecimalField(max_digits=20, decimal_places=14)
+    longitude = models.DecimalField(max_digits=20, decimal_places=14)
+    bedrooms_num = models.IntegerField()
     
 
 

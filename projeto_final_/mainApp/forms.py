@@ -75,6 +75,7 @@ class PropertyForm(forms.ModelForm):
             'latitude',
             'longitude',
             'address',
+            'bedrooms_num',
             'smoke',
             'garden',
             'garage',
@@ -292,7 +293,7 @@ TYPE_CHOICES =(
     ("House", "Two"), 
     ("Studio", "One"), 
     ("Bedroom", "Three"), 
-    ("Residence", "Four"), 
+    ("Residency", "Four"), 
 ) 
 NUM_CHOICES =( 
     ("", "Zero"), 
