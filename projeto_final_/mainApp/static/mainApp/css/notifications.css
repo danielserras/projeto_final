@@ -41,3 +41,12 @@ body {
 .recenteNotificacoes{
     background-color: #264653;
 }
+#defaultNotifications{
+   width: 100%; 
+   height: 100%;
+}
+#defaultImg{
+  background-size: contain ;
+   width: 100%; 
+   height: 100%;
+}
