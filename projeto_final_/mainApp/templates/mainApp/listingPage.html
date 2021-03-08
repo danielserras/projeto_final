@@ -76,9 +76,20 @@
                 <img src='{% static "mainApp/images/user.svg" %}' width='13%'>
             </div>
             <div class="row justify-content-center">
-                <form action="{% url 'create_request' %}">
-                    <button type="submit" class="btn text-info bg-warning m-4">Mostrar Interesse</button>
-                </form>
+                {% if is_tenant %}
+                    <form action="{% url 'create_request' %}">
+                        <button type="submit" class="btn text-info bg-warning m-4">Mostrar Interesse</button>
+                    </form>
+                {% else %}
+                    <form action="{% url 'create_request' %}">
+                        <button type="submit" class="btn text-info bg-warning m-4" disabled>Mostrar Interesse</button>
+                    </form>
+                    {% for message in messages %}
+                        {%if message.extra_tags == "tenant_lock"%}
+                            <p class="info_msg text-white" >{{ message }}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>
