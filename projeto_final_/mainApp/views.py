@@ -485,12 +485,12 @@ def introduce_property_view (request):
 
     
 
-@login_required(login_url='login_view')
-def index(response):
-    return render(response, "mainApp/home.html", {})
+#@login_required(login_url='login_view')
+def index(request):
+    return render(request, "mainApp/home.html", {})
 
 @login_required(login_url='login_view')
-def startsAgreement(response):
+def startsAgreement(request):
 
     if request.method == 'POST':
         pass
@@ -567,9 +567,11 @@ def create_request(request):
         return render(request, 'mainApp/intent.html')
 
 @login_required(login_url='login_view')
-def profile(response):
-    return render(response, "mainApp/profile.html", {})
+def profile(request):
+    return render(request, "mainApp/profile.html", {})
 
+def listing_management_view(request):
+    return render(request, "mainApp/listingsManagement.html", {})
 
 def notificationsLandlord(response):
     return render(response, "mainApp/notificationsLandlord.html", {})
@@ -634,8 +636,6 @@ def search(request):
 
     return render(request, "mainApp/search.html", {})
 
-""" def addListing(response):
-    return render(response, "mainApp/addListing.html", {}) """
 
 def notificationsTenent(request):
 
