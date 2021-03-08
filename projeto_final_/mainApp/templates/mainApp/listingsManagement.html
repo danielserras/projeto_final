@@ -4,7 +4,32 @@
     <link rel="stylesheet" href='{% static "mainApp/css/listingsManagement.css" %}'>
 {% endblock %}
 {% block content %}
-    <div class="container mt-5">
-        
+    <div class="container mt-5 ">
+        <table class="table">
+            <thead class="thead bg-info">
+                <tr>
+                <th class="text-white" scope="col">#</th>
+                <th class="text-white" scope="col">Morada</th>
+                <th class="text-white" scope="col">Alugada</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <th scope="row">1</th>
+                <td>Rua da Fonte, Bicesse, Alcabideche</td>
+                <td>Sim</td>
+                </tr>
+                <tr>
+                <th scope="row">2</th>
+                <td>Rua Vale Formoso, Vale Formoso, Sardoal</td>
+                <td>Parcialmente</td>
+                </tr>
+                <tr>
+                <th scope="row">3</th>
+                <td>Rua 25 de Abril, Alcochete</td>
+                <td>Não</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 {% endblock %}
