@@ -85,22 +85,41 @@
                 </div>
                 <div class="row justify-content-md-center ">
                     <div class="form-group col-sm-4">
-                        <h4>O que pretende anunciar?</h4><br>
-                        <label for="" class="radio-inline">
-                            <input type="radio" name="listing_type" class="" value="House"> Casa
-                        </label> <br>
-                        <label for="" class="radio-inline">
-                            <input type="radio" name="listing_type" class="" value="Studio"> Estúdio
-                        </label><br>
-                        <label for="" class="radio-inline">
-                            <input type="radio" name="listing_type" class="" value="Apartment"> Apartamento
-                        </label><br>
-                        <label for="" class="radio-inline">
-                            <input type="radio" name="listing_type" class="" value="Bedroom"> Quarto
-                        </label><br>
-                        <label for="" class="radio-inline">
-                            <input type="radio" name="listing_type" class="" value="Residency"> Residência
-                        </label><br>
+                        {% if "multiple_bedrooms" in request.session %}
+                            <h4>O que pretende anunciar?</h4><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Home"> Casa
+                            </label> <br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Studio" disabled> Estúdio
+                            </label><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Apartment"> Apartamento
+                            </label><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Bedroom" disabled> Quarto
+                            </label><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Residency"> Residência
+                            </label><br>
+                        {% else %}
+                            <h4>O que pretende anunciar?</h4><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Home"> Casa
+                            </label> <br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Studio"> Estúdio
+                            </label><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Apartment"> Apartamento
+                            </label><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Bedroom"> Quarto
+                            </label><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Residency"> Residência
+                            </label><br>
+                        {% endif %}
                     </div>
                     <div class="form-group col-sm-3">
                         <h4>Album de fotografias</h4><br>
