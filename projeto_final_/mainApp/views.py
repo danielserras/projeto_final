@@ -514,7 +514,17 @@ def profile(request):
     return render(request, "mainApp/profile.html", {})
 
 def listing_management_view(request):
-    return render(request, "mainApp/listingsManagement.html", {})
+    current_user = request.user
+    app_user = App_user.objects.get(user_id = current_user)
+    a_user = Landlord.objects.get(lord_user_id=app_user)
+    properties = list(Property.objects.filter(landlord_id = a_user))
+    
+    propertyStatus = {}
+    for p in properties:
+        agreements.add()
+
+    context = {"properties":properties}
+    return render(request, "mainApp/listingsManagement.html", context)
 
 def notificationsLandlord(response):
     return render(response, "mainApp/notificationsLandlord.html", {})
