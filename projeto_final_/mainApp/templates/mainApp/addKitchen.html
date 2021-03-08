@@ -105,9 +105,18 @@
             {% endfor %}
         </div>
         <div class="row justify-content-md-center text-center mb-3">
-            <div class="col-sm-auto">
-                <button type="submit" class="btn btn-secondary" >Seguinte</button>
-            </div>
+            {% if "no_living" in request.session %}
+                <div class="col-sm-auto">
+                    <button name="save" value="True" type="submit" class="btn btn-secondary" >Pretendo apenas guardar</button>
+                </div>
+                <div class="col-sm-auto">
+                    <button type="submit" class="btn btn-secondary" >Prentendo listar</button>
+                </div>
+            {% else %}
+                <div class="col-sm-auto">
+                    <button type="submit" class="btn btn-secondary" >Seguinte</button>
+                </div>
+            {% endif %}
         </div>
     </form>
 </div>   
