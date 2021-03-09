@@ -1,0 +1,44 @@
+{% extends 'mainApp/base.html' %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/listingsManagement.css" %}'>
+{% endblock %}
+{% block content %}
+    <div class="container mt-5 ">
+        <div class="row text-center">
+            <div class="col-sm-12">
+                <h3>Gerir Alojamentos</h3>
+            </div> 
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+            <thead class="thead bg-info">
+                <tr>
+                <th class="text-white" scope="col">#</th>
+                <th class="text-white" scope="col">Morada</th>
+                <th class="text-white" scope="col">Editar Alojamento</th>
+                <th class="text-white" scope="col">Editar Anúncio</th>
+                <th class="text-white" scope="col">Alugada</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in properties%}
+                    <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{p.address}}</td>
+                    <td><a href="propertiesManagement/propertyEdit/{{p.id}}"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                                                                                <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
+                                                                                <line x1="16" y1="5" x2="19" y2="8" />
+                                                                            </svg></td>
+                    <td><a href="propertiesManagement/listingEdit/{{p.id}}"></a></td>
+                    <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        
+    </div>
+{% endblock %}

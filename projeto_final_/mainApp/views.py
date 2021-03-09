@@ -571,18 +571,21 @@ def create_request(request):
 def profile(request):
     return render(request, "mainApp/profile.html", {})
 
-def listing_management_view(request):
+def properties_management_view(request):
     current_user = request.user
     app_user = App_user.objects.get(user_id = current_user)
     a_user = Landlord.objects.get(lord_user_id=app_user)
     properties = list(Property.objects.filter(landlord_id = a_user))
-    
-    propertyStatus = {}
-    for p in properties:
-        agreements.add()
 
     context = {"properties":properties}
-    return render(request, "mainApp/listingsManagement.html", context)
+    return render(request, "mainApp/propertiesManagement.html", context)
+
+def property_edit(request, property_id):
+    return render(request, "mainApp/propertyEdit.html", {})
+
+def listing_edit(request, property_id):
+    print(property_id)
+    return render(request, "mainApp/listingEdit.html", {})
 
 def notificationsLandlord(response):
     return render(response, "mainApp/notificationsLandlord.html", {})
