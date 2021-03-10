@@ -29,10 +29,10 @@ def login_view(request):
         if user is not None:
             login(request, user)
             request.session['username'] = username
+            request.session['popUp'] =  False
             return redirect('index') #placeholder, alterem depois
         else:
             messages.info(request, 'Username ou password incorretos')
-            request.session['popUp'] =  False
 
             context = {}
             return render(request, 'mainApp/login.html', context) #placeholder
@@ -635,11 +635,68 @@ def property_edit_view(request, property_id):
 def listing_edit_view(request, property_id):
     return render(request, "mainApp/listingEdit.html", {})
 
-def notificationsLandlord(response):
-    return render(response, "mainApp/notificationsLandlord.html", {})
 
-def notifications3(response):
-    return render(response, "mainApp/notifications3.html", {})
+def notificationsTenant(request):
+    current_user_ = request.user
+    a_user_ = App_user.objects.get(user_id=current_user_)
+
+    try:
+        tenant_ = Tenant.objects.get(ten_user=a_user_)
+    except:
+        return redirect('profile')
+
+    listOfAgreements = []
+    for e in Agreement_Request.objects.all():
+        if e.tenant_id == tenant_.id:
+            listOfAgreements.append(e)
+    print("LISTA DOS AGREEMENTS DESTE USER: ", listOfAgreements)
+    fullList = []
+    for a in listOfAgreements:
+        _landlord_ = a.landlord #objeto landlord
+        _userLand_ = _landlord_.lord_user
+        userLand = _userLand_.user
+        nomeLand = userLand.username
+        message = a.message 
+        startsDate = a.startsDate
+        endDate = a.endDate
+        accepted = a.accepted #para ver se esta null, aceite ou recusada
+        fullList.append([nomeLand, message, startsDate, endDate, accepted])
+
+    #ola = Agreement_Request.objects.get(landlord_id=1)
+    #print(ola.tenant_id)
+    context = {"fullList" : fullList}
+    return render(request, "mainApp/notificationsTenant.html", context)
+
+def notificationsLandlord(request):
+    current_user_ = request.user
+    a_user_ = App_user.objects.get(user_id=current_user_)
+
+    try:
+        landlord_ = Landlord.objects.get(lord_user=a_user_)
+    except:
+        return redirect('profile')
+
+    listOfAgreements_ = []
+    for e in Agreement_Request.objects.all():
+        if e.landlord_id == landlord_.id:
+            listOfAgreements_.append(e)
+    print("LISTA DOS AGREEMENTS DESTE LANDLORD: ", listOfAgreements_)
+    fullList_ = []
+    for a in listOfAgreements_:
+        user_ = a.tenant #objeto tenant
+        _user_ = user_.ten_user
+        userTen = _user_.user
+        nomeTen = userTen.username
+        message_ = a.message 
+        startsDate_ = a.startsDate
+        endDate_ = a.endDate
+        accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
+        fullList_.append([nomeTen, message_, startsDate_, endDate_, accepted_])
+
+    #ola = Agreement_Request.objects.get(landlord_id=1)
+    #print(ola.tenant_id)
+    context = {"fullList_" : fullList_}
+    return render(request, "mainApp/notificationsLandlord.html", context)
 
 
 def search(request):
@@ -730,11 +787,6 @@ def search(request):
         print(row)
     return render(request, "mainApp/search.html", {})
 
-
-def notificationsTenent(request):
-
-
-    return render(request, "mainApp/notificationsTenent.html", {})
 
 def listing(request, listing_id):
     listing = Listing.objects.get(pk=listing_id)
