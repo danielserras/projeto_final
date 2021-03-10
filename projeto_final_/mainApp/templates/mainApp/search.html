@@ -109,75 +109,41 @@
     </form>
     <div class='mt-5' id="mapid"></div>
     <div class="row mt-5 justify-content-center">
-        <h1 class="mx-auto mt-5 font-weight-bold">Resultados</h1>
-        <div class="row justify-content-center mt-5 mb-5">
-            <div class="imageDiv m-5 rounded col-dm">
-                <p class="previewPrice text-white">450€</p>
-                <div class='previewTextDiv'>
-                    <p class='previewName m-0 text-white'>Apartamento no centro</p>
-                    <p class='previewDistance m-0 text-white'>4,4 Km de distância</p>
-                    <div class="previewLocation">
-                        <img src='{% static "mainApp/images/map-pin-preview.svg" %}' class='previewLocationPin' alt='Location pin'>
-                        <p class='previewAddress my-auto text-white'>Avenida Nuno Alvares Pereira</p>
+        <div class='col-12'>
+            <h1 class="row justify-content-center mt-5 font-weight-bold">Resultados</h1>
+        </div>
+        <div class='col-12'>
+            <div class="row justify-content-center mt-5 mb-5">
+                {% if row|length > 0 %}
+                    {% for l in row %}
+                        <div class="imageDiv m-5 rounded col-dm">
+                            <p class="previewPrice text-white">{{l.0}}€</p>
+                            <div class='previewTextDiv'>
+                                <p class='previewName m-0 text-white'>{{l.1}}</p>
+                                <p class='previewDistance m-0 text-white'>{{l.3}} Km de distância</p>
+                                <div class="previewLocation">
+                                    <img src='{% static "mainApp/images/map-pin-preview.svg" %}' class='previewLocationPin' alt='Location pin'>
+                                    <p class='previewAddress my-auto text-white'>{{l.2}}</p>
+                                </div>
+                            </div>
+                            <img src='{% static l.4 %}' class="rounded previewImage" width='270' height="270" alt=''>
+                        </div>
+                    {% endfor %}
+                    <div class="imageDiv m-5 rounded col-dm">
+                        <p class="previewPrice text-white">450€</p>
+                        <div class='previewTextDiv'>
+                            <p class='previewName m-0 text-white'>Apartamento no centro</p>
+                            <p class='previewDistance m-0 text-white'>4,4 Km de distância</p>
+                            <div class="previewLocation">
+                                <img src='{% static "mainApp/images/map-pin-preview.svg" %}' class='previewLocationPin' alt='Location pin'>
+                                <p class='previewAddress my-auto text-white'>Avenida Nuno Alvares Pereira</p>
+                            </div>
+                        </div>
+                        <img src='https://picsum.photos/570' class="rounded previewImage" width='270' alt=''>
                     </div>
-                </div>
-                <img src='https://picsum.photos/570' class="rounded previewImage" width='270' alt=''>
-            </div>
-            <div class="imageDiv m-5 rounded col-dm">
-                <p class="previewPrice text-white">450€</p>
-                <div class='previewTextDiv'>
-                    <p class='previewName m-0 text-white'>Apartamento no centro</p>
-                    <p class='previewDistance m-0 text-white'>4,4 Km de distância</p>
-                    <div class="previewLocation">
-                        <img src='{% static "mainApp/images/map-pin-preview.svg" %}' class='previewLocationPin' alt='Location pin'>
-                        <p class='previewAddress my-auto text-white'>Avenida Nuno Alvares Pereira</p>
-                    </div>
-                </div>
-                <img src='https://picsum.photos/570' class="rounded previewImage" width='270' alt=''>
-            </div>
-            <div class="imageDiv m-5 rounded col-dm">
-                <div class='previewTextDiv'>
-                    <p class='previewName m-0 text-white'>Apartamento no centro</p>
-                    <p class='previewDistance m-0 text-white'>4,4 Km de distância</p>
-                    <div class="previewLocation">
-                        <img src='{% static "mainApp/images/map-pin-preview.svg" %}' class='previewLocationPin' alt='Location pin'>
-                        <p class='previewAddress my-auto text-white'>Avenida Nuno Alvares Pereira</p>
-                    </div>
-                </div>
-                <img src='https://picsum.photos/570' class="rounded previewImage" width='270' alt=''>
-            </div>
-            <div class="imageDiv m-5 rounded col-dm">
-                <div class='previewTextDiv'>
-                    <p class='previewName m-0 text-white'>Apartamento no centro</p>
-                    <p class='previewDistance m-0 text-white'>4,4 Km de distância</p>
-                    <div class="previewLocation">
-                        <img src='{% static "mainApp/images/map-pin-preview.svg" %}' class='previewLocationPin' alt='Location pin'>
-                        <p class='previewAddress my-auto text-white'>Avenida Nuno Alvares Pereira</p>
-                    </div>
-                </div>
-                <img src='https://picsum.photos/570' class="rounded previewImage" width='270' alt=''>
-            </div>
-            <div class="imageDiv m-5 rounded col-dm">
-                <div class='previewTextDiv'>
-                    <p class='previewName m-0 text-white'>Apartamento no centro</p>
-                    <p class='previewDistance m-0 text-white'>4,4 Km de distância</p>
-                    <div class="previewLocation">
-                        <img src='{% static "mainApp/images/map-pin-preview.svg" %}' class='previewLocationPin' alt='Location pin'>
-                        <p class='previewAddress my-auto text-white'>Avenida Nuno Alvares Pereira</p>
-                    </div>
-                </div>
-                <img src='https://picsum.photos/570' class="rounded previewImage" width='270' alt=''>
-            </div>
-            <div class="imageDiv m-5 rounded col-dm">
-                <div class='previewTextDiv'>
-                    <p class='previewName m-0 text-white'>Apartamento no centro</p>
-                    <p class='previewDistance m-0 text-white'>4,4 Km de distância</p>
-                    <div class="previewLocation">
-                        <img src='{% static "mainApp/images/map-pin-preview.svg" %}' class='previewLocationPin' alt='Location pin'>
-                        <p class='previewAddress my-auto text-white'>Avenida Nuno Alvares Pereira</p>
-                    </div>
-                </div>
-                <img src='https://picsum.photos/570' class="rounded previewImage" width='270' alt=''>
+                {% else %}
+                    <p>Não foram encontrados resultados para a sua pesquisa.</p>
+                {% endif %}
             </div>
         </div>
         <!---->
