@@ -589,48 +589,28 @@ def property_edit_view(request, property_id):
     except:
         return redirect('index')
 
+    property_object = Property.objects.get(id=property_id)
+    bedrooms = list(Bedroom.objects.filter(associated_property=property_object))
+    bathrooms = list(Bathroom.objects.filter(associated_property=property_object))
+    kitchens = list(Kitchen.objects.filter(associated_property=property_object))
+    livingrooms = list(Livingroom.objects.filter(associated_property=property_object))
 
-    if request.user.is_active:
-        if request.method == 'POST':
-            f = PropertyForm(data=request.POST)
-            if f.is_valid():
+    request.session["property_id"] = json.dumps(property_object.id)
 
-                #bed_formset = BedroomFormSet(queryset=Bedroom.objects.none())
-                #bed_formset.extra = int(f.cleaned_data.get('bedrooms_num'))
-                
-                request.session['bedrooms_num'] =  f.cleaned_data.get('bedrooms_num')
-                request.session['bathrooms_num'] =  f.cleaned_data.get('bathrooms_num')
-                if request.session['bedrooms_num'] > 1:
-                    request.session['multiple_bedrooms'] = True
+    if request.method == 'POST':
+        f = PropertyForm(data=request.POST)
+        if f.is_valid():                
+            prop_serial = json.dumps(f.cleaned_data)
+            request.session['prop_serial'] = prop_serial
 
-                request.session['kitchens_num'] =  f.cleaned_data.get('kitchens_num')
-                request.session['livingrooms_num'] =  f.cleaned_data.get('livingrooms_num')
-                if request.session['livingrooms_num'] == 0:
-                    request.session['no_living'] = True
-                    
-                prop_serial = json.dumps(f.cleaned_data)
-                request.session['prop_serial'] = prop_serial
-
-                context = {
-                    'property_form': prop_form,
-                    'bed_formset': bed_formset
-                    }
-                
-                return render(
-                    request,
-                    'mainApp/addBedroom.html',
-                    context)
-        else:
-            property_object = Property.objects.get(id=property_id)
-            bedrooms = list(Bedroom.objects.filter(associated_property=property_object))
-            bathrooms = list(Bathroom.objects.filter(associated_property=property_object))
-            kitchens = list(Kitchen.objects.filter(associated_property=property_object))
-            livingrooms = list(Livingroom.objects.filter(associated_property=property_object))
-
-            context={"property":property_object, "bedrooms":bedrooms, "bathrooms":bathrooms, "bathrooms_num":len(bathrooms), "kitchens_num":len(kitchens), "livingrooms_num":len(livingrooms)}
-            return render(request, "mainApp/propertyEdit.html", context)
+            context = {"bedrooms":bedrooms}
+            
+            return render(request,'mainApp/editBedrooms.html',context)
     else:
-        return redirect('index')
+        context={"property":property_object}
+        return render(request, "mainApp/editProperty.html", context)
+
+
 
 def listing_edit_view(request, property_id):
     return render(request, "mainApp/listingEdit.html", {})
