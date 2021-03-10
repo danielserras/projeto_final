@@ -1,0 +1,151 @@
+{% extends 'mainApp/base.html' %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/addProperty.css" %}'>
+    <link rel="stylesheet" href='{% static "mainApp/css/map.css" %}'> 
+{% endblock %}
+{% block scripts%}
+    <script src='{% static "mainApp/js/addProperty.js" %}'></script>
+    <script src='{% static "mainApp/js/map.js" %}'></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+{% endblock %}
+{% block content %}
+    <div class="container ">
+    <div class="progress mt-5 mb-3">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <form action="{% url 'addProperty' %}" method="POST" id="formContainer">
+        {% csrf_token %}
+        <div class="row justify-content-md-center pageListing-1">
+            <div class="form-group col-sm-7">
+                <label for="address"><h4>Morada</h4></label><br>
+                <input name ="latitude" id="latitude" type="hidden"/>
+                <input name ="longitude" id="longitude" type="hidden"/>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-white border-info border-right-0 border-3 p-1">
+                            {% load static %}
+                            <img src='{% static "mainApp/images/map-pin.svg" %}' class='img-fluid' alt='Location pin'>
+                        </span>
+                    </div>
+                    <input type="text" id="address" class="form-control border-left-0 pl-0 border-info border-3 rounded-right" name="address" value="{{property.address}}" required>
+                </div>
+            </div>
+        </div>
+
+        <div class= "mt-3 mb-3" id="mapid"></div>
+
+
+        <div class="row">
+            <div class="col-sm-12" >                
+                <div class="row mt-2 mb-2 justify-content-md-center">
+                    <div class="col-sm-7">
+                        <h3>Regras</h3>
+                    </div>
+                </div>
+
+                <div class="row justify-content-md-center mb-2 ">
+                    <div class="col-sm-7">
+                        <div class="row p-3">
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="pets" class="custom-control-input" id="pets" {% if property.pets%}checked{% endif %}>
+                                <label for="pets" class="custom-control-label">Animais de Estimação</label>
+                            </div>
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="smoke" class="custom-control-input" id="smoke"{% if property.smoke%}checked{% endif %}>
+                                <label for="smoke" class="custom-control-label">Fumar</label>
+                            </div>
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="overnight_visits"class="custom-control-input" id="overnight_visits"{% if property.overnight_vissits%}checked{% endif %}>
+                                <label for="overnight_visits" class="custom-control-label">Visitas podem pernoitar ocasionalmente</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-2 mb-2 justify-content-md-center">
+                    <div class="col-sm-7">
+                        <h3>Despesas Incluídas</h3>
+                    </div>
+                </div>
+
+                <div class="row justify-content-md-center mb-2">
+                    <div class="col-sm-7">
+                        <div class="row p-3">
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="water" class="custom-control-input" id="water" {% if property.water%}checked{% endif %}>
+                                <label for="water" class="custom-control-label">Água</label>
+                            </div>
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="eletricity" class="custom-control-input" id="eletricity" {% if property.eletricity%}checked{% endif %}>
+                                <label for="eletricity" class="custom-control-label">Eletricidade</label>
+                            </div>
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="internet" class="custom-control-input" id="internet" {% if property.internet%}checked{% endif %}>
+                                <label for="internet" class="custom-control-label">Internet</label>
+                            </div>
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="gas" class="custom-control-input" id="gas" {% if property.gas%}checked{% endif %}>
+                                <label for="gas" class="custom-control-label">Gás</label>
+                            </div>
+                        </div>
+                        <div class="row p-3">
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="cleaning_services" class="custom-control-input" id="cleaning_services" {% if property.cleaning_services%}checked{% endif %}>
+                                <label for="cleaning_services" class="custom-control-label">Serviços de Limpeza</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-2 mb-2 justify-content-md-center">
+                    <div class="col-sm-7">
+                        <h3>Exterior</h3>
+                    </div>
+                </div>
+
+                <div class="row justify-content-md-center mb-2">
+                    <div class="col-sm-7">
+                        <div class="row p-3">
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="street_parking" class="custom-control-input" id="street_parking" {% if property.street_parking%}checked{% endif %}>
+                                <label for="street_parking" class="custom-control-label">Estacionamento</label>
+                            </div>
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="garage" class="custom-control-input" id="garage" {% if property.garage%}checked{% endif %}>
+                                <label for="garage" class="custom-control-label">Garagem</label>
+                            </div>
+                            <div class="col-sm-3 custom-control custom-checkbox">
+                                <input type="checkbox" name="garden" class="custom-control-input" id="garden" {% if property.garden%}checked{% endif %}>
+                                <label for="garden" class="custom-control-label">Jardim</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2  justify-content-md-center">
+            <div class="col-sm-7">
+                <h3>Características da Casa</h3>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-sm-7">
+                <label for="bedroomsNum" >Número de Quartos</label>
+                <input type="number" name="bedrooms_num" id="bedroomsNum" min="1" class="form-control border-info border-3 rounded" value="{{property.bedrooms_num}}" required> <br>
+                <label for="bathroomsNum" >Número de Casas de Banho</label><br>
+                <input type="number" name="bathrooms_num" id="bathroomsNum" min="1" class="form-control border-info border-3 rounded-right" value="{{bathrooms_num}}" required><br>
+                <label for="kitchensNum" >Número de Cozinhas</label><br>
+                <input type="number" name="kitchens_num" id="kitchensNum" min="1" class="form-control border-info border-3 rounded-right" value="{{kitchens_num}}" required><br>
+                <label for="livingroomsNum" >Número de Salas</label><br>
+                <input type="number" name="livingrooms_num" id="livingroomsNum" min="0" class="form-control border-info border-3 rounded-right" value="{{livingrooms_num}}" required> <br>
+            </div>
+        </div>
+        <div class="row justify-content-md-center text-center mb-3">
+            <div class="col-sm-auto">
+                <button type="submit" class="btn btn-secondary" >Seguinte</button>
+            </div>
+        </div>
+    </form>
+</div
+{% endblock %}
