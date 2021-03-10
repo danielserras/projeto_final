@@ -11,12 +11,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from paypal.standard.forms import PayPalPaymentsForm
 from django.forms.models import model_to_dict
+from django.template.loader import render_to_string
 from django.db import connection
 from decouple import config
 from geopy.geocoders import MapBox
 from copy import deepcopy
 import time
 import json
+import math
 #tirar debug_mode no fim do proj
 #tirar test_mode do paypal no fim
 
@@ -29,10 +31,10 @@ def login_view(request):
         if user is not None:
             login(request, user)
             request.session['username'] = username
+            request.session['popUp'] =  False
             return redirect('index') #placeholder, alterem depois
         else:
             messages.info(request, 'Username ou password incorretos')
-            request.session['popUp'] =  False
 
             context = {}
             return render(request, 'mainApp/login.html', context) #placeholder
@@ -75,6 +77,18 @@ def register_view(request):
 
     context = {'form':form, 'errors':form.errors} #, 'pform':pform
     return render(request, 'mainApp/register.html', context)
+
+""" def password_recovery_view(request):
+    
+    user_id = request.user.id
+    subject = "Pedido de mudança de password"
+    sender = "noreply.unihouses@gmail.com"
+    recipient = form.cleaned_data.get('recovery_email')
+    template = "mainApp/templates/mainApp/recovery.html"
+
+    msg = render_to_string(template, raise_exception=True), {"link": verification_url})
+
+    send_mail(subject, strip_tags(msg), from_email=sender, recipient_list=[recipient], html_message=msg) """
 
 def save_property(request):
 
@@ -635,49 +649,118 @@ def property_edit_view(request, property_id):
 def listing_edit_view(request, property_id):
     return render(request, "mainApp/listingEdit.html", {})
 
-def notificationsLandlord(response):
-    return render(response, "mainApp/notificationsLandlord.html", {})
 
-def notifications3(response):
-    return render(response, "mainApp/notifications3.html", {})
+def notificationsTenant(request):
+    current_user_ = request.user
+    a_user_ = App_user.objects.get(user_id=current_user_)
 
+    try:
+        tenant_ = Tenant.objects.get(ten_user=a_user_)
+    except:
+        return redirect('profile')
+
+    listOfAgreements = []
+    for e in Agreement_Request.objects.all():
+        if e.tenant_id == tenant_.id:
+            listOfAgreements.append(e)
+    print("LISTA DOS AGREEMENTS DESTE USER: ", listOfAgreements)
+    fullList = []
+    for a in listOfAgreements:
+        _landlord_ = a.landlord #objeto landlord
+        _userLand_ = _landlord_.lord_user
+        userLand = _userLand_.user
+        nomeLand = userLand.username
+        message = a.message 
+        startsDate = a.startsDate
+        endDate = a.endDate
+        accepted = a.accepted #para ver se esta null, aceite ou recusada
+        fullList.append([nomeLand, message, startsDate, endDate, accepted])
+
+    #ola = Agreement_Request.objects.get(landlord_id=1)
+    #print(ola.tenant_id)
+    context = {"fullList" : fullList}
+    return render(request, "mainApp/notificationsTenant.html", context)
+
+def notificationsLandlord(request):
+    current_user_ = request.user
+    a_user_ = App_user.objects.get(user_id=current_user_)
+
+    try:
+        landlord_ = Landlord.objects.get(lord_user=a_user_)
+    except:
+        return redirect('profile')
+
+    listOfAgreements_ = []
+    for e in Agreement_Request.objects.all():
+        if e.landlord_id == landlord_.id:
+            listOfAgreements_.append(e)
+    print("LISTA DOS AGREEMENTS DESTE LANDLORD: ", listOfAgreements_)
+    fullList_ = []
+    for a in listOfAgreements_:
+        user_ = a.tenant #objeto tenant
+        _user_ = user_.ten_user
+        userTen = _user_.user
+        nomeTen = userTen.username
+        message_ = a.message 
+        startsDate_ = a.startsDate
+        endDate_ = a.endDate
+        accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
+        fullList_.append([nomeTen, message_, startsDate_, endDate_, accepted_])
+
+    #ola = Agreement_Request.objects.get(landlord_id=1)
+    #print(ola.tenant_id)
+    context = {"fullList_" : fullList_}
+    return render(request, "mainApp/notificationsLandlord.html", context)
+
+def get_distance(lat_1, lng_1, lat_2, lng_2): 
+    d_lat = lat_2 - lat_1
+    d_lng = lng_2 - lng_1 
+
+    temp = (  
+         math.sin(d_lat / 2) ** 2 
+       + math.cos(lat_1) 
+       * math.cos(lat_2) 
+       * math.sin(d_lng / 2) ** 2
+    )
+
+    return 6373.0 * (2 * math.atan2(math.sqrt(temp), math.sqrt(1 - temp)))
 
 def search(request):
     form = CreateUserForm()
+    geolocator = MapBox(config('MAPBOX_KEY'), scheme=None, user_agent=None, domain='api.mapbox.com')
+    location = ''
+    row = ''
+
     if request.method == 'POST':
         form = SearchForm(data=request.POST)
         if form.is_valid():
 
-            geolocator = MapBox(config('MAPBOX_KEY'), scheme=None, user_agent=None, domain='api.mapbox.com')
-                    
             location = geolocator.geocode(form.cleaned_data.get('location'))
 
-            querySelect = 'SELECT l.monthly_payment, l.title, p.address, p.latitude, p.longitude'
-            queryFrom = ' FROM mainApp_listing AS l, mainApp_property as p'
-            queryWhere = " WHERE (acos(sin(p.latitude * 0.0175) * sin(38.7057409 * 0.0175) \
-                            + cos(p.latitude * 0.0175) * cos(38.7057409 * 0.0175) *    \
-                                cos((-9.16016118661616 * 0.0175) - (p.longitude * 0.0175))\
+            querySelect = 'SELECT l.monthly_payment, l.title, p.address, p.latitude, p.longitude, i.image'
+            queryFrom = ' FROM mainApp_listing AS l, mainApp_property as p, mainApp_image as i'
+            queryWhere = " WHERE (acos(sin(p.latitude * 0.0175) * sin("+str(location.latitude)+"* 0.0175) \
+                            + cos(p.latitude * 0.0175) * cos("+str(location.latitude)+" * 0.0175) *    \
+                                cos(("+str(location.longitude)+" * 0.0175) - (p.longitude * 0.0175))\
                             ) * 6371 <='" + str(form.cleaned_data.get('radius')) + "')"
-            
-            '''
-                SELECT * FROM mainApp_property p 
-                WHERE (
-                        acos(sin(p.latitude * 0.0175) * sin(38.7057409 * 0.0175) 
-                            + cos(p.latitude * 0.0175) * cos(38.7057409 * 0.0175) *    
-                                cos((-9.16016118661616 * 0.0175) - (p.longitude * 0.0175))
-                            ) * 6371 <= 23
-                    )
-            '''
 
             cursor = connection.cursor()
             
+            queryWhere += " AND l.album_id = i.album_id AND i.is_cover = 1"
+
             #Checks if the price is within range
-            queryWhere += " AND l.monthly_payment BETWEEN '" + form.cleaned_data.get('minPrice') + "' AND '" + form.cleaned_data.get('maxPrice') + "'"
+            if (form.cleaned_data.get('maxPrice') == '2000'):
+                queryWhere += " AND  l.monthly_payment >= '" + form.cleaned_data.get('minPrice') + "'"
+            else:
+                queryWhere += " AND l.monthly_payment BETWEEN '" + form.cleaned_data.get('minPrice') + "' AND '"\
+                                + form.cleaned_data.get('maxPrice') + "' AND l.album_id = i.album_id AND i.is_cover = 1"
 
             #Number of tenants is filled
             if any(form.cleaned_data.get('num_tenants') == x for x in ('1','2','3','4')):
                 queryWhere += " AND l.max_capacity = '" + form.cleaned_data.get('num_tenants') + "'"
-            
+            elif(form.cleaned_data.get('num_tenants') == '5'):
+                queryWhere += " AND l.max_capacity >= 5"
+
             #Date in is filled
             if form.cleaned_data.get('date_in') is not None:
                 queryWhere += " AND '" + str(form.cleaned_data.get('date_in')) + "' >= l.availability_starts"
@@ -687,8 +770,11 @@ def search(request):
                 queryWhere += " AND '" + str(form.cleaned_data.get('date_out')) + "' <= l.availability_ending"
 
             #Number of bedrooms is filled
+            print(form.cleaned_data.get('num_bedrooms'))
             if any(form.cleaned_data.get('num_bedrooms') == x for x in ('1','2','3','4')):
                 queryWhere += " AND p.bedrooms_num = '" + form.cleaned_data.get('num_bedrooms') + "'"
+            elif(form.cleaned_data.get('num_bedrooms') == '5'):
+                queryWhere += " AND p.bedrooms_num >= 5"
             
             #Property type is filled and is either Bedroom, Studio or Residency
             if any( form.cleaned_data.get('type') == x for x in ('Bedroom', 'Studio', 'Residency')):
@@ -709,16 +795,14 @@ def search(request):
                 row = cursor.fetchall()
             
             #Property type is empty
-            else:            
+            else:         
                 queryFromProperty = deepcopy(queryFrom) + ', mainApp_property_listing AS pl'
                 queryWhereProperty = deepcopy(queryWhere) + ' AND pl.associated_property_id = p.id AND pl.main_listing_id = l.id'
 
                 queryFromRoom = deepcopy(queryFrom) + ', mainApp_room_listing AS rl'
                 queryWhereRoom = deepcopy(queryWhere) + ' AND rl.associated_room_id = p.id AND rl.main_listing_id = l.id'
 
-                
-                #print(querySelect + queryFromProperty + queryWhereProperty)
-                #print(querySelect + queryFromRoom+ queryWhereRoom)
+                print(querySelect + queryFrom + queryWhere)
 
                 cursor.execute(querySelect + queryFromProperty + queryWhereProperty)
                 row_property = cursor.fetchall()
@@ -727,14 +811,21 @@ def search(request):
                 row_room = cursor.fetchall()
 
                 row = row_property + row_room
-        print(row)
-    return render(request, "mainApp/search.html", {})
 
+    final_row = ()
+    for l in row:
+        lng_1, lat_1, lng_2, lat_2 = map(math.radians, [location.longitude, location.latitude, l[4], l[3]])
+        listing = (l[:3] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),) + (l[5].split('mainApp/static/')[1],) + l[6:],)
+        final_row += listing
 
-def notificationsTenent(request):
+    print(final_row)
 
+    context = {
+        'num_results' : len(final_row), 
+        'row' : final_row
+    }
+    return render(request, "mainApp/search.html", context)
 
-    return render(request, "mainApp/notificationsTenent.html", {})
 
 def listing(request, listing_id):
     listing = Listing.objects.get(pk=listing_id)

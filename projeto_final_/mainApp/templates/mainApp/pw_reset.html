@@ -1,0 +1,19 @@
+{% extends 'mainApp/base.html' %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/login.css" %}'>
+{% endblock %}
+{% block content %}
+<p>Por favor insira o endereço email associado à sua conta. Será enviado um email em breve</p>
+
+<form method="post">{% csrf_token %}
+<fieldset class="module aligned">
+    <div class="form-row field-email">
+        {{ form.email.errors }}
+        <label for="id_email">Email address:</label>
+        {{ form.email }}
+    </div>
+    <input type="submit" value="Reset my password">
+</fieldset>
+</form>
+{% endblock %}
