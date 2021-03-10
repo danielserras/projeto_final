@@ -593,11 +593,59 @@ def properties_management_view(request):
     context = {"properties":properties}
     return render(request, "mainApp/propertiesManagement.html", context)
 
-def property_edit(request, property_id):
-    return render(request, "mainApp/propertyEdit.html", {})
+def property_edit_view(request, property_id):
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
 
-def listing_edit(request, property_id):
-    print(property_id)
+    try:
+        lord = Landlord.objects.get(lord_user=a_user)
+    except:
+        return redirect('index')
+
+
+    if request.user.is_active:
+        if request.method == 'POST':
+            f = PropertyForm(data=request.POST)
+            if f.is_valid():
+
+                #bed_formset = BedroomFormSet(queryset=Bedroom.objects.none())
+                #bed_formset.extra = int(f.cleaned_data.get('bedrooms_num'))
+                
+                request.session['bedrooms_num'] =  f.cleaned_data.get('bedrooms_num')
+                request.session['bathrooms_num'] =  f.cleaned_data.get('bathrooms_num')
+                if request.session['bedrooms_num'] > 1:
+                    request.session['multiple_bedrooms'] = True
+
+                request.session['kitchens_num'] =  f.cleaned_data.get('kitchens_num')
+                request.session['livingrooms_num'] =  f.cleaned_data.get('livingrooms_num')
+                if request.session['livingrooms_num'] == 0:
+                    request.session['no_living'] = True
+                    
+                prop_serial = json.dumps(f.cleaned_data)
+                request.session['prop_serial'] = prop_serial
+
+                context = {
+                    'property_form': prop_form,
+                    'bed_formset': bed_formset
+                    }
+                
+                return render(
+                    request,
+                    'mainApp/addBedroom.html',
+                    context)
+        else:
+            property_object = Property.objects.get(id=property_id)
+            bedrooms = list(Bedroom.objects.filter(associated_property=property_object))
+            bathrooms = list(Bathroom.objects.filter(associated_property=property_object))
+            kitchens = list(Kitchen.objects.filter(associated_property=property_object))
+            livingrooms = list(Livingroom.objects.filter(associated_property=property_object))
+
+            context={"property":property_object, "bedrooms":bedrooms, "bathrooms":bathrooms, "bathrooms_num":len(bathrooms), "kitchens_num":len(kitchens), "livingrooms_num":len(livingrooms)}
+            return render(request, "mainApp/propertyEdit.html", context)
+    else:
+        return redirect('index')
+
+def listing_edit_view(request, property_id):
     return render(request, "mainApp/listingEdit.html", {})
 
 def notificationsLandlord(response):
@@ -618,14 +666,14 @@ def search(request):
             location = geolocator.geocode(form.cleaned_data.get('location'))
 
             querySelect = 'SELECT l.monthly_payment, l.title, p.address, p.latitude, p.longitude'
-            queryFrom = ' FROM mainapp_listing AS l, mainapp_property as p'
+            queryFrom = ' FROM mainApp_listing AS l, mainApp_property as p'
             queryWhere = " WHERE (acos(sin(p.latitude * 0.0175) * sin(38.7057409 * 0.0175) \
                             + cos(p.latitude * 0.0175) * cos(38.7057409 * 0.0175) *    \
                                 cos((-9.16016118661616 * 0.0175) - (p.longitude * 0.0175))\
                             ) * 6371 <='" + str(form.cleaned_data.get('radius')) + "')"
             
             '''
-                SELECT * FROM mainapp_property p 
+                SELECT * FROM mainApp_property p 
                 WHERE (
                         acos(sin(p.latitude * 0.0175) * sin(38.7057409 * 0.0175) 
                             + cos(p.latitude * 0.0175) * cos(38.7057409 * 0.0175) *    
@@ -657,7 +705,7 @@ def search(request):
             
             #Property type is filled and is either Bedroom, Studio or Residency
             if any( form.cleaned_data.get('type') == x for x in ('Bedroom', 'Studio', 'Residency')):
-                queryFrom += ', mainapp_room_listing AS rl'
+                queryFrom += ', mainApp_room_listing AS rl'
                 queryWhere += " AND l.listing_type = '" + form.cleaned_data.get('type') + "'\
                                 AND rl.associated_room_id = p.id AND rl.main_listing_id = l.id"
                 #print(querySelect + queryFrom + queryWhere)
@@ -666,7 +714,7 @@ def search(request):
 
             #Property type is filled and is either Apartment or House
             elif any( form.cleaned_data.get('type') == x for x in ('Apartment', 'House')):
-                queryFrom += ', mainapp_property_listing AS pl'
+                queryFrom += ', mainApp_property_listing AS pl'
                 queryWhere += " AND l.listing_type = '" + form.cleaned_data.get('type') + "'\
                                 AND pl.associated_property_id = p.id AND pl.main_listing_id = l.id"
                 #print(querySelect + queryFrom + queryWhere)
@@ -675,10 +723,10 @@ def search(request):
             
             #Property type is empty
             else:            
-                queryFromProperty = deepcopy(queryFrom) + ', mainapp_property_listing AS pl'
+                queryFromProperty = deepcopy(queryFrom) + ', mainApp_property_listing AS pl'
                 queryWhereProperty = deepcopy(queryWhere) + ' AND pl.associated_property_id = p.id AND pl.main_listing_id = l.id'
 
-                queryFromRoom = deepcopy(queryFrom) + ', mainapp_room_listing AS rl'
+                queryFromRoom = deepcopy(queryFrom) + ', mainApp_room_listing AS rl'
                 queryWhereRoom = deepcopy(queryWhere) + ' AND rl.associated_room_id = p.id AND rl.main_listing_id = l.id'
 
                 
