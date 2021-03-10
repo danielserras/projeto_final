@@ -1,5 +1,5 @@
-from django.urls import path
-
+from django.urls import path, include
+from projeto_final import urls
 from . import views
 
 urlpatterns = [
@@ -12,9 +12,9 @@ urlpatterns = [
     path('addProperty/kitchen/', views.introduce_property_view, name='addKitchen'),
     path('addProperty/livingroom/', views.introduce_property_view, name='addLivingroom'),
     path('addProperty/listing/', views.introduce_property_view, name='addListing'),
-    path('login', views.login_view, name='login_view'),
-    path('logout', views.logout_view, name='logout_view'),
-    path('register', views.register_view, name='register_view'),
+    #path('login', views.login_view, name='login_view'),
+    #path('logout', views.logout_view, name='logout_view'),
+    #path('register', views.register_view, name='register_view'),
     path('profile', views.profile, name = 'profile'),
     path('startsAgreement', views.startsAgreement, name='startsAgreement'),
     path('search', views.search, name='search'),
@@ -22,5 +22,6 @@ urlpatterns = [
     path('notificationsTenant', views.notificationsTenant, name='notificationsTenant'),
     path('notificationsLandlord', views.notificationsLandlord, name='notificationsLandlord'),
     path('listing/application', views.create_request, name='create_request'),
-    path('listing/<int:listing_id>', views.listing, name='listing')
+    path('listing/<int:listing_id>', views.listing, name='listing'),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
