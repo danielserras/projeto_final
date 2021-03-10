@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from paypal.standard.forms import PayPalPaymentsForm
 from django.forms.models import model_to_dict
+from django.template.loader import render_to_string
 from django.db import connection
 from decouple import config
 from geopy.geocoders import MapBox
@@ -29,10 +30,10 @@ def login_view(request):
         if user is not None:
             login(request, user)
             request.session['username'] = username
+            request.session['popUp'] =  False
             return redirect('index') #placeholder, alterem depois
         else:
             messages.info(request, 'Username ou password incorretos')
-            request.session['popUp'] =  False
 
             context = {}
             return render(request, 'mainApp/login.html', context) #placeholder
@@ -75,6 +76,18 @@ def register_view(request):
 
     context = {'form':form, 'errors':form.errors} #, 'pform':pform
     return render(request, 'mainApp/register.html', context)
+
+""" def password_recovery_view(request):
+    
+    user_id = request.user.id
+    subject = "Pedido de mudança de password"
+    sender = "noreply.unihouses@gmail.com"
+    recipient = form.cleaned_data.get('recovery_email')
+    template = "mainApp/templates/mainApp/recovery.html"
+
+    msg = render_to_string(template, raise_exception=True), {"link": verification_url})
+
+    send_mail(subject, strip_tags(msg), from_email=sender, recipient_list=[recipient], html_message=msg) """
 
 def save_property(request):
 
@@ -679,7 +692,7 @@ def search(request):
                 row_room = cursor.fetchall()
 
                 row = row_property + row_room
-
+        print(row)
     return render(request, "mainApp/search.html", {})
 
 
