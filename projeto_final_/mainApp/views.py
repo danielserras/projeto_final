@@ -488,8 +488,6 @@ def introduce_property_view (request):
     else:
         return redirect('index')
 
-    
-
 #@login_required(login_url='login_view')
 def index(request):
     return render(request, "mainApp/home.html", {})
@@ -593,7 +591,7 @@ def properties_management_view(request):
     context = {"properties":properties}
     return render(request, "mainApp/propertiesManagement.html", context)
 
-def property_edit_view(request, property_id):
+def property_editing_view(request, property_id=None):
     current_user = request.user
     a_user = App_user.objects.get(user_id=current_user)
 
@@ -608,24 +606,32 @@ def property_edit_view(request, property_id):
     kitchens = list(Kitchen.objects.filter(associated_property=property_object))
     livingrooms = list(Livingroom.objects.filter(associated_property=property_object))
 
-    request.session["property_id"] = json.dumps(property_object.id)
-
     if request.method == 'POST':
-        f = PropertyForm(data=request.POST)
-        if f.is_valid():                
+        f = PropertyForm(instance=property_object, data=request.POST)
+        f.latitude = property_object.latitude
+        f.latitude = property_object.longitude
+        f.bedrooms_num = property_object.bedrooms_num
+        f.bathrooms_num = len(bathrooms)
+        f.kitchens_num = len(kitchens)
+        f.livingrooms_num = len(livingrooms)
+        for e in f.errors:
+            print(e)
+        
+        for e in f:
+            print(e)
+        if f.is_valid():              
             prop_serial = json.dumps(f.cleaned_data)
             request.session['prop_serial'] = prop_serial
-
-            context = {"bedrooms":bedrooms}
+            f.update()
             
-            return render(request,'mainApp/editBedrooms.html',context)
-    else:
-        context={"property":property_object}
-        return render(request, "mainApp/editProperty.html", context)
+            return redirect("/mainApp/profile/propertiesManagement/editBedrooms/{}".format(property_object.id))    
+    context={"property":property_object}
+    return render(request, "mainApp/editProperty.html", context)
 
+def bedrooms_editing_view(request, property_id):
+    print("PROPERTY_ID: ", property_id)
 
-
-def listing_edit_view(request, property_id):
+def listing_editing_view(request, property_id):
     return render(request, "mainApp/listingEdit.html", {})
 
 def notificationsLandlord(response):
@@ -633,7 +639,6 @@ def notificationsLandlord(response):
 
 def notifications3(response):
     return render(response, "mainApp/notifications3.html", {})
-
 
 def search(request):
     form = CreateUserForm()
