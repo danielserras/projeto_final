@@ -20,14 +20,14 @@
   
           <div class="messages-box">
             <div class="list-group rounded-0">
-              <a class="list-group-item list-group-item-action active text-white rounded-0">
+              <a href="#" class="notification1 list-group-item list-group-item-action list-group-item-warning rounded-0">
                 {% load static %}
                 <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
                   <div class="media-body ml-4">
                     <div class="d-flex align-items-center justify-content-between mb-1">
                       <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">25 Dec</small>
                     </div>
-                    <p class="font-italic mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
                   </div>
                 </div>
               </a>
@@ -117,17 +117,22 @@
       <!-- Caixa de notificações-->
       
 
-     <div class="col-sm-7 px-0" style="background-color:white;" id="msgEmDetalhe">
-        <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary">
-            <h4 class="text-white mt-3 pl-3"> Assunto </h4>
+      <div class="col-sm-7 px-0" style="background-color:white;" id="msgEmDetalhe">
+        <div class="defaultNotifications">
+            {% load static %}
+            <img src='{% static "mainApp/images/message.svg" %}' class='img' id="defaultImg" alt='Image representing a message' />
         </div>
-        <div class="row m-2">
-            <p class= "text-info">Data: 10/02/2020</p>
-        </div>
-        <div class="row m-2">
-            <p class= "text-info">Hora: 10:10</p>
-        </div>
-        <div class="row m-2">
+        <div class="contentNotification1" style="display:none">
+          <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
+              <h4 class="text-white mt-3 pl-3"> Assunto </h4>
+          </div>
+          <div class="row m-2">
+              <p class= "text-info">Data: 10/02/2020</p>
+          </div>
+          <div class="row m-2">
+              <p class= "text-info">Hora: 10:10</p>
+          </div>
+          <div class="row m-2">
             <p class= "text-info">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam elit vitae venenatis mollis. Donec eu risus ex. Cras tempus elit ex, vitae suscipit dolor commodo in. Cras felis lorem, fringilla vel eros quis, tincidunt maximus elit. Suspendisse luctus nunc id iaculis rhoncus. In volutpat turpis sed ipsum congue, et fermentum magna feugiat. Vivamus gravida justo vitae nunc iaculis elementum. Duis pulvinar nulla turpis, sed dignissim mi gravida nec. Nulla leo orci, rhoncus a lectus ac, consectetur congue nisi. Curabitur nec cursus turpis, quis viverra libero. Etiam non bibendum lorem, in vehicula ante. Morbi tristique mi a justo dapibus laoreet. Quisque ut metus nec arcu tempus cursus. Cras facilisis dolor nec urna commodo commodo. Proin accumsan ante quis est ultricies, commodo accumsan diam sodales. Vivamus tincidunt orci quis suscipit pretium.
             </p>
@@ -138,9 +143,10 @@
               <div class="col-sm-6 mt-5">
                 <button type="button" class="btn btn-info font-weight-bold mx-auto" >Aceitar</button>
               </div>
+            </div>
           </div>
-     </div>
-    </div>
+        </div>
+      </div>
   </div>
 </div>
 

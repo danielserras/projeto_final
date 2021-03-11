@@ -7,7 +7,7 @@ from django.forms import modelformset_factory
 from django.forms.models import inlineformset_factory
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.forms import inlineformset_factory
-from PIL import *
+#from PIL import *
 
 
 class CreateUserForm(UserCreationForm):
