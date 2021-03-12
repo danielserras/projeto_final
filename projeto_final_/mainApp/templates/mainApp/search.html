@@ -120,13 +120,15 @@
                             <p class="previewPrice text-white">{{l.0}}€</p>
                             <div class='previewTextDiv'>
                                 <p class='previewName m-0 text-white'>{{l.1}}</p>
-                                <p class='previewDistance m-0 text-white'>{{l.3}} Km de distância</p>
+                                <p class='previewDistance m-0 text-white'>{{l.6}} Km de distância</p>
                                 <div class="previewLocation">
                                     <img src='{% static "mainApp/images/map-pin-preview.svg" %}' class='previewLocationPin' alt='Location pin'>
                                     <p class='previewAddress my-auto text-white'>{{l.2}}</p>
                                 </div>
                             </div>
-                            <img src='{% static l.4 %}' class="rounded previewImage" width='270' height="270" alt=''>
+                            <img src='{% static l.5 %}' class="rounded previewImage" width='270' height="270" alt=''>
+                            <input type="hidden" class="PassedLats" value={{l.3}}>
+                            <input type="hidden" class="PassedLongs" value={{l.4}}>
                         </div>
                     {% endfor %}
                 {% else %}

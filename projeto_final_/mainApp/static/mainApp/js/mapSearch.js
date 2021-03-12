@@ -10,3 +10,31 @@ $(document).ready(function(){
     accessToken: 'pk.eyJ1IjoidW5paG91c2VzIiwiYSI6ImNrbGltdHJxcDBlZWEyd25tYmtkc2xuNmIifQ.hX3RupN9qPRjEJ9oHAFMQg'
     }).addTo(mymap);
 });
+
+function addMarker(e){
+    var newMarker = new L.marker(e.latlng).addTo(mymap);
+}
+
+
+
+$(document).ready(function(){
+    var l = $('.PassedLats').length;
+    var resultLats = [];
+    var resultLongs = [];
+    for (i = 0; i < l; i++) { 
+        resultLats.push($('.PassedLats').eq(i).val());
+        resultLongs.push($('.PassedLongs').eq(i).val());
+    }
+    
+    //print the array or use it for your further logic
+    console.log(resultLats);
+    console.log(resultLongs);
+    for (i = 0; i < l; i++) {
+        marker = L.marker([resultLats[i], resultLongs[i]], {
+            draggable: false
+          }).addTo(mymap);
+    }
+
+
+});
+
