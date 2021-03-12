@@ -829,24 +829,16 @@ def search(request):
 
                 row = row_property + row_room
 
-    final_row = []
-    rowList =[]
-    for l in row:
-        rowList.append(list(l))
+    for i in range(len(row)):
+        lng_1, lat_1, lng_2, lat_2 = map(math.radians, [location.longitude, location.latitude, row[i][4], row[i][3]])
+        print(row[i][5])
+        tempTuple = row[i][:5] + (row[i][5].split('mainApp/static/')[1],) + row[i][6:] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),)
+        row = row[:i] + (tempTuple,) + row[i+1:]
     print(row)
-    print(rowList)
-    for l in rowList:
-        lng_1, lat_1, lng_2, lat_2 = map(math.radians, [location.longitude, location.latitude, l[4], l[3]])
-        l.append(round(get_distance(lng_1, lat_1, lng_2, lat_2),1))
-        l[5] = l[5].split('mainApp/static/')[1]
-        #(l[5].split('mainApp/static/')[1],)
-        final_row.append(l)
-
-    print(final_row, "HERE")
 
     context = {
-        'num_results' : len(final_row), 
-        'row' : final_row
+        'num_results' : len(row), 
+        'row' : row
     }
     return render(request, "mainApp/search.html", context)
 
