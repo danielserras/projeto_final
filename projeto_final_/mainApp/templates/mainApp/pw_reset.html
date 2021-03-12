@@ -1,10 +1,32 @@
 {% extends 'mainApp/base.html' %}
 {% load static %}
+{% block scripts %}
+<script src='{% static "mainApp/js/pwd_reset.js" %}'></script>
+{% endblock %}
 {% block styles %}
     <link rel="stylesheet" href='{% static "mainApp/css/login.css" %}'>
 {% endblock %}
 {% block content %}
 <p>Por favor insira o endereço email associado à sua conta. Será enviado um email em breve</p>
+
+<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Mudança de password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+        Enviámos-lhe um link por email para proceder à alteração da password, por favor efetue assim que possível.
+        </div>
+        <div class="modal-footer">
+        <button type="button" id="fecharRegister" class="btn btn-primary">Fechar</button>
+        </div>
+    </div>
+    </div>
+</div>
 
 <form method="post">{% csrf_token %}
 <fieldset class="module aligned">
@@ -13,7 +35,8 @@
         <label for="id_email">Email address:</label>
         {{ form.email }}
     </div>
-    <input type="submit" value="Reset my password">
+    <input type="submit" class="email_sent" value="Reset my password">
 </fieldset>
 </form>
+
 {% endblock %}

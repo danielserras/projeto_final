@@ -225,10 +225,9 @@ def introduce_property_view (request):
             kitchen_form = ''
             live_form = ''
             listing_form = ''
-
-            prop_form = PropertyForm(data=request.POST)
-            form_list.append(prop_form)
-
+            prop_form = ''
+            print(request.session.keys())
+            
             if 'bedrooms_num' in request.session.keys():
                 bed_form = BedroomFormSet(data=request.POST)
                 form_list.append(bed_form)
@@ -247,7 +246,11 @@ def introduce_property_view (request):
 
             elif 'listing' in request.session.keys():
                 listing_form = ListingForm(request.POST, request.FILES)
+                print(request.POST)
                 form_list.append(listing_form)
+            else:
+                prop_form = PropertyForm(data=request.POST)
+                form_list.append(prop_form)
 
 
             
@@ -256,6 +259,7 @@ def introduce_property_view (request):
                 if f.is_bound:
 
                     if f == prop_form:
+                        print(f.errors)
                         if f.is_valid():
 
                             bed_formset = BedroomFormSet(queryset=Bedroom.objects.none())
@@ -270,7 +274,8 @@ def introduce_property_view (request):
                             request.session['livingrooms_num'] =  f.cleaned_data.get('livingrooms_num')
                             if request.session['livingrooms_num'] == 0:
                                 request.session['no_living'] = True
-                                
+                            
+                            request.session['l_type'] = f.cleaned_data.get('listing_type')
                             prop_serial = json.dumps(f.cleaned_data)
                             request.session['prop_serial'] = prop_serial
 
@@ -328,6 +333,7 @@ def introduce_property_view (request):
                         elif 'save' in request.POST:
                             save_property(request)
 
+                            del request.session['l_type']
                             del request.session['prop_id']
                             del request.session['kitchens_num']
                             del request.session['livingrooms_num']
@@ -343,7 +349,7 @@ def introduce_property_view (request):
 
                             listing_form = ListingForm()
                             request.session['listing'] =  True
-                            
+                            save_property(request)
                             imgformset = ImgFormSet(queryset=Image.objects.none())
                             context = {'listing_form': listing_form, 'imgformset' : imgformset}
 
@@ -362,6 +368,7 @@ def introduce_property_view (request):
                         if 'save' in request.POST:
                             save_property(request)
 
+                            del request.session['l_type']
                             del request.session['prop_id']
                             del request.session['livingrooms_num']
                             if 'multiple_bedrooms' in request.session:
@@ -373,7 +380,7 @@ def introduce_property_view (request):
 
                         else:
                             listing_form = ListingForm()
-
+                            save_property(request)
                             request.session['listing'] =  True
                             del request.session['livingrooms_num']
 
@@ -399,18 +406,30 @@ def introduce_property_view (request):
                         context = {'bath_formset': bath_formset}
                         return render(request,'mainApp/addBathroom.html',context)
                         
-                
+                    elif 'multiple_listing' in request.POST:
+                        del request.session['listing']
+                        del request.session['prop_serial']
+
+                        return redirect('propertiesManagement')
+
                     elif f == listing_form:
                         print(f)
                         if f.is_valid():
+                            
+                            assoc_prop = Property.objects.get(id=request.session['prop_id'])
+
+                            """ if 'multiple_listing' in f.cleaned_data:
+                                if f.cleaned_data.get('multiple_listing') == 'separate':
+
+                                    del request.session['listing']
+                                    del request.session['prop_serial']
+                                    return redirect('propertiesManagement') """
 
                             prop_album = ImageAlbum(name=f.cleaned_data.get('title'))
                             prop_album.save()
-
-                            save_property(request)
-
+                            
                             listing_obj = Listing(
-                                listing_type = f.cleaned_data.get('listing_type'),
+                                listing_type = request.session['l_type'],
                                 allowed_gender = f.cleaned_data.get('allowed_gender'),
                                 monthly_payment =  f.cleaned_data.get('monthly_payment'),
                                 availability_starts =  f.cleaned_data.get('availability_starts'),
@@ -424,7 +443,7 @@ def introduce_property_view (request):
                             listing_obj.save()
 
                                 
-                            assoc_prop = Property.objects.get(id=request.session['prop_id'])
+                            
                             main_listing = listing_obj
                             del request.session['listing']
 
@@ -448,21 +467,20 @@ def introduce_property_view (request):
 
                             del request.session['prop_serial']
 
-                            if f.cleaned_data.get('listing_type') == 'Apartment' or f.cleaned_data.get('listing_type') == 'House':
+                            if request.session['l_type'] == 'Apartment' or request.session['l_type'] == 'House':
+                                #if f.cleaned_data.get('multiple_listing') == 'whole':
                                 apart_obj = Property_listing(main_listing = main_listing, associated_property = assoc_prop)
                                 apart_obj.save()
 
-                                context = {'imgformset': imgformset}
                                 return redirect('index')
                                 
 
-                            elif f.cleaned_data.get('listing_type') == 'Bedroom' or f.cleaned_data.get('listing_type') == 'Residency' or f.cleaned_data.get('listing_type') == 'Studio':
+                            elif request.session['l_type'] == 'Bedroom' or request.session['l_type'] == 'Studio':
                                 room_obj = Room_listing(
                                     main_listing = main_listing,
                                     associated_room = Bedroom.objects.get(associated_property = assoc_prop))
                                 room_obj.save()
                                 
-                                context = {'imgformset': imgformset}
                                 return redirect('index')
 
 
@@ -657,10 +675,11 @@ def notificationsTenant(request):
         endDate = a.endDate
         accepted = a.accepted #para ver se esta null, aceite ou recusada
         fullList.append([nomeLand, message, startsDate, endDate, accepted])
+    sizeList = len(fullList)
 
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
-    context = {"fullList" : fullList}
+    context = {"fullList" : fullList, "sizeList": sizeList}
     return render(request, "mainApp/notificationsTenant.html", context)
 
 def notificationsLandlord(request):
@@ -688,10 +707,10 @@ def notificationsLandlord(request):
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
         fullList_.append([nomeTen, message_, startsDate_, endDate_, accepted_])
-
+    sizeList = len(fullList_)
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
-    context = {"fullList_" : fullList_}
+    context = {"fullList_": fullList_, 'range': range(sizeList)}
     return render(request, "mainApp/notificationsLandlord.html", context)
 
 def get_distance(lat_1, lng_1, lat_2, lng_2): 
@@ -774,7 +793,7 @@ def search(request):
                                 AND pl.associated_property_id = p.id AND pl.main_listing_id = l.id"
                 #print(querySelect + queryFrom + queryWhere)
                 cursor.execute(querySelect + queryFrom + queryWhere)
-                row = cursor.fetchall()
+                row = listcursor.fetchall()
             
             #Property type is empty
             else:         
@@ -784,8 +803,6 @@ def search(request):
                 queryFromRoom = deepcopy(queryFrom) + ', mainApp_room_listing AS rl'
                 queryWhereRoom = deepcopy(queryWhere) + ' AND rl.associated_room_id = p.id AND rl.main_listing_id = l.id'
 
-                print(querySelect + queryFrom + queryWhere)
-
                 cursor.execute(querySelect + queryFromProperty + queryWhereProperty)
                 row_property = cursor.fetchall()
 
@@ -794,13 +811,20 @@ def search(request):
 
                 row = row_property + row_room
 
-    final_row = ()
+    final_row = []
+    rowList =[]
     for l in row:
+        rowList.append(list(l))
+    print(row)
+    print(rowList)
+    for l in rowList:
         lng_1, lat_1, lng_2, lat_2 = map(math.radians, [location.longitude, location.latitude, l[4], l[3]])
-        listing = (l[:3] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),) + (l[5].split('mainApp/static/')[1],) + l[6:],)
-        final_row += listing
+        l.append(round(get_distance(lng_1, lat_1, lng_2, lat_2),1))
+        l[5] = l[5].split('mainApp/static/')[1]
+        #(l[5].split('mainApp/static/')[1],)
+        final_row.append(l)
 
-    print(final_row)
+    print(final_row, "HERE")
 
     context = {
         'num_results' : len(final_row), 
@@ -811,6 +835,7 @@ def search(request):
 
 def listing(request, listing_id):
     listing = Listing.objects.get(pk=listing_id)
+    images = Image.objects.filter(album_id=listing.album_id)
     listing_type = listing.listing_type
     bedrooms = []
 
@@ -866,6 +891,14 @@ def listing(request, listing_id):
         request.session['tenant'] = None
         request.session['landlord'] = None
 
+    #print(list(images)[0].image)
+    imagesPaths = []
+    range = ["0"]
+    for i in list(images):
+        pathSplited = str(i.image).split('mainApp/static/')
+        imagesPaths.append(pathSplited[1])
+        range.append(str(int(range[-1]) + 1))
+
     context  = {
         "listing": listing,
         "landlord_user": landlord_user,
@@ -878,6 +911,8 @@ def listing(request, listing_id):
         "livingrooms": livingrooms,
         "security_deposit": listing.security_deposit,
         "is_tenant": is_tenant,
+        "imagesPaths": imagesPaths,
+        "range": range[:-1]
     }
     return render(request, "mainApp/listingPage.html", context)
 

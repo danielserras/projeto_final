@@ -23,7 +23,7 @@ class ProfileForm(forms.ModelForm):
 
 class ListingForm(forms.ModelForm):
 
-    listing_type = forms.CharField(required=True, max_length=25)
+    #listing_type = forms.CharField(required=True, max_length=25)
     allowed_gender = forms.CharField(required=True, max_length=25)
     monthly_payment = forms.IntegerField(required=True)
     availability_starts = forms.DateField()
@@ -33,10 +33,13 @@ class ListingForm(forms.ModelForm):
     security_deposit = forms.IntegerField()
     max_capacity = forms.IntegerField(required=True)
 
+    LISTING_CHOICES = [
+    ('RO', 'Pretendo anunciar a propriedade inteira'),
+    ('PR', 'Pretendo anunciar os quartos separadamente'),]
+
     class Meta:
         model = Listing
         fields = [
-            'listing_type',
             'allowed_gender',
             'monthly_payment',
             'availability_starts',
@@ -54,6 +57,7 @@ class PropertyForm(forms.ModelForm):
     livingrooms_num = forms.IntegerField(required=True)
     latitude = forms.CharField(required=True, max_length=100)
     longitude = forms.CharField(required=True, max_length=100)
+    listing_type = forms.CharField(required=True, max_length=25)
 
     #booleans
     smoke = forms.BooleanField(required=False, initial=False)
@@ -72,6 +76,7 @@ class PropertyForm(forms.ModelForm):
     class Meta:
         model = Property
         fields = [
+            'listing_type',
             'latitude',
             'longitude',
             'address',
