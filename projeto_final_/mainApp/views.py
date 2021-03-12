@@ -675,10 +675,11 @@ def notificationsTenant(request):
         endDate = a.endDate
         accepted = a.accepted #para ver se esta null, aceite ou recusada
         fullList.append([nomeLand, message, startsDate, endDate, accepted])
+    sizeList = len(fullList)
 
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
-    context = {"fullList" : fullList}
+    context = {"fullList" : fullList, "sizeList": sizeList}
     return render(request, "mainApp/notificationsTenant.html", context)
 
 def notificationsLandlord(request):
@@ -706,10 +707,10 @@ def notificationsLandlord(request):
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
         fullList_.append([nomeTen, message_, startsDate_, endDate_, accepted_])
-
+    sizeList = len(fullList_)
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
-    context = {"fullList_" : fullList_}
+    context = {"fullList_": fullList_, 'range': range(sizeList)}
     return render(request, "mainApp/notificationsLandlord.html", context)
 
 def get_distance(lat_1, lng_1, lat_2, lng_2): 

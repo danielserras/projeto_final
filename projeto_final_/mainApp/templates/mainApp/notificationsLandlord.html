@@ -8,6 +8,32 @@
 {% endblock %}
 {% block content %}
 
+<!--
+{% for n in range%}
+  <script>
+    $(document).ready(function(){
+
+      $("#leftStart").append("<li>Here's 3</li>");
+
+      var number ='{{ n }}';
+
+      for (var n = 0; n < number; ++ n){
+        //$('.needN').addClass('notification'+n);
+        //$('.needNumber').addClass('contentNotification'+n);
+        $("#leftStart").append();
+      }
+
+      for (var n2 = 0; n2 < number; ++ n2){
+        $('.notification'+n2).click(function(){
+          $(".defaultNotifications").hide();
+          $('.contentNotification'+n2).show();
+      
+        })
+      }
+    })
+    </script>
+{% endfor %} -->
+
 <div class="container py-5 px-4 mt-5">
     <div class="row rounded-lg overflow-hidden shadow border border-warning border-5">
       <!-- Users box-->
@@ -19,19 +45,21 @@
           </div>
   
           <div class="messages-box">
-            <div class="list-group rounded-0">
-              <a href="#" class="notification1 list-group-item list-group-item-action list-group-item-warning rounded-0">
-                {% load static %}
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">25 Dec</small>
+            <div id="leftStart" class="list-group rounded-0">
+              {% for a,b,c,d,e in fullList_ %}
+                  <a href="#" id="notifications_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
+                    {% load static %}
+                    <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                      <div class="media-body ml-4">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                          <h6 class="mb-0">{{ a }}</h6><small class="small font-weight-bold">25 Dec</small>
+                        </div>
+                        <p class="font-italic text-muted mb-0 text-small">{{ b }}</p>
+                      </div>
                     </div>
-                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-  
+                  </a>
+              {% endfor %}
+              <!--
               <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
                 <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
                   <div class="media-body ml-4">
@@ -108,7 +136,8 @@
                   </div>
                 </div>
               </a>
-  
+              -->
+
             </div>
           </div>
         </div>
@@ -122,30 +151,35 @@
             {% load static %}
             <img src='{% static "mainApp/images/message.svg" %}' class='img' id="defaultImg" alt='Image representing a message' />
         </div>
-        <div class="contentNotification1" style="display:none">
-          <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
-              <h4 class="text-white mt-3 pl-3"> Assunto </h4>
-          </div>
-          <div class="row m-2">
-              <p class= "text-info">Data: 10/02/2020</p>
-          </div>
-          <div class="row m-2">
-              <p class= "text-info">Hora: 10:10</p>
-          </div>
-          <div class="row m-2">
-            <p class= "text-info">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam elit vitae venenatis mollis. Donec eu risus ex. Cras tempus elit ex, vitae suscipit dolor commodo in. Cras felis lorem, fringilla vel eros quis, tincidunt maximus elit. Suspendisse luctus nunc id iaculis rhoncus. In volutpat turpis sed ipsum congue, et fermentum magna feugiat. Vivamus gravida justo vitae nunc iaculis elementum. Duis pulvinar nulla turpis, sed dignissim mi gravida nec. Nulla leo orci, rhoncus a lectus ac, consectetur congue nisi. Curabitur nec cursus turpis, quis viverra libero. Etiam non bibendum lorem, in vehicula ante. Morbi tristique mi a justo dapibus laoreet. Quisque ut metus nec arcu tempus cursus. Cras facilisis dolor nec urna commodo commodo. Proin accumsan ante quis est ultricies, commodo accumsan diam sodales. Vivamus tincidunt orci quis suscipit pretium.
-            </p>
-            <div class="row mx-auto">
-              <div class="col-sm-6 mt-5">
-                <button type="button" class="btn btn-info font-weight-bold mx-auto">Recusar</button>
+          {% for a,b,c,d,e in fullList_ %}
+            <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
+              <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
+                  <h4 class="text-white mt-3 pl-3"> Assunto </h4>
               </div>
-              <div class="col-sm-6 mt-5">
-                <button type="button" class="btn btn-info font-weight-bold mx-auto" >Aceitar</button>
+              <div class="row m-2">
+                  <p class= "text-info font-weight-bold">Data Início:&nbsp </p>
+                  <p class= "text-info"> {{ c }}</p>
+              </div>
+              <div class="row m-2">
+                  <p class= "text-info font-weight-bold">Data término:&nbsp </p>
+                  <p class= "text-info"> {{ d }}</p>
+              </div>
+              <div class="row m-2">
+                <div>
+                  <h6 class="text-info font-weight-bold">Mensagem:&nbsp</h6>
+                  <p class="text-info">{{ b }}</p>
+                </div>
+                <div class="row mx-auto">
+                  <div class="col-sm-6 mt-5">
+                    <button type="button" class="btn btn-info font-weight-bold mx-auto">Recusar</button>
+                  </div>
+                  <div class="col-sm-6 mt-5">
+                    <button type="button" class="btn btn-info font-weight-bold mx-auto" >Aceitar</button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          {% endfor %}
       </div>
   </div>
 </div>
