@@ -12,6 +12,40 @@ $(document).ready(function(){
         addimgSlot(imgSlots);
     })
 
+    $('.num_divisions').hide();
+    $('.studio_type, .bedroom_type').click(function(){
+        $('.num_divisions').hide();
+        $('#bedroomsNum').attr('value', 1);
+        $('#bathroomsNum').attr('value', 1);
+        $('#kitchensNum').attr('value', 1);
+        $('#livingroomsNum').attr('value', 0);
+    })
+
+    $('.apartment_type, .residency_type, .house_type').click(function(){
+        $('.num_divisions').show();
+    })
+
+    $(".listing_form").hide();
+    $(".multiple_form").show();
+    $(".multiple_form_next").click(function(){
+        var whole = $('.whole');
+        var separate = $('.separate');
+        if (whole.prop('checked')){
+            $(".listing_form").show();
+            $(".multiple_form").remove();
+        }
+        if (separate.prop('checked')){
+            $(".multiple_form").attr("method", "POST");
+            $(".multiple_form_next").attr("type", "submit");
+            $(".multiple_form").submit();
+        }
+        
+    })
+
+    /* $(".separate").click(function(){
+        window.location.href = "/mainApp/profile/propertiesManagement"
+    })
+ */
     $("#backPageListing").hide();
     $("#submitListing").hide();
     $("*[class*='pageListing-']").hide();
