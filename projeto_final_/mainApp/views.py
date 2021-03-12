@@ -602,35 +602,31 @@ def property_editing_view(request, property_id=None):
         return redirect('index')
 
     property_object = Property.objects.get(id=property_id)
-    bedrooms = list(Bedroom.objects.filter(associated_property=property_object))
-    bathrooms = list(Bathroom.objects.filter(associated_property=property_object))
-    kitchens = list(Kitchen.objects.filter(associated_property=property_object))
-    livingrooms = list(Livingroom.objects.filter(associated_property=property_object))
+    
 
     if request.method == 'POST':
-        f = PropertyForm(instance=property_object, data=request.POST)
-        f.latitude = property_object.latitude
-        f.latitude = property_object.longitude
-        f.bedrooms_num = property_object.bedrooms_num
-        f.bathrooms_num = len(bathrooms)
-        f.kitchens_num = len(kitchens)
-        f.livingrooms_num = len(livingrooms)
-        for e in f.errors:
-            print(e)
+        f = UpdatePropertyForm(request.POST, instance=property_object)
         
-        for e in f:
-            print(e)
         if f.is_valid():              
-            prop_serial = json.dumps(f.cleaned_data)
-            request.session['prop_serial'] = prop_serial
-            f.update()
+            #prop_serial = json.dumps(f.cleaned_data)
+            #request.session['prop_serial'] = prop_serial
+            f.save() 
             
-            return redirect("/mainApp/profile/propertiesManagement/editBedrooms/{}".format(property_object.id))    
+        return redirect("/mainApp/profile/propertiesManagement/bedroomsEditing/{}".format(property_object.id))    
     context={"property":property_object}
     return render(request, "mainApp/editProperty.html", context)
 
 def bedrooms_editing_view(request, property_id):
-    print("PROPERTY_ID: ", property_id)
+    property_object = Property.objects.get(id=property_id)
+    bedrooms = list(Bedroom.objects.filter(associated_property=property_object))
+    """ bathrooms = list(Bathroom.objects.filter(associated_property=property_object))
+    kitchens = list(Kitchen.objects.filter(associated_property=property_object))
+    livingrooms = list(Livingroom.objects.filter(associated_property=property_object)) """
+    bed_formset = BedroomFormSet(queryset=Bedroom.objects.filter(associated_property=property_object))
+    bed_formset.extra = 0
+
+    context = {'bedrooms':bedrooms, 'bed_formset':bed_formset}
+    return render(request, "mainApp/editBedrooms.html", context)
 
 def listing_editing_view(request, property_id):
     return render(request, "mainApp/listingEdit.html", {})

@@ -5,9 +5,105 @@
 {% endblock %}
 {% block content %}
     <div class="container ">
-
-        {% for b in bedrooms %}
-        
-        {% endfor %}
-    </div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="row ">
+            {{bed_formset.management_form}}
+            
+                {% for form in bed_formset%}
+                <div class="col-sm-12 bedroomF" id="pageListing-3">
+                    <div class="row mt-2 mb-2 justify-content-md-center">
+                        <h3>Quarto {{forloop.counter}}</h3>
+                    </div>
+                    <div class="row justify-content-md-center mb-2">
+                        <div class="col-sm-7">
+                            <div class="row">
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    {{form.heater}}
+                                    <label for="{{ form.heater.id_for_label }}" class="custom-control-label">Aquecedor</label>
+                                </div>
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    {{form.air_conditioning}}
+                                    <label for="{{ form.air_conditioning.id_for_label }}" class="custom-control-label">Ar condicionado</label>
+                                </div>
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    {{form.be_chairs}}
+                                    <label for="{{ form.be_chairs.id_for_label }}" class="custom-control-label">Cadeira</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    {{form.ensuite_bathroom}}
+                                    <label for="{{ form.ensuite_bathroom.id_for_label }}" class="custom-control-label">Casa de Banho Privada</label>
+                                </div>
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    {{form.chest_of_drawers}}
+                                    <label for="{{ form.chest_of_drawers.id_for_label }}" class="custom-control-label">Cómoda</label>
+                                </div>
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    {{form.wardrobe}}
+                                    <label for="{{ form.wardrobe.id_for_label }}" class="custom-control-label">Guarda Roupa</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    {{form.be_window}}
+                                    <label for="{{ form.be_window.id_for_label }}" class="custom-control-label">Janela</label>
+                                </div>
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    {{form.be_desk}}
+                                    <label for="{{ form.be_desk.id_for_label }}" class="custom-control-label">Secretária</label>
+                                </div>
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    {{form.be_sofa}}
+                                    <label for="{{ form.be_sofa.id_for_label }}" class="custom-control-label">Sofá</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    {{form.be_sofa_bed}}
+                                    <label for="{{ form.be_sofa_bed.id_for_label }}" class="custom-control-label">Sofá-Cama</label>
+                                </div>
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    {{form.tv}}
+                                    <label for="{{ form.tv.id_for_label }}" class="custom-control-label">Tv</label>
+                                </div>
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    {{form.be_balcony}}
+                                    <label for="{{ form.be_balcony.id_for_label }}" class="custom-control-label">Varanda</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 custom-control custom-checkbox">
+                                    {{form.lock}}
+                                    <label for="{{ form.lock.id_for_label }}" class="custom-control-label">Fechadura</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 custom-control">
+                                    <label for="{{ form.num_double_beds.id_for_label }}">Camas de Casal</label>
+                                    {{form.num_double_beds}}
+                                </div>
+                                <div class="col-sm-4 custom-control">
+                                    <label for="{{ form.num_single_beds.id_for_label }}">Camas de Solteiro</label>
+                                    {{form.num_single_beds}}
+                                </div>
+                                <div class="col-sm-4 custom-control">
+                                    <label for="{{ form.max_occupacity.id_for_label }}">Ocupação máxima</label>
+                                    {{form.max_occupacity}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <input type="hidden" name="prop_id" value="{{prop_id}}">
+            <div class="row justify-content-md-center text-center mb-3" >
+                <div class="col-sm-auto">
+                    <button type="submit" class="btn btn-secondary" >Seguinte</button>
+                </div>
+            </div>
+        </form>
+</div>
 {% endblock %}

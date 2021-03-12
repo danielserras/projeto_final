@@ -313,7 +313,47 @@ class SearchForm(forms.Form):
     date_out = forms.DateField(required=False)
     minPrice = forms.CharField(required=True)
     maxPrice = forms.CharField(required=True)
+class UpdatePropertyForm(forms.ModelForm):
+    address = forms.CharField(required=True, max_length=100)
+    bedrooms_num = forms.IntegerField(required=False) 
+    bathrooms_num = forms.IntegerField(required=False)
+    kitchens_num = forms.IntegerField(required=False)
+    livingrooms_num = forms.IntegerField(required=False)
+    latitude = forms.CharField(required=True, max_length=100)
+    longitude = forms.CharField(required=True, max_length=100)
 
+    #booleans
+    smoke = forms.BooleanField(required=False, initial=False)
+    garden = forms.BooleanField(required=False, initial=False)
+    garage = forms.BooleanField(required=False, initial=False)
+    street_parking = forms.BooleanField(required=False, initial=False)
+    internet = forms.BooleanField(required=False, initial=False)
+    electricity = forms.BooleanField(required=False, initial=False)            
+    water = forms.BooleanField(required=False, initial=False)   
+    gas = forms.BooleanField(required=False, initial=False)
+    pets = forms.BooleanField(required=False, initial=False)
+    overnight_visits = forms.BooleanField(required=False, initial=False)
+    cleaning_services = forms.BooleanField(required=False, initial=False)
+    floor_area = forms.BooleanField(required=False, initial=False)
+
+    class Meta:
+        model = Property
+        fields = [
+            'latitude',
+            'longitude',
+            'address',
+            'smoke',
+            'garden',
+            'garage',
+            'street_parking',
+            'internet',
+            'electricity',            
+            'water',  
+            'gas',
+            'pets',
+            'overnight_visits',
+            'cleaning_services',
+            'floor_area']
 
 BedroomFormSet = modelformset_factory(model = Bedroom, form = BedroomForm, extra=1)
 
