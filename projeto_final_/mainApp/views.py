@@ -693,10 +693,11 @@ def notificationsTenant(request):
         endDate = a.endDate
         accepted = a.accepted #para ver se esta null, aceite ou recusada
         fullList.append([nomeLand, message, startsDate, endDate, accepted])
+    sizeList = len(fullList)
 
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
-    context = {"fullList" : fullList}
+    context = {"fullList" : fullList, "sizeList": sizeList}
     return render(request, "mainApp/notificationsTenant.html", context)
 
 def notificationsLandlord(request):
@@ -724,10 +725,10 @@ def notificationsLandlord(request):
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
         fullList_.append([nomeTen, message_, startsDate_, endDate_, accepted_])
-
+    sizeList = len(fullList_)
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
-    context = {"fullList_" : fullList_}
+    context = {"fullList_": fullList_, 'range': range(sizeList)}
     return render(request, "mainApp/notificationsLandlord.html", context)
 
 def get_distance(lat_1, lng_1, lat_2, lng_2): 
@@ -810,7 +811,7 @@ def search(request):
                                 AND pl.associated_property_id = p.id AND pl.main_listing_id = l.id"
                 #print(querySelect + queryFrom + queryWhere)
                 cursor.execute(querySelect + queryFrom + queryWhere)
-                row = cursor.fetchall()
+                row = listcursor.fetchall()
             
             #Property type is empty
             else:         
@@ -820,8 +821,6 @@ def search(request):
                 queryFromRoom = deepcopy(queryFrom) + ', mainApp_room_listing AS rl'
                 queryWhereRoom = deepcopy(queryWhere) + ' AND rl.associated_room_id = p.id AND rl.main_listing_id = l.id'
 
-                print(querySelect + queryFrom + queryWhere)
-
                 cursor.execute(querySelect + queryFromProperty + queryWhereProperty)
                 row_property = cursor.fetchall()
 
@@ -830,13 +829,20 @@ def search(request):
 
                 row = row_property + row_room
 
-    final_row = ()
+    final_row = []
+    rowList =[]
     for l in row:
+        rowList.append(list(l))
+    print(row)
+    print(rowList)
+    for l in rowList:
         lng_1, lat_1, lng_2, lat_2 = map(math.radians, [location.longitude, location.latitude, l[4], l[3]])
-        listing = (l[:3] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),) + (l[5].split('mainApp/static/')[1],) + l[6:],)
-        final_row += listing
+        l.append(round(get_distance(lng_1, lat_1, lng_2, lat_2),1))
+        l[5] = l[5].split('mainApp/static/')[1]
+        #(l[5].split('mainApp/static/')[1],)
+        final_row.append(l)
 
-    print(final_row)
+    print(final_row, "HERE")
 
     context = {
         'num_results' : len(final_row), 
@@ -847,6 +853,7 @@ def search(request):
 
 def listing(request, listing_id):
     listing = Listing.objects.get(pk=listing_id)
+    images = Image.objects.filter(album_id=listing.album_id)
     listing_type = listing.listing_type
     bedrooms = []
 
@@ -902,6 +909,14 @@ def listing(request, listing_id):
         request.session['tenant'] = None
         request.session['landlord'] = None
 
+    #print(list(images)[0].image)
+    imagesPaths = []
+    range = ["0"]
+    for i in list(images):
+        pathSplited = str(i.image).split('mainApp/static/')
+        imagesPaths.append(pathSplited[1])
+        range.append(str(int(range[-1]) + 1))
+
     context  = {
         "listing": listing,
         "landlord_user": landlord_user,
@@ -914,6 +929,8 @@ def listing(request, listing_id):
         "livingrooms": livingrooms,
         "security_deposit": listing.security_deposit,
         "is_tenant": is_tenant,
+        "imagesPaths": imagesPaths,
+        "range": range[:-1]
     }
     return render(request, "mainApp/listingPage.html", context)
 
