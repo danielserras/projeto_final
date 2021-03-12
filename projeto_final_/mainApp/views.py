@@ -793,7 +793,7 @@ def search(request):
                                 AND pl.associated_property_id = p.id AND pl.main_listing_id = l.id"
                 #print(querySelect + queryFrom + queryWhere)
                 cursor.execute(querySelect + queryFrom + queryWhere)
-                row = cursor.fetchall()
+                row = listcursor.fetchall()
             
             #Property type is empty
             else:         
@@ -803,8 +803,6 @@ def search(request):
                 queryFromRoom = deepcopy(queryFrom) + ', mainApp_room_listing AS rl'
                 queryWhereRoom = deepcopy(queryWhere) + ' AND rl.associated_room_id = p.id AND rl.main_listing_id = l.id'
 
-                print(querySelect + queryFrom + queryWhere)
-
                 cursor.execute(querySelect + queryFromProperty + queryWhereProperty)
                 row_property = cursor.fetchall()
 
@@ -813,13 +811,20 @@ def search(request):
 
                 row = row_property + row_room
 
-    final_row = ()
+    final_row = []
+    rowList =[]
     for l in row:
+        rowList.append(list(l))
+    print(row)
+    print(rowList)
+    for l in rowList:
         lng_1, lat_1, lng_2, lat_2 = map(math.radians, [location.longitude, location.latitude, l[4], l[3]])
-        listing = (l[:3] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),) + (l[5].split('mainApp/static/')[1],) + l[6:],)
-        final_row += listing
+        l.append(round(get_distance(lng_1, lat_1, lng_2, lat_2),1))
+        l[5] = l[5].split('mainApp/static/')[1]
+        #(l[5].split('mainApp/static/')[1],)
+        final_row.append(l)
 
-    print(final_row)
+    print(final_row, "HERE")
 
     context = {
         'num_results' : len(final_row), 
