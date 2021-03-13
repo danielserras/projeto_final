@@ -903,11 +903,11 @@ def listing(request, listing_id):
 
     #print(list(images)[0].image)
     imagesPaths = []
-    range = ["0"]
+    range = [0,]
     for i in list(images):
         pathSplited = str(i.image).split('mainApp/static/')
         imagesPaths.append(pathSplited[1])
-        range.append(str(int(range[-1]) + 1))
+        range.append(int(range[-1]) + 1)
 
     context  = {
         "listing": listing,
@@ -922,7 +922,8 @@ def listing(request, listing_id):
         "security_deposit": listing.security_deposit,
         "is_tenant": is_tenant,
         "imagesPaths": imagesPaths,
-        "range": range[:-1]
+        "range": range[:-1],
+        "zipPaths": zip(imagesPaths, range[:-1]),
     }
     return render(request, "mainApp/listingPage.html", context)
 

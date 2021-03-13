@@ -1,5 +1,6 @@
 from django import template
 from django.utils.html import format_html
+from django.template import Variable, VariableDoesNotExist
 register = template.Library()
 
 @register.simple_tag
@@ -17,6 +18,14 @@ def get_number_beds(feature, feature_name):
             return numberIten('green', feature, feature_name)
     else:
         return numberIten('primary', feature, feature_name)
+
+@register.simple_tag
+def resolve(lookup, target):
+    try:
+        print('hello')
+        return Variable(lookup).resolve(target)
+    except VariableDoesNotExist:
+        return None
 
 def numberIten(color, feature, feature_name):
     return format_html('<div class="col-sm-3 room-detail-item">\

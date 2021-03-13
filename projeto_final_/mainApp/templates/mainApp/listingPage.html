@@ -1,6 +1,6 @@
-{% extends 'mainApp/base.html' %} {% load static %} {% block styles %} {% load app_extras %}
-
-<link rel="stylesheet" href='{% static "mainApp/css/listingPage.css" %}'> {% endblock %} {% block scripts%} {% endblock %} {% block content %}
+{% extends 'mainApp/base.html' %} {% load static %}{% load app_extras %}
+{% block styles%} <link rel="stylesheet" href='{% static "mainApp/css/listingPage.css" %}'> {% endblock %}
+{% block scripts%} <script src='{% static "mainApp/js/listingPage.js" %}'></script> {% endblock %} {% block content %}
 <div class="container">
     <div class="row justify-content-md-center m-5" id="a">
         <div class="col-sm-8">
@@ -35,6 +35,16 @@
                 </a>
             </div>
         </div>
+        <p id='rangeLength' hidden>{{ range|length }}</p>
+        <div class='col-sm-2 bg-danger p-0' id='sideCol'>
+            {% for p, i in zipPaths %}
+                {% if i < 3 %}
+                    <img class="mx-2 my-1 rounded" id="col_image_{{ i }}" src="{% static p %}" width="90%" height="95">
+                {% else %}
+                    <img class="mx-2 my-1 rounded" id="col_image_{{ i }}" src="{% static p %}" width="90%" height="95" hidden>
+                {% endif %}
+            {% endfor %}
+        </div> 
     </div>
 </div>
 <div class="container mb-3">
