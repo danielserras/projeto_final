@@ -936,3 +936,8 @@ def countRoomDetails(rooms):
                 num_details+=1
     
     return num_details
+
+def confirmPass (response):
+    return render(response, "mainApp/confirmPass.html", {})
+
+
