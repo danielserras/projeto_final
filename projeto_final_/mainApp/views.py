@@ -641,10 +641,7 @@ def bedrooms_editing_view(request, property_id):
     """ bathrooms = list(Bathroom.objects.filter(associated_property=property_object))
     kitchens = list(Kitchen.objects.filter(associated_property=property_object))
     livingrooms = list(Livingroom.objects.filter(associated_property=property_object)) """
-    #print("\n\n E R R O R S \n\n")
-    #print(bed_formset.errors)
     if request.method == 'POST':
-        #print(bed_formset)
         """ print("\n\n QUERYSET \n\n")
         for o in bedrooms_queryset:
             print(o.id) """
