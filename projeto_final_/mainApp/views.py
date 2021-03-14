@@ -649,6 +649,7 @@ def bedrooms_editing_view(request, property_id):
         for o in bedrooms_queryset:
             print(o.id) """
         bed_formset = BedroomFormSet(request.POST, queryset=bedrooms_queryset)
+        print("\n\n ERRORS \n\n")
         print(bed_formset.errors)
         if bed_formset.is_valid():
             for form in bed_formset.forms:
