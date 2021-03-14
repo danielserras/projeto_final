@@ -11,6 +11,7 @@
             {{bed_formset.management_form}}
             
                 {% for form in bed_formset%}
+                {{form.id}}
                 <div class="col-sm-12 bedroomF" id="pageListing-3">
                     <div class="row mt-2 mb-2 justify-content-md-center">
                         <h3>Quarto {{forloop.counter}}</h3>

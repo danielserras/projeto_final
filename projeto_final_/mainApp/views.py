@@ -626,8 +626,6 @@ def property_editing_view(request, property_id=None):
         f = UpdatePropertyForm(request.POST, instance=property_object)
         
         if f.is_valid():              
-            #prop_serial = json.dumps(f.cleaned_data)
-            #request.session['prop_serial'] = prop_serial
             f.save() 
             
         return redirect("/mainApp/profile/propertiesManagement/bedroomsEditing/{}".format(property_object.id))    
@@ -651,7 +649,15 @@ def bedrooms_editing_view(request, property_id):
         if bed_formset.is_valid():
             for form in bed_formset.forms:
                 form.save()
-                print("F U N C I O N A")
+                print("F U N C I O N A") 
+        """i = 0
+        for sub_form in bed_formset:
+            print(sub_form.get("be_window"))
+            bedroom = bedrooms_list[i]
+            bedroom.be_window = 1
+            bedroom.save()"""
+
+            
     else:
         #print(instance)
         """ bedforms_list = request.POST
