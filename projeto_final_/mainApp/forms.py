@@ -150,7 +150,6 @@ class BedroomForm(forms.ModelForm):
             'be_chairs' : forms.CheckboxInput(attrs={'class':'custom-control-input'})} """
 
 
-
 class KitchenForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(KitchenForm, self).__init__(*args, **kwargs)

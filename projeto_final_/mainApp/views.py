@@ -636,14 +636,40 @@ def property_editing_view(request, property_id=None):
 
 def bedrooms_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
-    bedrooms = list(Bedroom.objects.filter(associated_property=property_object))
+    bedrooms_queryset = Bedroom.objects.filter(associated_property=property_object)
+    bedrooms_list = list(bedrooms_queryset)
     """ bathrooms = list(Bathroom.objects.filter(associated_property=property_object))
     kitchens = list(Kitchen.objects.filter(associated_property=property_object))
     livingrooms = list(Livingroom.objects.filter(associated_property=property_object)) """
-    bed_formset = BedroomFormSet(queryset=Bedroom.objects.filter(associated_property=property_object))
-    bed_formset.extra = 0
+    #print("\n\n E R R O R S \n\n")
+    #print(bed_formset.errors)
+    if request.method == 'POST':
+        #print(bed_formset)
+        print("\n\n QUERYSET \n\n")
+        for o in bedrooms_queryset:
+            print(o.id)
+        bed_formset = BedroomFormSet(request.POST, queryset=bedrooms_queryset)
+        print(bed_formset.errors)
+        if bed_formset.is_valid():
+            for form in bed_formset.forms:
+                form.save()
+                print("FUNCIONOU")
+    else:
+        #print(instance)
+        """ bedforms_list = request.POST
+        print("\n\n")
+        print(bedforms_list)
+        #print(bedforms_list)
+        i = 0
+        for f in bedforms_list:
+            bed_form = BedroomForm(f, instance=bedrooms[i])
+            bed_form.save()
+            i+=1  """
+        
+        bed_formset = BedroomFormSet(queryset=bedrooms_queryset)
+        bed_formset.extra=0
 
-    context = {'bedrooms':bedrooms, 'bed_formset':bed_formset}
+    context = {'bed_formset':bed_formset}
     return render(request, "mainApp/editBedrooms.html", context)
 
 def listing_editing_view(request, property_id):
