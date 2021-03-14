@@ -24,5 +24,6 @@ urlpatterns = [
     path('notificationsLandlord', views.notificationsLandlord, name='notificationsLandlord'),
     path('listing/application', views.create_request, name='create_request'),
     path('listing/<int:listing_id>', views.listing, name='listing'),
+    path('confirmPass', views.confirmPass, name='confirmPass'),
     path('accounts/', include('django.contrib.auth.urls')),
 ]

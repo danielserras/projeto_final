@@ -837,24 +837,16 @@ def search(request):
 
                 row = row_property + row_room
 
-    final_row = []
-    rowList =[]
-    for l in row:
-        rowList.append(list(l))
+    for i in range(len(row)):
+        lng_1, lat_1, lng_2, lat_2 = map(math.radians, [location.longitude, location.latitude, row[i][4], row[i][3]])
+        print(row[i][5])
+        tempTuple = row[i][:5] + (row[i][5].split('mainApp/static/')[1],) + row[i][6:] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),)
+        row = row[:i] + (tempTuple,) + row[i+1:]
     print(row)
-    print(rowList)
-    for l in rowList:
-        lng_1, lat_1, lng_2, lat_2 = map(math.radians, [location.longitude, location.latitude, l[4], l[3]])
-        l.append(round(get_distance(lng_1, lat_1, lng_2, lat_2),1))
-        l[5] = l[5].split('mainApp/static/')[1]
-        #(l[5].split('mainApp/static/')[1],)
-        final_row.append(l)
-
-    print(final_row, "HERE")
 
     context = {
-        'num_results' : len(final_row), 
-        'row' : final_row
+        'num_results' : len(row), 
+        'row' : row
     }
     return render(request, "mainApp/search.html", context)
 
@@ -919,11 +911,11 @@ def listing(request, listing_id):
 
     #print(list(images)[0].image)
     imagesPaths = []
-    range = ["0"]
+    range = [0,]
     for i in list(images):
         pathSplited = str(i.image).split('mainApp/static/')
         imagesPaths.append(pathSplited[1])
-        range.append(str(int(range[-1]) + 1))
+        range.append(int(range[-1]) + 1)
 
     context  = {
         "listing": listing,
@@ -938,7 +930,8 @@ def listing(request, listing_id):
         "security_deposit": listing.security_deposit,
         "is_tenant": is_tenant,
         "imagesPaths": imagesPaths,
-        "range": range[:-1]
+        "range": range[:-1],
+        "zipPaths": zip(imagesPaths, range[:-1]),
     }
     return render(request, "mainApp/listingPage.html", context)
 
@@ -951,3 +944,8 @@ def countRoomDetails(rooms):
                 num_details+=1
     
     return num_details
+
+def confirmPass (response):
+    return render(response, "mainApp/confirmPass.html", {})
+
+
