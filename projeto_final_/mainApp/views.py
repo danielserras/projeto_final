@@ -645,15 +645,15 @@ def bedrooms_editing_view(request, property_id):
     #print(bed_formset.errors)
     if request.method == 'POST':
         #print(bed_formset)
-        print("\n\n QUERYSET \n\n")
+        """ print("\n\n QUERYSET \n\n")
         for o in bedrooms_queryset:
-            print(o.id)
+            print(o.id) """
         bed_formset = BedroomFormSet(request.POST, queryset=bedrooms_queryset)
         print(bed_formset.errors)
         if bed_formset.is_valid():
             for form in bed_formset.forms:
                 form.save()
-                print("FUNCIONOU")
+                print("SERA")
     else:
         #print(instance)
         """ bedforms_list = request.POST
