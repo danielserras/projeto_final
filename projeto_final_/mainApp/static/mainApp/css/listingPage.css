@@ -25,3 +25,22 @@
 .text-size-24 {
     font-size: 24px;
 }
+
+#listingSlider{
+    width: 600px;
+    height: 100%;
+    overflow: hidden;
+}
+
+#listingSlides {
+    display:flex;
+    margin:0;
+    padding: 0;
+    width: 100%;
+}
+
+.slide{
+    float: left;
+    list-style-type: none;
+}
+
