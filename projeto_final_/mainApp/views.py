@@ -653,7 +653,7 @@ def bedrooms_editing_view(request, property_id):
         if bed_formset.is_valid():
             for form in bed_formset.forms:
                 form.save()
-                print("SERA")
+                print(F U N C I O N A")
     else:
         #print(instance)
         """ bedforms_list = request.POST
