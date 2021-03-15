@@ -1,4 +1,26 @@
 $(document).ready(function() {
+
+    function list_redirect(container){
+        var container_img = container[1];
+        var img_url = container_img.src.slice(22);
+        var patt = /[1-9]/;
+        var id_location = img_url.search(patt);
+        var listing_id = 0;
+        console.log(img_url.slice(24));
+        for (var c=id_location; c<img_url.length; c++){
+            
+            if (isNaN(img_url.slice(c,c+1))){
+                listing_id = img_url.slice(id_location, c);
+                break;
+            }
+        }
+
+        window.location.href = "listing/"+listing_id;
+
+    }
+    $(".imageDiv").click(function(){
+        list_redirect($(this).find("img"));
+    })
     //Show/Hide advanced search at button press
     document.querySelector('.advancedSearchFormButton').addEventListener('click', function() {
         console.log($("#advancedSearchDiv").css('display'));

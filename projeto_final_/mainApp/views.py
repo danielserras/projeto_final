@@ -214,7 +214,7 @@ def introduce_property_view (request):
     except:
         return redirect('index')
 
-
+    print(request.session.items())
     if request.user.is_active:
 
         if request.method == 'POST':
@@ -226,7 +226,6 @@ def introduce_property_view (request):
             live_form = ''
             listing_form = ''
             prop_form = ''
-            print(request.session.keys())
             
             if 'bedrooms_num' in request.session.keys():
                 bed_form = BedroomFormSet(data=request.POST)
@@ -438,6 +437,7 @@ def introduce_property_view (request):
                                 description =  f.cleaned_data.get('description'),
                                 security_deposit =  f.cleaned_data.get('security_deposit'),
                                 max_capacity =  f.cleaned_data.get('max_capacity'),
+                                is_active = True,
                                 album = prop_album
                             )
                             listing_obj.save()
@@ -512,13 +512,55 @@ def index(request):
     return render(request, "mainApp/home.html", {})
 
 @login_required(login_url='login_view')
-def startsAgreement(request):
+def create_agreement(request):
+
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+
+    try:
+        tenant = Tenant.objects.get(ten_user=a_user)
+    except:
+        return redirect('search')
 
     if request.method == 'POST':
-        pass
+
+        request_id = f.cleaned_data.get('request_id')
+        ag_request = Agreement_Request.objects.get(id= request_id)
+        assoc_listing = ''
+        new_ag = ''
+
+        if ag_request.associated_property_listing:
+            assoc_listing = ag_request.associated_property_listing
+            lord = assoc_listing.associated_property.landlord
+
+            new_ag = Agreement(
+                associated_property_listing = assoc_listing,
+                tenant = tenant,
+                landlord = lord,
+                startsDate = ag_request.startsDate,
+                endDate= ag_request.endDate
+            )
+            new_ag.save()
+            assoc_listing.main_listing.is_active = False
+            assoc_listing.save()
+
+        else:
+            assoc_listing = ag_request.associated_room_listing
+            lord = assoc_listing.associated_room.associated_property.landlord
+
+            new_ag = Agreement(
+                associated_property_listing = assoc_listing,
+                tenant = tenant,
+                landlord = lord,
+                startsDate = ag_request.startsDate,
+                endDate= ag_request.endDate
+            )
+            new_ag.save()
+            assoc_listing.main_listing.is_active = False
+            assoc_listing.save()
+
         #criar o agreement
         #efetuar o pagamento
-        #apagar o listing
         #active/inactive no listing de modo a reutilizar
         
     else:
@@ -625,9 +667,9 @@ def property_editing_view(request, property_id=None):
     if request.method == 'POST':
         f = UpdatePropertyForm(request.POST, instance=property_object)
         
-        if f.is_valid():              
+        if f.is_valid():
             f.save() 
-            
+           
         return redirect("/mainApp/profile/propertiesManagement/bedroomsEditing/{}".format(property_object.id))    
     context={"property":property_object}
     return render(request, "mainApp/editProperty.html", context)
@@ -635,46 +677,66 @@ def property_editing_view(request, property_id=None):
 def bedrooms_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
     bedrooms_queryset = Bedroom.objects.filter(associated_property=property_object)
-    bedrooms_list = list(bedrooms_queryset)
-    """ bathrooms = list(Bathroom.objects.filter(associated_property=property_object))
-    kitchens = list(Kitchen.objects.filter(associated_property=property_object))
-    livingrooms = list(Livingroom.objects.filter(associated_property=property_object)) """
     if request.method == 'POST':
-        """ print("\n\n QUERYSET \n\n")
-        for o in bedrooms_queryset:
-            print(o.id) """
         bed_formset = BedroomFormSet(request.POST, queryset=bedrooms_queryset)
-        print("\n\n ERRORS \n\n")
-        print(bed_formset.errors)
         if bed_formset.is_valid():
             for form in bed_formset.forms:
                 form.save()
-                print("F U N C I O N A") 
-        """i = 0
-        for sub_form in bed_formset:
-            print(sub_form.get("be_window"))
-            bedroom = bedrooms_list[i]
-            bedroom.be_window = 1
-            bedroom.save()"""
-
-            
-    else:
-        #print(instance)
-        """ bedforms_list = request.POST
-        print("\n\n")
-        print(bedforms_list)
-        #print(bedforms_list)
-        i = 0
-        for f in bedforms_list:
-            bed_form = BedroomForm(f, instance=bedrooms[i])
-            bed_form.save()
-            i+=1  """
-        
+            return redirect("/mainApp/profile/propertiesManagement/bathroomsEditing/{}".format(property_object.id))    
+    else:        
         bed_formset = BedroomFormSet(queryset=bedrooms_queryset)
         bed_formset.extra=0
 
     context = {'bed_formset':bed_formset}
     return render(request, "mainApp/editBedrooms.html", context)
+
+def bathrooms_editing_view(request, property_id):
+    property_object = Property.objects.get(id=property_id)
+    bathrooms_queryset = Bathroom.objects.filter(associated_property=property_object)
+    if request.method == 'POST':
+        bath_formset = BathroomFormSet(request.POST, queryset=bathrooms_queryset)
+        if bath_formset.is_valid():
+            for form in bath_formset.forms:
+                form.save()      
+            return redirect("/mainApp/profile/propertiesManagement/kitchensEditing/{}".format(property_object.id)) 
+    else:        
+        bath_formset = BathroomFormSet(queryset=bathrooms_queryset)
+        bath_formset.extra=0
+
+    context = {'bath_formset':bath_formset}
+    return render(request, "mainApp/editBathrooms.html", context)
+
+def kitchens_editing_view(request, property_id):
+    property_object = Property.objects.get(id=property_id)
+    kitchens_queryset = Kitchen.objects.filter(associated_property=property_object)
+    if request.method == 'POST':
+        kitchen_formset = KitchenFormSet(request.POST, queryset=kitchens_queryset)
+        if kitchen_formset.is_valid():
+            for form in kitchen_formset.forms:
+                form.save()    
+            return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_object.id))
+    else:        
+        kitchen_formset = KitchenFormSet(queryset=kitchens_queryset)
+        kitchen_formset.extra=0
+
+    context = {'kitchen_formset':kitchen_formset}
+    return render(request, "mainApp/editKitchens.html", context)
+
+def livingrooms_editing_view(request, property_id):
+    property_object = Property.objects.get(id=property_id)
+    livingrooms_queryset = Livingroom.objects.filter(associated_property=property_object)
+    if request.method == 'POST':
+        livingroom_formset = LivingroomFormSet(request.POST, queryset=livingrooms_queryset)
+        if livingroom_formset.is_valid():
+            for form in livingroom_formset.forms:
+                form.save()    
+            #return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_object.id))
+    else:        
+        livingroom_formset = LivingroomFormSet(queryset=livingrooms_queryset)
+        livingroom_formset.extra=0
+
+    context = {'live_formset':livingroom_formset}
+    return render(request, "mainApp/editLivingrooms.html", context)
 
 def listing_editing_view(request, property_id):
     return render(request, "mainApp/listingEdit.html", {})
