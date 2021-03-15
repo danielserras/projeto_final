@@ -214,7 +214,7 @@ def introduce_property_view (request):
     except:
         return redirect('index')
 
-
+    print(request.session.items())
     if request.user.is_active:
 
         if request.method == 'POST':
@@ -437,6 +437,7 @@ def introduce_property_view (request):
                                 description =  f.cleaned_data.get('description'),
                                 security_deposit =  f.cleaned_data.get('security_deposit'),
                                 max_capacity =  f.cleaned_data.get('max_capacity'),
+                                is_active = True,
                                 album = prop_album
                             )
                             listing_obj.save()
@@ -511,13 +512,55 @@ def index(request):
     return render(request, "mainApp/home.html", {})
 
 @login_required(login_url='login_view')
-def startsAgreement(request):
+def create_agreement(request):
+
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+
+    try:
+        tenant = Tenant.objects.get(ten_user=a_user)
+    except:
+        return redirect('search')
 
     if request.method == 'POST':
-        pass
+
+        request_id = f.cleaned_data.get('request_id')
+        ag_request = Agreement_Request.objects.get(id= request_id)
+        assoc_listing = ''
+        new_ag = ''
+
+        if ag_request.associated_property_listing:
+            assoc_listing = ag_request.associated_property_listing
+            lord = assoc_listing.associated_property.landlord
+
+            new_ag = Agreement(
+                associated_property_listing = assoc_listing,
+                tenant = tenant,
+                landlord = lord,
+                startsDate = ag_request.startsDate,
+                endDate= ag_request.endDate
+            )
+            new_ag.save()
+            assoc_listing.main_listing.is_active = False
+            assoc_listing.save()
+
+        else:
+            assoc_listing = ag_request.associated_room_listing
+            lord = assoc_listing.associated_room.associated_property.landlord
+
+            new_ag = Agreement(
+                associated_property_listing = assoc_listing,
+                tenant = tenant,
+                landlord = lord,
+                startsDate = ag_request.startsDate,
+                endDate= ag_request.endDate
+            )
+            new_ag.save()
+            assoc_listing.main_listing.is_active = False
+            assoc_listing.save()
+
         #criar o agreement
         #efetuar o pagamento
-        #apagar o listing
         #active/inactive no listing de modo a reutilizar
         
     else:
@@ -624,7 +667,7 @@ def property_editing_view(request, property_id=None):
     if request.method == 'POST':
         f = UpdatePropertyForm(request.POST, instance=property_object)
         
-        if f.is_valid():              
+        if f.is_valid():
             f.save() 
             
         return redirect("/mainApp/profile/propertiesManagement/bedroomsEditing/{}".format(property_object.id))    

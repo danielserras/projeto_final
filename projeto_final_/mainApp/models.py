@@ -130,6 +130,7 @@ class Listing(models.Model):
     security_deposit = models.IntegerField()
     max_capacity = models.IntegerField()
     listing_type = models.CharField(max_length=20)
+    is_active = models.BooleanField()
     album = models.OneToOneField(ImageAlbum, related_name="ListingAlbum", on_delete=models.CASCADE, blank=True, null=True)
 
 

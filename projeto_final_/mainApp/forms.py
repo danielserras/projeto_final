@@ -33,10 +33,6 @@ class ListingForm(forms.ModelForm):
     security_deposit = forms.IntegerField()
     max_capacity = forms.IntegerField(required=True)
 
-    LISTING_CHOICES = [
-    ('RO', 'Pretendo anunciar a propriedade inteira'),
-    ('PR', 'Pretendo anunciar os quartos separadamente'),]
-
     class Meta:
         model = Listing
         fields = [
