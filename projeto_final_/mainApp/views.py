@@ -226,7 +226,6 @@ def introduce_property_view (request):
             live_form = ''
             listing_form = ''
             prop_form = ''
-            print(request.session.keys())
             
             if 'bedrooms_num' in request.session.keys():
                 bed_form = BedroomFormSet(data=request.POST)
