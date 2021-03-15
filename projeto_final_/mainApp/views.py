@@ -627,7 +627,7 @@ def property_editing_view(request, property_id=None):
         
         if f.is_valid():              
             f.save() 
-            
+           
         return redirect("/mainApp/profile/propertiesManagement/bedroomsEditing/{}".format(property_object.id))    
     context={"property":property_object}
     return render(request, "mainApp/editProperty.html", context)
@@ -640,9 +640,7 @@ def bedrooms_editing_view(request, property_id):
         if bed_formset.is_valid():
             for form in bed_formset.forms:
                 form.save()
-
-            return redirect("/mainApp/profile/propertiesManagement/bathroomsEditing/{}".format(property_object.id)) 
-            
+            return redirect("/mainApp/profile/propertiesManagement/bathroomsEditing/{}".format(property_object.id))    
     else:        
         bed_formset = BedroomFormSet(queryset=bedrooms_queryset)
         bed_formset.extra=0
@@ -655,20 +653,48 @@ def bathrooms_editing_view(request, property_id):
     bathrooms_queryset = Bathroom.objects.filter(associated_property=property_object)
     if request.method == 'POST':
         bath_formset = BathroomFormSet(request.POST, queryset=bathrooms_queryset)
-        print("\n\n ERRORS \n\n")
-        print(bath_formset.errors)
         if bath_formset.is_valid():
             for form in bath_formset.forms:
-                form.save()
-
-            print("IT WORKS")
-            
+                form.save()      
+            return redirect("/mainApp/profile/propertiesManagement/kitchensEditing/{}".format(property_object.id)) 
     else:        
         bath_formset = BathroomFormSet(queryset=bathrooms_queryset)
         bath_formset.extra=0
 
     context = {'bath_formset':bath_formset}
     return render(request, "mainApp/editBathrooms.html", context)
+
+def kitchens_editing_view(request, property_id):
+    property_object = Property.objects.get(id=property_id)
+    kitchens_queryset = Kitchen.objects.filter(associated_property=property_object)
+    if request.method == 'POST':
+        kitchen_formset = KitchenFormSet(request.POST, queryset=kitchens_queryset)
+        if kitchen_formset.is_valid():
+            for form in kitchen_formset.forms:
+                form.save()    
+            return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_object.id))
+    else:        
+        kitchen_formset = KitchenFormSet(queryset=kitchens_queryset)
+        kitchen_formset.extra=0
+
+    context = {'kitchen_formset':kitchen_formset}
+    return render(request, "mainApp/editKitchens.html", context)
+
+def livingrooms_editing_view(request, property_id):
+    property_object = Property.objects.get(id=property_id)
+    livingrooms_queryset = Livingroom.objects.filter(associated_property=property_object)
+    if request.method == 'POST':
+        livingroom_formset = LivingroomFormSet(request.POST, queryset=livingrooms_queryset)
+        if livingroom_formset.is_valid():
+            for form in livingroom_formset.forms:
+                form.save()    
+            #return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_object.id))
+    else:        
+        livingroom_formset = LivingroomFormSet(queryset=livingrooms_queryset)
+        livingroom_formset.extra=0
+
+    context = {'live_formset':livingroom_formset}
+    return render(request, "mainApp/editLivingrooms.html", context)
 
 def listing_editing_view(request, property_id):
     return render(request, "mainApp/listingEdit.html", {})
