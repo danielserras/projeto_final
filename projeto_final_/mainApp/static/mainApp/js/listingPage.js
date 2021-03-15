@@ -1,12 +1,14 @@
 var colIndex=0;
 var slideIndex=0;
 var max 
-var min = 0;
+const min = 0;
 $(document).ready(function(){
     var isMouseOverCol = false; 
     var x, y; 
     max = $('#rangeLength').text();
-    var scrollCol = $('#sideCol');
+    const scrollCol = $('#sideCol');
+
+    scrollReachedBorder()
 
     scrollCol.mouseenter(function() {
         x = window.pageXOffset; 
@@ -18,7 +20,7 @@ $(document).ready(function(){
     document.getElementById('sideCol').addEventListener("wheel", function(e) {  
         noWindowScroll(x,y);
         e.preventDefault();
-        colIndex = scrollThroughCol (e.deltaY, max, min, colIndex);
+        colIndex = scrollThroughCol (e.deltaY);
     });
 });
 
@@ -26,7 +28,28 @@ function noWindowScroll(x,y) {
     window.scrollTo(x, y); 
 }
 
-function scrollThroughCol (direction, max, min, colIndex) {
+function previousInColumn(){
+    scrollThroughCol(-100)
+}
+
+function nextInColumn(){
+    scrollThroughCol(100)
+}
+
+function scrollReachedBorder(){
+    if(colIndex==0){
+        $('#col_image_btn_up').css('opacity', 0);
+    }
+    if(max - colIndex < 4){
+        $('#col_image_btn_down').css('opacity', 0);
+    }
+    if(colIndex!=max-3 && colIndex!=0){
+        $('#col_image_btn_up').css('opacity', 1);
+        $('#col_image_btn_down').css('opacity', 1);
+    }
+}
+
+function scrollThroughCol (direction) {
     //If scrolled down and not at the column bottom
     if(direction > 0 && (colIndex+3)<max){
         $('#col_image_'+colIndex).attr("hidden",true)
@@ -39,25 +62,28 @@ function scrollThroughCol (direction, max, min, colIndex) {
         $('#col_image_'+colIndex).attr("hidden",false)
         $('#col_image_'+(colIndex+3)).attr("hidden",true)
     }
+    scrollReachedBorder()
     return colIndex
 }
 
 function previous(){
-     if(slideIndex > min){
-        $('#listingSlides').animate({'margin-left':'+=600px'}, 600)
-        slideIndex -= 1
-    }
+    slideToImage(slideIndex-1)
 }
 
 function next(){
-    if(slideIndex < max-1){
-        $('#listingSlides').animate({'margin-left':'-=600px'}, 600)
-        slideIndex += 1
-    }
+    slideToImage(slideIndex+1)
 }
 
 function slideToImage(id){
+    if(id == min-1){
+       id=max-1
+    }
+    else if(id == max){
+        id=min
+    }
     px = 600*(id-slideIndex)
-    slideIndex = id
+    $('#order_bullet_'+slideIndex).html('<i class="fa fa-circle-o" aria-hidden="true"></i>')
+    $('#order_bullet_'+id).html('<i class="fa fa-circle" aria-hidden="true"></i>')
     $('#listingSlides').animate({'margin-left':'-='+px+'px'}, 600)
+    slideIndex = id
 }
