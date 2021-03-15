@@ -1,0 +1,68 @@
+{% extends 'mainApp/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    {% if request.session.livingrooms_num > 0%}
+        <div class="progress mt-5 mb-3">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:40%">40%</div>
+        </div>
+    {% else %}
+        <div class="progress mt-5 mb-3">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:50%">50%</div>
+        </div>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        {{bath_formset.management_form}}
+        <div class="row">
+            {% for form in bath_formset%}
+            {{form.id}}
+            <div class="col-sm-12 bathroomF" id="pageListing-4">
+                <div class="row mt-2 mb-2 justify-content-md-center">
+                    <h3>Casa de Banho {{forloop.counter}}</h3>
+                </div>
+                <div class="row justify-content-md-center mb-2">
+                    <div class="col-sm-7">
+                        <div class="row">
+                            <div class="col-sm-4 custom-control custom-checkbox">
+                                {{form.bathtub}}
+                                <label for="{{ form.bathtub.id_for_label }}" class="custom-control-label">Banheira</label>
+                            </div>
+                            <div class="col-sm-4 custom-control custom-checkbox">
+                                {{form.bidet}}
+                                <label for="{{ form.bidet.id_for_label }}" class="custom-control-label">Bidé</label>
+                            </div>
+                            <div class="col-sm-4 custom-control custom-checkbox">
+                                {{form.shower}}
+                                <label for="{{ form.shower.id_for_label }}" class="custom-control-label">Chuveiro</label>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 custom-control custom-checkbox">
+                                {{form.b_window}}
+                                <label for="{{ form.b_window.id_for_label }}" class="custom-control-label">Janela</label>
+                            </div>
+                            <div class="col-sm-4 custom-control custom-checkbox">
+                                {{form.sink}}
+                                <label for="{{ form.sink.id_for_label }}" class="custom-control-label">Lavatório</label>
+                            </div>
+                            <div class="col-sm-4 custom-control custom-checkbox">
+                                {{form.toilet}}
+                                <label for="{{ form.toilet.id_for_label }}" class="custom-control-label">Sanita</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row justify-content-md-center text-center mb-3">
+            <div class="col-sm-auto">
+                <button type="submit" class="btn btn-secondary" >Seguinte</button>
+            </div>
+        </div>
+    </form>
+</div>   
+{% endblock %}
