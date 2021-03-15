@@ -6,6 +6,7 @@ urlpatterns = [
     path('profile/propertiesManagement/listingEditing/<int:property_id>', views.listing_editing_view, name='listingEditing'),
     path('profile/propertiesManagement/propertyEditing/<int:property_id>', views.property_editing_view, name='propertyEditing'),
     path('profile/propertiesManagement/bedroomsEditing/<int:property_id>', views.bedrooms_editing_view, name='bedroomsEditing'),
+    path('profile/propertiesManagement/bathroomsEditing/<int:property_id>', views.bathrooms_editing_view, name='bathroomsEditing'),
     path('profile/propertiesManagement', views.properties_management_view, name='propertiesManagement'),
     path('addProperty', views.introduce_property_view, name='addProperty'),
     path('addProperty/bedroom/', views.introduce_property_view, name='addBedroom'),

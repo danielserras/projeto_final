@@ -635,46 +635,40 @@ def property_editing_view(request, property_id=None):
 def bedrooms_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
     bedrooms_queryset = Bedroom.objects.filter(associated_property=property_object)
-    bedrooms_list = list(bedrooms_queryset)
-    """ bathrooms = list(Bathroom.objects.filter(associated_property=property_object))
-    kitchens = list(Kitchen.objects.filter(associated_property=property_object))
-    livingrooms = list(Livingroom.objects.filter(associated_property=property_object)) """
     if request.method == 'POST':
-        """ print("\n\n QUERYSET \n\n")
-        for o in bedrooms_queryset:
-            print(o.id) """
         bed_formset = BedroomFormSet(request.POST, queryset=bedrooms_queryset)
-        print("\n\n ERRORS \n\n")
-        print(bed_formset.errors)
         if bed_formset.is_valid():
             for form in bed_formset.forms:
                 form.save()
-                print("F U N C I O N A") 
-        """i = 0
-        for sub_form in bed_formset:
-            print(sub_form.get("be_window"))
-            bedroom = bedrooms_list[i]
-            bedroom.be_window = 1
-            bedroom.save()"""
 
+            return redirect("/mainApp/profile/propertiesManagement/bathroomsEditing/{}".format(property_object.id)) 
             
-    else:
-        #print(instance)
-        """ bedforms_list = request.POST
-        print("\n\n")
-        print(bedforms_list)
-        #print(bedforms_list)
-        i = 0
-        for f in bedforms_list:
-            bed_form = BedroomForm(f, instance=bedrooms[i])
-            bed_form.save()
-            i+=1  """
-        
+    else:        
         bed_formset = BedroomFormSet(queryset=bedrooms_queryset)
         bed_formset.extra=0
 
     context = {'bed_formset':bed_formset}
     return render(request, "mainApp/editBedrooms.html", context)
+
+def bathrooms_editing_view(request, property_id):
+    property_object = Property.objects.get(id=property_id)
+    bathrooms_queryset = Bathroom.objects.filter(associated_property=property_object)
+    if request.method == 'POST':
+        bath_formset = BathroomFormSet(request.POST, queryset=bathrooms_queryset)
+        print("\n\n ERRORS \n\n")
+        print(bath_formset.errors)
+        if bath_formset.is_valid():
+            for form in bath_formset.forms:
+                form.save()
+
+            print("IT WORKS")
+            
+    else:        
+        bath_formset = BathroomFormSet(queryset=bathrooms_queryset)
+        bath_formset.extra=0
+
+    context = {'bath_formset':bath_formset}
+    return render(request, "mainApp/editBathrooms.html", context)
 
 def listing_editing_view(request, property_id):
     return render(request, "mainApp/listingEdit.html", {})
