@@ -506,8 +506,6 @@ def introduce_property_view (request):
     else:
         return redirect('index')
 
-    
-
 #@login_required(login_url='login_view')
 def index(request):
     return render(request, "mainApp/home.html", {})
@@ -611,7 +609,7 @@ def properties_management_view(request):
     context = {"properties":properties}
     return render(request, "mainApp/propertiesManagement.html", context)
 
-def property_edit_view(request, property_id):
+def property_editing_view(request, property_id=None):
     current_user = request.user
     a_user = App_user.objects.get(user_id=current_user)
 
@@ -620,50 +618,64 @@ def property_edit_view(request, property_id):
     except:
         return redirect('index')
 
+    property_object = Property.objects.get(id=property_id)
+    
 
-    if request.user.is_active:
-        if request.method == 'POST':
-            f = PropertyForm(data=request.POST)
-            if f.is_valid():
+    if request.method == 'POST':
+        f = UpdatePropertyForm(request.POST, instance=property_object)
+        
+        if f.is_valid():              
+            f.save() 
+            
+        return redirect("/mainApp/profile/propertiesManagement/bedroomsEditing/{}".format(property_object.id))    
+    context={"property":property_object}
+    return render(request, "mainApp/editProperty.html", context)
 
-                #bed_formset = BedroomFormSet(queryset=Bedroom.objects.none())
-                #bed_formset.extra = int(f.cleaned_data.get('bedrooms_num'))
-                
-                request.session['bedrooms_num'] =  f.cleaned_data.get('bedrooms_num')
-                request.session['bathrooms_num'] =  f.cleaned_data.get('bathrooms_num')
-                if request.session['bedrooms_num'] > 1:
-                    request.session['multiple_bedrooms'] = True
+def bedrooms_editing_view(request, property_id):
+    property_object = Property.objects.get(id=property_id)
+    bedrooms_queryset = Bedroom.objects.filter(associated_property=property_object)
+    bedrooms_list = list(bedrooms_queryset)
+    """ bathrooms = list(Bathroom.objects.filter(associated_property=property_object))
+    kitchens = list(Kitchen.objects.filter(associated_property=property_object))
+    livingrooms = list(Livingroom.objects.filter(associated_property=property_object)) """
+    if request.method == 'POST':
+        """ print("\n\n QUERYSET \n\n")
+        for o in bedrooms_queryset:
+            print(o.id) """
+        bed_formset = BedroomFormSet(request.POST, queryset=bedrooms_queryset)
+        print("\n\n ERRORS \n\n")
+        print(bed_formset.errors)
+        if bed_formset.is_valid():
+            for form in bed_formset.forms:
+                form.save()
+                print("F U N C I O N A") 
+        """i = 0
+        for sub_form in bed_formset:
+            print(sub_form.get("be_window"))
+            bedroom = bedrooms_list[i]
+            bedroom.be_window = 1
+            bedroom.save()"""
 
-                request.session['kitchens_num'] =  f.cleaned_data.get('kitchens_num')
-                request.session['livingrooms_num'] =  f.cleaned_data.get('livingrooms_num')
-                if request.session['livingrooms_num'] == 0:
-                    request.session['no_living'] = True
-                    
-                prop_serial = json.dumps(f.cleaned_data)
-                request.session['prop_serial'] = prop_serial
-
-                context = {
-                    'property_form': prop_form,
-                    'bed_formset': bed_formset
-                    }
-                
-                return render(
-                    request,
-                    'mainApp/addBedroom.html',
-                    context)
-        else:
-            property_object = Property.objects.get(id=property_id)
-            bedrooms = list(Bedroom.objects.filter(associated_property=property_object))
-            bathrooms = list(Bathroom.objects.filter(associated_property=property_object))
-            kitchens = list(Kitchen.objects.filter(associated_property=property_object))
-            livingrooms = list(Livingroom.objects.filter(associated_property=property_object))
-
-            context={"property":property_object, "bedrooms":bedrooms, "bathrooms":bathrooms, "bathrooms_num":len(bathrooms), "kitchens_num":len(kitchens), "livingrooms_num":len(livingrooms)}
-            return render(request, "mainApp/propertyEdit.html", context)
+            
     else:
-        return redirect('index')
+        #print(instance)
+        """ bedforms_list = request.POST
+        print("\n\n")
+        print(bedforms_list)
+        #print(bedforms_list)
+        i = 0
+        for f in bedforms_list:
+            bed_form = BedroomForm(f, instance=bedrooms[i])
+            bed_form.save()
+            i+=1  """
+        
+        bed_formset = BedroomFormSet(queryset=bedrooms_queryset)
+        bed_formset.extra=0
 
-def listing_edit_view(request, property_id):
+    context = {'bed_formset':bed_formset}
+    return render(request, "mainApp/editBedrooms.html", context)
+
+def listing_editing_view(request, property_id):
     return render(request, "mainApp/listingEdit.html", {})
 
 
@@ -828,24 +840,16 @@ def search(request):
 
                 row = row_property + row_room
 
-    final_row = []
-    rowList =[]
-    for l in row:
-        rowList.append(list(l))
+    for i in range(len(row)):
+        lng_1, lat_1, lng_2, lat_2 = map(math.radians, [location.longitude, location.latitude, row[i][4], row[i][3]])
+        print(row[i][5])
+        tempTuple = row[i][:5] + (row[i][5].split('mainApp/static/')[1],) + row[i][6:] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),)
+        row = row[:i] + (tempTuple,) + row[i+1:]
     print(row)
-    print(rowList)
-    for l in rowList:
-        lng_1, lat_1, lng_2, lat_2 = map(math.radians, [location.longitude, location.latitude, l[4], l[3]])
-        l.append(round(get_distance(lng_1, lat_1, lng_2, lat_2),1))
-        l[5] = l[5].split('mainApp/static/')[1]
-        #(l[5].split('mainApp/static/')[1],)
-        final_row.append(l)
-
-    print(final_row, "HERE")
 
     context = {
-        'num_results' : len(final_row), 
-        'row' : final_row
+        'num_results' : len(row), 
+        'row' : row
     }
     return render(request, "mainApp/search.html", context)
 
@@ -910,11 +914,11 @@ def listing(request, listing_id):
 
     #print(list(images)[0].image)
     imagesPaths = []
-    range = ["0"]
+    range = [0,]
     for i in list(images):
         pathSplited = str(i.image).split('mainApp/static/')
         imagesPaths.append(pathSplited[1])
-        range.append(str(int(range[-1]) + 1))
+        range.append(int(range[-1]) + 1)
 
     context  = {
         "listing": listing,
@@ -929,7 +933,8 @@ def listing(request, listing_id):
         "security_deposit": listing.security_deposit,
         "is_tenant": is_tenant,
         "imagesPaths": imagesPaths,
-        "range": range[:-1]
+        "range": range[:-1],
+        "zipPaths": zip(imagesPaths, range[:-1]),
     }
     return render(request, "mainApp/listingPage.html", context)
 
@@ -942,3 +947,8 @@ def countRoomDetails(rooms):
                 num_details+=1
     
     return num_details
+
+def confirmPass (response):
+    return render(response, "mainApp/confirmPass.html", {})
+
+

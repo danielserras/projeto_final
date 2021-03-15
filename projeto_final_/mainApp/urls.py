@@ -3,8 +3,9 @@ from projeto_final import urls
 from . import views
 
 urlpatterns = [
-    path('profile/propertiesManagement/listingEdit/<int:property_id>', views.listing_edit_view, name='listingEdit'),
-    path('profile/propertiesManagement/propertyEdit/<int:property_id>', views.property_edit_view, name='propertyEdit'),
+    path('profile/propertiesManagement/listingEditing/<int:property_id>', views.listing_editing_view, name='listingEditing'),
+    path('profile/propertiesManagement/propertyEditing/<int:property_id>', views.property_editing_view, name='propertyEditing'),
+    path('profile/propertiesManagement/bedroomsEditing/<int:property_id>', views.bedrooms_editing_view, name='bedroomsEditing'),
     path('profile/propertiesManagement', views.properties_management_view, name='propertiesManagement'),
     path('addProperty', views.introduce_property_view, name='addProperty'),
     path('addProperty/bedroom/', views.introduce_property_view, name='addBedroom'),
@@ -23,5 +24,6 @@ urlpatterns = [
     path('notificationsLandlord', views.notificationsLandlord, name='notificationsLandlord'),
     path('listing/application', views.create_request, name='create_request'),
     path('listing/<int:listing_id>', views.listing, name='listing'),
+    path('confirmPass', views.confirmPass, name='confirmPass'),
     path('accounts/', include('django.contrib.auth.urls')),
 ]
