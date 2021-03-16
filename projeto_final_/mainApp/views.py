@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from paypal.standard.forms import PayPalPaymentsForm
+from paypal.standard.models import ST_PP_COMPLETED
 from django.forms.models import model_to_dict
 from django.template.loader import render_to_string
 from django.db import connection
@@ -23,6 +24,9 @@ import math
 #tirar test_mode do paypal no fim
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -48,6 +52,10 @@ def logout_view(request):
 
 
 def register_view(request):
+
+    if request.user.is_authenticated:
+        return redirect('index')
+
     form = CreateUserForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
@@ -511,6 +519,7 @@ def introduce_property_view (request):
 def index(request):
     return render(request, "mainApp/home.html", {})
 
+
 @login_required(login_url='login_view')
 def create_agreement(request):
 
@@ -559,8 +568,6 @@ def create_agreement(request):
             assoc_listing.main_listing.is_active = False
             assoc_listing.save()
 
-        #criar o agreement
-        #efetuar o pagamento
         #active/inactive no listing de modo a reutilizar
         
     else:
@@ -1011,7 +1018,58 @@ def countRoomDetails(rooms):
     
     return num_details
 
-def confirmPass (response):
-    return render(response, "mainApp/confirmPass.html", {})
+@login_required(login_url='login_view')
+def make_payment(request, listing_id):
+
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+
+    try:
+        tenant = Tenant.objects.get(ten_user=a_user)
+    except:
+        return redirect('search')
+
+    if request.method == 'GET':
+
+        main_listing = Listing.objects.get(id=listing_id)
+        l_type = main_listing.listing_type
+
+        if l_type == 'Bedroom' or l_type == 'Studio':
+            pass
+        else:
+            pass
+        lord_receiver_email = 'ir buscar mail do landlord'
+
+        paypal_dict = {
+        "cmd": "_xclick-subscriptions",
+        "business": lord_receiver_email,
+        "amount": "montante vai pra aqui",
+        "currency_code": "EUR",
+        "no_note": "1",
+        "item_name": "Nome do alojamento vai pra aqui",
+        "notify_url": "http://localhost:8000/mainApp/payments/",
+        "return_url": "http://localhost:8000/mainApp/payments/confirm/",
+        "cancel_return": "http://localhost:8000/paypal/",
+
+        }
+        payment_form = PayPalPaymentsForm(initial=paypal_dict)
+        context = {'pp_form':payment_form}
+
+        return render('payment/', context=context)
+
+def get_payment_status(sender, **kwargs):
+
+    if request.method == 'POST':
+
+        ipn_obj = sender
+        lord_receiver_email = 'ir buscar mail do landlord'
+        if ipn_obj.payment_status == ST_PP_COMPLETED:
+            
+            if ipn_obj.receiver_email != lord_receiver_email:
+                # Not a valid payment
+                pass
+            #...
+
+        valid_ipn_received.connect(get_payment_status)
 
 
