@@ -39,7 +39,7 @@ urlpatterns = [
     path('accounts/password_reset/', pw_reset , name='password_reset'),
     path('accounts/reset/<uidb64>/<token>/', pw_confirm , name='pwd_reset_confirm'),
     path('paypal/', include("paypal.standard.ipn.urls")),
-    path('payment/<int:listing_id>', mainApp.views.make_payment , name='make_payment'),
+    path('payment/<int:ag_request_id>', mainApp.views.make_payment , name='make_payment'),
     #path('accounts/password_reset/done/', )
     path('accounts/', include('django.contrib.auth.urls')),
 ]

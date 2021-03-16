@@ -27,5 +27,7 @@ urlpatterns = [
     path('notificationsLandlord', views.notificationsLandlord, name='notificationsLandlord'),
     path('listing/application', views.create_request, name='create_request'),
     path('listing/<int:listing_id>', views.listing, name='listing'),
+    path('listing/requestAccepted/<int:request_id>', views.accept_request, name='accept_request'),
+    path('listing/requestDenied/<int:request_id>', views.deny_request, name='deny_request'),
     path('accounts/', include('django.contrib.auth.urls')),
 ]

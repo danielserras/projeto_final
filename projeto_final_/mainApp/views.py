@@ -81,7 +81,7 @@ def register_view(request):
             messages.success(request, 'Utilizador ' + user_nameStr + ' criado!')
             
             request.session['popUp'] =  True
-            return redirect('login_view') #placeholder, alterem depois   
+            return redirect('login_view')  
 
     context = {'form':form, 'errors':form.errors} #, 'pform':pform
     return render(request, 'mainApp/register.html', context)
@@ -519,6 +519,39 @@ def introduce_property_view (request):
 def index(request):
     return render(request, "mainApp/home.html", {})
 
+@login_required(login_url='login_view')
+def accept_request(request, request_id):
+
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+    print('pls_get_in')
+    try:
+        lord = Landlord.objects.get(lord_user=a_user)
+    except:
+        return redirect('search')
+
+    ag_request = Agreement_Request.objects.get(id=request_id)
+    ag_request.accepted = True
+    ag_request.save()
+
+    return redirect('profile')
+
+@login_required(login_url='login_view')
+def deny_request(request, request_id):
+
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+    print('pls_DONT_get_in')
+    try:
+        lord = Landlord.objects.get(lord_user=a_user)
+    except:
+        return redirect('search')
+
+    ag_request = Agreement_Request.objects.get(id=request_id)
+    ag_request.accepted = False
+    ag_request.save()
+
+    return redirect('profile')
 
 @login_required(login_url='login_view')
 def create_agreement(request):
@@ -582,7 +615,7 @@ def create_request(request):
     a_user = App_user.objects.get(user_id=current_user)
 
     try:
-        lord = Landlord.objects.get(lord_user=a_user)
+        ten = Tenant.objects.get(ten_user=a_user)
     except:
         return redirect('search')
 
@@ -773,7 +806,8 @@ def notificationsTenant(request):
         startsDate = a.startsDate
         endDate = a.endDate
         accepted = a.accepted #para ver se esta null, aceite ou recusada
-        fullList.append([nomeLand, message, startsDate, endDate, accepted])
+        ag_id = a.id
+        fullList.append([nomeLand, message, startsDate, endDate, accepted, ag_id])
     sizeList = len(fullList)
 
     #ola = Agreement_Request.objects.get(landlord_id=1)
@@ -805,7 +839,8 @@ def notificationsLandlord(request):
         startsDate_ = a.startsDate
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
-        fullList_.append([nomeTen, message_, startsDate_, endDate_, accepted_])
+        ag_id_ = a.id
+        fullList_.append([nomeTen, message_, startsDate_, endDate_, accepted_, ag_id_])
     sizeList = len(fullList_)
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
@@ -1019,7 +1054,7 @@ def countRoomDetails(rooms):
     return num_details
 
 @login_required(login_url='login_view')
-def make_payment(request, listing_id):
+def make_payment(request, ag_request_id):
 
     current_user = request.user
     a_user = App_user.objects.get(user_id=current_user)
@@ -1031,31 +1066,45 @@ def make_payment(request, listing_id):
 
     if request.method == 'GET':
 
-        main_listing = Listing.objects.get(id=listing_id)
-        l_type = main_listing.listing_type
+        ag_request = Agreement_Request.objects.get(id=ag_request_id)
+        if ag_request.tenant == tenant and ag_request.accepted == True:
 
-        if l_type == 'Bedroom' or l_type == 'Studio':
-            pass
+            if ag_request.associated_property_listing == None:
+                room_listing = ag_request.associated_room_listing
+                assoc_room = room_listing.associated_room
+                assoc_prop = assoc_room.associated_property
+                lord = assoc_prop.landlord
+                main_listing = room_listing.main_listing
+
+            else:
+                prop_listing = ag_request.associated_property_listing
+                assoc_prop = prop_listing.associated_property
+                lord = assoc_prop.landlord
+                main_listing = property_listing.main_listing
+
+            lord_receiver_email = lord.email
+            duration_days = main_listing.availability_ending - main_listing.availability_starts
+            total_amount = (duration_days/30) * main_listing.monthly_payment
+
+            paypal_dict = {
+            "cmd": "_xclick-subscriptions",
+            "business": lord_receiver_email,
+            "amount": total_amount,
+            "currency_code": "EUR",
+            "no_note": "1",
+            "item_name": main_listing.title,
+            "notify_url": "http://localhost:8000/mainApp/payments/",
+            "return_url": "http://localhost:8000/mainApp/payments/confirm/",
+            "cancel_return": "http://localhost:8000/paypal/",
+
+            }
+            payment_form = PayPalPaymentsForm(initial=paypal_dict)
+            context = {'pp_form':payment_form}
+
+            return render('payment.html', context=context)
+        
         else:
-            pass
-        lord_receiver_email = 'ir buscar mail do landlord'
-
-        paypal_dict = {
-        "cmd": "_xclick-subscriptions",
-        "business": lord_receiver_email,
-        "amount": "montante vai pra aqui",
-        "currency_code": "EUR",
-        "no_note": "1",
-        "item_name": "Nome do alojamento vai pra aqui",
-        "notify_url": "http://localhost:8000/mainApp/payments/",
-        "return_url": "http://localhost:8000/mainApp/payments/confirm/",
-        "cancel_return": "http://localhost:8000/paypal/",
-
-        }
-        payment_form = PayPalPaymentsForm(initial=paypal_dict)
-        context = {'pp_form':payment_form}
-
-        return render('payment/', context=context)
+            return redirect('search')
 
 def get_payment_status(sender, **kwargs):
 

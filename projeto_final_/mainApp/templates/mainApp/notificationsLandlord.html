@@ -46,7 +46,7 @@
   
           <div class="messages-box">
             <div id="leftStart" class="list-group rounded-0">
-              {% for a,b,c,d,e in fullList_ %}
+              {% for a,b,c,d,e,f in fullList_ %}
                   <a href="#" id="notifications_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
                     {% load static %}
                     <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
@@ -151,7 +151,7 @@
             {% load static %}
             <img src='{% static "mainApp/images/message.svg" %}' class='img' id="defaultImg" alt='Image representing a message' />
         </div>
-          {% for a,b,c,d,e in fullList_ %}
+          {% for a,b,c,d,e,f in fullList_ %}
             <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
               <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                   <h4 class="text-white mt-3 pl-3"> Assunto </h4>
@@ -170,12 +170,14 @@
                   <p class="text-info">{{ b }}</p>
                 </div>
                 <div class="row mx-auto">
-                  <div class="col-sm-6 mt-5">
-                    <button type="button" class="btn btn-info font-weight-bold mx-auto">Recusar</button>
-                  </div>
-                  <div class="col-sm-6 mt-5">
-                    <button type="button" class="btn btn-info font-weight-bold mx-auto" >Aceitar</button>
-                  </div>
+                  <form method="POST" action="{% url 'deny_request' f %}" class="col-sm-6 mt-5">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-info font-weight-bold mx-auto">Recusar</button>
+                  </form>
+                  <form method="POST" action="{% url 'accept_request' f %}" class="col-sm-6 mt-5">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-info font-weight-bold mx-auto" >Aceitar</button>
+                  </form>
                 </div>
               </div>
             </div>
