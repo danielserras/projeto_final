@@ -9,110 +9,37 @@
 {% block content %}
 
 <div class="container py-5 px-4 mt-5">
-    <div class="row rounded-lg overflow-hidden shadow border border-warning border-5">
-      <!-- Users box-->
-      <div class="col-sm-5 px-0">
-        <div class="bg-white">
-  
-          <div class="recenteNotificacoes px-4 py-2">
-            <p class="h5 mb-0 py-1 text-white">Recentemente</p>
-          </div>
-  
-          <div class="messages-box">
-            <div class="list-group rounded-0">
-              <a href="#" class="notification1 list-group-item list-group-item-action list-group-item-warning rounded-0">
-                {% load static %}
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">25 Dec</small>
+  <div class="row rounded-lg overflow-hidden shadow border border-warning border-5">
+    <!-- Users box-->
+    <div class="col-sm-5 px-0">
+      <div class="bg-white">
+
+        <div class="recenteNotificacoes px-4 py-2">
+          <p class="h5 mb-0 py-1 text-white">Recentemente</p>
+        </div>
+
+        <div class="messages-box">
+          <div id="leftStart" class="list-group rounded-0">
+            {% for a,b,c,d,e,f in fullList %}
+              {% if f is not None %}
+                  <a href="#" id="notificationsTen_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
+                    {% load static %}
+                    <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                      <div class="media-body ml-4">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                          <h6 class="mb-0">{{ b }}</h6><small class="small font-weight-bold">25 Dec</small>
+                        </div>
+                        <p class="messageText font-italic text-muted mb-0 text-small">Resposta ao seu pedido de alojamento.</p>
+                      </div>
                     </div>
-                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-  
-              <a href="#" class=" list-group-item list-group-item-action list-group-item-warning rounded-0">
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">14 Dec</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur. incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-  
-              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">9 Nov</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-  
-              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">18 Oct</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-  
-              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">17 Oct</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-  
-              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">2 Sep</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                  </div>
-                </div>
-              </a>
-  
-              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">30 Aug</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-  
-              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">21 Aug</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-  
-            </div>
+                  </a>
+              {% endif %}
+            {% endfor %}
+
           </div>
         </div>
       </div>
+    </div>
 
       <!-- Caixa de notificações-->
 
@@ -121,25 +48,37 @@
           {% load static %}
           <img src='{% static "mainApp/images/message.svg" %}' class='img' id="defaultImg" alt='Image representing a message' />
       </div>
-      <div class="contentNotification1" style="display:none">
-        <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
-            <h4 class="text-white mt-3 pl-3"> Assunto </h4>
-        </div>
-        <div class="row m-2">
-            <p class= "text-info">Data: 10/02/2020</p>
-        </div>
-        <div class="row m-2">
-            <p class= "text-info">Hora: 10:10</p>
-        </div>
-        <div class="row m-2">
-            <p class= "text-info">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam elit vitae venenatis mollis. Donec eu risus ex. Cras tempus elit ex, vitae suscipit dolor commodo in. Cras felis lorem, fringilla vel eros quis, tincidunt maximus elit. Suspendisse luctus nunc id iaculis rhoncus. In volutpat turpis sed ipsum congue, et fermentum magna feugiat. Vivamus gravida justo vitae nunc iaculis elementum. Duis pulvinar nulla turpis, sed dignissim mi gravida nec. Nulla leo orci, rhoncus a lectus ac, consectetur congue nisi. Curabitur nec cursus turpis, quis viverra libero. Etiam non bibendum lorem, in vehicula ante. Morbi tristique mi a justo dapibus laoreet. Quisque ut metus nec arcu tempus cursus. Cras facilisis dolor nec urna commodo commodo. Proin accumsan ante quis est ultricies, commodo accumsan diam sodales. Vivamus tincidunt orci quis suscipit pretium.
-            </p>
-            <div class="row mx-auto mt-5">
-                <button type="button" class="btn btn-info font-weight-bold mx-auto">Renovar</button>
+        {% for a,b,c,d,e,f in fullList %}
+          <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
+            <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
+                <h4 class="text-white mt-3 pl-3"> Assunto </h4>
             </div>
-        </div>
-      </div>
+            <div class="row m-2">
+                <p class= "text-info font-weight-bold">Data Início:&nbsp </p>
+                <p class= "text-info"> {{ d }}</p>
+            </div>
+            <div class="row m-2">
+                <p class= "text-info font-weight-bold">Data término:&nbsp </p>
+                <p class= "text-info"> {{ e }}</p>
+            </div>
+            <div class="row m-2">
+              <div>
+                <p class="text-info font-weight-bold">Mensagem:&nbsp</p>
+                <p class="text-info">{{ c }}</p>
+              </div>
+            </div>
+            <div class="big_text row m-2">
+              <p class="text-info font-weight-bold">Resposta ao seu pedido de alojamento:&nbsp</p>
+              {% if f is True %}
+                <p class="text-info">Aceite</p>
+                <button type="button" class="btn btn-info font-weight-bold mx-auto">Realizar Pagamento</button>
+                <!--ESTE BOTÃO VAI SERVIR PARA REDIRECIONAR PARA A PÁGINA DE PAGAMENTO-->
+              {% else %}
+                <p class="text-info">Recusado</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
     </div>
   </div>
 </div>

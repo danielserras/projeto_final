@@ -29,4 +29,7 @@ urlpatterns = [
     path('listing/<int:listing_id>', views.listing, name='listing'),
     path('confirmPass', views.confirmPass, name='confirmPass'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('notificationsLandlord/accReq/<int:id_Req>', views.accReq, name='accReq'),
+    path('notificationsLandlord/denReq/<int:id_Req>', views.denReq, name='denReq'),
+    
 ]
