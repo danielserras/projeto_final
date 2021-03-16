@@ -798,6 +798,7 @@ def notificationsTenant(request):
     print("LISTA DOS AGREEMENTS DESTE USER: ", listOfAgreements)
     fullList = []
     for a in listOfAgreements:
+        _id_req = a.id
         _landlord_ = a.landlord #objeto landlord
         _userLand_ = _landlord_.lord_user
         userLand = _userLand_.user
@@ -806,10 +807,9 @@ def notificationsTenant(request):
         startsDate = a.startsDate
         endDate = a.endDate
         accepted = a.accepted #para ver se esta null, aceite ou recusada
-        ag_id = a.id
-        fullList.append([nomeLand, message, startsDate, endDate, accepted, ag_id])
+        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted])
     sizeList = len(fullList)
-
+    #print(fullList)
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
     context = {"fullList" : fullList, "sizeList": sizeList}
@@ -831,6 +831,7 @@ def notificationsLandlord(request):
     print("LISTA DOS AGREEMENTS DESTE LANDLORD: ", listOfAgreements_)
     fullList_ = []
     for a in listOfAgreements_:
+        id_req = a.id
         user_ = a.tenant #objeto tenant
         _user_ = user_.ten_user
         userTen = _user_.user
@@ -839,13 +840,28 @@ def notificationsLandlord(request):
         startsDate_ = a.startsDate
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
-        ag_id_ = a.id
-        fullList_.append([nomeTen, message_, startsDate_, endDate_, accepted_, ag_id_])
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_])
     sizeList = len(fullList_)
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
     context = {"fullList_": fullList_, 'range': range(sizeList)}
     return render(request, "mainApp/notificationsLandlord.html", context)
+
+""" def accReq(request, id_Req):
+    #UserProfile.objects.filter(user=request.user).update(level='R')
+    Agreement_Request.objects.filter(id=id_Req).update(accepted='True')
+    #for e in Agreement_Request.objects.all():
+       # if e.id == id_Req:
+         #   e.update(accepted='True')
+    return render(request, "mainApp/notificationsLandlord.html", {})
+
+
+def denReq(request, id_Req):
+    Agreement_Request.objects.filter(id=id_Req).update(accepted='False')
+    #for e in Agreement_Request.objects.all():
+        #if e.id == id_Req:
+          #  e.update(accepted='False')
+    return render(request, "mainApp/notificationsLandlord.html", {}) """
 
 def get_distance(lat_1, lng_1, lat_2, lng_2): 
     d_lat = lat_2 - lat_1
