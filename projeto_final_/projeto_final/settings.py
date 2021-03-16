@@ -36,7 +36,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'noreply.unihouses@gmail.com'
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 VERIFICATION_SUCCESS_TEMPLATE = None
-LOGIN_URL = '/mainApp/login'
+LOGIN_URL = '/accounts/login'
 
 # Application definition
 
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'paypal.standard.ipn',
 ]
 PAYPAL_TEST = True
+PAYPAL_RECEIVER_EMAIL = 'noreply.unihouses@gmail.com'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
