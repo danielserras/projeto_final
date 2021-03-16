@@ -1022,15 +1022,21 @@ def listing(request, listing_id):
     for room in rooms_count_details:
         num_details += countRoomDetails(room)
 
-    app_user = App_user.objects.get(user=request.user)
-    is_tenant = True
-    try:
-        tenant = Tenant.objects.get(ten_user=app_user)
-        request.session['tenant'] = tenant.id
-        request.session['landlord'] = landlord.id
-    except:
-        is_tenant = False
-        messages.info(request, 'Opção reservada a inquilinos.', extra_tags='tenant_lock')
+    if request.user.is_authenticated:
+        app_user = App_user.objects.get(user=request.user)
+        print(app_user)
+        is_tenant = True
+        try:
+            tenant = Tenant.objects.get(ten_user=app_user)
+            request.session['tenant'] = tenant.id
+            request.session['landlord'] = landlord.id
+        except:
+            is_tenant = False
+            messages.info(request, 'Opção reservada a inquilinos.', extra_tags='tenant_lock')
+            request.session['tenant'] = None
+            request.session['landlord'] = None
+    else:
+        is_tenant = True
         request.session['tenant'] = None
         request.session['landlord'] = None
 
