@@ -887,7 +887,7 @@ def search(request):
         if form.is_valid():
 
             location = geolocator.geocode(form.cleaned_data.get('location'))
-
+            searched_values = [location.latitude, location.longitude, form.cleaned_data.get('radius')]
             querySelect = 'SELECT l.monthly_payment, l.title, p.address, p.latitude, p.longitude, i.image'
             queryFrom = ' FROM mainApp_listing AS l, mainApp_property as p, mainApp_image as i'
             queryWhere = " WHERE (acos(sin(p.latitude * 0.0175) * sin("+str(location.latitude)+"* 0.0175) \
@@ -967,8 +967,9 @@ def search(request):
         tempTuple = row[i][:5] + (row[i][5].split('mainApp/static/')[1],) + row[i][6:] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),)
         row = row[:i] + (tempTuple,) + row[i+1:]
     print(row)
-
+    print(searched_values)
     context = {
+        'searched_values' : searched_values,  #list with 3 elements containing the coordinates of the searched address and radius of the search 
         'num_results' : len(row), 
         'row' : row
     }

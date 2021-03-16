@@ -113,6 +113,9 @@
             <h1 class="row justify-content-center mt-5 font-weight-bold">Resultados</h1>
         </div>
         <div class='col-12'>
+            <input type="hidden" id="search_radius" value={{searched_values.2}}>
+            <input type="hidden" id="search_long" value={{searched_values.1}}>
+            <input type="hidden" id="search_lat" value={{searched_values.0}}>
             <div class="row justify-content-center mt-5 mb-5">
                 {% if row|length > 0 %}
                     {% for l in row %}
