@@ -17,6 +17,7 @@ from django.db import connection
 from decouple import config
 from geopy.geocoders import MapBox
 from copy import deepcopy
+import PIL
 import time
 import json
 import math
@@ -465,13 +466,16 @@ def introduce_property_view (request):
 
                                 for i in d.values():
                                     if i != None:
-                                        
+                            
                                         img = Image(
                                             name= listing_obj.title+'_'+str(assoc_prop.id),
                                             is_cover = cover,
                                             image = i,
                                             album = prop_album)
                                         img.save()
+                                        img_pli = PIL.Image.open(img.image)  
+                                        img_r = img_pli.resize((600,337.5))
+                                        img_r.save(str(img.image))
 
                             del request.session['prop_serial']
 
@@ -479,7 +483,6 @@ def introduce_property_view (request):
                                 #if f.cleaned_data.get('multiple_listing') == 'whole':
                                 apart_obj = Property_listing(main_listing = main_listing, associated_property = assoc_prop)
                                 apart_obj.save()
-
                                 return redirect('index')
                                 
 
