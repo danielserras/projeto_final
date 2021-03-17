@@ -681,7 +681,10 @@ def bedrooms_editing_view(request, property_id):
         bed_formset = BedroomFormSet(request.POST, queryset=bedrooms_queryset)
         if bed_formset.is_valid():
             for form in bed_formset.forms:
-                form.save()
+                bedroom = form.save(commit="False")
+                bedroom.associated_property = property_object
+                bedroom.save()
+
             return redirect("/mainApp/profile/propertiesManagement/bathroomsEditing/{}".format(property_object.id))    
     else:        
         bed_formset = BedroomFormSet(queryset=bedrooms_queryset)
