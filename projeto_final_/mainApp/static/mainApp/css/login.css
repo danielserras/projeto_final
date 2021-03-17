@@ -14,14 +14,41 @@
     text-align: center;
 }
 
-#formContent,
-#formContent2 {
+.wrapper2 {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    min-height: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.formContent
+ {
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
     background: #fff;
     padding: 30px;
     width: 90%;
     max-width: 450px;
+    position: relative;
+    padding: 0px;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.formContent2
+ {
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    background: #fff;
+    padding: 30px;
+    width: 90%;
+    max-width: 450px;
+    height:55vh;
     position: relative;
     padding: 0px;
     -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
@@ -56,6 +83,12 @@
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
+
+
+.butReset:hover {
+    background-color: #E76F51;
+}
+
 
 .inputType2:hover {
     background-color: #E76F51;
@@ -240,3 +273,4 @@
 .textForget{
     font-size: 90%;
 }
+

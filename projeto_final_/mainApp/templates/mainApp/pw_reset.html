@@ -7,7 +7,6 @@
     <link rel="stylesheet" href='{% static "mainApp/css/login.css" %}'>
 {% endblock %}
 {% block content %}
-<p>Por favor insira o endereço email associado à sua conta. Será enviado um email em breve</p>
 
 <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -28,15 +27,38 @@
     </div>
 </div>
 
-<form method="post">{% csrf_token %}
-<fieldset class="module aligned">
-    <div class="form-row field-email">
-        {{ form.email.errors }}
-        <label for="id_email">Email address:</label>
-        {{ form.email }}
+
+<div class="wrapper2 container">
+    <div class="formContent2">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2 class="text-center mt-3 mb-4">Recuperação password</h2>
+                <br>
+                <br>
+                <p class="small">Por favor insira o endereço de email associado à sua conta.<br> Será enviado um email em breve.</p>
+            </div>
+        </div>
+        <div class="">
+            <form method="post">{% csrf_token %}
+            <fieldset class="module aligned">
+                <div class="ml-4 mb-3 field-email">
+                    {{ form.email.errors }}
+                    <div class="">
+                        <label for="id_email" class="mx-auto">Endereço de email:</label>
+                    </div>
+                    <div class="">
+                        <input type="text" class="mx-auto inputType1">{{ form.email }}</input>
+                    </div>
+                </div>
+                <div class="row">
+                    <input type="submit" class="mx-auto email_sent butReset btn btn-secondary m-2 font-weight-bold" value="Reset my password">
+                </div>
+            </fieldset>
+            </form>
+        </div>
+        
     </div>
-    <input type="submit" class="email_sent" value="Reset my password">
-</fieldset>
-</form>
+</div>
+
 
 {% endblock %}
