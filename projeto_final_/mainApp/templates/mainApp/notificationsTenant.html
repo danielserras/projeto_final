@@ -71,8 +71,11 @@
               <p class="text-info font-weight-bold">Resposta ao seu pedido de alojamento:&nbsp</p>
               {% if f is True %}
                 <p class="text-info">Aceite</p>
-                <button type="button" class="btn btn-info font-weight-bold mx-auto">Realizar Pagamento</button>
-                <!--ESTE BOTÃO VAI SERVIR PARA REDIRECIONAR PARA A PÁGINA DE PAGAMENTO-->
+                <form method="POST" action="{% url 'make_payment' a %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-info font-weight-bold mx-auto">Realizar Pagamento</button>
+                  <!--ESTE BOTÃO VAI SERVIR PARA REDIRECIONAR PARA A PÁGINA DE PAGAMENTO-->
+                </form>
               {% else %}
                 <p class="text-info">Recusado</p>
               {% endif %}

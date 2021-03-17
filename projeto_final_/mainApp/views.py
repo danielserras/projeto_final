@@ -11,6 +11,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from paypal.standard.forms import PayPalPaymentsForm
 from paypal.standard.models import ST_PP_COMPLETED
+from paypal.standard.ipn.signals import valid_ipn_received, invalid_ipn_received
+from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 from django.template.loader import render_to_string
 from django.db import connection
@@ -553,10 +555,10 @@ def deny_request(request, request_id):
 
     return redirect('profile')
 
-@login_required(login_url='login_view')
-def create_agreement(request):
 
-    current_user = request.user
+def create_agreement(user_id, ag_request_id):
+
+    current_user = User.objects.get(id=user_id)
     a_user = App_user.objects.get(user_id=current_user)
 
     try:
@@ -564,49 +566,42 @@ def create_agreement(request):
     except:
         return redirect('search')
 
-    if request.method == 'POST':
 
-        request_id = f.cleaned_data.get('request_id')
-        ag_request = Agreement_Request.objects.get(id= request_id)
-        assoc_listing = ''
-        new_ag = ''
+    request_id = ag_request_id
+    ag_request = Agreement_Request.objects.get(id= request_id)
+    assoc_listing = ''
+    new_ag = ''
 
-        if ag_request.associated_property_listing:
-            assoc_listing = ag_request.associated_property_listing
-            lord = assoc_listing.associated_property.landlord
+    if ag_request.associated_property_listing:
+        assoc_listing = ag_request.associated_property_listing
+        lord = assoc_listing.associated_property.landlord
 
-            new_ag = Agreement(
-                associated_property_listing = assoc_listing,
-                tenant = tenant,
-                landlord = lord,
-                startsDate = ag_request.startsDate,
-                endDate= ag_request.endDate
-            )
-            new_ag.save()
-            assoc_listing.main_listing.is_active = False
-            assoc_listing.save()
+        new_ag = Agreement(
+            associated_property_listing = assoc_listing,
+            tenant = tenant,
+            landlord = lord,
+            startsDate = ag_request.startsDate,
+            endDate= ag_request.endDate
+        )
+        new_ag.save()
+        assoc_listing.main_listing.is_active = False
+        assoc_listing.save()
 
-        else:
-            assoc_listing = ag_request.associated_room_listing
-            lord = assoc_listing.associated_room.associated_property.landlord
-
-            new_ag = Agreement(
-                associated_property_listing = assoc_listing,
-                tenant = tenant,
-                landlord = lord,
-                startsDate = ag_request.startsDate,
-                endDate= ag_request.endDate
-            )
-            new_ag.save()
-            assoc_listing.main_listing.is_active = False
-            assoc_listing.save()
-
-        #active/inactive no listing de modo a reutilizar
-        
     else:
+        assoc_listing = ag_request.associated_room_listing
+        lord = assoc_listing.associated_room.associated_property.landlord
 
-        #return render(request, "mainApp/startsAgreementTenent.html", {})
-        return render(request, "mainApp/sendAgreementLandlord.html", {})
+        new_ag = Agreement(
+            associated_room_listing = assoc_listing,
+            tenant = tenant,
+            landlord = lord,
+            startsDate = ag_request.startsDate,
+            endDate= ag_request.endDate
+        )
+        new_ag.save()
+        assoc_listing.main_listing.is_active = False
+        assoc_listing.save()
+        
 
 @login_required(login_url='login_view')
 def create_request(request):
@@ -1080,7 +1075,7 @@ def make_payment(request, ag_request_id):
     except:
         return redirect('search')
 
-    if request.method == 'GET':
+    if request.method == 'POST':
 
         ag_request = Agreement_Request.objects.get(id=ag_request_id)
         if ag_request.tenant == tenant and ag_request.accepted == True:
@@ -1098,43 +1093,46 @@ def make_payment(request, ag_request_id):
                 lord = assoc_prop.landlord
                 main_listing = property_listing.main_listing
 
-            lord_receiver_email = lord.email
-            duration_days = main_listing.availability_ending - main_listing.availability_starts
-            total_amount = (duration_days/30) * main_listing.monthly_payment
+            lord_receiver_email = lord.lord_user.user.email
+            duration_days = (ag_request.endDate - ag_request.startsDate).days
+            total_amount = int((duration_days/30) * main_listing.monthly_payment)
 
             paypal_dict = {
-            "cmd": "_xclick-subscriptions",
-            "business": lord_receiver_email,
+            "business": settings.PAYPAL_RECEIVER_EMAIL,
             "amount": total_amount,
             "currency_code": "EUR",
             "no_note": "1",
             "item_name": main_listing.title,
-            "notify_url": "http://localhost:8000/mainApp/payments/",
-            "return_url": "http://localhost:8000/mainApp/payments/confirm/",
-            "cancel_return": "http://localhost:8000/paypal/",
+            "item_number": ag_request.id,
+            "custom": current_user.id,
+            "notify_url": "http://179c45eda6a9.ngrok.io/paymentStatus/",
+            "return_url": "http://179c45eda6a9.ngrok.io/mainApp/search",
+            "cancel_return": "http://179c45eda6a9.ngrok.io/mainApp/search",
 
             }
             payment_form = PayPalPaymentsForm(initial=paypal_dict)
             context = {'pp_form':payment_form}
 
-            return render('payment.html', context=context)
+            return render(request, template_name='mainApp/payment.html', context=context)
         
         else:
             return redirect('search')
 
+@csrf_exempt
 def get_payment_status(sender, **kwargs):
+    
+    ipn_obj = sender.POST
+    if ipn_obj['payment_status'] == ST_PP_COMPLETED:
 
-    if request.method == 'POST':
+        if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
 
-        ipn_obj = sender
-        lord_receiver_email = 'ir buscar mail do landlord'
-        if ipn_obj.payment_status == ST_PP_COMPLETED:
-            
-            if ipn_obj.receiver_email != lord_receiver_email:
-                # Not a valid payment
-                pass
-            #...
+            ag_request_id = ipn_obj['item_number']
+            user_id = ipn_obj['custom']
+            create_agreement(user_id, ag_request_id)
 
-        valid_ipn_received.connect(get_payment_status)
+    return redirect('index')
+
+valid_ipn_received.connect(get_payment_status)
+invalid_ipn_received.connect(get_payment_status)
 
 
