@@ -19,6 +19,7 @@ from django.db import connection
 from decouple import config
 from geopy.geocoders import MapBox
 from copy import deepcopy
+import PIL
 import time
 import json
 import math
@@ -467,13 +468,16 @@ def introduce_property_view (request):
 
                                 for i in d.values():
                                     if i != None:
-                                        
+                            
                                         img = Image(
                                             name= listing_obj.title+'_'+str(assoc_prop.id),
                                             is_cover = cover,
                                             image = i,
                                             album = prop_album)
                                         img.save()
+                                        img_pli = PIL.Image.open(img.image)  
+                                        img_r = img_pli.resize((600,337.5))
+                                        img_r.save(str(img.image))
 
                             del request.session['prop_serial']
 
@@ -481,7 +485,6 @@ def introduce_property_view (request):
                                 #if f.cleaned_data.get('multiple_listing') == 'whole':
                                 apart_obj = Property_listing(main_listing = main_listing, associated_property = assoc_prop)
                                 apart_obj.save()
-
                                 return redirect('index')
                                 
 
@@ -876,13 +879,13 @@ def search(request):
     geolocator = MapBox(config('MAPBOX_KEY'), scheme=None, user_agent=None, domain='api.mapbox.com')
     location = ''
     row = ''
-
+    searched_values = []
     if request.method == 'POST':
         form = SearchForm(data=request.POST)
         if form.is_valid():
 
             location = geolocator.geocode(form.cleaned_data.get('location'))
-
+            searched_values.extend((location.latitude, location.longitude, form.cleaned_data.get('radius')))
             querySelect = 'SELECT l.monthly_payment, l.title, p.address, p.latitude, p.longitude, i.image'
             queryFrom = ' FROM mainApp_listing AS l, mainApp_property as p, mainApp_image as i'
             queryWhere = " WHERE (acos(sin(p.latitude * 0.0175) * sin("+str(location.latitude)+"* 0.0175) \
@@ -962,8 +965,9 @@ def search(request):
         tempTuple = row[i][:5] + (row[i][5].split('mainApp/static/')[1],) + row[i][6:] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),)
         row = row[:i] + (tempTuple,) + row[i+1:]
     print(row)
-
+    print(searched_values)
     context = {
+        'searched_values' : searched_values,  #list with 3 elements containing the coordinates of the searched address and radius of the search 
         'num_results' : len(row), 
         'row' : row
     }
@@ -1016,15 +1020,21 @@ def listing(request, listing_id):
     for room in rooms_count_details:
         num_details += countRoomDetails(room)
 
-    app_user = App_user.objects.get(user=request.user)
-    is_tenant = True
-    try:
-        tenant = Tenant.objects.get(ten_user=app_user)
-        request.session['tenant'] = tenant.id
-        request.session['landlord'] = landlord.id
-    except:
-        is_tenant = False
-        messages.info(request, 'Opção reservada a inquilinos.', extra_tags='tenant_lock')
+    if request.user.is_authenticated:
+        app_user = App_user.objects.get(user=request.user)
+        print(app_user)
+        is_tenant = True
+        try:
+            tenant = Tenant.objects.get(ten_user=app_user)
+            request.session['tenant'] = tenant.id
+            request.session['landlord'] = landlord.id
+        except:
+            is_tenant = False
+            messages.info(request, 'Opção reservada a inquilinos.', extra_tags='tenant_lock')
+            request.session['tenant'] = None
+            request.session['landlord'] = None
+    else:
+        is_tenant = True
         request.session['tenant'] = None
         request.session['landlord'] = None
 
