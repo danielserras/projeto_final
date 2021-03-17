@@ -90,6 +90,7 @@
     border-radius: 5px 5px 5px 5px;
 }
 
+
 .inputType1:focus {
     background-color: #fff;
     border-bottom: 2px solid #E76F51;
@@ -234,4 +235,8 @@
 
 #icon {
     width: 60%;
+}
+
+.textForget{
+    font-size: 90%;
 }

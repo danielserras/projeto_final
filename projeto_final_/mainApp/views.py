@@ -1138,4 +1138,5 @@ def get_payment_status(sender, **kwargs):
 
         valid_ipn_received.connect(get_payment_status)
 
-
+def changeToRegister(request):
+    return render(request, "mainApp/register.html", {})

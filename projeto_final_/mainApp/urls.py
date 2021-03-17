@@ -30,5 +30,6 @@ urlpatterns = [
     path('listing/requestAccepted/<int:request_id>', views.accept_request, name='accept_request'),
     path('listing/requestDenied/<int:request_id>', views.deny_request, name='deny_request'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('login/changeToRegister', views.changeToRegister, name='changeToRegister'),
     
 ]
