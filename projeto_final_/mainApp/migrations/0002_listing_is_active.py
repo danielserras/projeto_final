@@ -13,7 +13,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='listing',
             name='is_active',
+<<<<<<< HEAD
+            field=models.BooleanField(default=True),
+=======
             field=models.BooleanField(default=0),
-            preserve_default=False,
-        ),
     ]

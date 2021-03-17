@@ -20,7 +20,6 @@ urlpatterns = [
     #path('logout', views.logout_view, name='logout_view'),
     #path('register', views.register_view, name='register_view'),
     path('profile', views.profile, name = 'profile'),
-    path('create_agreement', views.create_agreement, name='create_agreement'),
     path('search', views.search, name='search'),
     path('', views.index, name='index'),
     path('notificationsTenant', views.notificationsTenant, name='notificationsTenant'),
