@@ -46,97 +46,19 @@
   
           <div class="messages-box">
             <div id="leftStart" class="list-group rounded-0">
-              {% for a,b,c,d,e in fullList_ %}
+              {% for a,b,c,d,e,f in fullList_ %}
                   <a href="#" id="notifications_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
                     {% load static %}
                     <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
                       <div class="media-body ml-4">
                         <div class="d-flex align-items-center justify-content-between mb-1">
-                          <h6 class="mb-0">{{ a }}</h6><small class="small font-weight-bold">25 Dec</small>
+                          <h6 class="mb-0">{{ b }}</h6><small class="small font-weight-bold">25 Dec</small>
                         </div>
-                        <p class="font-italic text-muted mb-0 text-small">{{ b }}</p>
+                        <p class="messageText font-italic text-muted mb-0 text-small">{{ c }}</p>
                       </div>
                     </div>
                   </a>
               {% endfor %}
-              <!--
-              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">14 Dec</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur. incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-  
-              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">9 Nov</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-  
-              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">18 Oct</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-  
-              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">17 Oct</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-  
-              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">2 Sep</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                  </div>
-                </div>
-              </a>
-  
-              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">30 Aug</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-  
-              <a href="#" class="list-group-item list-group-item-action list-group-item-warning rounded-0">
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                      <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">21 Aug</small>
-                    </div>
-                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  </div>
-                </div>
-              </a>
-              -->
 
             </div>
           </div>
@@ -151,33 +73,50 @@
             {% load static %}
             <img src='{% static "mainApp/images/message.svg" %}' class='img' id="defaultImg" alt='Image representing a message' />
         </div>
-          {% for a,b,c,d,e in fullList_ %}
+          {% for a,b,c,d,e,f in fullList_ %}
             <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
               <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                   <h4 class="text-white mt-3 pl-3"> Assunto </h4>
               </div>
               <div class="row m-2">
                   <p class= "text-info font-weight-bold">Data Início:&nbsp </p>
-                  <p class= "text-info"> {{ c }}</p>
-              </div>
-              <div class="row m-2">
-                  <p class= "text-info font-weight-bold">Data término:&nbsp </p>
                   <p class= "text-info"> {{ d }}</p>
               </div>
               <div class="row m-2">
+                  <p class= "text-info font-weight-bold">Data término:&nbsp </p>
+                  <p class= "text-info"> {{ e }}</p>
+              </div>
+              <div class="row m-2">
                 <div>
-                  <h6 class="text-info font-weight-bold">Mensagem:&nbsp</h6>
-                  <p class="text-info">{{ b }}</p>
-                </div>
-                <div class="row mx-auto">
-                  <div class="col-sm-6 mt-5">
-                    <button type="button" class="btn btn-info font-weight-bold mx-auto">Recusar</button>
-                  </div>
-                  <div class="col-sm-6 mt-5">
-                    <button type="button" class="btn btn-info font-weight-bold mx-auto" >Aceitar</button>
-                  </div>
+                  <p class="text-info font-weight-bold">Mensagem:&nbsp</p>
+                  <p class="text-info">{{ c }}</p>
                 </div>
               </div>
+              {% if f is None %}
+                <div class="row d-flex justify-content-center">
+                  <form method="POST" action="{% url 'deny_request' a %}">
+                    {% csrf_token %}
+                    <div class="col-sm-6 mt-5">
+                      <button type="submit" class="btn btn-info font-weight-bold mx-auto">Recusar</button>
+                    </div>
+                  </form>
+                  <form method="POST" action="{% url 'accept_request' a %}">
+                    {% csrf_token %}
+                    <div class="col-sm-6 mt-5">
+                      <button type="submit" class="btn btn-info font-weight-bold mx-auto" >Aceitar</button>
+                    </div>
+                  </form>
+                </div>
+              {% else %}
+                <div class="row m-2">
+                  <p class="text-info font-weight-bold">Estado do pedido:&nbsp</p>
+                  {% if f is True %}
+                    <p class="text-info">Aceite</p>
+                  {% else %}
+                    <p class="text-info">Recusado</p>
+                  {% endif %}
+                </div>
+              {% endif %}
             </div>
           {% endfor %}
       </div>

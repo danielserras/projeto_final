@@ -10,12 +10,16 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from paypal.standard.forms import PayPalPaymentsForm
+from paypal.standard.models import ST_PP_COMPLETED
+from paypal.standard.ipn.signals import valid_ipn_received, invalid_ipn_received
+from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 from django.template.loader import render_to_string
 from django.db import connection
 from decouple import config
 from geopy.geocoders import MapBox
 from copy import deepcopy
+import PIL
 import time
 import json
 import math
@@ -23,6 +27,9 @@ import math
 #tirar test_mode do paypal no fim
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -48,6 +55,10 @@ def logout_view(request):
 
 
 def register_view(request):
+
+    if request.user.is_authenticated:
+        return redirect('index')
+
     form = CreateUserForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
@@ -73,7 +84,7 @@ def register_view(request):
             messages.success(request, 'Utilizador ' + user_nameStr + ' criado!')
             
             request.session['popUp'] =  True
-            return redirect('login_view') #placeholder, alterem depois   
+            return redirect('login_view')  
 
     context = {'form':form, 'errors':form.errors} #, 'pform':pform
     return render(request, 'mainApp/register.html', context)
@@ -457,13 +468,16 @@ def introduce_property_view (request):
 
                                 for i in d.values():
                                     if i != None:
-                                        
+                            
                                         img = Image(
                                             name= listing_obj.title+'_'+str(assoc_prop.id),
                                             is_cover = cover,
                                             image = i,
                                             album = prop_album)
                                         img.save()
+                                        img_pli = PIL.Image.open(img.image)  
+                                        img_r = img_pli.resize((600,337.5))
+                                        img_r.save(str(img.image))
 
                             del request.session['prop_serial']
 
@@ -471,7 +485,6 @@ def introduce_property_view (request):
                                 #if f.cleaned_data.get('multiple_listing') == 'whole':
                                 apart_obj = Property_listing(main_listing = main_listing, associated_property = assoc_prop)
                                 apart_obj.save()
-
                                 return redirect('index')
                                 
 
@@ -512,9 +525,43 @@ def index(request):
     return render(request, "mainApp/home.html", {})
 
 @login_required(login_url='login_view')
-def create_agreement(request):
+def accept_request(request, request_id):
 
     current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+    print('pls_get_in')
+    try:
+        lord = Landlord.objects.get(lord_user=a_user)
+    except:
+        return redirect('search')
+
+    ag_request = Agreement_Request.objects.get(id=request_id)
+    ag_request.accepted = True
+    ag_request.save()
+
+    return redirect('profile')
+
+@login_required(login_url='login_view')
+def deny_request(request, request_id):
+
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+    print('pls_DONT_get_in')
+    try:
+        lord = Landlord.objects.get(lord_user=a_user)
+    except:
+        return redirect('search')
+
+    ag_request = Agreement_Request.objects.get(id=request_id)
+    ag_request.accepted = False
+    ag_request.save()
+
+    return redirect('profile')
+
+
+def create_agreement(user_id, ag_request_id):
+
+    current_user = User.objects.get(id=user_id)
     a_user = App_user.objects.get(user_id=current_user)
 
     try:
@@ -522,51 +569,42 @@ def create_agreement(request):
     except:
         return redirect('search')
 
-    if request.method == 'POST':
 
-        request_id = f.cleaned_data.get('request_id')
-        ag_request = Agreement_Request.objects.get(id= request_id)
-        assoc_listing = ''
-        new_ag = ''
+    request_id = ag_request_id
+    ag_request = Agreement_Request.objects.get(id= request_id)
+    assoc_listing = ''
+    new_ag = ''
 
-        if ag_request.associated_property_listing:
-            assoc_listing = ag_request.associated_property_listing
-            lord = assoc_listing.associated_property.landlord
+    if ag_request.associated_property_listing:
+        assoc_listing = ag_request.associated_property_listing
+        lord = assoc_listing.associated_property.landlord
 
-            new_ag = Agreement(
-                associated_property_listing = assoc_listing,
-                tenant = tenant,
-                landlord = lord,
-                startsDate = ag_request.startsDate,
-                endDate= ag_request.endDate
-            )
-            new_ag.save()
-            assoc_listing.main_listing.is_active = False
-            assoc_listing.save()
+        new_ag = Agreement(
+            associated_property_listing = assoc_listing,
+            tenant = tenant,
+            landlord = lord,
+            startsDate = ag_request.startsDate,
+            endDate= ag_request.endDate
+        )
+        new_ag.save()
+        assoc_listing.main_listing.is_active = False
+        assoc_listing.save()
 
-        else:
-            assoc_listing = ag_request.associated_room_listing
-            lord = assoc_listing.associated_room.associated_property.landlord
-
-            new_ag = Agreement(
-                associated_property_listing = assoc_listing,
-                tenant = tenant,
-                landlord = lord,
-                startsDate = ag_request.startsDate,
-                endDate= ag_request.endDate
-            )
-            new_ag.save()
-            assoc_listing.main_listing.is_active = False
-            assoc_listing.save()
-
-        #criar o agreement
-        #efetuar o pagamento
-        #active/inactive no listing de modo a reutilizar
-        
     else:
+        assoc_listing = ag_request.associated_room_listing
+        lord = assoc_listing.associated_room.associated_property.landlord
 
-        #return render(request, "mainApp/startsAgreementTenent.html", {})
-        return render(request, "mainApp/sendAgreementLandlord.html", {})
+        new_ag = Agreement(
+            associated_room_listing = assoc_listing,
+            tenant = tenant,
+            landlord = lord,
+            startsDate = ag_request.startsDate,
+            endDate= ag_request.endDate
+        )
+        new_ag.save()
+        assoc_listing.main_listing.is_active = False
+        assoc_listing.save()
+        
 
 @login_required(login_url='login_view')
 def create_request(request):
@@ -575,7 +613,7 @@ def create_request(request):
     a_user = App_user.objects.get(user_id=current_user)
 
     try:
-        lord = Landlord.objects.get(lord_user=a_user)
+        ten = Tenant.objects.get(ten_user=a_user)
     except:
         return redirect('search')
 
@@ -761,6 +799,7 @@ def notificationsTenant(request):
     print("LISTA DOS AGREEMENTS DESTE USER: ", listOfAgreements)
     fullList = []
     for a in listOfAgreements:
+        _id_req = a.id
         _landlord_ = a.landlord #objeto landlord
         _userLand_ = _landlord_.lord_user
         userLand = _userLand_.user
@@ -769,9 +808,9 @@ def notificationsTenant(request):
         startsDate = a.startsDate
         endDate = a.endDate
         accepted = a.accepted #para ver se esta null, aceite ou recusada
-        fullList.append([nomeLand, message, startsDate, endDate, accepted])
+        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted])
     sizeList = len(fullList)
-
+    #print(fullList)
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
     context = {"fullList" : fullList, "sizeList": sizeList}
@@ -793,6 +832,7 @@ def notificationsLandlord(request):
     print("LISTA DOS AGREEMENTS DESTE LANDLORD: ", listOfAgreements_)
     fullList_ = []
     for a in listOfAgreements_:
+        id_req = a.id
         user_ = a.tenant #objeto tenant
         _user_ = user_.ten_user
         userTen = _user_.user
@@ -801,12 +841,28 @@ def notificationsLandlord(request):
         startsDate_ = a.startsDate
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
-        fullList_.append([nomeTen, message_, startsDate_, endDate_, accepted_])
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_])
     sizeList = len(fullList_)
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
     context = {"fullList_": fullList_, 'range': range(sizeList)}
     return render(request, "mainApp/notificationsLandlord.html", context)
+
+""" def accReq(request, id_Req):
+    #UserProfile.objects.filter(user=request.user).update(level='R')
+    Agreement_Request.objects.filter(id=id_Req).update(accepted='True')
+    #for e in Agreement_Request.objects.all():
+       # if e.id == id_Req:
+         #   e.update(accepted='True')
+    return render(request, "mainApp/notificationsLandlord.html", {})
+
+
+def denReq(request, id_Req):
+    Agreement_Request.objects.filter(id=id_Req).update(accepted='False')
+    #for e in Agreement_Request.objects.all():
+        #if e.id == id_Req:
+          #  e.update(accepted='False')
+    return render(request, "mainApp/notificationsLandlord.html", {}) """
 
 def get_distance(lat_1, lng_1, lat_2, lng_2): 
     d_lat = lat_2 - lat_1
@@ -826,13 +882,13 @@ def search(request):
     geolocator = MapBox(config('MAPBOX_KEY'), scheme=None, user_agent=None, domain='api.mapbox.com')
     location = ''
     row = ''
-
+    searched_values = []
     if request.method == 'POST':
         form = SearchForm(data=request.POST)
         if form.is_valid():
 
             location = geolocator.geocode(form.cleaned_data.get('location'))
-
+            searched_values.extend((location.latitude, location.longitude, form.cleaned_data.get('radius')))
             querySelect = 'SELECT l.monthly_payment, l.title, p.address, p.latitude, p.longitude, i.image'
             queryFrom = ' FROM mainApp_listing AS l, mainApp_property as p, mainApp_image as i'
             queryWhere = " WHERE (acos(sin(p.latitude * 0.0175) * sin("+str(location.latitude)+"* 0.0175) \
@@ -912,8 +968,9 @@ def search(request):
         tempTuple = row[i][:5] + (row[i][5].split('mainApp/static/')[1],) + row[i][6:] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),)
         row = row[:i] + (tempTuple,) + row[i+1:]
     print(row)
-
+    print(searched_values)
     context = {
+        'searched_values' : searched_values,  #list with 3 elements containing the coordinates of the searched address and radius of the search 
         'num_results' : len(row), 
         'row' : row
     }
@@ -966,15 +1023,21 @@ def listing(request, listing_id):
     for room in rooms_count_details:
         num_details += countRoomDetails(room)
 
-    app_user = App_user.objects.get(user=request.user)
-    is_tenant = True
-    try:
-        tenant = Tenant.objects.get(ten_user=app_user)
-        request.session['tenant'] = tenant.id
-        request.session['landlord'] = landlord.id
-    except:
-        is_tenant = False
-        messages.info(request, 'Opção reservada a inquilinos.', extra_tags='tenant_lock')
+    if request.user.is_authenticated:
+        app_user = App_user.objects.get(user=request.user)
+        print(app_user)
+        is_tenant = True
+        try:
+            tenant = Tenant.objects.get(ten_user=app_user)
+            request.session['tenant'] = tenant.id
+            request.session['landlord'] = landlord.id
+        except:
+            is_tenant = False
+            messages.info(request, 'Opção reservada a inquilinos.', extra_tags='tenant_lock')
+            request.session['tenant'] = None
+            request.session['landlord'] = None
+    else:
+        is_tenant = True
         request.session['tenant'] = None
         request.session['landlord'] = None
 
@@ -1014,7 +1077,75 @@ def countRoomDetails(rooms):
     
     return num_details
 
-def confirmPass (response):
-    return render(response, "mainApp/confirmPass.html", {})
+@login_required(login_url='login_view')
+def make_payment(request, ag_request_id):
+
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+
+    try:
+        tenant = Tenant.objects.get(ten_user=a_user)
+    except:
+        return redirect('search')
+
+    if request.method == 'POST':
+
+        ag_request = Agreement_Request.objects.get(id=ag_request_id)
+        if ag_request.tenant == tenant and ag_request.accepted == True:
+
+            if ag_request.associated_property_listing == None:
+                room_listing = ag_request.associated_room_listing
+                assoc_room = room_listing.associated_room
+                assoc_prop = assoc_room.associated_property
+                lord = assoc_prop.landlord
+                main_listing = room_listing.main_listing
+
+            else:
+                prop_listing = ag_request.associated_property_listing
+                assoc_prop = prop_listing.associated_property
+                lord = assoc_prop.landlord
+                main_listing = property_listing.main_listing
+
+            lord_receiver_email = lord.lord_user.user.email
+            duration_days = (ag_request.endDate - ag_request.startsDate).days
+            total_amount = int((duration_days/30) * main_listing.monthly_payment)
+
+            paypal_dict = {
+            "business": settings.PAYPAL_RECEIVER_EMAIL,
+            "amount": total_amount,
+            "currency_code": "EUR",
+            "no_note": "1",
+            "item_name": main_listing.title,
+            "item_number": ag_request.id,
+            "custom": current_user.id,
+            "notify_url": "http://179c45eda6a9.ngrok.io/paymentStatus/",
+            "return_url": "http://179c45eda6a9.ngrok.io/mainApp/search",
+            "cancel_return": "http://179c45eda6a9.ngrok.io/mainApp/search",
+
+            }
+            payment_form = PayPalPaymentsForm(initial=paypal_dict)
+            context = {'pp_form':payment_form}
+
+            return render(request, template_name='mainApp/payment.html', context=context)
+        
+        else:
+            return redirect('search')
+
+@csrf_exempt
+def get_payment_status(sender, **kwargs):
+    
+    ipn_obj = sender.POST
+    if ipn_obj['payment_status'] == ST_PP_COMPLETED:
+
+        if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
+
+            ag_request_id = ipn_obj['item_number']
+            user_id = ipn_obj['custom']
+            create_agreement(user_id, ag_request_id)
+
+    return redirect('index')
+
+valid_ipn_received.connect(get_payment_status)
+invalid_ipn_received.connect(get_payment_status)
 
 
