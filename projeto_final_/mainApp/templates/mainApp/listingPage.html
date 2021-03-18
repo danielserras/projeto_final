@@ -4,30 +4,28 @@
 <div class="container">
     <div class="row justify-content-md-center m-5" id="a">
         <div class="col-sm-7">
-            <div class='rounded' id='listingSlider'>
-                <ul id='listingSlides'>
+            <div class="slider">
+                <figure id="slidesFigure">
                     {% for p in imagesPaths %}
-                        <li class='slide'>
-                            <img src="{% static p %}" width="600px" height="350px">
-                        </li>
+                        <img src="{% static p %}">
                     {% endfor %}
-                </ul>
+                </figure>
                 <div class="previous px-5" onclick="previous()">
-                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    <i class="fa fa-chevron-left" aria-hidden="true"'></i>
                 </div>
                 <div class="next px-5" onclick="next()">
                     <i class="fa fa-chevron-right" aria-hidden="true"></i>
                 </div>
-                <ol id='slideOrder' class="p-0">
-                    {% for i in range %}
-                        {% if forloop.first %}
-                            <li id='order_bullet_{{ i }}'><i class="fa fa-circle" aria-hidden="true"></i></li>
-                        {% else %}
-                            <li id='order_bullet_{{ i }}'><i class="fa fa-circle-o" aria-hidden="true"></i></li>
-                        {% endif %}
-                    {% endfor %}
-                </ol>
             </div>
+            <ol id='slideOrder' class="p-0">
+                {% for i in range %}
+                    {% if forloop.first %}
+                        <li id='order_bullet_{{ i }}'><i class="fa fa-circle" aria-hidden="true"></i></li>
+                    {% else %}
+                        <li id='order_bullet_{{ i }}'><i class="fa fa-circle-o" aria-hidden="true"></i></li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
         </div>
         <p id='rangeLength' hidden>{{ range|length }}</p>
         <div class='col-sm-2 p-0' id='sideCol'>
