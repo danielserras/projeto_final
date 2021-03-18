@@ -11,7 +11,7 @@ $(document).ready(function () {
         let formRegex = RegExp(`form-(\\d){1}-`,'g');
         let formRegex2 = RegExp(`value="(\\d)"{1}`,'g');
         let formRegex3 = RegExp(`Quarto (\\d){1}`,'g');
-        let bedroomNum = parseInt(totalForms.getAttribute("value")) + 1;
+        let bedroomNum = parseInt(totalForms.getAttribute("value")) + 1 ;
 
         formNum++;
         newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`);
@@ -24,4 +24,10 @@ $(document).ready(function () {
         totalForms.setAttribute('value', `${formNum+1}`)
         
     });
+
+    var removeButton = $(".removeBedroom");
+
+    /* removeButton.click(function(){
+        console.log("SIMMMM")
+    }) */
 });

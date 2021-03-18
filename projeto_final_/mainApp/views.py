@@ -728,8 +728,14 @@ def bedrooms_editing_view(request, property_id):
         bed_formset = BedroomFormSet(queryset=bedrooms_queryset)
         bed_formset.extra=0
 
-    context = {'bed_formset':bed_formset}
+    context = {'bed_formset':bed_formset, 'property_id':property_id}
     return render(request, "mainApp/editBedrooms.html", context)
+
+def bedroom_delete_view(request, bedroom_id, property_id):
+    bedrom_object = Bedroom.objects.get(id=bedroom_id)
+    bedrom_object.delete()
+    
+    return redirect("/mainApp/profile/propertiesManagement/bedroomsEditing/{}".format(property_id))
 
 def bathrooms_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
