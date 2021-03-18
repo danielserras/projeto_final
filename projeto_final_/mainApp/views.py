@@ -882,11 +882,14 @@ def search(request):
     geolocator = MapBox(config('MAPBOX_KEY'), scheme=None, user_agent=None, domain='api.mapbox.com')
     location = ''
     row = ''
+    searched = False
+
     searched_values = []
     if request.method == 'POST':
         form = SearchForm(data=request.POST)
         if form.is_valid():
 
+            searched = True
             location = geolocator.geocode(form.cleaned_data.get('location'))
             searched_values.extend((location.latitude, location.longitude, form.cleaned_data.get('radius')))
             querySelect = 'SELECT l.monthly_payment, l.title, p.address, p.latitude, p.longitude, i.image'
@@ -944,7 +947,7 @@ def search(request):
                                 AND pl.associated_property_id = p.id AND pl.main_listing_id = l.id"
                 #print(querySelect + queryFrom + queryWhere)
                 cursor.execute(querySelect + queryFrom + queryWhere)
-                row = listcursor.fetchall()
+                row = cursor.fetchall()
             
             #Property type is empty
             else:         
@@ -967,12 +970,12 @@ def search(request):
         print(row[i][5])
         tempTuple = row[i][:5] + (row[i][5].split('mainApp/static/')[1],) + row[i][6:] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),)
         row = row[:i] + (tempTuple,) + row[i+1:]
-    print(row)
-    print(searched_values)
+
     context = {
         'searched_values' : searched_values,  #list with 3 elements containing the coordinates of the searched address and radius of the search 
         'num_results' : len(row), 
-        'row' : row
+        'row' : row,
+        'searched' : searched,
     }
     return render(request, "mainApp/search.html", context)
 

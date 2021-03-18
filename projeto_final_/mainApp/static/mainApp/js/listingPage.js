@@ -75,15 +75,17 @@ function next(){
 }
 
 function slideToImage(id){
+    let direction = 0
+    //Loops the slide
     if(id == min-1){
        id=max-1
     }
     else if(id == max){
         id=min
     }
-    px = 600*(id-slideIndex)
+    //Changes slide depending on the direction
     $('#order_bullet_'+slideIndex).html('<i class="fa fa-circle-o" aria-hidden="true"></i>')
     $('#order_bullet_'+id).html('<i class="fa fa-circle" aria-hidden="true"></i>')
-    $('#listingSlides').animate({'margin-left':'-='+px+'px'}, 600)
+    $('#slidesFigure').animate({'left':'-='+(id-slideIndex)*100+'%'}, 600)
     slideIndex = id
 }
