@@ -15,6 +15,7 @@
             </div>
         {% endif %}
         <form method="POST" id="form-container">
+            <input type="hidden" name="updateBedroom">
             {% csrf_token %}
             <div class="row bedroomF">
             {{bed_formset.management_form}}
@@ -24,6 +25,7 @@
                 <div class="col-sm-12">
                     <div class="row mt-2 mb-2 justify-content-md-center">
                         <h3>Quarto {{forloop.counter}}</h3>
+                        <button class="btn btn-primary removeBedroom" type="button" onclick="location.href='/mainApp/profile/propertiesManagement/deleteBedroom/{{property_id}}/{{form.id.value}}'">-</button>
                     </div>
                     <div class="row justify-content-md-center mb-2">
                         <div class="col-sm-7">
