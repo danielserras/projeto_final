@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.http import HttpResponse
 from .models import *
@@ -715,6 +715,14 @@ def property_editing_view(request, property_id=None):
 def bedrooms_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
     bedrooms_queryset = Bedroom.objects.filter(associated_property=property_object)
+    bedrooms_list = list(bedrooms_queryset)
+    bedrooms_listing = []
+    for bedroom in bedrooms_list:
+        try:
+            room_listing = Room_listing.objects.get(associated_room=bedroom)
+            bedrooms_listing.append(True)
+        except:
+            bedrooms_listing.append(False)
     if request.method == 'POST':
         bed_formset = BedroomFormSet(request.POST, queryset=bedrooms_queryset)
         if bed_formset.is_valid():
@@ -727,13 +735,23 @@ def bedrooms_editing_view(request, property_id):
     else:        
         bed_formset = BedroomFormSet(queryset=bedrooms_queryset)
         bed_formset.extra=0
-
-    context = {'bed_formset':bed_formset, 'property_id':property_id}
+    
+    forms = [form for form in bed_formset]
+    bedrooms_info_zip = zip(forms, bedrooms_listing)
+    context = {'bed_formset':bed_formset, 'property_id':property_id, 'bedrooms_info_zip':bedrooms_info_zip}
     return render(request, "mainApp/editBedrooms.html", context)
 
 def bedroom_delete_view(request, bedroom_id, property_id):
-    bedrom_object = Bedroom.objects.get(id=bedroom_id)
-    bedrom_object.delete()
+    bedroom_object = Bedroom.objects.get(id=bedroom_id)
+    try:
+        room_listing = Room_listing.objects.get(associated_room=bedroom_object)
+    except:
+        room_listing = None
+
+    if room_listing == None:
+        bedroom_object.delete()
+    else:
+        request.session['bedroom_delete_error'] = True
     
     return redirect("/mainApp/profile/propertiesManagement/bedroomsEditing/{}".format(property_id))
 

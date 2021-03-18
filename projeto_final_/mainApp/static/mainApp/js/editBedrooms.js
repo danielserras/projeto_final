@@ -18,6 +18,7 @@ $(document).ready(function () {
         newForm.innerHTML = newForm.innerHTML.replaceAll("checked","")
         newForm.innerHTML = newForm.innerHTML.replace(formRegex2, `value="0"`);
         newForm.innerHTML = newForm.innerHTML.replace(formRegex3, `Quarto ${bedroomNum}`);
+        newForm.innerHTML = newForm.innerHTML.replace("disabled","");
 
         $("#buttonsDiv").before(newForm)
         
@@ -27,7 +28,4 @@ $(document).ready(function () {
 
     var removeButton = $(".removeBedroom");
 
-    /* removeButton.click(function(){
-        console.log("SIMMMM")
-    }) */
 });
