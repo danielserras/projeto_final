@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,7 +18,7 @@
     {% block scripts %} {% endblock %}
     <title>UniHouses</title>
 </head>
-
+{% load i18n %}
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
@@ -33,7 +32,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/mainApp/search">{% trans "Pesquisar" %}</a>
+                            <a class="nav-link" href="/mainApp/search">{% translate "Pesquisar" %}</a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="/mainApp/profile">{{user.username}}</a>
@@ -49,7 +48,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="/mainApp/search">{% trans "Pesquisar" %}</a>
+                            <a class="nav-link" href="/mainApp/search">{% translate "Pesquisar" %}</a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="/accounts/register">Registar</a>
