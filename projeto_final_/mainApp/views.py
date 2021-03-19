@@ -722,7 +722,11 @@ def bedrooms_editing_view(request, property_id):
             room_listing = Room_listing.objects.get(associated_room=bedroom)
             bedrooms_listing.append(True)
         except:
-            bedrooms_listing.append(False)
+            try:
+                property_listing = Property_listing.objects.get(associated_property=property_object)
+            except:
+                bedrooms_listing.append(False)
+
     if request.method == 'POST':
         bed_formset = BedroomFormSet(request.POST, queryset=bedrooms_queryset)
         if bed_formset.is_valid():
@@ -750,26 +754,38 @@ def bedroom_delete_view(request, bedroom_id, property_id):
 
     if room_listing == None:
         bedroom_object.delete()
-    else:
-        request.session['bedroom_delete_error'] = True
     
     return redirect("/mainApp/profile/propertiesManagement/bedroomsEditing/{}".format(property_id))
 
 def bathrooms_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
     bathrooms_queryset = Bathroom.objects.filter(associated_property=property_object)
+    bathrooms_list = list(bathrooms_queryset)
+    bathrooms_listing = []
+
     if request.method == 'POST':
         bath_formset = BathroomFormSet(request.POST, queryset=bathrooms_queryset)
         if bath_formset.is_valid():
             for form in bath_formset.forms:
-                form.save()      
-            return redirect("/mainApp/profile/propertiesManagement/kitchensEditing/{}".format(property_object.id)) 
+                bathroom = form.save(commit="False")
+                bathroom.associated_property = property_object
+                bathroom.save()
+
+            return redirect("/mainApp/profile/propertiesManagement/kitchensEditing/{}".format(property_object.id))    
     else:        
         bath_formset = BathroomFormSet(queryset=bathrooms_queryset)
         bath_formset.extra=0
-
-    context = {'bath_formset':bath_formset}
+    
+    forms = [form for form in bath_formset]
+    bathrooms_info_zip = zip(forms, bathrooms_listing)
+    context = {'bath_formset':bath_formset, 'property_id':property_id, 'bathrooms_info_zip':bathrooms_info_zip}
     return render(request, "mainApp/editBathrooms.html", context)
+
+def bathroom_delete_view(request, bathroom_id, property_id):
+    bathroom_object = Bathroom.objects.get(id=bathroom_id)
+    bathroom_object.delete()
+    
+    return redirect("/mainApp/profile/propertiesManagement/bathroomsEditing/{}".format(property_id))
 
 def kitchens_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
