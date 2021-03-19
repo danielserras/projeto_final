@@ -16,13 +16,12 @@
         {% csrf_token %}
         {{bath_formset.management_form}}
         <div class="row">
-            {% for form, bathrooms_listing_status in bathrooms_info_zip %}
+            {% for form in bath_formset %}
             {{form.id}}
             <div class="col-sm-12 bathroomF" id="pageListing-4">
                 <div class="row mt-2 mb-2 justify-content-md-center">
                     <h3>Casa de Banho {{forloop.counter}}</h3>
-                    <button class="btn removeBedroom" type="button" {% if bathroom_listing_status %}disabled {% endif %}
-                        onclick="location.href='/mainApp/profile/propertiesManagement/deleteBathroom/{{property_id}}/{{form.id.value}}'">
+                    <button class="btn removeBedroom" type="button" onclick="location.href='/mainApp/profile/propertiesManagement/deleteBathroom/{{property_id}}/{{form.id.value}}'">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#e76f51" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                         <line x1="4" y1="7" x2="20" y2="7" />

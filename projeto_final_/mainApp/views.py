@@ -724,6 +724,7 @@ def bedrooms_editing_view(request, property_id):
         except:
             try:
                 property_listing = Property_listing.objects.get(associated_property=property_object)
+                bedrooms_listing.append(True)
             except:
                 bedrooms_listing.append(False)
 
@@ -742,7 +743,7 @@ def bedrooms_editing_view(request, property_id):
     
     forms = [form for form in bed_formset]
     bedrooms_info_zip = zip(forms, bedrooms_listing)
-    context = {'bed_formset':bed_formset, 'property_id':property_id, 'bedrooms_info_zip':bedrooms_info_zip}
+    context = {'bed_formset':bed_formset, 'property_id':property_id, 'bedrooms_info_zip':bedrooms_info_zip, 'bedrooms_num':len(bedrooms_list)}
     return render(request, "mainApp/editBedrooms.html", context)
 
 def bedroom_delete_view(request, bedroom_id, property_id):
@@ -760,8 +761,6 @@ def bedroom_delete_view(request, bedroom_id, property_id):
 def bathrooms_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
     bathrooms_queryset = Bathroom.objects.filter(associated_property=property_object)
-    bathrooms_list = list(bathrooms_queryset)
-    bathrooms_listing = []
 
     if request.method == 'POST':
         bath_formset = BathroomFormSet(request.POST, queryset=bathrooms_queryset)
@@ -776,9 +775,7 @@ def bathrooms_editing_view(request, property_id):
         bath_formset = BathroomFormSet(queryset=bathrooms_queryset)
         bath_formset.extra=0
     
-    forms = [form for form in bath_formset]
-    bathrooms_info_zip = zip(forms, bathrooms_listing)
-    context = {'bath_formset':bath_formset, 'property_id':property_id, 'bathrooms_info_zip':bathrooms_info_zip}
+    context = {'bath_formset':bath_formset, 'property_id':property_id}
     return render(request, "mainApp/editBathrooms.html", context)
 
 def bathroom_delete_view(request, bathroom_id, property_id):
