@@ -775,7 +775,7 @@ def bathrooms_editing_view(request, property_id):
         bath_formset = BathroomFormSet(queryset=bathrooms_queryset)
         bath_formset.extra=0
     
-    context = {'bath_formset':bath_formset, 'property_id':property_id}
+    context = {'bath_formset':bath_formset, 'property_id':property_id, 'bathrooms_num': len(list(bathrooms_queryset))}
     return render(request, "mainApp/editBathrooms.html", context)
 
 def bathroom_delete_view(request, bathroom_id, property_id):

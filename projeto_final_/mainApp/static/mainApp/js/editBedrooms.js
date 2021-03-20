@@ -26,6 +26,4 @@ $(document).ready(function () {
         
     });
 
-    var removeButton = $(".removeBedroom");
-
 });

@@ -15,7 +15,6 @@
             </div>
         {% endif %}
         <form method="POST" id="form-container">
-            <input type="hidden" name="updateBedroom">
             {% csrf_token %}
             <div class="row bedroomF">
             {{bed_formset.management_form}}
@@ -43,6 +42,9 @@
                     </div>
                     {% if bedroom_listing_status %}
                         <p class="text-danger text-center">Não é possível remover quartos que estejam anunciados</p>
+                    {% endif %}
+                    {% if bedrooms_num  == 1 %}
+                        <p class="text-danger text-center">Tem que ter no mínimo um quarto</p>
                     {% endif %}
                     {% comment %} {% if  bedroom_delete_error %}
                     <div class="row">
