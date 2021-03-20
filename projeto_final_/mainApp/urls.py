@@ -9,6 +9,7 @@ urlpatterns = [
     path('profile/propertiesManagement/deleteBedroom/<int:property_id>/<int:bedroom_id>', views.bedroom_delete_view, name='removeBedroom'),  
     path('profile/propertiesManagement/deleteBedroom/<int:property_id>/', views.bedroom_delete_view, name='removeBedroom'),
     path('profile/propertiesManagement/deleteBathroom/<int:property_id>/<int:bathroom_id>', views.bathroom_delete_view, name='removeBathroom'),    
+     path('profile/propertiesManagement/deleteBathroom/<int:property_id>/', views.bathroom_delete_view, name='removeBathroom'),   
     path('profile/propertiesManagement/bathroomsEditing/<int:property_id>', views.bathrooms_editing_view, name='bathroomsEditing'),
     path('profile/propertiesManagement/kitchensEditing/<int:property_id>', views.kitchens_editing_view, name='kitchensEditing'),
     path('profile/propertiesManagement/livingroomsEditing/<int:property_id>', views.livingrooms_editing_view, name='livingroomsEditing'),

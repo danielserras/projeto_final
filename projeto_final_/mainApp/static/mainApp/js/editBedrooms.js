@@ -22,9 +22,10 @@ $(document).ready(function () {
         newForm.innerHTML = newForm.innerHTML.replace(formRegex3, `Quarto ${bedroomNum}`);
         newForm.innerHTML = newForm.innerHTML.replace("disabled","");
         newForm.innerHTML = newForm.innerHTML.replace(formRegex4, `deleteBedroom/${propertyId}/`);
-
+        newForm.innerHTML = newForm.innerHTML.replace("Não é possível remover quartos que estejam anunciados", "");
+        newForm.innerHTML = newForm.innerHTML.replace("Tem que ter no mínimo um quarto", "");
         $("#buttonsDiv").before(newForm)
-        
+       
         totalForms.setAttribute('value', `${formNum+1}`)
         
     });

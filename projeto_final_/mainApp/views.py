@@ -781,8 +781,11 @@ def bathrooms_editing_view(request, property_id):
     context = {'bath_formset':bath_formset, 'property_id':property_id, 'bathrooms_num': len(list(bathrooms_queryset))}
     return render(request, "mainApp/editBathrooms.html", context)
 
-def bathroom_delete_view(request, bathroom_id, property_id):
-    bathroom_object = Bathroom.objects.get(id=bathroom_id)
+def bathroom_delete_view(request, property_id, bathroom_id=None):
+    try:
+        bathroom_object = Bathroom.objects.get(id=bathroom_id)
+    except:
+        return redirect("/mainApp/profile/propertiesManagement/bathroomsEditing/{}".format(property_id))
     bathroom_object.delete()
     
     return redirect("/mainApp/profile/propertiesManagement/bathroomsEditing/{}".format(property_id))
