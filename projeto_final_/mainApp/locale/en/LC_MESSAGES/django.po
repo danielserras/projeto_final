@@ -1,0 +1,401 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-20 18:27+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: mainApp/templates/mainApp/addAlbum.html:27
+#: mainApp/templates/mainApp/addBathroom.html:66
+#: mainApp/templates/mainApp/addBedroom.html:114
+#: mainApp/templates/mainApp/addKitchen.html:115
+#: mainApp/templates/mainApp/addListing.html:141
+#: mainApp/templates/mainApp/addListing.html:154
+#: mainApp/templates/mainApp/addProperty.html:174
+msgid "Seguinte"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBathroom.html:26
+msgid "Casa de Banho"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBathroom.html:33
+msgid "Banheira"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBathroom.html:37
+msgid "Bidé"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBathroom.html:41
+msgid "Chuveiro"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBathroom.html:48
+#: mainApp/templates/mainApp/addBedroom.html:61
+#: mainApp/templates/mainApp/addKitchen.html:55
+#: mainApp/templates/mainApp/addLivingroom.html:35
+msgid "Janela"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBathroom.html:52
+msgid "Lavatório"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBathroom.html:56
+msgid "Sanita"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBedroom.html:33
+msgid "Aquecedor"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBedroom.html:37
+msgid "Ar condicionado"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBedroom.html:41
+msgid "Cadeira"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBedroom.html:47
+msgid "Casa de Banho Privada"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBedroom.html:51
+msgid "Cómoda"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBedroom.html:55
+msgid "Guarda Roupa"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBedroom.html:65
+#: mainApp/templates/mainApp/addLivingroom.html:53
+msgid "Secretária"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBedroom.html:69
+#: mainApp/templates/mainApp/addLivingroom.html:45
+msgid "Sofá"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBedroom.html:75
+msgid "Sofá-Cama"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBedroom.html:79
+msgid "Tv"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBedroom.html:83
+#: mainApp/templates/mainApp/addKitchen.html:97
+#: mainApp/templates/mainApp/addLivingroom.html:59
+msgid "Varanda"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBedroom.html:89
+msgid "Fechadura"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBedroom.html:94
+msgid "Camas de Casal"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBedroom.html:98
+msgid "Camas de Solteiro"
+msgstr ""
+
+#: mainApp/templates/mainApp/addBedroom.html:102
+#: mainApp/templates/mainApp/addListing.html:65
+msgid "Ocupação máxima"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:26
+msgid "Cozinha"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:33
+#: mainApp/templates/mainApp/addLivingroom.html:31
+msgid "Cadeiras"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:37
+msgid "Congelador"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:41
+msgid "Fogão"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:47
+msgid "Forno"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:51
+msgid "Frigorífico"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:61
+msgid "Máquina de Lavar Loiça"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:65
+msgid "Máquina de Lavar Roupa"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:69
+msgid "Máquina de Secar Roupa"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:75
+#: mainApp/templates/mainApp/addLivingroom.html:39
+msgid "Mesa"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:79
+msgid "Microondas"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:83
+msgid "Lava Loiças"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:89
+msgid "Panelas e Frigideiras"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:93
+msgid "Pratos e Talheres"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:108
+#: mainApp/templates/mainApp/addLivingroom.html:69
+msgid "Pretendo apenas guardar"
+msgstr ""
+
+#: mainApp/templates/mainApp/addKitchen.html:111
+#: mainApp/templates/mainApp/addLivingroom.html:72
+msgid "Prentendo listar"
+msgstr ""
+
+#: mainApp/templates/mainApp/addListing.html:21
+msgid "Outras informações"
+msgstr ""
+
+#: mainApp/templates/mainApp/addListing.html:28
+msgid "Título"
+msgstr ""
+
+#: mainApp/templates/mainApp/addListing.html:34
+msgid "Descrição"
+msgstr ""
+
+#: mainApp/templates/mainApp/addListing.html:40
+msgid "Disponível de"
+msgstr ""
+
+#: mainApp/templates/mainApp/addListing.html:44
+msgid "até"
+msgstr ""
+
+#: mainApp/templates/mainApp/addListing.html:50
+msgid "Renda"
+msgstr ""
+
+#: mainApp/templates/mainApp/addListing.html:54
+msgid "Caução"
+msgstr ""
+
+#: mainApp/templates/mainApp/addListing.html:71
+msgid "Género Permitido"
+msgstr ""
+
+#: mainApp/templates/mainApp/addListing.html:73
+msgid "Ambos"
+msgstr ""
+
+#: mainApp/templates/mainApp/addListing.html:75
+msgid "Apenas Homens"
+msgstr ""
+
+#: mainApp/templates/mainApp/addListing.html:126
+msgid "Album de fotografias"
+msgstr ""
+
+#: mainApp/templates/mainApp/addListing.html:147
+msgid "Como pretende anunciar"
+msgstr ""
+
+#: mainApp/templates/mainApp/addListing.html:150
+msgid "Anunciar toda a propriedade"
+msgstr ""
+
+#: mainApp/templates/mainApp/addListing.html:152
+msgid "Anunciar quartos separadamente"
+msgstr ""
+
+#: mainApp/templates/mainApp/addLivingroom.html:24
+msgid "Sala"
+msgstr ""
+
+#: mainApp/templates/mainApp/addLivingroom.html:49
+msgid "Sofá-cama"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:22
+msgid "Morada"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:33
+msgid "Marcar"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:44
+msgid "Arraste o marcador no mapa para ajustar a morada"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:54
+msgid "Regras"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:63
+msgid "Animais de Estimação"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:67
+msgid "Fumar"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:71
+msgid "Visitas podem pernoitar ocasionalmente"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:79
+msgid "Despesas Incluídas"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:88
+msgid "Água"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:92
+msgid "Eletricidade"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:96
+msgid "Internet"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:100
+msgid "Gás"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:106
+msgid "Serviços de Limpeza"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:114
+msgid "Exterior"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:123
+msgid "Estacionamento"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:127
+msgid "Garagem"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:131
+msgid "Jardim"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:140
+msgid "Características da Casa"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:145
+msgid "O que pretende anunciar"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:147
+msgid "Casa"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:150
+msgid "Estúdio"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:153
+msgid "Apartamento"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:156
+msgid "Quarto"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:162
+msgid "Número de Quartos"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:164
+msgid "Número de Casas de Banho"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:166
+msgid "Número de Cozinhas"
+msgstr ""
+
+#: mainApp/templates/mainApp/addProperty.html:168
+msgid "Número de Salas"
+msgstr ""
+
+#: mainApp/templates/mainApp/base.html:35
+#: mainApp/templates/mainApp/base.html:51
+msgid "Pesquisar"
+msgstr ""
+
+#: mainApp/templates/mainApp/base.html:54
+msgid "Registar"
+msgstr ""
+
+#: mainApp/templates/mainApp/base.html:74
+msgid "Termos e Políticas"
+msgstr ""
+
+#: mainApp/templates/mainApp/pwd_reset_email.html:2
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+
+#: mainApp/templates/mainApp/pwd_reset_email.html:4
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+#: mainApp/templates/mainApp/pwd_reset_email.html:8
+msgid "Your username, in case you’ve forgotten:"
+msgstr ""
+
+#: mainApp/templates/mainApp/pwd_reset_email.html:10
+msgid "Thanks for using our site!"
+msgstr ""
+
+#: mainApp/templates/mainApp/pwd_reset_email.html:12
+#, python-format
+msgid "The %(site_name)s team"
+msgstr ""
