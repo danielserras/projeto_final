@@ -22,7 +22,7 @@
             {{form.id}}
             <div class="col-sm-12" id="pageListing-4">
                 <div class="row mt-2 mb-2 justify-content-md-center">
-                    <h3>Casa de Banho {{forloop.counter}}</h3>
+                    <h3>{% trans 'Casa de Banho' %} {{forloop.counter}}</h3>
                     <button class="btn removeBedroom" type="button" {% if bathrooms_num == 1%}disabled {% endif%}
                         onclick="location.href='/mainApp/profile/propertiesManagement/deleteBathroom/{{property_id}}/{{form.id.value}}'">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#e76f51" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -36,37 +36,37 @@
                     </button>
                 </div>
                 {% if bathrooms_num  == 1 %}
-                    <p class="text-danger text-center">Tem que ter no mínimo uma casa de banho</p>
+                    <p class="text-danger text-center">{% trans 'Tem que ter no mínimo uma casa de banho' %}</p>
                 {% endif %}
                 <div class="row justify-content-md-center mb-2">
                     <div class="col-sm-7">
                         <div class="row">
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.bathtub}}
-                                <label for="{{ form.bathtub.id_for_label }}" class="custom-control-label">Banheira</label>
+                                <label for="{{ form.bathtub.id_for_label }}" class="custom-control-label">{% trans 'Banheira' %}</label>
                             </div>
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.bidet}}
-                                <label for="{{ form.bidet.id_for_label }}" class="custom-control-label">Bidé</label>
+                                <label for="{{ form.bidet.id_for_label }}" class="custom-control-label">{% trans 'Bidé' %}</label>
                             </div>
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.shower}}
-                                <label for="{{ form.shower.id_for_label }}" class="custom-control-label">Chuveiro</label>
+                                <label for="{{ form.shower.id_for_label }}" class="custom-control-label">{% trans 'Chuveiro' %}</label>
                             </div>
                             
                         </div>
                         <div class="row">
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.b_window}}
-                                <label for="{{ form.b_window.id_for_label }}" class="custom-control-label">Janela</label>
+                                <label for="{{ form.b_window.id_for_label }}" class="custom-control-label">{% trans 'Janela' %}</label>
                             </div>
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.sink}}
-                                <label for="{{ form.sink.id_for_label }}" class="custom-control-label">Lavatório</label>
+                                <label for="{{ form.sink.id_for_label }}" class="custom-control-label">{% trans 'Lavatório' %}</label>
                             </div>
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.toilet}}
-                                <label for="{{ form.toilet.id_for_label }}" class="custom-control-label">Sanita</label>
+                                <label for="{{ form.toilet.id_for_label }}" class="custom-control-label">{% trans 'Sanita' %}</label>
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                 <button type="button" id="addBathroom" class="btn btn-info">+</button>
             </div>
             <div class="col-sm-auto">
-                <button type="submit" class="btn btn-secondary" >Seguinte</button>
+                <button type="submit" class="btn btn-secondary" >{% trans 'Seguinte' %}</button>
             </div>
         </div>
     </form>

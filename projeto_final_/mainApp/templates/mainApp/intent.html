@@ -11,28 +11,28 @@
             {% csrf_token %}
             <div class="row col-sm-12 mb-0 mt-2 p-0 pl-0 ml-0 bg-warning">
                 <img src='{% static "mainApp/images/arrow.jpg" %}' class="rounded housesMsg mt-0" alt="arrow" width="45" height="50">
-                <h4 class="text-right text-info mt-3 mb-2 pl-2"> Estou interessado! </h4>
+                <h4 class="text-right text-info mt-3 mb-2 pl-2"> {% trans 'Estou interessado!' %} </h4>
             </div>
             <div class="form-group row pl-4 mt-4 mb-2">
-                <label for="example-date-input" class="col-2 col-form-label">Data de Início</label>
+                <label for="example-date-input" class="col-2 col-form-label">{% trans 'Data de Início' %}</label>
                 <div class="col-4">
                   <input class="form-control" type="date" name="startsDate" value="">
                 </div>
             </div>
             <div class="form-group row pl-4 mt-4 mb-2">
-                <label for="example-date-input" class="col-2 col-form-label">Data de Fim</label>
+                <label for="example-date-input" class="col-2 col-form-label">{% trans 'Data de Fim' %}</label>
                 <div class="col-4">
                   <input class="form-control" type="date" name="endDate" value="">
                 </div>
             </div>
             <div class="row">
-                <h6 class="text-info font-weight-bold mb-3 mt-3 pl-4">Mensagem a enviar ao senhorio:</h6>
+                <h6 class="text-info font-weight-bold mb-3 mt-3 pl-4">{% trans 'Mensagem a enviar ao senhorio' %}:</h6>
             </div>
 
             
                 
                     <textarea id="msg" class="row container border border-info border-3 p-3 mx-auto "name="message" rows="15" cols="50">
-                        Introduza aqui uma mensagem a enviar ao proprietário
+                        {% trans 'Introduza aqui uma mensagem a enviar ao proprietário' %}
                     </textarea>
                 
             <div class="row mt-4 ml-3">

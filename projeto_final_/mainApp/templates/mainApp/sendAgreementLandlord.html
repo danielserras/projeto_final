@@ -11,99 +11,99 @@
 
 <div class="container mt-5">
     <div class="row">
-        <h2>Descrição do Acordo</h2>
+        <h2>{% trans 'Descrição do Acordo' %}</h2>
     </div>
     <div class="row">
         <div class="container border border-info border-3 p-3 agreementDescription">
 
             <div class="row">
                 <div class="col-sm-12">
-                    <h4>Quarto no Areiro</h4> <!--Title-->
+                    <h4>{% trans 'Quarto no Areiro' %}</h4> <!--Title-->
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-12">
-                    <h5>Condições de Arrendamento</h5>
+                    <h5>{% trans 'Condições de Arrendamento' %}</h5>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-3">
                     <ul id="sendAgreementList">
-                        <li><b>Data de entrada: </b><input class="form-control border-primary" type="date" name="" id="" value="2021-03-10"></li> <!--startsDate-->
-                        <li><b>Data de saída: </b><input class="form-control border-primary" type="date" name="" id="" value="2021-07-18"></li> <!--endsDate-->
-                        <li><b>Renda: </b><input class="form-control border-primary" type="number" name="" id="" value="500" min="1"></li><!--rentAumont-->
-                        <li><b>Caução: </b> <input class="form-control border-primary" type="number" name="" id="" value="500" min="1"></li> <!--securityDeposit-->
-                        <li><b>Frequência dos Serviços de limpeza: </b><input class="form-control border-primary" type="text" name="" id="" value="Todas as semanas"></li> <!--cleaningServices-->
+                        <li><b>{% trans 'Data de entrada' %}: </b><input class="form-control border-primary" type="date" name="" id="" value="2021-03-10"></li> <!--startsDate-->
+                        <li><b>{% trans 'Data de saída' %}: </b><input class="form-control border-primary" type="date" name="" id="" value="2021-07-18"></li> <!--endsDate-->
+                        <li><b>{% trans 'Renda' %}: </b><input class="form-control border-primary" type="number" name="" id="" value="500" min="1"></li><!--rentAumont-->
+                        <li><b>{% trans 'Caução' %}: </b> <input class="form-control border-primary" type="number" name="" id="" value="500" min="1"></li> <!--securityDeposit-->
+                        <li><b>{% trans 'Frequência dos Serviços de limpeza' %}: </b><input class="form-control border-primary" type="text" name="" id="" value="Todas as semanas"></li> <!--cleaningServices-->
                     </ul>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-12">
-                    <h5>Regras</h5>
+                    <h5>{% trans 'Regras' %}</h5>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-3">
                     <ul id="sendAgreementList">
-                        <li><b>Animais de estimação permitidos: </b> <br>
+                        <li><b>{% trans 'Animais de estimação permitidos' %}: </b> <br>
                             <input type="radio" name="pets" id="petsY" value="Sim">
-                            <label for="petsY" >Sim</label> 
+                            <label for="petsY" >{% trans 'Sim' %}</label> 
                             <input type="radio" name="pets" id="petsN" value="Não">
-                            <label for="petsN" >Não</label> <!--pets-->
-                        <li><b>Visitas podem pernoitar ocasionalmente: </b> <br>
+                            <label for="petsN" >{% trans 'Não' %}</label> <!--pets-->
+                        <li><b>{% trans 'Visitas podem pernoitar ocasionalmente' %}: </b> <br>
                             <input type="radio" name="overnightVisits" id="overnightVisitsY" value="Sim" >
-                            <label for="overnightVisitsY" >Sim</label> 
+                            <label for="overnightVisitsY" >{% trans 'Sim' %}</label> 
                             <input type="radio" name="overnightVisits" id="overnightVisitsN" value="Não" >
-                            <label for="overnightVisitsN" >Não</label><!--overnightVisits-->       
+                            <label for="overnightVisitsN" >{% trans 'Não' %}</label><!--overnightVisits-->       
                         <li><b>Permitido fumar: </b><br>
                             <input type="radio" name="smoke" id="smokeY" value="Sim" >
-                            <label for="smokeY" >Sim</label> 
+                            <label for="smokeY" >{% trans 'Sim' %}</label> 
                             <input type="radio" name="smoke" id="smokeN" value="Não" >
-                            <label for="smokeN" >Não</label> <!--smoke-->            
+                            <label for="smokeN" >{% trans 'Não' %}</label> <!--smoke-->            
                     </ul>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-12">
-                    <h5>Despesas Incluídas</h5>
+                    <h5>{% trans 'Despesas Incluídas' %}</h5>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-3">
                     <ul id="sendAgreementList">
-                        <li><b>Internet: </b> <br>
+                        <li><b>{% trans 'Internet' %}: </b> <br>
                             <input type="radio" name="internet" id="internetY" value="Sim" >
-                            <label for="internetY" >Sim</label> 
+                            <label for="internetY" >{% trans 'Sim' %}</label> 
                             <input type="radio" name="internet" id="internetN" value="Não" >
-                            <label for="internetN" >Não</label><!--internet-->
-                        <li><b>Eletricidade: </b><br>
+                            <label for="internetN" >{% trans 'Não' %}</label><!--internet-->
+                        <li><b>{% trans 'Eletricidade' %}: </b><br>
                             <input type="radio" name="eletricity" id="eletricityY" value="Sim" >
-                            <label for="eletricityY" >Sim</label> 
+                            <label for="eletricityY" >{% trans 'Sim' %}</label> 
                             <input type="radio" name="eletricity" id="eletricityN" value="Não" >
-                            <label for="eletricityN" >Não</label><!--eletricity-->       
-                        <li><b>Água: </b><br>
+                            <label for="eletricityN" >{% trans 'Não' %}</label><!--eletricity-->       
+                        <li><b>{% trans 'Água' %}: </b><br>
                             <input type="radio" name="water" id="waterY" value="Sim" >
-                            <label for="waterY" >Sim</label> 
+                            <label for="waterY" >{% trans 'Sim' %}</label> 
                             <input type="radio" name="eletricity" id="waterN" value="Não" >
-                            <label for="waterN" >Não</label> <!--water-->   
-                        <li><b>Gás: </b><br>
+                            <label for="waterN" >{% trans 'Não' %}</label> <!--water-->   
+                        <li><b>{% trans 'Gás' %}: </b><br>
                             <input type="radio" name="gas" id="gasY" value="Sim" >
-                            <label for="gasY" >Sim</label> 
+                            <label for="gasY" >{% trans 'Sim' %}</label> 
                             <input type="radio" name="gas" id="gasN" value="Não" >
-                            <label for="gasN" >Não</label> <!--gas-->            
+                            <label for="gasN" >{% trans 'Não' %}</label> <!--gas-->            
                     </ul>
                 </div>
             </div>
             
             <div class="row">
                 <div class="col-sm-12">
-                    <h5>Outros:</h5>
+                    <h5>{% trans 'Outros' %}:</h5>
                 </div>
             </div>
 
@@ -127,7 +127,7 @@
 
     <div class="row float-right mt-2">
         <div class="col-sm-12">
-            <button id="sendAgreement" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Enviar acordo</>
+            <button id="sendAgreement" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">{% trans 'Enviar acordo' %}</>
         </div>
     </div>
 
@@ -136,11 +136,11 @@
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Pretende enviar o acordo ao Inquilino?</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{% trans 'Pretende enviar o acordo ao Inquilino' %}?</h5>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-secondary">Confirmar</button>
+                <button type="button" class="btn btn-info" data-bs-dismiss="modal">{% trans 'Cancelar' %}</button>
+                <button type="button" class="btn btn-secondary">{% trans 'Confirmar' %}</button>
             </div>
             </div>
         </div>

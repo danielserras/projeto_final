@@ -26,13 +26,13 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Confirmação E-mail</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle"{% trans '>Confirmação E-mail' %}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
-            Enviámos-lhe um email de confirmação de conta, por favor confirme-a assim que possível.
+            {% trans 'Enviámos-lhe um email de confirmação de conta, por favor confirme-a assim que possível.' %}
             </div>
             <div class="modal-footer">
             <button type="button" id="fecharRegister" class="btn btn-primary">Fechar</button>
@@ -45,13 +45,13 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Mudança de password</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Mudança de password' %}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
-            Enviámos-lhe um link por email para proceder à alteração da sua password, por favor efetue assim que possível.
+            {% trans 'Enviámos-lhe um link por email para proceder à alteração da sua password, por favor efetue assim que possível.' %}
             </div>
             <div class="modal-footer">
             <button type="button" id="close_mail_popup" class="btn btn-primary">Fechar</button>
@@ -64,16 +64,16 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Password alterada</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Password alterada' %}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
-            Password alterada com sucesso!
+            {% trans 'Password alterada com sucesso!' %}
             </div>
             <div class="modal-footer">
-            <button type="button" id="close_reset_done" class="btn btn-primary">Fechar</button>
+            <button type="button" id="close_reset_done" class="btn btn-primary">{% trans 'Fechar' %}</button>
             </div>
         </div>
         </div>
@@ -90,7 +90,7 @@
             {% csrf_token %}
             <input type="text" id="username" class="inputType1 fadeIn second" name="username" placeholder="Nome de Utilizador">
             <input type="password" id="password" class="inputType1 fadeIn third" name="password" placeholder="Palavra-passe">
-            <a class="underlineHover textForget fadeIn third" href="{% url 'password_reset' %}">Esqueceste-te da password?</a>
+            <a class="underlineHover textForget fadeIn third" href="{% url 'password_reset' %}">{% trans 'Esqueceste-te da password' %}?</a>
             
             {% for message in messages %}
 
@@ -101,10 +101,10 @@
 
                 </div>
             {% endfor %}
-            <button type="submit" class="inputType2 fadeIn fourth btn btn-secondary m-2 font-weight-bold">Login</button>
+            <button type="submit" class="inputType2 fadeIn fourth btn btn-secondary m-2 font-weight-bold">{% trans 'Login' %}</button>
           </form>
           <div id="formFooter">
-            <a class="underlineHover font-weight-bold fadeIn fourth" href="{% url 'changeToRegister' %}">Registe-se agora</a>
+            <a class="underlineHover font-weight-bold fadeIn fourth" href="{% url 'changeToRegister' %}">{% trans 'Registe-se agora' %}</a>
           </div>
       
         </div>
