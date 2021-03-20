@@ -746,8 +746,11 @@ def bedrooms_editing_view(request, property_id):
     context = {'bed_formset':bed_formset, 'property_id':property_id, 'bedrooms_info_zip':bedrooms_info_zip, 'bedrooms_num':len(bedrooms_list)}
     return render(request, "mainApp/editBedrooms.html", context)
 
-def bedroom_delete_view(request, bedroom_id, property_id):
-    bedroom_object = Bedroom.objects.get(id=bedroom_id)
+def bedroom_delete_view(request, bedroom_id, property_id = None):
+    try:
+        bedroom_object = Bedroom.objects.get(id=bedroom_id)
+    except:
+        return redirect("/mainApp/profile/propertiesManagement/bedroomsEditing/{}".format(property_id))
     try:
         room_listing = Room_listing.objects.get(associated_room=bedroom_object)
     except:
