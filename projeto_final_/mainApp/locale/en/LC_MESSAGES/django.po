@@ -27,28 +27,28 @@ msgstr ""
 #: templates/mainApp/editKitchens.html:116
 #: templates/mainApp/editProperty.html:137
 msgid "Seguinte"
-msgstr ""
+msgstr "Next"
 
 #: templates/mainApp/addBathroom.html:26
 #: templates/mainApp/editBathrooms.html:25
 #: templates/mainApp/listingPage.html:170
 msgid "Casa de Banho"
-msgstr ""
+msgstr "Bathroom"
 
 #: templates/mainApp/addBathroom.html:33
 #: templates/mainApp/editBathrooms.html:46
 msgid "Banheira"
-msgstr ""
+msgstr "Bathtub"
 
 #: templates/mainApp/addBathroom.html:37
 #: templates/mainApp/editBathrooms.html:50
 msgid "Bidé"
-msgstr ""
+msgstr "Bidet"
 
 #: templates/mainApp/addBathroom.html:41
 #: templates/mainApp/editBathrooms.html:54
 msgid "Chuveiro"
-msgstr ""
+msgstr "Shower"
 
 #: templates/mainApp/addBathroom.html:48 templates/mainApp/addBedroom.html:61
 #: templates/mainApp/addKitchen.html:55 templates/mainApp/addLivingroom.html:35
@@ -57,21 +57,21 @@ msgstr ""
 #: templates/mainApp/editKitchens.html:56
 #: templates/mainApp/editLivingrooms.html:36
 msgid "Janela"
-msgstr ""
+msgstr "Window"
 
 #: templates/mainApp/addBathroom.html:52
 #: templates/mainApp/editBathrooms.html:65
 msgid "Lavatório"
-msgstr ""
+msgstr "Sink"
 
 #: templates/mainApp/addBathroom.html:56
 #: templates/mainApp/editBathrooms.html:69
 msgid "Sanita"
-msgstr ""
+msgstr "Toilet"
 
 #: templates/mainApp/addBedroom.html:33 templates/mainApp/editBedrooms.html:62
 msgid "Aquecedor"
-msgstr ""
+msgstr "Heater"
 
 #: templates/mainApp/addBedroom.html:37 templates/mainApp/editBedrooms.html:66
 msgid "Ar condicionado"
