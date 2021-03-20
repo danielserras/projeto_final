@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
     <div class="container mt-5">
-        <div class="row bg-info p-2"><h3 class="mx-auto my-auto  text-white ">Perfil</h3></div>
+        <div class="row bg-info p-2"><h3 class="mx-auto my-auto  text-white ">{% trans 'Perfil' %}</h3></div>
         <div class="row">
             <!-- List of options-->
             <div class="col-sm-3 bg-secondary">
@@ -18,27 +18,27 @@
                     </div>
                     <!--If landlord-->
                     <div class="col-sm-12 p-3">
-                        <a class="text-white" href="profile/propertiesManagement">Gerir Alojamentos</a>
+                        <a class="text-white" href="profile/propertiesManagement">{% trans 'Gerir Alojamentos' %}</a>
                     </div>
                     <!--If landlord-->
                     <div class="col-sm-12 p-3">
-                        <a class="text-white" href="addProperty">Adicionar Alojamento</a>
+                        <a class="text-white" href="addProperty">{% trans 'Adicionar Alojamento' %}</a>
                     </div>
                     <!--If landlord-->
                     <div class="col-sm-12 p-3">
-                        <a class="text-white" href="#">Gerir Acordos</a>
+                        <a class="text-white" href="#">{% trans 'Gerir Acordos' %}</a>
                     </div>
                     {% comment %} <!--If tenant-->
                     <div class="col-sm-12 p-3">
-                        <a class="text-white" href="#">Ver Acordos</a>
+                        <a class="text-white" href="#">{% trans 'Ver Acordos' %}</a>
                     </div>
                     <!--If tenant-->
                     <div class="col-sm-12 p-3">
-                        <a class="text-white" href="#">Renovar Acordo</a>
+                        <a class="text-white" href="#">{% trans 'Renovar Acordo' %}</a>
                     </div>
                     <!--If tenant-->
                     <div class="col-sm-12 p-3">
-                        <a class="text-white" href="#">Cancelar Acordo</a>
+                        <a class="text-white" href="#">{% trans 'Cancelar Acordo' %}</a>
                     </div> {% endcomment %}
                 </div>
             </div>
@@ -46,7 +46,7 @@
             <div class="col-sm-9">
                 <div class="row">
                     <div class="col-sm-12 p-3 ">
-                        info do perfil
+                        {% trans 'info do perfil' %}
                     </div>
                 </div>
             </div>

@@ -24,78 +24,78 @@
             {{form.id}}
             <div class="col-sm-12 kitchenF" id="pageListing-5">
                 <div class="row mt-2 mb-2 justify-content-md-center">
-                    <h3>Cozinha {{forloop.counter}}</h3>
+                    <h3>{% trans 'Cozinha' %} {{forloop.counter}}</h3>
                 </div>
                 <div class="row justify-content-md-center mb-2">
                     <div class="col-sm-7">
                         <div class="row">
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.k_chairs}}
-                                <label for="{{ form.k_chairs.id_for_label }}" class="custom-control-label">Cadeiras</label>
+                                <label for="{{ form.k_chairs.id_for_label }}" class="custom-control-label">{% trans 'Cadeiras' %}</label>
                             </div>
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.freezer}}
-                                <label for="{{ form.freezer.id_for_label }}" class="custom-control-label">Congelador</label>
+                                <label for="{{ form.freezer.id_for_label }}" class="custom-control-label">{% trans 'Congelador' %}</label>
                             </div>
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.cooker}}
-                                <label for="{{ form.cooker.id_for_label }}" class="custom-control-label">Fogão</label>
+                                <label for="{{ form.cooker.id_for_label }}" class="custom-control-label">{% trans 'Fogão' %}</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.oven}}
-                                <label for="{{ form.oven.id_for_label }}" class="custom-control-label">Forno</label>
+                                <label for="{{ form.oven.id_for_label }}" class="custom-control-label">{% trans 'Forno' %}</label>
                             </div>
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.fridge}}
-                                <label for="{{ form.fridge.id_for_label }}" class="custom-control-label">Frigorífico</label>
+                                <label for="{{ form.fridge.id_for_label }}" class="custom-control-label">{% trans 'Frigorífico' %}</label>
                             </div>
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.k_window}}
-                                <label for="{{ form.k_window.id_for_label }}" class="custom-control-label">Janela</label>
+                                <label for="{{ form.k_window.id_for_label }}" class="custom-control-label">{% trans 'Janela' %}</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.dishwasher_machine}}
-                                <label for="{{ form.dishwasher_machine.id_for_label }}" class="custom-control-label">Máquina de Lavar Loiça</label>
+                                <label for="{{ form.dishwasher_machine.id_for_label }}" class="custom-control-label">{% trans 'Máquina de Lavar Loiça' %}</label>
                             </div>
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.laundering_machine}}
-                                <label for="{{ form.laundering_machine.id_for_label }}" class="custom-control-label">Máquina de Lavar Roupa</label>
+                                <label for="{{ form.laundering_machine.id_for_label }}" class="custom-control-label">{% trans 'Máquina de Lavar Roupa' %}</label>
                             </div>
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.dryer}}
-                                <label for="{{ form.dryer.id_for_label }}" class="custom-control-label">Máquina de Secar Roupa</label>
+                                <label for="{{ form.dryer.id_for_label }}" class="custom-control-label">{% trans 'Máquina de Secar Roupa' %}</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.k_table}}
-                                <label for="{{ form.k_table.id_for_label }}" class="custom-control-label">Mesa</label>
+                                <label for="{{ form.k_table.id_for_label }}" class="custom-control-label">{% trans 'Mesa' %}</label>
                             </div>
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.microwave}}
-                                <label for="{{ form.microwave.id_for_label }}" class="custom-control-label">Microondas</label>
+                                <label for="{{ form.microwave.id_for_label }}" class="custom-control-label">{% trans 'Microondas' %}</label>
                             </div>
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.dish_washer}}
-                                <label for="{{ form.dish_washer.id_for_label }}" class="custom-control-label">Lava Loiças</label>
+                                <label for="{{ form.dish_washer.id_for_label }}" class="custom-control-label">{% trans 'Lava Loiças' %}</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.pans_pots}}
-                                <label for="{{ form.pans_pots.id_for_label }}" class="custom-control-label">Panelas e Frigideiras</label>
+                                <label for="{{ form.pans_pots.id_for_label }}" class="custom-control-label">{% trans 'Panelas e Frigideiras' %}</label>
                             </div>
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.dishes_cutlery}}
-                                <label for="{{ form.dishes_cutlery.id_for_label }}" class="custom-control-label">Pratos e Talheres</label>
+                                <label for="{{ form.dishes_cutlery.id_for_label }}" class="custom-control-label">{% trans 'Pratos e Talheres' %}</label>
                             </div>
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.k_balcony}}
-                                <label for="{{ form.k_balcony.id_for_label }}" class="custom-control-label" >Varanda</label>
+                                <label for="{{ form.k_balcony.id_for_label }}" class="custom-control-label" >{% trans 'Varanda' %}</label>
                             </div>
                         </div>
                     </div>
@@ -106,14 +106,14 @@
         <div class="row justify-content-md-center text-center mb-3">
             {% if "no_living" in request.session %}
                 <div class="col-sm-auto">
-                    <button name="save" value="True" type="submit" class="btn btn-secondary" >Pretendo apenas guardar</button>
+                    <button name="save" value="True" type="submit" class="btn btn-secondary" >{% trans 'Pretendo apenas guardar' %}</button>
                 </div>
                 <div class="col-sm-auto">
-                    <button type="submit" class="btn btn-secondary" >Prentendo listar</button>
+                    <button type="submit" class="btn btn-secondary" >{% trans 'Prentendo listar' %}</button>
                 </div>
             {% else %}
                 <div class="col-sm-auto">
-                    <button type="submit" class="btn btn-secondary" >Seguinte</button>
+                    <button type="submit" class="btn btn-secondary" >{% trans 'Seguinte' %}</button>
                 </div>
             {% endif %}
         </div>

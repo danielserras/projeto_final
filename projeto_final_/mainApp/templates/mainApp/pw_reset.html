@@ -12,13 +12,13 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Mudança de password</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Mudança de password' %}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
         <div class="modal-body">
-        Enviámos-lhe um link por email para proceder à alteração da password, por favor efetue assim que possível.
+        {% trans 'Enviámos-lhe um link por email para proceder à alteração da password, por favor efetue assim que possível' %}.
         </div>
         <div class="modal-footer">
         <button type="button" id="fecharRegister" class="btn btn-primary">Fechar</button>
@@ -32,10 +32,10 @@
     <div class="formContent2">
         <div class="row">
             <div class="col-sm-12">
-                <h2 class="text-center mt-3 mb-4">Recuperação password</h2>
+                <h2 class="text-center mt-3 mb-4">{% trans 'Recuperação password' %}</h2>
                 <br>
                 <br>
-                <p class="small">Por favor insira o endereço de email associado à sua conta.<br> Será enviado um email em breve.</p>
+                <p class="small">{% trans 'Por favor insira o endereço de email associado à sua conta.<br> Será enviado um email em breve' %}.</p>
             </div>
         </div>
         <div class="">
@@ -44,7 +44,7 @@
                 <div class="ml-4 mb-3 field-email">
                     {{ form.email.errors }}
                     <div class="">
-                        <label for="id_email" class="mx-auto">Endereço de email:</label>
+                        <label for="id_email" class="mx-auto">{% trans 'Endereço de email' %}:</label>
                     </div>
                     <div class="">
                         <input type="text" class="mx-auto inputType1">{{ form.email }}</input>

@@ -15,7 +15,7 @@
       <div class="bg-white">
 
         <div class="recenteNotificacoes px-4 py-2">
-          <p class="h5 mb-0 py-1 text-white">Recentemente</p>
+          <p class="h5 mb-0 py-1 text-white">{% trans 'Recentemente' %}</p>
         </div>
 
         <div class="messages-box">
@@ -29,7 +29,7 @@
                         <div class="d-flex align-items-center justify-content-between mb-1">
                           <h6 class="mb-0">{{ b }}</h6><small class="small font-weight-bold">25 Dec</small>
                         </div>
-                        <p class="messageText font-italic text-muted mb-0 text-small">Resposta ao seu pedido de alojamento.</p>
+                        <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Resposta ao seu pedido de alojamento' %}.</p>
                       </div>
                     </div>
                   </a>
@@ -51,33 +51,33 @@
         {% for a,b,c,d,e,f in fullList %}
           <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
             <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
-                <h4 class="text-white mt-3 pl-3"> Assunto </h4>
+                <h4 class="text-white mt-3 pl-3"> {% trans 'Assunto' %} </h4>
             </div>
             <div class="row m-2">
-                <p class= "text-info font-weight-bold">Data Início:&nbsp </p>
+                <p class= "text-info font-weight-bold">{% trans 'Data Início' %}:&nbsp </p>
                 <p class= "text-info"> {{ d }}</p>
             </div>
             <div class="row m-2">
-                <p class= "text-info font-weight-bold">Data término:&nbsp </p>
+                <p class= "text-info font-weight-bold">{% trans 'Data término' %}:&nbsp </p>
                 <p class= "text-info"> {{ e }}</p>
             </div>
             <div class="row m-2">
               <div>
-                <p class="text-info font-weight-bold">Mensagem:&nbsp</p>
+                <p class="text-info font-weight-bold">{% trans 'Mensagem' %}:&nbsp</p>
                 <p class="text-info">{{ c }}</p>
               </div>
             </div>
             <div class="big_text row m-2">
-              <p class="text-info font-weight-bold">Resposta ao seu pedido de alojamento:&nbsp</p>
+              <p class="text-info font-weight-bold">{% trans 'Resposta ao seu pedido de alojamento' %}:&nbsp</p>
               {% if f is True %}
                 <p class="text-info">Aceite</p>
                 <form method="POST" action="{% url 'make_payment' a %}">
                   {% csrf_token %}
-                  <button type="submit" class="btn btn-info font-weight-bold mx-auto">Realizar Pagamento</button>
+                  <button type="submit" class="btn btn-info font-weight-bold mx-auto">{% trans 'Realizar Pagamento' %}</button>
                   <!--ESTE BOTÃO VAI SERVIR PARA REDIRECIONAR PARA A PÁGINA DE PAGAMENTO-->
                 </form>
               {% else %}
-                <p class="text-info">Recusado</p>
+                <p class="text-info">{% trans 'Recusado' %}</p>
               {% endif %}
             </div>
           </div>

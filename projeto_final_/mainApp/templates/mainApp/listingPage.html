@@ -55,19 +55,19 @@
                 <div class="col-md-2 my-auto">
                     <div class="row justify-content-center">
                         <img src='{% static "mainApp/images/user_listing_icon.svg" %}' width="28px" class='img-fluid' alt='Maximum number of tenants'>
-                        <p class="my-auto font-weight-bold">{{listing.max_capacity}}  {% if listing.max_capacity > 1 %} pessoas {% else %} pessoa {% endif %} </p>
+                        <p class="my-auto font-weight-bold">{{listing.max_capacity}}  {% if listing.max_capacity > 1 %} {% trans 'pessoas' %} {% else %} {% trans 'pessoa' %} {% endif %} </p>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="row justify-content-center">
                         <img src='{% static "mainApp/images/bed.svg" %}' width="38px" class='img-fluid' alt='Number of beds'>
-                        <p class="my-auto font-weight-bold">{{num_beds}}  {% if num_beds > 1 %} camas {% else %} cama {% endif %}</p>
+                        <p class="my-auto font-weight-bold">{{num_beds}}  {% if num_beds > 1 %} {% trans 'camas' %} {% else %} {% trans 'cama' %} {% endif %}</p>
                     </div>
                 </div>
                 <div class="col-md-3 my-auto">
                     <div class="row justify-content-center">
                         <img src='{% static "mainApp/images/shower.svg" %}' width="24px" class='img-fluid' alt='Number of bathrooms'>
-                        <p class="my-auto font-weight-bold">{{bathrooms|length}} {% if bathrooms|length > 1 %} casas-de-banho {% else %} casa-de-banho {% endif %} </p>
+                        <p class="my-auto font-weight-bold">{{bathrooms|length}} {% if bathrooms|length > 1 %} {% trans 'casas-de-banho' %} {% else %} {% trans 'casa-de-banho' %} {% endif %} </p>
                     </div>
                 </div>
                 <div class="col-md-1 my-auto">
@@ -86,7 +86,7 @@
         <div class="col-sm-3 bg-secondary rounded-10 m-4">
             <div class="row justify-content-center mt-3">
                 <p class="text-white text-size-40 font-weight-bold">{{listing.monthly_payment}}€</p>
-                <p class="text-white my-auto h-100">/mês</p>
+                <p class="text-white my-auto h-100">/{% trans 'mês' %}</p>
             </div>
             <div class="row justify-content-center">
                 <p class="text-white my-auto mr-2">{{landlord_user.first_name}} {{landlord_user.last_name}}</p>
@@ -95,11 +95,11 @@
             <div class="row justify-content-center">
                 {% if is_tenant %}
                     <form action="{% url 'create_request' %}">
-                        <button type="submit" class="btn text-info bg-warning m-4">Mostrar Interesse</button>
+                        <button type="submit" class="btn text-info bg-warning m-4">{% trans 'Mostrar Interesse' %}</button>
                     </form>
                 {% else %}
                     <form action="{% url 'create_request' %}">
-                        <button type="submit" class="btn text-info bg-warning m-4" disabled>Mostrar Interesse</button>
+                        <button type="submit" class="btn text-info bg-warning m-4" disabled>{% trans 'Mostrar Interesse' %}</button>
                     </form>
                     {% for message in messages %}
                         {%if message.extra_tags == "tenant_lock"%}
@@ -112,14 +112,14 @@
     </div>
     <div class="row">
         <div class="row p-1 mt-5 ml-1">
-            <h2 class="text-secondary font-weight-bold">Detalhes ({{numDetails}})</h2>
+            <h2 class="text-secondary font-weight-bold">{% trans 'Detalhes' %} ({{numDetails}})</h2>
         </div>
     </div>
     {%for room in bedrooms%}
     <div id='bedroom'>
         <div class="row">
             <div class="row p-1 ml-4">
-                <h3 class="text-primary font-weight-bold">Quarto {% if bedrooms|length > 1 %} {{forloop.counter}} {% endif %} </h3>
+                <h3 class="text-primary font-weight-bold">{% trans 'Quarto' %} {% if bedrooms|length > 1 %} {{forloop.counter}} {% endif %} </h3>
             </div>
         </div>
         <div class="row pl-5 ml-5">
@@ -143,7 +143,7 @@
     <div id='kitchen'>
         <div class="row">
             <div class="row p-1 ml-4">
-                <h3 class="text-primary font-weight-bold">Cozinha {% if kitchens|length > 1 %} {{forloop.counter}} {% endif %}</h3>
+                <h3 class="text-primary font-weight-bold">{% trans 'Cozinha' %} {% if kitchens|length > 1 %} {{forloop.counter}} {% endif %}</h3>
             </div>
         </div>
         <div class="row pl-5 ml-5">
@@ -167,7 +167,7 @@
     <div id='bathroom'>
         <div class="row">
             <div class="row p-1 ml-4">
-                <h3 class="text-primary font-weight-bold">Casa de Banho {% if bathrooms|length > 1 %} {{forloop.counter}} {% endif %}</h3>
+                <h3 class="text-primary font-weight-bold">{% trans 'Casa de Banho' %} {% if bathrooms|length > 1 %} {{forloop.counter}} {% endif %}</h3>
             </div>
         </div>
         <div class="row pl-5 ml-5">
@@ -185,7 +185,7 @@
     <div id='livingroom'>
         <div class="row">
             <div class="row p-1 ml-4">
-                <h3 class="text-primary font-weight-bold">Sala de estar {% if livingrooms|length > 1 %} {{forloop.counter}} {% endif %}</h3>
+                <h3 class="text-primary font-weight-bold">{% trans 'Sala de estar' %} {% if livingrooms|length > 1 %} {{forloop.counter}} {% endif %}</h3>
             </div>
         </div>
         <div class="row pl-5 ml-5">
@@ -203,7 +203,7 @@
     <div id='outside'>
         <div class="row">
             <div class="row p-1 ml-4">
-                <h3 class="text-primary font-weight-bold">Exterior</h3>
+                <h3 class="text-primary font-weight-bold">{% trans 'Exterior' %}</h3>
             </div>
         </div>
         <div class="row pl-5 ml-5">
@@ -217,7 +217,7 @@
     <div id='rent_included'>
         <div class="row">
             <div class="row p-1 ml-4">
-                <h3 class="text-primary font-weight-bold">Despesas incluídas</h3>
+                <h3 class="text-primary font-weight-bold">{% trans 'Despesas incluídas' %}</h3>
             </div>
         </div>
         <div class="row pl-5 ml-5">
@@ -234,7 +234,7 @@
     <div id='listing_rules'>
         <div class="row">
             <div class="row p-1 ml-4 mt-4">
-                <h3 class="text-primary font-weight-bold">Regras</h3>
+                <h3 class="text-primary font-weight-bold">{% trans 'Regras' %}</h3>
             </div>
         </div>
         <div class="row pl-5 ml-5">

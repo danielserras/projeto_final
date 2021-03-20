@@ -41,7 +41,7 @@
         <div class="bg-white">
   
           <div class="recenteNotificacoes px-4 py-2">
-            <p class="h5 mb-0 py-1 text-white">Recentemente</p>
+            <p class="h5 mb-0 py-1 text-white">{% trans 'Recentemente' %}</p>
           </div>
   
           <div class="messages-box">
@@ -76,19 +76,19 @@
           {% for a,b,c,d,e,f in fullList_ %}
             <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
               <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
-                  <h4 class="text-white mt-3 pl-3"> Assunto </h4>
+                  <h4 class="text-white mt-3 pl-3"> {% trans 'Assunto' %} </h4>
               </div>
               <div class="row m-2">
-                  <p class= "text-info font-weight-bold">Data Início:&nbsp </p>
+                  <p class= "text-info font-weight-bold">{% trans 'Data Início' %}:&nbsp </p>
                   <p class= "text-info"> {{ d }}</p>
               </div>
               <div class="row m-2">
-                  <p class= "text-info font-weight-bold">Data término:&nbsp </p>
+                  <p class= "text-info font-weight-bold">{% trans 'Data término' %}:&nbsp </p>
                   <p class= "text-info"> {{ e }}</p>
               </div>
               <div class="row m-2">
                 <div>
-                  <p class="text-info font-weight-bold">Mensagem:&nbsp</p>
+                  <p class="text-info font-weight-bold">{% trans 'Mensagem' %}:&nbsp</p>
                   <p class="text-info">{{ c }}</p>
                 </div>
               </div>
@@ -97,23 +97,23 @@
                   <form method="POST" action="{% url 'deny_request' a %}">
                     {% csrf_token %}
                     <div class="col-sm-6 mt-5">
-                      <button type="submit" class="btn btn-info font-weight-bold mx-auto">Recusar</button>
+                      <button type="submit" class="btn btn-info font-weight-bold mx-auto">{% trans 'Recusar' %}</button>
                     </div>
                   </form>
                   <form method="POST" action="{% url 'accept_request' a %}">
                     {% csrf_token %}
                     <div class="col-sm-6 mt-5">
-                      <button type="submit" class="btn btn-info font-weight-bold mx-auto" >Aceitar</button>
+                      <button type="submit" class="btn btn-info font-weight-bold mx-auto" >{% trans 'Aceitar' %}</button>
                     </div>
                   </form>
                 </div>
               {% else %}
                 <div class="row m-2">
-                  <p class="text-info font-weight-bold">Estado do pedido:&nbsp</p>
+                  <p class="text-info font-weight-bold">{% trans 'Estado do pedido' %}:&nbsp</p>
                   {% if f is True %}
-                    <p class="text-info">Aceite</p>
+                    <p class="text-info">{% trans 'Aceite' %}</p>
                   {% else %}
-                    <p class="text-info">Recusado</p>
+                    <p class="text-info">{% trans 'Recusado' %}</p>
                   {% endif %}
                 </div>
               {% endif %}

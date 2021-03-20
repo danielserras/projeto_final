@@ -24,7 +24,7 @@
                 <div class="col-sm-12">
                     <div class="row mt-2 mb-2 justify-content-md-center">
                         <div class="col-sm-auto">
-                            <h3>Quarto {{forloop.counter}}</h3>
+                            <h3>{% trans 'Quarto' %} {{forloop.counter}}</h3>
                         </div>
                         <div class="col-sm-auto float-right">
                             <button class="btn removeBedroom" type="button" {% if bedroom_listing_status or bedrooms_num  == 1  %}disabled {% endif %}
@@ -41,15 +41,15 @@
                         </div>
                     </div>
                     {% if bedroom_listing_status %}
-                        <p class="text-danger text-center">Não é possível remover quartos que estejam anunciados</p>
+                        <p class="text-danger text-center">{% trans 'Não é possível remover quartos que estejam anunciados' %}</p>
                     {% endif %}
                     {% if bedrooms_num  == 1 %}
-                        <p class="text-danger text-center">Tem que ter no mínimo um quarto</p>
+                        <p class="text-danger text-center">{% trans 'Tem que ter no mínimo um quarto' %}</p>
                     {% endif %}
                     {% comment %} {% if  bedroom_delete_error %}
                     <div class="row">
                         <div class="alert alert-danger" role="alert">
-                            Não é permitido remover um quarto se estiver alugado
+                            {% trans 'Não é permitido remover um quarto se estiver alugado' %}
                         </div>
                     </div>
                     {% endif %} {% endcomment %}
@@ -58,76 +58,76 @@
                             <div class="row">
                                 <div class="col-sm-4 custom-control custom-checkbox">
                                     {{form.heater}}
-                                    <label for="{{ form.heater.id_for_label }}" class="custom-control-label">Aquecedor</label>
+                                    <label for="{{ form.heater.id_for_label }}" class="custom-control-label">{% trans 'Aquecedor' %}</label>
                                 </div>
                                 <div class="col-sm-4 custom-control custom-checkbox">
                                     {{form.air_conditioning}}
-                                    <label for="{{ form.air_conditioning.id_for_label }}" class="custom-control-label">Ar condicionado</label>
+                                    <label for="{{ form.air_conditioning.id_for_label }}" class="custom-control-label">{% trans 'Ar condicionado' %}</label>
                                 </div>
                                 <div class="col-sm-4 custom-control custom-checkbox">
                                     {{form.be_chairs}}
-                                    <label for="{{ form.be_chairs.id_for_label }}" class="custom-control-label">Cadeira</label>
+                                    <label for="{{ form.be_chairs.id_for_label }}" class="custom-control-label">{% trans 'Cadeira' %}</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 custom-control custom-checkbox">
                                     {{form.ensuite_bathroom}}
-                                    <label for="{{ form.ensuite_bathroom.id_for_label }}" class="custom-control-label">Casa de Banho Privada</label>
+                                    <label for="{{ form.ensuite_bathroom.id_for_label }}" class="custom-control-label">{% trans 'Casa de Banho Privada' %}</label>
                                 </div>
                                 <div class="col-sm-4 custom-control custom-checkbox">
                                     {{form.chest_of_drawers}}
-                                    <label for="{{ form.chest_of_drawers.id_for_label }}" class="custom-control-label">Cómoda</label>
+                                    <label for="{{ form.chest_of_drawers.id_for_label }}" class="custom-control-label">{% trans 'Cómoda' %}</label>
                                 </div>
                                 <div class="col-sm-4 custom-control custom-checkbox">
                                     {{form.wardrobe}}
-                                    <label for="{{ form.wardrobe.id_for_label }}" class="custom-control-label">Guarda Roupa</label>
+                                    <label for="{{ form.wardrobe.id_for_label }}" class="custom-control-label">{% trans 'Guarda Roupa' %}</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 custom-control custom-checkbox">
                                     {{form.be_window}}
-                                    <label for="{{ form.be_window.id_for_label }}" class="custom-control-label">Janela</label>
+                                    <label for="{{ form.be_window.id_for_label }}" class="custom-control-label">{% trans 'Janela' %}</label>
                                 </div>
                                 <div class="col-sm-4 custom-control custom-checkbox">
                                     {{form.be_desk}}
-                                    <label for="{{ form.be_desk.id_for_label }}" class="custom-control-label">Secretária</label>
+                                    <label for="{{ form.be_desk.id_for_label }}" class="custom-control-label">{% trans 'Secretária' %}</label>
                                 </div>
                                 <div class="col-sm-4 custom-control custom-checkbox">
                                     {{form.be_sofa}}
-                                    <label for="{{ form.be_sofa.id_for_label }}" class="custom-control-label">Sofá</label>
+                                    <label for="{{ form.be_sofa.id_for_label }}" class="custom-control-label">{% trans 'Sofá' %}</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 custom-control custom-checkbox">
                                     {{form.be_sofa_bed}}
-                                    <label for="{{ form.be_sofa_bed.id_for_label }}" class="custom-control-label">Sofá-Cama</label>
+                                    <label for="{{ form.be_sofa_bed.id_for_label }}" class="custom-control-label">{% trans 'Sofá-Cama' %}</label>
                                 </div>
                                 <div class="col-sm-4 custom-control custom-checkbox">
                                     {{form.tv}}
-                                    <label for="{{ form.tv.id_for_label }}" class="custom-control-label">Tv</label>
+                                    <label for="{{ form.tv.id_for_label }}" class="custom-control-label">{% trans 'Tv' %}</label>
                                 </div>
                                 <div class="col-sm-4 custom-control custom-checkbox">
                                     {{form.be_balcony}}
-                                    <label for="{{ form.be_balcony.id_for_label }}" class="custom-control-label">Varanda</label>
+                                    <label for="{{ form.be_balcony.id_for_label }}" class="custom-control-label">{% trans 'Varanda' %}</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 custom-control custom-checkbox">
                                     {{form.lock}}
-                                    <label for="{{ form.lock.id_for_label }}" class="custom-control-label">Fechadura</label>
+                                    <label for="{{ form.lock.id_for_label }}" class="custom-control-label">{% trans 'Fechadura' %}</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 custom-control">
-                                    <label for="{{ form.num_double_beds.id_for_label }}">Camas de Casal</label>
+                                    <label for="{{ form.num_double_beds.id_for_label }}">{% trans 'Camas de Casal' %}</label>
                                     {{form.num_double_beds}}
                                 </div>
                                 <div class="col-sm-4 custom-control">
-                                    <label for="{{ form.num_single_beds.id_for_label }}">Camas de Solteiro</label>
+                                    <label for="{{ form.num_single_beds.id_for_label }}">{% trans 'Camas de Solteiro' %}</label>
                                     {{form.num_single_beds}}
                                 </div>
                                 <div class="col-sm-4 custom-control">
-                                    <label for="{{ form.max_occupacity.id_for_label }}">Ocupação máxima</label>
+                                    <label for="{{ form.max_occupacity.id_for_label }}">{% trans 'Ocupação máxima' %}</label>
                                     {{form.max_occupacity}}
                                 </div>
                             </div>
@@ -142,7 +142,7 @@
                      <button type="button" id="addBedroom" class="btn btn-info">+</button>
                 </div>
                 <div class="col-sm-auto">
-                    <button type="submit" class="btn btn-secondary" >Seguinte</button>
+                    <button type="submit" class="btn btn-secondary" >{% trans 'Seguinte' %}</button>
                 </div>
             </div>
         </form>

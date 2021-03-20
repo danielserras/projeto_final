@@ -13,7 +13,7 @@
         
         <div class="row">
             <div class="col-sm-12">
-                <h2 class="text-center mt-3 mb-4">Registo</h2>
+                <h2 class="text-center mt-3 mb-4">{% trans 'Registo' %}</h2>
             </div>
         </div>
         <div class="row">
@@ -68,18 +68,18 @@
             </div>
             <div class="row form-group">
                 <div class="col-sm">
-                    <label for="birthdate">Data de Nascimento:</label>
+                    <label for="birthdate">{% trans 'Data de Nascimento' %}:</label>
                     <input type="date" name="birthDate" class="inputType1">
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm-12">
-                    <p class="">Tipo de Conta:</p>
+                    <p class="">{% trans 'Tipo de Conta' %}:</p>
                     <label for="" class="radio-inline">
-                        <input type="radio" name="tipo" class="inputType1" value="Inquilino"> Inquilino 
+                        <input type="radio" name="tipo" class="inputType1" value="Inquilino"> {% trans 'Inquilino' %} 
                     </label>
                     <label for="" class="radio-inline">
-                        <input type="radio" name="tipo" class="inputType1" value="Senhorio"> Senhorio
+                        <input type="radio" name="tipo" class="inputType1" value="Senhorio"> {% trans 'Senhorio' %}
                     </label>
                 </div>
             </div>

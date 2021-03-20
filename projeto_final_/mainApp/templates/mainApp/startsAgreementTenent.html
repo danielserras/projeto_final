@@ -10,71 +10,71 @@
 
 <div class="container mt-5">
     <div class="row">
-        <h2>Descrição do Acordo</h2>
+        <h2>{% trans 'Descrição do Acordo' %}</h2>
     </div>
     <div class="row">
         <div class="container border border-info border-3 p-3 agreementDescription">
 
             <div class="row">
                 <div class="col-sm-12">
-                    <h4>Quarto no Areiro</h4> <!--Title-->
+                    <h4>{% trans 'Quarto no Areiro' %}</h4> <!--Title-->
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-12">
-                    <h5>Condições de Arrendamento</h5>
+                    <h5>{% trans 'Condições de Arrendamento' %}</h5>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-12">
                     <ul id="agreementList">
-                        <li><b>Data de entrada: </b>10/03/2021</li> <!--startsDate-->
-                        <li><b>Data de saída: </b>18/07/2021</li> <!--endsDate-->
-                        <li><b>Renda: </b>500€</li><!--rentAumont-->
-                        <li><b>Caução: </b> 500€</li> <!--securityDeposit-->
-                        <li><b>Frequência dos Serviços de limpeza: </b>Todas as semanas</li> <!--cleaningServices-->
+                        <li><b>{% trans 'Data de entrada' %}: </b>10/03/2021</li> <!--startsDate-->
+                        <li><b>{% trans 'Data de saída' %}: </b>18/07/2021</li> <!--endsDate-->
+                        <li><b>{% trans 'Renda' %}: </b>500€</li><!--rentAumont-->
+                        <li><b>{% trans 'Caução' %}: </b> 500€</li> <!--securityDeposit-->
+                        <li><b>{% trans 'Frequência dos Serviços de limpeza' %}: </b>Todas as semanas</li> <!--cleaningServices-->
                     </ul>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-12">
-                    <h5>Regras</h5>
+                    <h5>{% trans 'Regras' %}</h5>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-12">
                     <ul id="agreementList">
-                        <li><b>Animais de estimação permitidos: </b>Sim</li> <!--pets-->
-                        <li><b>Visitas podem pernoitar ocasionalmente: </b>Sim</li><!--overnightVisits-->       
-                        <li><b>Permitido fumar: </b>Não</li> <!--smoke-->            
+                        <li><b>{% trans 'Animais de estimação permitidos' %}: </b>Sim</li> <!--pets-->
+                        <li><b>{% trans 'Visitas podem pernoitar ocasionalmente' %}: </b>Sim</li><!--overnightVisits-->       
+                        <li><b>{% trans 'Permitido fumar' %}: </b>Não</li> <!--smoke-->            
                     </ul>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-12">
-                    <h5>Despesas Incluídas</h5>
+                    <h5>{% trans 'Despesas Incluídas' %}</h5>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-12">
                     <ul id="agreementList">
-                        <li><b>Internet: </b>Sim</li> <!--internet-->
-                        <li><b>Eletricidade: </b>Sim</li><!--eletricity-->       
-                        <li><b>Água: </b>Não</li> <!--water-->   
-                        <li><b>Gás: </b>Não</li> <!--gas-->            
+                        <li><b>{% trans 'Internet' %}: </b>Sim</li> <!--internet-->
+                        <li><b>{% trans 'Eletricidade' %}: </b>Sim</li><!--eletricity-->       
+                        <li><b>{% trans 'Água' %}: </b>Não</li> <!--water-->   
+                        <li><b>{% trans 'Gás' %}: </b>Não</li> <!--gas-->            
                     </ul>
                 </div>
             </div>
             
             <div class="row">
                 <div class="col-sm-12">
-                    <h5>Outros:</h5>
+                    <h5>{% trans 'Outros' %}:</h5>
                 </div>
             </div>
 
@@ -90,15 +90,15 @@
     <div class="row">
         <div class="custom-control custom-checkbox mr-sm-2">
             <input type="checkbox" class="custom-control-input" id="agreementAcceptCheckbox">
-            <label class="custom-control-label" for="agreementAcceptCheckbox">Li e aceito todas as regras acima estabelecidas.</label>
+            <label class="custom-control-label" for="agreementAcceptCheckbox">{% trans 'Li e aceito todas as regras acima estabelecidas' %}.</label>
         </div>
     </div>
 
     <div class="row float-right">
         <div class="col-sm-12">
-            <button id="" type="button" class="btn btn-primary" >Recusar Acordo</button>
-            <button id="" type="button" class="btn btn-info" >Propor alterações</button>
-            <button id="agreementAccept" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>Aceitar Acordo</button>
+            <button id="" type="button" class="btn btn-primary" >{% trans 'Recusar Acordo' %}</button>
+            <button id="" type="button" class="btn btn-info" >{% trans 'Propor alterações' %}</button>
+            <button id="agreementAccept" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>{% trans 'Aceitar Acordo' %}</button>
         </div>
     </div>
 
@@ -107,14 +107,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirma que pretende iniciar o acordo com as condições impostas pelo Senhorio disponibilizadas no acordo?</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{% trans 'Confirma que pretende iniciar o acordo com as condições impostas pelo Senhorio disponibilizadas no acordo' %}?</h5>
             </div>
             <div class="modal-body">
-               O Senhorio será notificado e a informação do acordo será guardada na sua área pessoal e na área pessoal do Senhorio.
+               {% trans 'O Senhorio será notificado e a informação do acordo será guardada na sua área pessoal e na área pessoal do Senhorio' %}.
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-secondary">Confirmar</button>
+                <button type="button" class="btn btn-info" data-bs-dismiss="modal">{% trans 'Cancelar' %}</button>
+                <button type="button" class="btn btn-secondary">{% trans 'Confirmar' %}</button>
             </div>
             </div>
         </div>
