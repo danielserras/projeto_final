@@ -746,7 +746,7 @@ def bedrooms_editing_view(request, property_id):
     context = {'bed_formset':bed_formset, 'property_id':property_id, 'bedrooms_info_zip':bedrooms_info_zip, 'bedrooms_num':len(bedrooms_list)}
     return render(request, "mainApp/editBedrooms.html", context)
 
-def bedroom_delete_view(request, bedroom_id, property_id ):
+def bedroom_delete_view(request, property_id, bedroom_id=None ):
     try:
         bedroom_object = Bedroom.objects.get(id=bedroom_id)
     except:
