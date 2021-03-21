@@ -1,14 +1,14 @@
 $(document).ready(function () {
-    var bathFrom = $(".bathroomF");
+    var bathForm = $(".bathroomF");
     var addButton = $("#addBathroom");
     var totalForms = $("[id=id_form-TOTAL_FORMS]")[0];
 
-    var formNum = bathFrom.length-1
+    var formNum = bathForm.length-1
 
     addButton.click(function (e) { 
         e.preventDefault();
         let propertyId = window.location.href.split("/")[7]
-        let newForm = bathFrom.children()[1].cloneNode(true);
+        let newForm = bathForm.children()[1].cloneNode(true);
         let formRegex = RegExp(`form-(\\d+){1}-`,'g');
         let formRegex2 = RegExp(`value="(\\d+)"{1}`,'g');
         let formRegex3 = RegExp(`Casa de Banho (\\d+){1}`,'g');
