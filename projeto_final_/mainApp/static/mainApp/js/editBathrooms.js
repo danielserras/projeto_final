@@ -22,7 +22,7 @@ $(document).ready(function () {
         newForm.innerHTML = newForm.innerHTML.replace(formRegex3, `Casa de Banho ${bathroomNum}`);
         newForm.innerHTML = newForm.innerHTML.replace("disabled","");
         newForm.innerHTML = newForm.innerHTML.replace(formRegex4, `deleteBathroom/${propertyId}/`);
-
+        newForm.innerHTML = newForm.innerHTML.replace("Tem que ter no mínimo uma casa de banho", "");
         $("#buttonsDiv").before(newForm)
         
         totalForms.setAttribute('value', `${formNum+1}`)
