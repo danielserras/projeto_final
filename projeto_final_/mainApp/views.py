@@ -1196,3 +1196,13 @@ invalid_ipn_received.connect(get_payment_status)
 
 def changeToRegister(request):
     return render(request, "mainApp/register.html", {})
+
+def changeLanguage(request):
+    print("ENALKSED")
+    from django.utils import translation
+    if request.method == 'POST':
+        form = SearchForm(data=request.POST)
+        if form.is_valid():
+            user_language = form.cleaned_data.get('language')
+            translation.activate(user_language)
+        print(user_language)

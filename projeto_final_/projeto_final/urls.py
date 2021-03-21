@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import include, path
 import django.contrib.auth.views as d_auth
+from django.conf.urls.i18n import i18n_patterns
 import mainApp
 
 reset_path = 'mainApp/pw_reset.html'
@@ -30,6 +31,13 @@ confirm_success = '/accounts/login/'
 pw_confirm = d_auth.PasswordResetConfirmView.as_view(template_name = email_path, success_url = confirm_success)
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
+
+]
+
+
+
+urlpatterns += i18n_patterns (
     path('mainApp/', include('mainApp.urls')),
     path('admin/', admin.site.urls),
     path('verification/', include('verify_email.urls')),
@@ -43,5 +51,4 @@ urlpatterns = [
     path('paymentStatus/', mainApp.views.get_payment_status , name='payment_status'),
     #path('accounts/password_reset/done/', )
     path('accounts/', include('django.contrib.auth.urls')),
-]
-
+)

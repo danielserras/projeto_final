@@ -1,5 +1,6 @@
 from django.urls import path, include
 from projeto_final import urls
+from django.conf.urls.i18n import i18n_patterns
 from . import views
 
 urlpatterns = [
@@ -34,5 +35,7 @@ urlpatterns = [
     path('listing/requestDenied/<int:request_id>', views.deny_request, name='deny_request'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('login/changeToRegister', views.changeToRegister, name='changeToRegister'),
+    path('i18n/', include('django.conf.urls.i18n')),
     
 ]
+
