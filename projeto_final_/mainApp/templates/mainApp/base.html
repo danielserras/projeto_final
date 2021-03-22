@@ -19,10 +19,6 @@
     <title>UniHouses</title>
 </head>
 {% load i18n %}
-{% get_current_language as LANGUAGE_CODE %}
-{{LANGUAGE_CODE}}
-{% get_available_languages as LANGUAGES %}
-{% get_language_info_list for LANGUAGES as languages %}
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
@@ -82,22 +78,20 @@
                 <p class="text-light my-auto m-1 font-weight-bold">GitHub</p>
             </a>
             <i class="fa fa-github my-auto" style="font-size:18px;"></i>
-            <i class="fa fa-circle my-auto m-1" style="font-size:6px;"></i>
-
-            <div>
-                <form action="{% url 'set_language' %}" method="post" id="lang_form">{% csrf_token %}
-                <input name="next" type="hidden" value="{{ redirect_to }}">
-                    {% get_current_language as LANGUAGE_CODE %}
-                    {% get_available_languages as LANGUAGES %}
-                    {% get_language_info_list for LANGUAGES as languages %}
-                    {% for language in languages %}
-
-                        <button type="submit" name="language" value="{{ language.code }}" class="{% if language.code == LANGUAGE_CODE %}selected{% else%}demo-text-black{% endif %} dropdown-item">
-                            {{ language.name_local }}
-                        </button>
-                    {% endfor %}
-                </form>
-            </div>
+            <form action="{% url 'set_language' %}" method="post" id="lang_form" class="row ml-1">{% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% get_available_languages as LANGUAGES %}
+                {% get_language_info_list for LANGUAGES as languages %}
+                <i class="fa fa-circle my-auto m-1 mr-2" style="font-size:6px;"></i>
+                <button type="submit" name="language" value="{{ languages.0.code }}" class="p-0 bg-transparent border-0 font-weight-bold {% if languages.0.code == LANGUAGE_CODE %}text-primary{% else%}text-white{% endif %}">
+                    {{ languages.0.name_local }}
+                </button>
+                <i class="fa fa-circle my-auto m-2" style="font-size:6px;"></i>
+                <button type="submit" name="language" value="{{ languages.1.code }}" class="p-0 bg-transparent border-0 font-weight-bold {% if languages.1.code == LANGUAGE_CODE %}text-primary{% else%}text-white{% endif %}">
+                    {{ languages.1.name_local }}
+                </button>
+            </form>
         </div>
     </footer>
 </body>

@@ -87,6 +87,10 @@ img.blur {
     overflow-y: scroll;
 }
 
+.no-style-btn{
+    all: unset;
+}
+
 
 
 
