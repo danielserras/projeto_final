@@ -39,7 +39,6 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns (
     path('mainApp/', include('mainApp.urls')),
-    path('admin/', admin.site.urls),
     path('verification/', include('verify_email.urls')),
     path('accounts/login/', mainApp.views.login_view, name='login_view'),
     path('accounts/logout/', mainApp.views.logout_view, name='logout_view'),
