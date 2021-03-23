@@ -19,6 +19,7 @@ from django.db import connection
 from decouple import config
 from geopy.geocoders import MapBox
 from copy import deepcopy
+from django.utils.translation import gettext as _
 import PIL
 import time
 import json
@@ -41,7 +42,7 @@ def login_view(request):
             request.session['popUp'] =  False
             return redirect('index') #placeholder, alterem depois
         else:
-            messages.info(request, 'Username ou password incorretos')
+            messages.info(request, _('Username ou password incorretos'))
 
             context = {}
             return render(request, 'mainApp/login.html', context) #placeholder
@@ -81,7 +82,7 @@ def register_view(request):
                 
             user_nameStr = form.cleaned_data.get('username')
             user_first_name = form.cleaned_data.get('first_name')
-            messages.success(request, 'Utilizador ' + user_nameStr + ' criado!')
+            messages.success(request, _('Utilizador ') + user_nameStr + _(' criado!'))
             
             request.session['popUp'] =  True
             return redirect('login_view')  
@@ -1109,7 +1110,7 @@ def listing(request, listing_id):
             request.session['landlord'] = landlord.id
         except:
             is_tenant = False
-            messages.info(request, 'Opção reservada a inquilinos.', extra_tags='tenant_lock')
+            messages.info(request, _('Opção reservada a inquilinos.'), extra_tags='tenant_lock')
             request.session['tenant'] = None
             request.session['landlord'] = None
     else:
