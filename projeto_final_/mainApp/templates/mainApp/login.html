@@ -27,7 +27,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle"{% trans '>Confirmação E-mail' %}</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Confirmação E-mail' %}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -89,8 +89,8 @@
           </div>
           <form method='POST' action="{% url 'login_view' %}">
             {% csrf_token %}
-            <input type="text" id="username" class="inputType1 fadeIn second" name="username" placeholder="Nome de Utilizador">
-            <input type="password" id="password" class="inputType1 fadeIn third" name="password" placeholder="Palavra-passe">
+            <input type="text" id="username" class="inputType1 fadeIn second" name="username" placeholder="{% trans 'Nome de Utilizador' %}">
+            <input type="password" id="password" class="inputType1 fadeIn third" name="password" placeholder="{% trans 'Palavra-passe' %}">
             <a class="underlineHover textForget fadeIn third" href="{% url 'password_reset' %}">{% trans 'Esqueceste-te da password' %}?</a>
             
             {% for message in messages %}
