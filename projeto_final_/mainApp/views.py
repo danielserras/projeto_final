@@ -476,7 +476,7 @@ def introduce_property_view (request):
                                             album = prop_album)
                                         img.save()
                                         img_pli = PIL.Image.open(img.image)  
-                                        img_r = img_pli.resize((600,337.5))
+                                        img_r = img_pli.resize((600,337))
                                         img_r.save(str(img.image))
 
                             del request.session['prop_serial']
@@ -853,7 +853,7 @@ def livingrooms_editing_view(request, property_id):
     return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_id)) """
 
 def listing_editing_view(request, property_id):
-    return render(request, "mainApp/listingEdit.html", {})
+    return render(request, "mainApp/editListing.html", {})
 
 
 def notificationsTenant(request):
@@ -1180,7 +1180,7 @@ def make_payment(request, ag_request_id):
                 prop_listing = ag_request.associated_property_listing
                 assoc_prop = prop_listing.associated_property
                 lord = assoc_prop.landlord
-                main_listing = property_listing.main_listing
+                main_listing = prop_listing.main_listing
 
             lord_receiver_email = lord.lord_user.user.email
             duration_days = (ag_request.endDate - ag_request.startsDate).days
