@@ -1227,6 +1227,9 @@ invalid_ipn_received.connect(get_payment_status)
 def changeToRegister(request):
     return render(request, "mainApp/register.html", {})
 
+def emailBody(request):
+    return render(request, "mainApp/emailBody.html", {})
+
 def changeLanguage(request):
     print("ENALKSED")
     from django.utils import translation
