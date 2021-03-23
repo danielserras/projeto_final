@@ -700,7 +700,8 @@ def property_editing_view(request, property_id=None):
         return redirect('index')
 
     property_object = Property.objects.get(id=property_id)
-    
+    livingrooms_num = Livingroom.objects.filter(associated_property=property_object).count()
+    request.session["edit_livingrooms_num"] = livingrooms_num
 
     if request.method == 'POST':
         f = UpdatePropertyForm(request.POST, instance=property_object)
@@ -746,7 +747,7 @@ def bedrooms_editing_view(request, property_id):
     context = {'bed_formset':bed_formset, 'property_id':property_id, 'bedrooms_info_zip':bedrooms_info_zip, 'bedrooms_num':len(bedrooms_list)}
     return render(request, "mainApp/editBedrooms.html", context)
 
-def bedroom_delete_view(request, property_id, bedroom_id=None ):
+""" def bedroom_delete_view(request, property_id, bedroom_id=None ):
     try:
         bedroom_object = Bedroom.objects.get(id=bedroom_id)
     except:
@@ -759,7 +760,7 @@ def bedroom_delete_view(request, property_id, bedroom_id=None ):
     if room_listing == None:
         bedroom_object.delete()
     
-    return redirect("/mainApp/profile/propertiesManagement/bedroomsEditing/{}".format(property_id))
+    return redirect("/mainApp/profile/propertiesManagement/bedroomsEditing/{}".format(property_id)) """
 
 def bathrooms_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
@@ -781,14 +782,14 @@ def bathrooms_editing_view(request, property_id):
     context = {'bath_formset':bath_formset, 'property_id':property_id, 'bathrooms_num': len(list(bathrooms_queryset))}
     return render(request, "mainApp/editBathrooms.html", context)
 
-def bathroom_delete_view(request, property_id, bathroom_id=None):
+""" def bathroom_delete_view(request, property_id, bathroom_id=None):
     try:
         bathroom_object = Bathroom.objects.get(id=bathroom_id)
     except:
         return redirect("/mainApp/profile/propertiesManagement/bathroomsEditing/{}".format(property_id))
     bathroom_object.delete()
     
-    return redirect("/mainApp/profile/propertiesManagement/bathroomsEditing/{}".format(property_id))
+    return redirect("/mainApp/profile/propertiesManagement/bathroomsEditing/{}".format(property_id)) """
 
 def kitchens_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
@@ -802,11 +803,13 @@ def kitchens_editing_view(request, property_id):
                 kitchen = form.save(commit="False")
                 kitchen.associated_property = property_object
                 kitchen.save()
-            """
+
             if livingrooms_num > 0:
                 return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_object.id))   
             else:
-                return redirect("/mainApp/profile/propertiesManagement") """ 
+                return redirect("/mainApp/profile/propertiesManagement")
+            del request.session["edit_livingrooms_num"]
+            
     else:        
         kitchen_formset = KitchenFormSet(queryset=kitchens_queryset)
         kitchen_formset.extra=0
@@ -814,14 +817,14 @@ def kitchens_editing_view(request, property_id):
     context = {'kitchen_formset':kitchen_formset, 'property_id':property_id, 'kitchens_num': len(list(kitchens_queryset))}
     return render(request, "mainApp/editKitchens.html", context)
 
-def kitchen_delete_view(request, property_id, kitchen_id=None):
+""" def kitchen_delete_view(request, property_id, kitchen_id=None):
     try:
         kitchen_object = Kitchen.objects.get(id=kitchen_id)
     except:
         return redirect("/mainApp/profile/propertiesManagement/kitchensEditing/{}".format(property_id))
     kitchen_object.delete()
     
-    return redirect("/mainApp/profile/propertiesManagement/kitchensEditing/{}".format(property_id))
+    return redirect("/mainApp/profile/propertiesManagement/kitchensEditing/{}".format(property_id)) """
 
 def livingrooms_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
@@ -831,13 +834,23 @@ def livingrooms_editing_view(request, property_id):
         if livingroom_formset.is_valid():
             for form in livingroom_formset.forms:
                 form.save()    
-            #return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_object.id))
+            return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_object.id))
     else:        
         livingroom_formset = LivingroomFormSet(queryset=livingrooms_queryset)
         livingroom_formset.extra=0
 
-    context = {'live_formset':livingroom_formset}
+    context = {'live_formset':livingroom_formset, 'property_id':property_id}
     return render(request, "mainApp/editLivingrooms.html", context)
+
+
+""" def livingroom_delete_view(request, property_id, livingroom_id=None):
+    try:
+        livingroom_object = Livingroom.objects.get(id=livingroom_id)
+    except:
+        return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_id))
+    livingroom_object.delete()
+    
+    return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_id)) """
 
 def listing_editing_view(request, property_id):
     return render(request, "mainApp/listingEdit.html", {})

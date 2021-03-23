@@ -1,9 +1,9 @@
 {% extends 'mainApp/base.html' %}
 {% load i18n %}
 {% load static %}
-{% block scripts%}
+{% comment %} {% block scripts%}
      <script src='{% static "mainApp/js/editKitchens.js" %}'></script>
-{% endblock %}
+{% endblock %} {% endcomment %}
 {% block styles %}
     <link rel="stylesheet" href='{% static "mainApp/css/addListing.css" %}'>
 {% endblock %}
@@ -11,13 +11,13 @@
 
 {% block content %}
 <div class="container">
-    {% if request.session.livingrooms_num > 0%}
+    {% if request.session.edit_livingrooms_num > 0%}
         <div class="progress mt-5 mb-3">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:60%">60%</div>
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:80%">80%</div>
         </div>
     {% else %}
         <div class="progress mt-5 mb-3">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:75%">75%</div>
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:100%">100%</div>
         </div>
     {% endif %}
     <form action="" method="POST">
@@ -29,7 +29,7 @@
             <div class="col-sm-12">
                     <div class="row mt-2 mb-2 justify-content-md-center">
                         <h3>{% trans 'Cozinha' %} {{forloop.counter}}</h3>
-                        <button class="btn removeBedroom" type="button" {% if bedroom_listing_status or bedrooms_num  == 1  %}disabled {% endif %}
+                       {% comment %}  <button class="btn removeBedroom" type="button" {% if bedroom_listing_status or bedrooms_num  == 1  %}disabled {% endif %}
                         onclick="location.href='/mainApp/profile/propertiesManagement/deleteKitchen/{{property_id}}/{{form.id.value}}'">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash " width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#e76f51" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -39,7 +39,7 @@
                             <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
                             <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                             </svg>
-                        </button>
+                        </button> {% endcomment %}
                     </div>
                 <div class="row justify-content-md-center mb-2">
                     <div class="col-sm-7">
@@ -119,12 +119,18 @@
             {% endfor %}
         </div>
         <div class="row justify-content-md-center text-center mb-3" id="buttonsDiv" >
-            <div class="col-sm-auto">
+            {% comment %} <div class="col-sm-auto">
                     <button type="button" id="addKitchen" class="btn btn-info">+</button>
-            </div>
-            <div class="col-sm-auto">
-                <button type="submit" class="btn btn-secondary" >{% trans 'Seguinte' %}</button>
-            </div>
+            </div> {% endcomment %}
+            {%if edit_livingrooms_num > 0 %}
+                <div class="col-sm-auto">
+                    <button type="submit" class="btn btn-secondary" >{% trans 'Seguinte' %}</button>
+                </div>
+            {% else %}
+                <div class="col-sm-auto">
+                    <button type="submit" class="btn btn-secondary" >{% trans 'Terminar' %}</button>
+                </div>
+            {%endif%}
         </div>
     </form>
 </div>   
