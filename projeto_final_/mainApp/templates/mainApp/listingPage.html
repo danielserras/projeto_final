@@ -99,9 +99,7 @@
                         <button type="submit" class="btn text-info bg-warning m-4">{% trans 'Mostrar Interesse' %}</button>
                     </form>
                 {% else %}
-                    <form action="{% url 'create_request' %}">
-                        <button type="submit" class="btn text-info bg-warning m-4" disabled>{% trans 'Mostrar Interesse' %}</button>
-                    </form>
+                    <button type="submit" class="btn text-info bg-warning m-4" disabled>{% trans 'Mostrar Interesse' %}</button>
                     {% for message in messages %}
                         {%if message.extra_tags == "tenant_lock"%}
                             <p class="info_msg text-white" >{{ message }}</p>

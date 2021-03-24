@@ -3,45 +3,44 @@
 {% load static %}
 {% block styles %}
     <link rel="stylesheet" href='{% static "mainApp/css/intent.css" %}'>
+    <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
 {% endblock %}
 {% block content %}
 
-<div class="container mt-5 mb-5 p-0 intent">
-    <div class= "row" id="datesIntent">
-        <form method="POST" action="{% url 'create_request' %}" class="col-sm-8 pl-0 pr-0" style="background-color:white;">
-            {% csrf_token %}
-            <div class="row col-sm-12 mb-0 mt-2 p-0 pl-0 ml-0 bg-warning">
+<div class="container">
+    <div class="row p-3" id="datesIntent">
+        <div class="row col-sm-12 mb-0 mt-2 p-0 pl-0 ml-0 bg-warning">
+            <a onclick="history.back();">
                 <img src='{% static "mainApp/images/arrow.jpg" %}' class="rounded housesMsg mt-0" alt="arrow" width="45" height="50">
-                <h4 class="text-right text-info mt-3 mb-2 pl-2"> {% trans 'Estou interessado!' %} </h4>
-            </div>
-            <div class="form-group row pl-4 mt-4 mb-2">
-                <label for="example-date-input" class="col-2 col-form-label">{% trans 'Data de Início' %}</label>
-                <div class="col-4">
+            </a>
+            <h4 class="text-right text-info mt-3 mb-2 pl-2"> {% trans 'Estou interessado!' %} </h4>
+        </div>
+        <form method="POST" action="{% url 'create_request' %}" class="col" style="background-color:white;">
+            {% csrf_token %}
+            <div class="form-group row mt-4 mb-2">
+                <label for="example-date-input" class="col-sm-3 col-form-label">{% trans 'Data de Início' %}:</label>
+                <div class="col-sm-5">
                   <input class="form-control" type="date" name="startsDate" value="">
                 </div>
             </div>
-            <div class="form-group row pl-4 mt-4 mb-2">
-                <label for="example-date-input" class="col-2 col-form-label">{% trans 'Data de Fim' %}</label>
-                <div class="col-4">
+            <div class="form-group row mt-4 mb-2">
+                <label for="example-date-input" class="col-sm-3 col-form-label">{% trans 'Data de Fim' %}:</label>
+                <div class="col-sm-5">
                   <input class="form-control" type="date" name="endDate" value="">
                 </div>
             </div>
             <div class="row">
                 <h6 class="text-info font-weight-bold mb-3 mt-3 pl-4">{% trans 'Mensagem a enviar ao senhorio' %}:</h6>
             </div>
-
-            
-                
-                    <textarea id="msg" class="row container border border-info border-3 p-3 mx-auto "name="message" rows="15" cols="50" >
-                        {% comment %} {% trans 'Introduza aqui uma mensagem a enviar ao proprietário' %} {% endcomment %}
-                    </textarea>
-                
+                <div id="editor-container">
+                </div>
             <div class="row mt-4 ml-3">
-                <button type="submit" class="btn btn-secondary btn-lg pull-right">enviar</button>
+                <button type="submit" class="btn btn-secondary btn-lg pull-right">Enviar</button>
             </div>
         </form>
         <div class="col-sm-4 pl-0 pr-0" style="background-color:white;">
-            <img src='{% static "mainApp/images/houses.jpg" %}' class="rounded housesMsg mt-5 pl-5 mx-auto" alt="houses" width="440" height="415"> 
+            <img src='{% static "mainApp/images/houses.jpg" %}' class="img-fluid mt-5 pl-5 mx-auto" alt="houses"> 
         </div>
     </div>
 
@@ -50,4 +49,9 @@
 
 
 
+{% endblock %}
+{% block scripts%}
+    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script src='{% static "mainApp/js/intent.js" %}'></script>
 {% endblock %}
