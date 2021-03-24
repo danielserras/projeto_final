@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-23 20:55+0000\n"
+"POT-Creation-Date: 2021-03-24 13:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -478,19 +478,19 @@ msgstr "Register"
 msgid "Termos e Políticas"
 msgstr "Terms and policies"
 
-#: projeto_final_/mainApp/templates/mainApp/confirmPass.html:37
+#: projeto_final_/mainApp/templates/mainApp/confirmPass.html:14
 msgid "Confirme a sua Palavra-passe"
 msgstr "Confirm your password"
 
-#: projeto_final_/mainApp/templates/mainApp/confirmPass.html:41
+#: projeto_final_/mainApp/templates/mainApp/confirmPass.html:18
 msgid "Nova Palavra-passe"
 msgstr "New password"
 
-#: projeto_final_/mainApp/templates/mainApp/confirmPass.html:42
+#: projeto_final_/mainApp/templates/mainApp/confirmPass.html:19
 msgid "Insira de novo a Palavra-passe"
 msgstr "Write your new password"
 
-#: projeto_final_/mainApp/templates/mainApp/confirmPass.html:43
+#: projeto_final_/mainApp/templates/mainApp/confirmPass.html:20
 #: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:144
 #: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:118
 msgid "Confirmar"
@@ -538,10 +538,6 @@ msgstr "Ending date"
 #: projeto_final_/mainApp/templates/mainApp/intent.html:30
 msgid "Mensagem a enviar ao senhorio"
 msgstr "Message to landlord"
-
-#: projeto_final_/mainApp/templates/mainApp/intent.html:36
-msgid "Introduza aqui uma mensagem a enviar ao proprietário"
-msgstr "Write your message to the landlord here"
 
 #: projeto_final_/mainApp/templates/mainApp/listingPage.html:59
 msgid "pessoas"
@@ -1007,6 +1003,9 @@ msgstr " created!"
 #: projeto_final_/mainApp/views.py:1113
 msgid "Opção reservada a inquilinos."
 msgstr "Option available only to tenants"
+
+#~ msgid "Introduza aqui uma mensagem a enviar ao proprietário"
+#~ msgstr "Write your message to the landlord here"
 
 #~ msgid "Tem que ter no mínimo uma casa de banho"
 #~ msgstr "You need at least one bathroom"

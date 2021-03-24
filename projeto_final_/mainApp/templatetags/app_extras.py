@@ -1,6 +1,8 @@
 from django import template
 from django.utils.html import format_html
 from django.template import Variable, VariableDoesNotExist
+from django.utils.translation import gettext as _
+
 register = template.Library()
 
 @register.simple_tag
@@ -8,16 +10,16 @@ def get_checkmark(feature, feature_name):
     #takes a given object boolean property and returns the apropriate checkmark icon and text
     #based on it's value
     if feature:
-        return check(feature_name)
+        return check(_(feature_name))
     else:
-        return cross(feature_name)  
+        return cross(_(feature_name))  
 
 @register.simple_tag
 def get_number_beds(feature, feature_name):
     if feature > 0:
-            return numberIten('green', feature, feature_name)
+        return numberIten('green', feature, _(feature_name))
     else:
-        return numberIten('primary', feature, feature_name)
+        return numberIten('primary', feature, _(feature_name))
 
 @register.simple_tag
 def resolve(lookup, target):
