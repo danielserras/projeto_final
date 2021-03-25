@@ -2,34 +2,12 @@
 {% load i18n %}
 {% load static %}
 {% block content %}
-
-<div class = "container">
-    <div class = "row">
-        <div class = "col-sm-3 border-5 border-info rounded-top">
-            <h5 class = "text-info font-weight-bold">Caixa de entrada</h5>
-            <div class="row">
-                <h6 class = "text-info">mensagem 1</h6>
-                <p class = "text-info" >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-            </div>
-            <div class="row">
-                <h6 class = "text-info">mensagem 2</h6>
-                <p class = "text-info">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-            </div>
-            <div class="row">
-                <h6 class = "text-info">mensagem 3</h6>
-                <p class = "text-info">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-            </div>
-        </div>
-        <div class = "col-md-9 border-5 border-info rounded-top">
-            <h5 class = "text-info font-weight-bold">Mensagem 1</h5>
-            <p>
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-        </div>
+    <div class="container mt-5">
+        <div class="row bg-primary p-2 rounded-pill"><h2 class="mx-auto my-auto ml-2 text-white text-center font-weight-bold">{% trans 'Verificação de conta' %}</h2></div>
+        <div class = "row mt-4 border-bottom border-5 border-primary"><h4 class="mx-auto my-auto font-weight-bold"> E-mail de verificação</h4></div>
+        <h6 class= " text-center text-info mt-5">Este e-mail foi-lhe enviado porque tentou criar uma conta no nosso site, </h6>
+        <h6 class= " text-center text-info mt-0 pt-0">clique no botão abaixo para confirmar o seu e-mail e ativar a sua conta. </h6>
+        <h6 class= " text-center text-info mt-0 pt-0 font-weight-bold mt-5">Verifique aqui o seu e-mail:</h6>
+        <div class="d-flex justify-content-center mt-4"><button class=" btn btn-primary btn-lg rounded-pill" type="submit">Verificar</button></div>
     </div>
-</div>
-
 {% endblock %}
