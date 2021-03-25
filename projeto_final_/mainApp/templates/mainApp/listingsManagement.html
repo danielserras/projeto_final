@@ -1,0 +1,44 @@
+{% extends 'mainApp/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/listingsManagement.css" %}'>
+{% endblock %}
+{% block content %}
+<div class="container mt-5 ">
+        <div class="row text-center">
+            <div class="col-sm-12">
+                <h3>{% trans 'Gerir Anúncios' %}</h3>
+            </div> 
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+            <thead class="thead bg-info">
+                <tr>
+                <th class="text-white" scope="col">#</th>
+                <th class="text-white" scope="col">{% trans 'Título' %}</th>
+                <th class="text-white" scope="col">{% trans 'Tipo' %}</th>
+                <th class="text-white" scope="col">{% trans 'Editar' %}</th>
+                <th class="text-white" scope="col">{% trans 'Ativo' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if main_listing|length == 0%}
+                    <tr>
+                        <td>Não tem nenhum anúncio para esta propriedade, pretende anunciar esta propriedade?</td>
+                    </tr>
+                {%elif property_listing != None %}
+                    {% for listing in main_listing%}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{listing.title}}</td>
+                        </tr>
+                    {%endfor%}
+                {%else%}
+                {%endif%}
+            </tbody>
+        </table>
+        </div>
+        
+    </div>   
+{% endblock %}

@@ -160,4 +160,6 @@ class Agreement_Request(models.Model):
     endDate = models.DateField()
     message = models.TextField(null=True, blank=True)
     accepted = models.BooleanField(null=True, blank=True)
+    dateOfRequest = models.DateTimeField()
+
 # Create your models here.
