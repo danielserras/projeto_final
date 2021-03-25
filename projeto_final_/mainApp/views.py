@@ -1248,12 +1248,14 @@ def make_payment(request, ag_request_id):
                 assoc_prop = assoc_room.associated_property
                 lord = assoc_prop.landlord
                 main_listing = room_listing.main_listing
+                listing_name = main_listing.title
 
             else:
                 prop_listing = ag_request.associated_property_listing
                 assoc_prop = prop_listing.associated_property
                 lord = assoc_prop.landlord
                 main_listing = prop_listing.main_listing
+                listing_name = main_listing.title
 
             lord_receiver_email = lord.lord_user.user.email
             duration_days = (ag_request.endDate - ag_request.startsDate).days
@@ -1272,8 +1274,22 @@ def make_payment(request, ag_request_id):
             "cancel_return": "http://179c45eda6a9.ngrok.io/mainApp/search",
 
             }
+
+            start_date = ag_request.startsDate
+            end_date = ag_request.endDate
+            request_id = ag_request.id
+            lord_name = lord.lord_user.user.username
+
             payment_form = PayPalPaymentsForm(initial=paypal_dict)
-            context = {'pp_form':payment_form}
+            context = {
+                'pp_form':payment_form,
+                'start': start_date,
+                'end': end_date,
+                'id': request_id,
+                'lord_name': lord_name,
+                'amount': total_amount,
+                'listing_name': listing_name
+                }
 
             return render(request, template_name='mainApp/payment.html', context=context)
         
