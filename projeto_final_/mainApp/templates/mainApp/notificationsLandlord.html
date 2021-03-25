@@ -47,13 +47,13 @@
   
           <div class="messages-box">
             <div id="leftStart" class="list-group rounded-0">
-              {% for a,b,c,d,e,f in fullList_ %}
+              {% for a,b,c,d,e,f,g in fullList_ %}
                   <a href="#" id="notifications_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
                     {% load static %}
                     <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
                       <div class="media-body ml-4">
                         <div class="d-flex align-items-center justify-content-between mb-1">
-                          <h6 class="mb-0">{{ b }}</h6><small class="small font-weight-bold">25 Dec</small>
+                          <h6 class="mb-0">{{ b }}</h6><small class="small font-weight-bold">{{ g }}</small>
                         </div>
                         <p class="messageText font-italic text-muted mb-0 text-small">{{ c }}</p>
                       </div>
@@ -74,7 +74,7 @@
             {% load static %}
             <img src='{% static "mainApp/images/message.svg" %}' class='img' id="defaultImg" alt='Image representing a message' />
         </div>
-          {% for a,b,c,d,e,f in fullList_ %}
+          {% for a,b,c,d,e,f,g in fullList_ %}
             <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
               <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                   <h4 class="text-white mt-3 pl-3"> {% trans 'Assunto' %} </h4>

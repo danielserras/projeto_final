@@ -48,7 +48,7 @@
     padding: 30px;
     width: 90%;
     max-width: 450px;
-    height:55vh;
+    height:10%;
     position: relative;
     padding: 0px;
     -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
@@ -273,4 +273,3 @@
 .textForget{
     font-size: 90%;
 }
-
