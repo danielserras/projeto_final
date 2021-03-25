@@ -82,7 +82,7 @@ def register_view(request):
                 
             user_nameStr = form.cleaned_data.get('username')
             user_first_name = form.cleaned_data.get('first_name')
-            messages.success(request, _('Utilizador ') + user_nameStr + _(' criado!'))
+            #messages.success(request, _('Utilizador ') + user_nameStr + _(' criado!'))
             
             request.session['popUp'] =  True
             return redirect('login_view')  
@@ -530,24 +530,47 @@ def accept_request(request, request_id):
 
     current_user = request.user
     a_user = App_user.objects.get(user_id=current_user)
-    print('pls_get_in')
+    #print('pls_get_in')
     try:
         lord = Landlord.objects.get(lord_user=a_user)
     except:
-        return redirect('search')
+        return redirect('profile')
 
     ag_request = Agreement_Request.objects.get(id=request_id)
     ag_request.accepted = True
     ag_request.save()
 
-    return redirect('profile')
+
+    listOfAgreements_ = []
+    for e in Agreement_Request.objects.all():
+        if e.landlord_id == lord.id:
+            listOfAgreements_.append(e)
+    print("LISTA DOS AGREEMENTS DESTE LANDLORD: ", listOfAgreements_)
+    fullList_ = []
+    for a in listOfAgreements_:
+        id_req = a.id
+        user_ = a.tenant #objeto tenant
+        _user_ = user_.ten_user
+        userTen = _user_.user
+        nomeTen = userTen.username
+        message_ = a.message 
+        startsDate_ = a.startsDate
+        endDate_ = a.endDate
+        accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_])
+    sizeList = len(fullList_)
+    #ola = Agreement_Request.objects.get(landlord_id=1)
+    #print(ola.tenant_id)
+    context = {"fullList_": fullList_, 'range': range(sizeList)}
+
+    return render(request, "mainApp/notificationsLandlord.html", context)
 
 @login_required(login_url='login_view')
 def deny_request(request, request_id):
 
     current_user = request.user
     a_user = App_user.objects.get(user_id=current_user)
-    print('pls_DONT_get_in')
+    #print('pls_DONT_get_in')
     try:
         lord = Landlord.objects.get(lord_user=a_user)
     except:
@@ -557,7 +580,29 @@ def deny_request(request, request_id):
     ag_request.accepted = False
     ag_request.save()
 
-    return redirect('profile')
+    listOfAgreements_ = []
+    for e in Agreement_Request.objects.all():
+        if e.landlord_id == lord.id:
+            listOfAgreements_.append(e)
+    print("LISTA DOS AGREEMENTS DESTE LANDLORD: ", listOfAgreements_)
+    fullList_ = []
+    for a in listOfAgreements_:
+        id_req = a.id
+        user_ = a.tenant #objeto tenant
+        _user_ = user_.ten_user
+        userTen = _user_.user
+        nomeTen = userTen.username
+        message_ = a.message 
+        startsDate_ = a.startsDate
+        endDate_ = a.endDate
+        accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_])
+    sizeList = len(fullList_)
+    #ola = Agreement_Request.objects.get(landlord_id=1)
+    #print(ola.tenant_id)
+    context = {"fullList_": fullList_, 'range': range(sizeList)}
+
+    return render(request, "mainApp/notificationsLandlord.html", context)
 
 
 def create_agreement(user_id, ag_request_id):
@@ -630,6 +675,7 @@ def create_request(request):
             start_date = ag_form.cleaned_data.get('startsDate')
             end_date = ag_form.cleaned_data.get('endDate')
             message = ag_form.cleaned_data.get('message')
+            dateNow = timezone.now()
 
             if 'room_listing' in request.session:
                 del request.session['room_listing']
@@ -652,7 +698,8 @@ def create_request(request):
                     landlord=landlord,
                     startsDate=start_date,
                     endDate=end_date,
-                    message=message
+                    message=message,
+                    dateOfRequest = dateNow
                 )
                 ag_request.save()
 
@@ -669,7 +716,8 @@ def create_request(request):
                     landlord=landlord,
                     startsDate=start_date,
                     endDate=end_date,
-                    message=message
+                    message=message,
+                    dateOfRequest = dateNow
                 )
                 ag_request.save()
 
@@ -882,12 +930,14 @@ def notificationsTenant(request):
         startsDate = a.startsDate
         endDate = a.endDate
         accepted = a.accepted #para ver se esta null, aceite ou recusada
-        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted])
+        dateOfRequest_ = a.dateOfRequest
+        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted,dateOfRequest_])
     sizeList = len(fullList)
+    reverseList = list(reversed(fullList))
     #print(fullList)
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
-    context = {"fullList" : fullList, "sizeList": sizeList}
+    context = {"fullList" : reverseList, "sizeList": sizeList}
     return render(request, "mainApp/notificationsTenant.html", context)
 
 def notificationsLandlord(request):
@@ -915,11 +965,14 @@ def notificationsLandlord(request):
         startsDate_ = a.startsDate
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_])
+        dateOfRequest_ = a.dateOfRequest
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_])
     sizeList = len(fullList_)
+    reverseList = list(reversed(fullList_))
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
-    context = {"fullList_": fullList_, 'range': range(sizeList)}
+    #print(reversed(fullList_))
+    context = {"fullList_": reverseList, 'range': range(sizeList)}
     return render(request, "mainApp/notificationsLandlord.html", context)
 
 """ def accReq(request, id_Req):

@@ -8,23 +8,76 @@
 
 {% if validlink %}
 
-<p>Please enter your new password twice so we can verify you typed it in correctly.</p>
 
-<form method="post">{% csrf_token %}
-<fieldset class="module aligned">
-    <div class="form-row field-password1">
-        {{ form.new_password1.errors }}
-        <label for="id_new_password1">New password:</label>
-        {{ form.new_password1 }}
+
+<div class="wrapper2 container">
+    <div class="formContent2">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2 class="text-center mt-3 mb-4">{% trans 'Alteração palavra-passe' %}</h2>
+                <br>
+                <p class="small">{% trans 'Por favor insira a sua nova palavra-passe' %}.</p>
+            </div>
+        </div>
+        
+        <div class="mt-3">
+            <div class="row">
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class='mx-auto col-sm-8 alert alert-danger' id="errorBox">
+                            <!--{{errors}}-->
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <form method="post">{% csrf_token %}
+                <fieldset class="module aligned">
+                    <div class="field-password1">
+                        
+                        <!--{{ form.new_password1.errors }}-->
+                        
+                        <div class="row">
+                            <label class="mx-auto" for="id_new_password1">Nova palavra-passe:</label>
+                        </div>
+                        <!--{{ form.new_password1 }}-->
+                        <div class="row">
+                            <div class="col-sm">
+                                <input type="password" class="inputType1" name="new_password1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-password2">
+                        
+                        <!--{{ form.new_password2.errors }}-->
+                        
+                        <div class="row">
+                            <label class="mx-auto" for="id_new_password2">Confirmar nova palavra-passe:</label>
+                        </div>
+                            <!--{{ form.new_password2 }}-->
+                            <div class="row">
+                                <div class="col-sm">
+                                    <input type="password" class="inputType1" name="new_password2">
+                                </div>
+                            </div>    
+                    </div>
+                    <div class="row mt-3"></div>
+                        <input type="submit" class="mx-auto email_sent butReset btn btn-secondary m-2 font-weight-bold" value="Alterar password">
+                    </div>
+                </fieldset>
+            </form>
     </div>
-    <div class="form-row field-password2">
-        {{ form.new_password2.errors }}
-        <label for="id_new_password2">Confirm password:</label>
-        {{ form.new_password2 }}
+        
+        
     </div>
-    <input type="submit" value="Change my password">
-</fieldset>
-</form>
+</div>
 
 {% else %}
 
