@@ -666,7 +666,6 @@ def create_request(request):
     if request.method == 'POST':
 
         ag_form = Agreement_Request_Form(data=request.POST)
-
         if ag_form.is_valid():
             room_id = request.session.get('room_listing')
             prop_id = request.session.get('property_listing')
@@ -722,7 +721,6 @@ def create_request(request):
                 ag_request.save()
 
                 return redirect('index')
-
     else:
         return render(request, 'mainApp/intent.html')
 
@@ -1028,7 +1026,7 @@ def search(request):
 
             cursor = connection.cursor()
             
-            queryWhere += " AND l.album_id = i.album_id AND i.is_cover = 1"
+            queryWhere += " AND l.album_id = i.album_id AND i.is_cover = 1 AND l.is_active = 1"
 
             #Checks if the price is within range
             if (form.cleaned_data.get('maxPrice') == '2000'):

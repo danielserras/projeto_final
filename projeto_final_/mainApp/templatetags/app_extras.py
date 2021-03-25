@@ -32,10 +32,10 @@ def resolve(lookup, target):
 def numberIten(color, feature, feature_name):
     return format_html('<div class="col-sm-3 room-detail-item">\
                         <div class="row">\
-                            <div class="col-sm-2 p-0 pl-3">\
+                            <div class="col-sm-3 p-0 pl-3">\
                                 <p class="font-weight-bold text-{}">{}</p>\
                             </div>\
-                            <div class="col-sm-10 p-0"> <p>{}</p> \
+                            <div class="col-sm-9 p-0"> <p>{}</p> \
                             </div>\
                         </div>\
                     </div>', color, feature, feature_name)
