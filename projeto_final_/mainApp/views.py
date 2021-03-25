@@ -853,7 +853,28 @@ def livingrooms_editing_view(request, property_id):
     return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_id)) """
 
 def listing_editing_view(request, property_id):
-    return render(request, "mainApp/editListing.html", {})
+    property_object = Property.objects.get(id=property_id)
+    bedrooms = list(Bedroom.objects.filter(associated_property=property_object))
+    
+    property_listing = None
+    main_listing  = []
+    rooms_listing = []
+
+    #property_listing
+    try:
+        property_listing = Property_listing.objects.get(associated_property=property_object)
+        main_listing.append(property_listing.main_listing)
+    except:
+        #bedrooms_listing
+        try:
+            for bedroom in bedrooms:
+                room_listing = Room_listing.objects.filter(associated_room=bedroom)
+                rooms_listing.append(room_listing)
+                main_listing.append(room_listing.main_listing)
+        except:
+            pass
+    context = {'property_listing':property_listing, 'rooms_listing':rooms_listing, 'main_listing':main_listing}
+    return render(request, "mainApp/listingsManagement.html", context)
 
 
 def notificationsTenant(request):
