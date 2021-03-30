@@ -4,6 +4,9 @@
 {% block styles %}
     <link rel="stylesheet" href='{% static "mainApp/css/login.css" %}'>
 {% endblock %}
+{% block scripts %}
+<script src='{% static "mainApp/js/register.js" %}'></script>
+{% endblock %}
 {% block content %}
 
 
@@ -70,16 +73,23 @@
             <div class="row form-group">
                 <div class="col-sm">
                     <label for="birthdate">{% trans 'Data de Nascimento' %}:</label>
-                    <input type="date" name="birthDate" class="inputType1">
+                    <input type="date" name="birthDate" id="datefield" class="inputType1"></input>
+                    <script type="text/javascript">
+                        var today = new Date();
+                        var dd = today.getDate();
+                        var mm = today.getMonth()+1; //January is 0 so we gotta add 1
+                        var yyyy = today.getFullYear();
+                        max18yo(dd,mm,yyyy,today);
+                    </script> 
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm-12">
                     <p class="">{% trans 'Tipo de Conta' %}:</p>
-                    <label for="" class="radio-inline ml-5">
+                    <label for="" class="radio-inline ml-5 mx-auto">
                         <input type="radio" name="tipo" class="inputType1" value="Inquilino"> {% trans 'Inquilino' %} 
                     </label>
-                    <label for="" class="radio-inline ml-5">
+                    <label for="" class="radio-inline ml-5 mx-auto">
                         <input type="radio" name="tipo" class="inputType1" value="Senhorio"> {% trans 'Senhorio' %}
                     </label>
                 </div>
