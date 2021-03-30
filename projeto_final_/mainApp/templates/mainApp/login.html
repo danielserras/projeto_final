@@ -15,7 +15,7 @@
         <script>
         $(document).ready(function(){
             $('#modalLogin').modal('show');
-            $("#fecharRegister").click(function() {
+            $(".deletePOP").click(function() {
                 $('#modalLogin').modal('hide');
             });
         })
@@ -28,15 +28,21 @@
         <div class="modal-content">
             <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Confirmação E-mail' %}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <form method="POST" action="{% url 'deletePopUp' %}">
+                {% csrf_token %}
+                <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </form>
             </div>
             <div class="modal-body">
             {% trans 'Enviámos-lhe um email de confirmação de conta, por favor confirme-a assim que possível.' %}
             </div>
             <div class="modal-footer">
-            <button type="button" id="fecharRegister" class="btn btn-primary">Fechar</button>
+                <form method="POST" action="{% url 'deletePopUp' %}">
+                    {% csrf_token %}
+                    <button type="submit" id="fecharRegister" class="btn btn-primary deletePOP">Fechar</button>
+                </form>
             </div>
         </div>
         </div>
@@ -95,7 +101,7 @@
             
             {% for message in messages %}
 
-                <div class="w-75 alert alert-success mx-auto text-center m-2">
+                <div class="w-75 alert alert-danger mx-auto text-center m-2">
                     <a class="close" href="#" data-dismiss="alert">×</a>
 
                     <strong> {{ message }}</strong>

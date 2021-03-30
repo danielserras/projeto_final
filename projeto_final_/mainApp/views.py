@@ -1328,3 +1328,7 @@ def changeLanguage(request):
             user_language = form.cleaned_data.get('language')
             translation.activate(user_language)
         print(user_language)
+
+def deletePopUp(request):
+    request.session['popUp'] =  False
+    return render(request, "mainApp/login.html", {})

@@ -33,6 +33,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('login/changeToRegister', views.changeToRegister, name='changeToRegister'),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('login/confirmed', views.deletePopUp, name='deletePopUp'),
     
 ]
 
