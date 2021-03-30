@@ -20,6 +20,7 @@
                 <th class="text-white" scope="col">{% trans 'Tipo' %}</th>
                 <th class="text-white" scope="col">{% trans 'Editar' %}</th>
                 <th class="text-white" scope="col">{% trans 'Ativo' %}</th>
+                <th class="text-white" scope="col">{% trans 'Editar' %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,6 +33,7 @@
                         <tr>
                             <td>{{forloop.counter}}</td>
                             <td>{{listing.title}}</td>
+                            <td>{{}}</td>
                         </tr>
                     {%endfor%}
                 {%else%}
