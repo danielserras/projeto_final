@@ -97,8 +97,9 @@
             {% csrf_token %}
             <input type="text" id="username" class="inputType1 fadeIn second" name="username" placeholder="{% trans 'Nome de Utilizador' %}">
             <input type="password" id="password" class="inputType1 fadeIn third" name="password" placeholder="{% trans 'Palavra-passe' %}">
-            <a class="underlineHover textForget fadeIn third mx-auto" href="{% url 'password_reset' %}">{% trans 'Esqueceste-te da password' %}?</a>
-            
+            <div>
+                <a class="underlineHover textForget fadeIn third mx-auto" href="{% url 'password_reset' %}">{% trans 'Esqueceste-te da password' %}?</a>
+            </div>
             {% for message in messages %}
 
                 <div class="w-75 alert alert-danger mx-auto text-center m-2">
