@@ -566,11 +566,13 @@ def accept_request(request, request_id):
         startsDate_ = a.startsDate
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_])
+        dateOfRequest_ = a.dateOfRequest
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_])
     sizeList = len(fullList_)
+    reverseList = list(reversed(fullList_))
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
-    context = {"fullList_": fullList_, 'range': range(sizeList)}
+    context = {"fullList_": reverseList, 'range': range(sizeList)}
 
     return render(request, "mainApp/notificationsLandlord.html", context)
 
@@ -605,11 +607,13 @@ def deny_request(request, request_id):
         startsDate_ = a.startsDate
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_])
+        dateOfRequest_ = a.dateOfRequest
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_])
     sizeList = len(fullList_)
+    reverseList = list(reversed(fullList_))
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
-    context = {"fullList_": fullList_, 'range': range(sizeList)}
+    context = {"fullList_": reverseList, 'range': range(sizeList)}
 
     return render(request, "mainApp/notificationsLandlord.html", context)
 
