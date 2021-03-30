@@ -1105,7 +1105,7 @@ def search(request):
 
                 cursor.execute(querySelect + queryFromProperty + queryWhereProperty)
                 row_property = cursor.fetchall()
-
+                
                 cursor.execute(querySelect + queryFromRoom+ queryWhereRoom)
                 row_room = cursor.fetchall()
 
