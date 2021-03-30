@@ -35,12 +35,20 @@ def login_view(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-
         if user is not None:
             login(request, user)
             request.session['username'] = username
             request.session['popUp'] =  False
-            return redirect('index') #placeholder, alterem depois
+            a_user = user.username
+            id_user = user.id
+            for i in Landlord.objects.all():
+                if i.lord_user_id == id_user:
+                    request.session['typeUser'] = "Landlord"
+                    return redirect('index') #placeholder, alterem depois
+            for i in Tenant.objects.all():
+                if i.ten_user_id == id_user:
+                    request.session['typeUser'] = "Tenant"
+                    return redirect('index') #placeholder, alterem depois
         else:
             messages.info(request, _('Username ou password incorretos'))
 
@@ -65,6 +73,7 @@ def register_view(request):
         form = CreateUserForm(request.POST)
         pform = ProfileForm(request.POST)
 
+        #para verificar email ver https://github.com/foo290/Django-Verify-Email/   -alexfaustino
         if form.is_valid() and pform.is_valid():
             inactive_user = send_verification_email(request, form)
             #user = form.save()
@@ -557,11 +566,13 @@ def accept_request(request, request_id):
         startsDate_ = a.startsDate
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_])
+        dateOfRequest_ = a.dateOfRequest
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_])
     sizeList = len(fullList_)
+    reverseList = list(reversed(fullList_))
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
-    context = {"fullList_": fullList_, 'range': range(sizeList)}
+    context = {"fullList_": reverseList, 'range': range(sizeList)}
 
     return render(request, "mainApp/notificationsLandlord.html", context)
 
@@ -596,11 +607,13 @@ def deny_request(request, request_id):
         startsDate_ = a.startsDate
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_])
+        dateOfRequest_ = a.dateOfRequest
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_])
     sizeList = len(fullList_)
+    reverseList = list(reversed(fullList_))
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
-    context = {"fullList_": fullList_, 'range': range(sizeList)}
+    context = {"fullList_": reverseList, 'range': range(sizeList)}
 
     return render(request, "mainApp/notificationsLandlord.html", context)
 
@@ -861,7 +874,7 @@ def kitchens_editing_view(request, property_id):
         kitchen_formset = KitchenFormSet(queryset=kitchens_queryset)
         kitchen_formset.extra=0
     
-    context = {'kitchen_formset':kitchen_formset, 'property_id':property_id, 'kitchens_num': len(list(kitchens_queryset))}
+    context = {'kitchen_formset':kitchen_formset, 'property_id':property_id, 'kitchens_num': len(list(kitchens_queryset)), 'livingrooms_num':livingrooms_num}
     return render(request, "mainApp/editKitchens.html", context)
 
 """ def kitchen_delete_view(request, property_id, kitchen_id=None):
@@ -881,7 +894,7 @@ def livingrooms_editing_view(request, property_id):
         if livingroom_formset.is_valid():
             for form in livingroom_formset.forms:
                 form.save()    
-            return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_object.id))
+            return redirect("/mainApp/profile/propertiesManagement")
     else:        
         livingroom_formset = LivingroomFormSet(queryset=livingrooms_queryset)
         livingroom_formset.extra=0
@@ -1119,6 +1132,7 @@ def search(request):
         print(row[i][5])
         tempTuple = row[i][:5] + (row[i][5].split('mainApp/static/')[1],) + row[i][6:] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),)
         row = row[:i] + (tempTuple,) + row[i+1:]
+<<<<<<< HEAD
         rangeList.append(i)
         if (i % previewPerPage == 0):
             pageNumbers.append(int(i/previewPerPage)+1)
@@ -1126,6 +1140,9 @@ def search(request):
     #if(len(row)% previewPerPage != 0):
     #    pageNumbers.append(int(i/previewPerPage)+1)
 
+=======
+    
+>>>>>>> ef709b40f56fb2e64fab57d97883d99dab985f44
     context = {
         'searched_values' : searched_values,  #list with 3 elements containing the coordinates of the searched address and radius of the search 
         'num_results' : len(row), 

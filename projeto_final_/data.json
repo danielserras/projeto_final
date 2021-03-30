@@ -1,0 +1,77 @@
+[
+{
+    "model": "mainApp.landlord",
+    "pk": 1,
+    "fields": {
+        "lord_user": 2,
+        "lord_type": "Particular"
+    }
+},
+
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$216000$IhooyJBU48CI$JnSOXBmziuzF7YSHTzd3QI9H3FRMpC74YuZVAbyZAic=",
+        "last_login": null,
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2021-03-28T23:33:16.364Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$216000$IhooyJBU48CI$JnSOXBmziuzF7YSHTzd3QI9H3FRMpC74YuZVAbyZAic=",
+        "last_login": "2021-03-28T23:37:22.794Z",
+        "is_superuser": false,
+        "username": "user1",
+        "first_name": "user",
+        "last_name": "user",
+        "email": "lideje8923@kindbest.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2021-03-28T23:36:54.878Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "qxm9ebpugfoiw136m4r3nd2fo2872m2f",
+    "fields": {
+        "session_data": ".eJxVjLsOwiAUht-F2RAoHISO7o7OzSk92GqFprST8d2FpINu__V7sw73bez2TGs3DaxlDTv9Zj36J8VaDA-M98R9its69bxO-NFmfk0DzZdj-wcYMY_lba3TgpRqhBJCGhc0aWfAIIazVcUJcAGclAFIQaO1CwF7T8ZbsOCgQCsu4osKrUpZoiUtt4W1AedMny9xdEHf:1lQtYq:wv6qghcCc0PnnQfBc9GIycq1epc5D0iuENg3kushbZE",
+        "expire_date": "2021-04-12T15:12:12.695Z"
+    }
+},
+{
+    "model": "mainApp.app_user",
+    "pk": 1,
+    "fields": {
+        "user": [
+            "admin"
+        ],
+        "phoneNumber": null,
+        "birthDate": null
+    }
+},
+{
+    "model": "mainApp.app_user",
+    "pk": 2,
+    "fields": {
+        "user": [
+            "user1"
+        ],
+        "phoneNumber": 912312342,
+        "birthDate": "2021-03-08"
+    }
+}
+]

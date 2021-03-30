@@ -28,10 +28,9 @@ $(document).ready(function(){
         resultLats.push($('.PassedLats').eq(i).val());
         resultLongs.push($('.PassedLongs').eq(i).val());
     }
+
     L.circle([search_lat, search_long], {radius: search_radius*1000, weight: 1, color: '#3388ff'}).addTo(mymap);
     //print the array or use it for your further logic
-    console.log(search_long);
-    console.log(search_radius);
     for (i = 0; i < l; i++) {
         marker = L.marker([resultLats[i], resultLongs[i]], {
             draggable: false
