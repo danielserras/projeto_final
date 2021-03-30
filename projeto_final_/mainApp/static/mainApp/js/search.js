@@ -1,5 +1,13 @@
 $(document).ready(function() {
 
+    pageDivs = [];
+    numPages = $("#numPages").html();
+    for (let i = 0; i < numPages; i++) {
+        console.log('hello')  
+        pageDivs.push("page_" + i)
+    }
+
+    console.log(pageDivs);
     function list_redirect(container){
         var container_img = container[1];
         var img_url = container_img.src.slice(22);
@@ -80,3 +88,7 @@ $(document).ready(function() {
         }
     });
 });
+
+function changePage(){
+    console.log('hello');
+};

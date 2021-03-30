@@ -1029,6 +1029,9 @@ def search(request):
     location = ''
     row = ''
     searched = False
+    rangeList = []
+    previewPerPage = 12
+    pageNumbers = []
 
     searched_values = []
     if request.method == 'POST':
@@ -1116,12 +1119,21 @@ def search(request):
         print(row[i][5])
         tempTuple = row[i][:5] + (row[i][5].split('mainApp/static/')[1],) + row[i][6:] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),)
         row = row[:i] + (tempTuple,) + row[i+1:]
+        rangeList.append(i)
+        if (i % previewPerPage == 0):
+            pageNumbers.append(int(i/previewPerPage)+1)
+    
+    #if(len(row)% previewPerPage != 0):
+    #    pageNumbers.append(int(i/previewPerPage)+1)
 
     context = {
         'searched_values' : searched_values,  #list with 3 elements containing the coordinates of the searched address and radius of the search 
         'num_results' : len(row), 
         'row' : row,
         'searched' : searched,
+        'pageNumbers':  pageNumbers,
+        'previewPerPage': previewPerPage,
+        'zipPreviews': zip(row, rangeList),
     }
     return render(request, "mainApp/search.html", context)
 
@@ -1288,7 +1300,7 @@ def make_payment(request, ag_request_id):
                 'id': request_id,
                 'lord_name': lord_name,
                 'amount': total_amount,
-                'listing_name': listing_name
+                'listing_name': listing_name,
                 }
 
             return render(request, template_name='mainApp/payment.html', context=context)
