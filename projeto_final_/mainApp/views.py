@@ -35,12 +35,20 @@ def login_view(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-
         if user is not None:
             login(request, user)
             request.session['username'] = username
             request.session['popUp'] =  False
-            return redirect('index') #placeholder, alterem depois
+            a_user = user.username
+            id_user = user.id
+            for i in Landlord.objects.all():
+                if i.lord_user_id == id_user:
+                    request.session['typeUser'] = "Landlord"
+                    return redirect('index') #placeholder, alterem depois
+            for i in Tenant.objects.all():
+                if i.ten_user_id == id_user:
+                    request.session['typeUser'] = "Tenant"
+                    return redirect('index') #placeholder, alterem depois
         else:
             messages.info(request, _('Username ou password incorretos'))
 
@@ -65,6 +73,7 @@ def register_view(request):
         form = CreateUserForm(request.POST)
         pform = ProfileForm(request.POST)
 
+        #para verificar email ver https://github.com/foo290/Django-Verify-Email/   -alexfaustino
         if form.is_valid() and pform.is_valid():
             inactive_user = send_verification_email(request, form)
             #user = form.save()

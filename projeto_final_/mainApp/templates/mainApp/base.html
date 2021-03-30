@@ -31,13 +31,27 @@
             {% if user.is_authenticated %}
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
+                        <li class="nav-item active my-auto">
                             <a class="nav-link" href="/mainApp/search">{% trans "Pesquisar" %}</a>
                         </li>
-                        <li class="nav-item active">
+                        {% if request.session.typeUser == "Landlord" %}
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/mainApp/notificationsLandlord">
+                                    {% load static %}
+                                    <img width="50" class="rounded-circle" alt="notifications" src='{% static "mainApp/images/notificationsImg.svg" %}'>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/mainApp/notificationsTenant">
+                                    <img width="50" class="rounded-circle" alt="notifications" src='{% static "mainApp/images/notificationsImg.svg" %}'>
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item active my-auto">
                             <a class="nav-link" href="/mainApp/profile">{{user.username}}</a>
                         </li>
-                        <li class="nav-item active">
+                        <li class="nav-item active my-auto">
                             <form action="{% url 'logout_view' %}">
                                 <button type="submit"  class="btn btn-secondary ml-4 font-weight-bold">Logout</button>
                             </form>
