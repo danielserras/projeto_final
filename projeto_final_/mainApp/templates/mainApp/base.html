@@ -35,16 +35,23 @@
                             <a class="nav-link" href="/mainApp/search">{% trans "Pesquisar" %}</a>
                         </li>
                         {% if request.session.typeUser == "Landlord" %}
-                            <li class="nav-item active">
-                                <a class="nav-link" href="/mainApp/notificationsLandlord">
-                                    {% load static %}
-                                    <img width="50" height="50" class="" alt="notifications" src='{% static "mainApp/images/notificationsImg.svg" %}'>
+                            <li class="nav-item active my-auto">
+                                <a class="nav-link p-0" href="/mainApp/notificationsLandlord">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.60" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <rect x="3" y="5" width="18" height="14" rx="2" />
+                                        <polyline points="3 7 12 13 21 7" />
+                                    </svg>
                                 </a>
                             </li>
                         {% else %}
-                            <li class="nav-item active">
-                                <a class="nav-link" href="/mainApp/notificationsTenant">
-                                    <img width="50" height="50" class="" alt="notifications" src='{% static "mainApp/images/notificationsImg.svg" %}'>
+                            <li class="nav-item active my-auto">
+                                <a class="nav-link p-0" href="/mainApp/notificationsTenant">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.60" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <rect x="3" y="5" width="18" height="14" rx="2" />
+                                        <polyline points="3 7 12 13 21 7" />
+                                    </svg>
                                 </a>
                             </li>
                         {% endif %}
