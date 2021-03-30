@@ -870,7 +870,7 @@ def kitchens_editing_view(request, property_id):
         kitchen_formset = KitchenFormSet(queryset=kitchens_queryset)
         kitchen_formset.extra=0
     
-    context = {'kitchen_formset':kitchen_formset, 'property_id':property_id, 'kitchens_num': len(list(kitchens_queryset))}
+    context = {'kitchen_formset':kitchen_formset, 'property_id':property_id, 'kitchens_num': len(list(kitchens_queryset)), 'livingrooms_num':livingrooms_num}
     return render(request, "mainApp/editKitchens.html", context)
 
 """ def kitchen_delete_view(request, property_id, kitchen_id=None):
@@ -890,7 +890,7 @@ def livingrooms_editing_view(request, property_id):
         if livingroom_formset.is_valid():
             for form in livingroom_formset.forms:
                 form.save()    
-            return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_object.id))
+            return redirect("/mainApp/profile/propertiesManagement")
     else:        
         livingroom_formset = LivingroomFormSet(queryset=livingrooms_queryset)
         livingroom_formset.extra=0

@@ -18,8 +18,8 @@
                 <th class="text-white" scope="col">#</th>
                 <th class="text-white" scope="col">{% trans 'Título' %}</th>
                 <th class="text-white" scope="col">{% trans 'Tipo' %}</th>
-                <th class="text-white" scope="col">{% trans 'Editar' %}</th>
                 <th class="text-white" scope="col">{% trans 'Ativo' %}</th>
+                <th class="text-white" scope="col">{% trans 'Editar' %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,6 +32,16 @@
                         <tr>
                             <td>{{forloop.counter}}</td>
                             <td>{{listing.title}}</td>
+                            {% if listing.listing_type == 'Apartment'%}
+                                <td>Apartamento</td>
+                            {% elif listing.listing_type == 'House'%}
+                                <td>Casa</td>
+                            {% elif listing.listing_type == 'Studio'%}
+                                <td>Estúdio</td>
+                            {% else %}
+                                <td>Quarto</td>
+                            {% endif %}
+                            <td class="custom-checkbox"><input type="checkbox" name="isActive" id="isActive" class="custom-control-input"{%if listing.is_active == 1 %}checked{%endif%}></td>
                         </tr>
                     {%endfor%}
                 {%else%}
