@@ -102,25 +102,32 @@
             <div class="d-none d-lg-block d-xl-block">
                 {% block ruler %} {% include "mainApp/ruler.html" %} {% endblock %}
             </div>
-            <div class='form-row mt-5 justify-content-center'>
+            <div class='form-row mt-5 mb-5 justify-content-center'>
                 <button type="reset" class="btn btn-outline-secondary m-2">{% trans 'Limpar' %}</button>
                 <button type="submit" class="btn btn-secondary m-2">{% trans 'Pesquisar' %}</button>
             </div>
         </div>
     </form>
+    {% if searched %}
     <div class='mt-5' id="mapid"></div>
     <div class="row mt-5 justify-content-center">
-    {% if searched %}
-        <div class='col-12'>
+        <div class='col-12' id='resultsTitle'>
             <h1 class="row justify-content-center mt-5 font-weight-bold">{% trans 'Resultados' %}</h1>
         </div>
+        <p id="numPages" hidden>{{pageNumbers|length}}</p>
         <div class='col-12'>
             <input type="hidden" id="search_radius" value={{searched_values.2}}>
             <input type="hidden" id="search_long" value={{searched_values.1}}>
             <input type="hidden" id="search_lat" value={{searched_values.0}}>
-            <div class="row justify-content-center mt-5 mb-5">
-                {% if row|length > 0 %}
-                    {% for l in row %}
+            {% if row|length > 0 %}
+                {% for l, r in zipPreviews %}
+                    {% if r|divisibleby:previewPerPage %}
+                        {% if r == 0 %}
+                            <div class="row justify-content-center" id='page_div_{% widthratio r 12 1%}'>
+                        {% else %}
+                            <div class="row justify-content-center" id='page_div_{% widthratio r 12 1%}' hidden>
+                        {% endif %}
+                    {% endif %}                
                         <div class="imageDiv m-5 rounded col-dm">
                             <p class="previewPrice text-white">{{l.0}}€</p>
                             <div class='previewTextDiv'>
@@ -135,11 +142,30 @@
                             <input type="hidden" class="PassedLats" value={{l.3}}>
                             <input type="hidden" class="PassedLongs" value={{l.4}}>
                         </div>
-                    {% endfor %}
-                {% else %}
-                    <p>{% trans 'Não foram encontrados resultados para a sua pesquisa.' %}</p>
+                    {% if r|add:"1"|divisibleby:previewPerPage %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>{% trans 'Não foram encontrados resultados para a sua pesquisa.' %}</p>
+            {% endif %}
+        </div>
+        <div class="pagesNumbersDiv col-12 row justify-content-center m-0">
+            <div class="p-3" id='pageLeftFiller' hidden></div>
+            <i class="fa fa-chevron-left text-primary pb-3 px-2 my-auto" id='pageLeft' aria-hidden="left" onclick="previousPage()"></i>
+            {% for p in pageNumbers %}
+                {% if p == 2 %}
+                    <p class="px-1 font-weight-bold my-auto pb-2" id='etc1' hidden>...</p>
                 {% endif %}
-            </div>
+                {% if p == pageNumbers|length %}
+                    <p class="px-1 font-weight-bold my-auto pb-2" id='etc2' hidden>...</p>
+                {% endif %}
+                <p class="mx-2 px-1 py-0 font-weight-bold border-primary border-3 text-24" id='page_num_{{p}}' onclick='changePage({{p}})' hidden>
+                    {{p}}
+                </p>
+            {% endfor %}
+            <i class="fa fa-chevron-right text-primary pb-3 px-2 my-auto" id='pageRight' aria-hidden="right" onclick="nextPage()"></i>
+            <div class="p-3" id='pageRightFiller' hidden></div>
         </div>
         {% endif %}
     </div>

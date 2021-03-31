@@ -1,4 +1,9 @@
+page = 1;
+numPages = 0;
 $(document).ready(function() {
+
+    numPages = $("#numPages").html();
+    changePage(page)
 
     function list_redirect(container){
         var container_img = container[1];
@@ -80,3 +85,84 @@ $(document).ready(function() {
         }
     });
 });
+
+function changePage(n){
+    nDiv = n-1;
+    $('#etc1').attr("hidden",true);
+    $('#etc2').attr("hidden",true);
+    for (let i = 0; i <= numPages; i++) {
+        elemDiv = $('#page_div_' + i);
+        elemNum = $('#page_num_' + i);
+        elemDiv.attr("hidden",true);
+        elemNum.attr("hidden",true);
+        elemNum.removeClass("border-bottom");
+    }
+    $('#page_num_1').attr("hidden",false);
+    $('#page_div_' + nDiv).attr("hidden",false);
+    $('#page_num_' + n).attr("hidden",false);
+    $('#page_num_' + n).addClass("border-bottom");
+    $('#page_num_' + numPages).attr("hidden",false);
+    if (numPages > 6){
+        $('#page_num_' + (n-1)).attr("hidden",false);
+        $('#page_num_' + (n+1)).attr("hidden",false);
+        if (n == 1){
+            $('#page_num_' + (n+2)).attr("hidden",false);
+            $('#page_num_' + (n+3)).attr("hidden",false);
+        }
+        else if (n == 2){
+            $('#page_num_' + (n+2)).attr("hidden",false);
+        }
+        else{
+            $('#etc1').attr("hidden",false); 
+        }
+        if (numPages-n == 1){
+            $('#page_num_' + (n-2)).attr("hidden",false);
+        }
+        else if (numPages == n){
+            $('#page_num_' + (n-2)).attr("hidden",false);
+            $('#page_num_' + (n-3)).attr("hidden",false);
+        }
+        else{
+            $('#etc2').attr("hidden",false); 
+        }
+    }
+    else{
+        for (let i = 0; i <= numPages; i++) {
+            elemNum = $('#page_num_' + i);
+            elemNum.attr("hidden",false);
+        }
+    }
+    page = n
+    if(page == numPages){
+        $('#pageRight').attr("hidden",true);
+        $('#pageRightFiller').attr("hidden",false);
+        $('#pageLeft').attr("hidden",false);
+        $('#pageLeftFiller').attr("hidden",true);
+    }
+    else if (page == 1){
+        $('#pageLeft').attr("hidden",true);
+        $('#pageLeftFiller').attr("hidden",false);
+        $('#pageRight').attr("hidden",false);
+        $('#pageRightFiller').attr("hidden",true);
+    }
+    else{
+        $('#pageRight').attr("hidden",false);
+        $('#pageRightFiller').attr("hidden",true);
+        $('#pageLeft').attr("hidden",false);
+        $('#pageLeftFiller').attr("hidden",true);
+    }
+    $('#resultsTitle')[0].scrollIntoView();
+};
+
+function previousPage(){
+    if (page > 1){
+        changePage(page-1);
+    }
+}
+
+function nextPage(){
+    console.log('numPages');
+    if (numPages > page){
+        changePage(page+1);
+    }
+}

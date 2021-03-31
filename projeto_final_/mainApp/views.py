@@ -35,12 +35,20 @@ def login_view(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-
         if user is not None:
             login(request, user)
             request.session['username'] = username
             request.session['popUp'] =  False
-            return redirect('index') #placeholder, alterem depois
+            a_user = user.username
+            id_user = user.id
+            for i in Landlord.objects.all():
+                if i.lord_user_id == id_user:
+                    request.session['typeUser'] = "Landlord"
+                    return redirect('index') #placeholder, alterem depois
+            for i in Tenant.objects.all():
+                if i.ten_user_id == id_user:
+                    request.session['typeUser'] = "Tenant"
+                    return redirect('index') #placeholder, alterem depois
         else:
             messages.info(request, _('Username ou password incorretos'))
 
@@ -65,6 +73,7 @@ def register_view(request):
         form = CreateUserForm(request.POST)
         pform = ProfileForm(request.POST)
 
+        #para verificar email ver https://github.com/foo290/Django-Verify-Email/   -alexfaustino
         if form.is_valid() and pform.is_valid():
             inactive_user = send_verification_email(request, form)
             #user = form.save()
@@ -557,11 +566,13 @@ def accept_request(request, request_id):
         startsDate_ = a.startsDate
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_])
+        dateOfRequest_ = a.dateOfRequest
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_])
     sizeList = len(fullList_)
+    reverseList = list(reversed(fullList_))
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
-    context = {"fullList_": fullList_, 'range': range(sizeList)}
+    context = {"fullList_": reverseList, 'range': range(sizeList)}
 
     return render(request, "mainApp/notificationsLandlord.html", context)
 
@@ -596,11 +607,13 @@ def deny_request(request, request_id):
         startsDate_ = a.startsDate
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_])
+        dateOfRequest_ = a.dateOfRequest
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_])
     sizeList = len(fullList_)
+    reverseList = list(reversed(fullList_))
     #ola = Agreement_Request.objects.get(landlord_id=1)
     #print(ola.tenant_id)
-    context = {"fullList_": fullList_, 'range': range(sizeList)}
+    context = {"fullList_": reverseList, 'range': range(sizeList)}
 
     return render(request, "mainApp/notificationsLandlord.html", context)
 
@@ -674,6 +687,7 @@ def create_request(request):
             start_date = ag_form.cleaned_data.get('startsDate')
             end_date = ag_form.cleaned_data.get('endDate')
             message = ag_form.cleaned_data.get('message')
+            print(message)
             dateNow = timezone.now()
 
             if 'room_listing' in request.session:
@@ -726,7 +740,21 @@ def create_request(request):
 
 @login_required(login_url='login_view')
 def profile(request):
-    return render(request, "mainApp/profile.html", {})
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+    
+    temp = False
+    if request.session['typeUser'] == "Tenant":
+        for i in Agreement.objects.all():
+            if i.tenant_id == a_user.id:
+                currentAgreementListing = int(i.associated_property_listing_id)
+                temp = True
+                context = {"idListing": currentAgreementListing}
+        if temp == False:
+           context = {} 
+    else:
+        context = {}
+    return render(request, "mainApp/profile.html", context)
 
 def properties_management_view(request):
     current_user = request.user
@@ -1050,6 +1078,9 @@ def search(request):
     location = ''
     row = ''
     searched = False
+    rangeList = []
+    previewPerPage = 12
+    pageNumbers = []
 
     searched_values = []
     if request.method == 'POST':
@@ -1126,7 +1157,7 @@ def search(request):
 
                 cursor.execute(querySelect + queryFromProperty + queryWhereProperty)
                 row_property = cursor.fetchall()
-
+                
                 cursor.execute(querySelect + queryFromRoom+ queryWhereRoom)
                 row_room = cursor.fetchall()
 
@@ -1137,12 +1168,19 @@ def search(request):
         print(row[i][5])
         tempTuple = row[i][:5] + (row[i][5].split('mainApp/static/')[1],) + row[i][6:] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),)
         row = row[:i] + (tempTuple,) + row[i+1:]
+        rangeList.append(i)
+        if (i % previewPerPage == 0):
+            pageNumbers.append(int(i/previewPerPage)+1)
 
+    
     context = {
         'searched_values' : searched_values,  #list with 3 elements containing the coordinates of the searched address and radius of the search 
         'num_results' : len(row), 
         'row' : row,
         'searched' : searched,
+        'pageNumbers':  pageNumbers,
+        'previewPerPage': previewPerPage,
+        'zipPreviews': zip(row, rangeList),
     }
     return render(request, "mainApp/search.html", context)
 
@@ -1309,7 +1347,7 @@ def make_payment(request, ag_request_id):
                 'id': request_id,
                 'lord_name': lord_name,
                 'amount': total_amount,
-                'listing_name': listing_name
+                'listing_name': listing_name,
                 }
 
             return render(request, template_name='mainApp/payment.html', context=context)
