@@ -743,11 +743,15 @@ def profile(request):
     current_user = request.user
     a_user = App_user.objects.get(user_id=current_user)
     
+    temp = False
     if request.session['typeUser'] == "Tenant":
         for i in Agreement.objects.all():
             if i.tenant_id == a_user.id:
                 currentAgreementListing = int(i.associated_property_listing_id)
-        context = {"idListing": currentAgreementListing}
+                temp = True
+                context = {"idListing": currentAgreementListing}
+        if temp == False:
+           context = {} 
     else:
         context = {}
     return render(request, "mainApp/profile.html", context)
