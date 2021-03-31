@@ -17,9 +17,9 @@
                 <tr>
                 <th class="text-white" scope="col">#</th>
                 <th class="text-white" scope="col">{% trans 'Título' %}</th>
-                <th class="text-white" scope="col">{% trans 'Tipo' %}</th>
-                <th class="text-white" scope="col">{% trans 'Ativo' %}</th>
-                <th class="text-white" scope="col">{% trans 'Editar' %}</th>
+                <th class="text-white text-center" scope="col">{% trans 'Tipo' %}</th>
+                <th class="text-white text-center" scope="col">{% trans 'Ativo' %}</th>
+                <th class="text-white text-center" scope="col">{% trans 'Editar' %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,15 +33,23 @@
                             <td>{{forloop.counter}}</td>
                             <td>{{listing.title}}</td>
                             {% if listing.listing_type == 'Apartment'%}
-                                <td>Apartamento</td>
+                                <td class="text-center">Apartamento</td> 
                             {% elif listing.listing_type == 'House'%}
-                                <td>Casa</td>
+                                <td class="text-center">Casa</td>
                             {% elif listing.listing_type == 'Studio'%}
-                                <td>Estúdio</td>
+                                <td class="text-center">Estúdio</td>
                             {% else %}
-                                <td>Quarto</td>
+                                <td class="text-center">Quarto</td>
                             {% endif %}
-                            <td class="custom-checkbox"><input type="checkbox" name="isActive" id="isActive" class="custom-control-input"{%if listing.is_active == 1 %}checked{%endif%}></td>
+                            <td class="custom-control custom-checkbox text-center"><input type="checkbox" name="isActive" id="isActive" class="custom-control-input d-flex"{%if listing.is_active == 1 %}checked{%endif%}>
+                            <label for="isActive" class="custom-control-label"></label>
+                            </td>
+                            <td class="text-center"><a href="{{property.id}}/{{listing.id}}"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                                                <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
+                                                                                <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
+                                                                                <line x1="16" y1="5" x2="19" y2="8" />
+                                                                            </svg></a></td>
                         </tr>
                     {%endfor%}
                 {%else%}

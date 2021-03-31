@@ -920,9 +920,30 @@ def listing_editing_view(request, property_id):
                 main_listing.append(room_listing.main_listing)
         except:
             pass
-    context = {'property_listing':property_listing, 'rooms_listing':rooms_listing, 'main_listing':main_listing}
+    context = {'property_listing':property_listing, 'rooms_listing':rooms_listing, 'main_listing':main_listing, 'property':property_object}
     return render(request, "mainApp/listingsManagement.html", context)
 
+def main_listing_editing_view(request, property_id, main_listing_id):
+    
+    main_listing = Listing.objects.get(id=main_listing_id)
+    main_listing.availability_starts = main_listing.availability_starts.strftime('%Y-%m-%d')
+    main_listing.availability_ending = main_listing.availability_ending.strftime('%Y-%m-%d')
+
+    image_album = main_listing.album
+    
+    images = Image.objects.filter(album=image_album)
+
+    if request.method == 'POST':
+        f = ListingForm(request.POST, instance=main_listing)
+        #f.cleaned_data()
+        if f.is_valid():
+            f.save()
+        return redirect("/mainApp/profile/propertiesManagement/listingEditing/{}".format(property_id))
+    img_formset = ImgFormSet(queryset=images)
+    img_formset.extra=0
+
+    context = {'main_listing':main_listing, 'img_formset':img_formset}
+    return render(request, "mainApp/editListing.html", context)
 
 def notificationsTenant(request):
     current_user_ = request.user
