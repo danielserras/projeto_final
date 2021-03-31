@@ -739,7 +739,17 @@ def create_request(request):
 
 @login_required(login_url='login_view')
 def profile(request):
-    return render(request, "mainApp/profile.html", {})
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+    
+    if request.session['typeUser'] == "Tenant":
+        for i in Agreement.objects.all():
+            if i.tenant_id == a_user.id:
+                currentAgreementListing = int(i.associated_property_listing_id)
+        context = {"idListing": currentAgreementListing}
+    else:
+        context = {}
+    return render(request, "mainApp/profile.html", context)
 
 def properties_management_view(request):
     current_user = request.user
