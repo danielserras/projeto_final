@@ -687,6 +687,7 @@ def create_request(request):
             start_date = ag_form.cleaned_data.get('startsDate')
             end_date = ag_form.cleaned_data.get('endDate')
             message = ag_form.cleaned_data.get('message')
+            print(message)
             dateNow = timezone.now()
 
             if 'room_listing' in request.session:
@@ -1132,7 +1133,6 @@ def search(request):
         print(row[i][5])
         tempTuple = row[i][:5] + (row[i][5].split('mainApp/static/')[1],) + row[i][6:] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),)
         row = row[:i] + (tempTuple,) + row[i+1:]
-<<<<<<< HEAD
         rangeList.append(i)
         if (i % previewPerPage == 0):
             pageNumbers.append(int(i/previewPerPage)+1)
@@ -1140,9 +1140,7 @@ def search(request):
     #if(len(row)% previewPerPage != 0):
     #    pageNumbers.append(int(i/previewPerPage)+1)
 
-=======
     
->>>>>>> ef709b40f56fb2e64fab57d97883d99dab985f44
     context = {
         'searched_values' : searched_values,  #list with 3 elements containing the coordinates of the searched address and radius of the search 
         'num_results' : len(row), 
