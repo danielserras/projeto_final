@@ -114,13 +114,20 @@
         <div class='col-12'>
             <h1 class="row justify-content-center mt-5 font-weight-bold">{% trans 'Resultados' %}</h1>
         </div>
+        <p id="numPages" hidden>{{pageNumbers|length}}</p>
         <div class='col-12'>
             <input type="hidden" id="search_radius" value={{searched_values.2}}>
             <input type="hidden" id="search_long" value={{searched_values.1}}>
             <input type="hidden" id="search_lat" value={{searched_values.0}}>
-            <div class="row justify-content-center mt-5 mb-5">
-                {% if row|length > 0 %}
-                    {% for l in row %}
+            {% if row|length > 0 %}
+                {% for l, r in zipPreviews %}
+                    {% if r|divisibleby:previewPerPage %}
+                        {% if r == 0 %}
+                            <div class="row justify-content-center mt-5 mb-5" id='page_{% widthratio r 12 1%}'>
+                        {% else %}
+                            <div class="row justify-content-center mt-5 mb-5" id='page_{% widthratio r 12 1%}' hidden>
+                        {% endif %}
+                    {% endif %}                
                         <div class="imageDiv m-5 rounded col-dm">
                             <p class="previewPrice text-white">{{l.0}}€</p>
                             <div class='previewTextDiv'>
@@ -135,11 +142,20 @@
                             <input type="hidden" class="PassedLats" value={{l.3}}>
                             <input type="hidden" class="PassedLongs" value={{l.4}}>
                         </div>
-                    {% endfor %}
-                {% else %}
-                    <p>{% trans 'Não foram encontrados resultados para a sua pesquisa.' %}</p>
-                {% endif %}
-            </div>
+                    {% if r|add:"1"|divisibleby:previewPerPage %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>{% trans 'Não foram encontrados resultados para a sua pesquisa.' %}</p>
+            {% endif %}
+        </div>
+        <div class="pagesNumbersDiv col-12 row justify-content-center m-0">
+            {% for p in pageNumbers %}
+                <p class="mx-2 px-1 font-weight-bold border-bottom border-primary border-3" onclick='changePage()'>
+                    {{p}}
+                </p>
+            {% endfor %}
         </div>
         {% endif %}
     </div>
