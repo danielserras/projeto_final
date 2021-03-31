@@ -30,7 +30,7 @@
         </div>
         <p id='rangeLength' hidden>{{ range|length }}</p>
         <div class='col-sm-2 p-0' id='sideCol'>
-            <i class="fa fa-chevron-up col_image_btn" id='col_image_btn_up' aria-hidden="true" onclick="previousInColumn()" title="Scroll Up"></i>
+            <i class="fa fa-chevron-up col_image_btn" id='col_image_btn_up' aria-hidden="up" onclick="previousInColumn()" title="Scroll Up"></i>
             {% for p, i in zipPaths %}
                 {% if i < 3 %}
                     <div class='col_image_div' id="col_image_{{ i }}" >
@@ -42,7 +42,7 @@
                     </div>
                 {% endif %}
             {% endfor %}
-            <i class="fa fa-chevron-down col_image_btn" id='col_image_btn_down' aria-hidden="true" onclick="nextInColumn()" title="Scroll Down"></i>
+            <i class="fa fa-chevron-down col_image_btn" id='col_image_btn_down' aria-hidden="down" onclick="nextInColumn()" title="Scroll Down"></i>
         </div> 
     </div>
 </div>
