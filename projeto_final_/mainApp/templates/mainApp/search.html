@@ -108,10 +108,10 @@
             </div>
         </div>
     </form>
+    {% if searched %}
     <div class='mt-5' id="mapid"></div>
     <div class="row mt-5 justify-content-center">
-    {% if searched %}
-        <div class='col-12'>
+        <div class='col-12' id='resultsTitle'>
             <h1 class="row justify-content-center mt-5 font-weight-bold">{% trans 'Resultados' %}</h1>
         </div>
         <p id="numPages" hidden>{{pageNumbers|length}}</p>
@@ -123,9 +123,9 @@
                 {% for l, r in zipPreviews %}
                     {% if r|divisibleby:previewPerPage %}
                         {% if r == 0 %}
-                            <div class="row justify-content-center mt-5 mb-5" id='page_{% widthratio r 12 1%}'>
+                            <div class="row justify-content-center mt-5 mb-5" id='page_div_{% widthratio r 12 1%}'>
                         {% else %}
-                            <div class="row justify-content-center mt-5 mb-5" id='page_{% widthratio r 12 1%}' hidden>
+                            <div class="row justify-content-center mt-5 mb-5" id='page_div_{% widthratio r 12 1%}' hidden>
                         {% endif %}
                     {% endif %}                
                         <div class="imageDiv m-5 rounded col-dm">
@@ -152,7 +152,11 @@
         </div>
         <div class="pagesNumbersDiv col-12 row justify-content-center m-0">
             {% for p in pageNumbers %}
-                <p class="mx-2 px-1 font-weight-bold border-bottom border-primary border-3" onclick='changePage()'>
+                {% if p == 1 %}
+                    <p class="mx-2 px-1 font-weight-bold border-bottom border-primary border-3 text-24" id='page_num_{{p}}' onclick='changePage({{p}})'>
+                {% else %}
+                    <p class="mx-2 px-1 font-weight-bold border-primary border-3 text-24" id='page_num_{{p}}' onclick='changePage({{p}})'>
+                {% endif %}
                     {{p}}
                 </p>
             {% endfor %}

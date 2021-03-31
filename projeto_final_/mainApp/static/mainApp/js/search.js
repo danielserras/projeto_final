@@ -1,10 +1,9 @@
+pageDivs = [];
 $(document).ready(function() {
 
-    pageDivs = [];
     numPages = $("#numPages").html();
     for (let i = 0; i < numPages; i++) {
-        console.log('hello')  
-        pageDivs.push("page_" + i)
+        pageDivs.push("page_div_" + i)
     }
 
     console.log(pageDivs);
@@ -89,6 +88,16 @@ $(document).ready(function() {
     });
 });
 
-function changePage(){
-    console.log('hello');
+function changePage(n){
+    num = n-1
+    for (let i = 0; i <= numPages; i++) {
+        elemDiv = $('#page_div_' + i);
+        elemNum = $('#page_num_' + i);
+        elemDiv.attr("hidden",true);
+        elemNum.removeClass("border-bottom");
+    }
+    $('#page_div_' + num).attr("hidden",false);
+    $('#page_num_' + n).addClass("border-bottom");
+    
+    $('#resultsTitle')[0].scrollIntoView();
 };

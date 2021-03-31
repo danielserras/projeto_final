@@ -1146,9 +1146,6 @@ def search(request):
         rangeList.append(i)
         if (i % previewPerPage == 0):
             pageNumbers.append(int(i/previewPerPage)+1)
-    
-    #if(len(row)% previewPerPage != 0):
-    #    pageNumbers.append(int(i/previewPerPage)+1)
 
     
     context = {
