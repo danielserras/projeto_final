@@ -1,0 +1,140 @@
+{% extends 'mainApp/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/addProperty.css" %}'>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form enctype="multipart/form-data" action="" class="listing_form" method="POST">
+        {% csrf_token %}
+        <div class="row ">
+            <div class="col-sm-12" id="pageListing-7">
+                <div class="row mt-2 mb-2 justify-content-md-center">
+                    <div class="col-sm-7">
+                        <h3>{% trans 'Edição do Anúncio' %}</h3>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center mb-2">
+                    <div class="col-sm-7">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="title">{% trans 'Título' %}:</label>
+                                <input type="text" name="title" class="form-control border-info border-3 rounded" value="{{main_listing.title}}" required>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-sm-12">
+                                <label for="description">{% trans 'Descrição' %}:</label>
+                                <textarea name="description" class="form-control border-info border-3 rounded" rows="6" class="w-100">{{main_listing.description}}</textarea>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-sm-6">
+                                <label for="availability_starts">{% trans 'Disponível de' %}:</label>
+                                <input type="date"  class="form-control border-info border-3 rounded" name="availability_starts" value="{{main_listing.availability_starts}}" required>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="availability_ending">{% trans 'até' %}:</label>
+                                <input type="date" class="form-control border-info border-3 rounded" name="availability_ending" value="{{main_listing.availability_ending}}" required >
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-sm-6">
+                                <label for="monthly_payment">{% trans 'Renda' %}:</label>
+                                <input type="number" class="form-control border-info border-3 rounded" name="monthly_payment"  min="0" value="{{main_listing.monthly_payment}}" required>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="security_deposit">{% trans 'Caução' %}:</label>
+                                <input type="number" class="form-control border-info border-3 rounded" name="security_deposit"  min="0" value="{{main_listing.security_deposit}}" required>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            {% comment %} <div class="col-sm-6">
+                                <label for="cleaningServices">{% trans 'Frequência dos Serviçoes de limpeza' %}:</label>
+                                <input type="text" name="cleaningServices" >
+                            </div> {% endcomment %}
+                            <div class="col-sm-6">
+                                <label for="max_capacity">{% trans 'Ocupação máxima' %}:</label>
+                                <input type="number" class="form-control border-info border-3 rounded" name="max_capacity" value="{{main_listing.max_capacity}}" min="1">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-sm-4">
+                                <label for="allowed_gender">{% trans 'Género Permitido' %}</label>
+                                <select name="allowed_gender" class="custom-select border-info border-3" value ="{{main_listing.allowed_gender}}"required >
+                                    <option value="Ambos">{% trans 'Ambos' %}</option>
+                                    <option value="onlyWomens">{% trans 'Apenas Mulheres' %}</option>
+                                    <option value="onlyMens">{% trans 'Apenas Homens' %}</option>
+                                </select>
+                            </div>
+                        </div>
+                    
+                </div>
+                <!-- <div class="row mt-2 mb-2 justify-content-md-center">
+                    <div class="col-sm-7">
+                        <h3>Regras</h3>
+                    </div>
+                </div> -->
+                </div>
+                <div class="row justify-content-md-center ">
+                    <!-- <div class="form-group col-sm-4">
+                        {% if "multiple_bedrooms" in request.session %}
+                            <h4>O que pretende anunciar?</h4><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="House"> Casa
+                            </label> <br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Studio" disabled> Estúdio
+                            </label><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Apartment"> Apartamento
+                            </label><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Bedroom" disabled> Quarto
+                            </label><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Residency"> Residência
+                            </label><br>
+                        {% else %}
+                            <h4>O que pretende anunciar?</h4><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Home"> Casa
+                            </label> <br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Studio"> Estúdio
+                            </label><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Apartment"> Apartamento
+                            </label><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Bedroom"> Quarto
+                            </label><br>
+                            <label for="" class="radio-inline">
+                                <input type="radio" name="listing_type" class="" value="Residency"> Residência
+                            </label><br>
+                        {% endif %}
+                    </div> -->
+                    {% comment %} <div class="form-group col-sm-3">
+                        <h4>{% trans 'Album de fotografias' %}</h4><br>
+                            <div class="form-group imgF">
+                            {{img_formset.management_form}}
+                            {% for form in img_formset%}
+                            {{form.id}}
+                            {{form.images}}
+                            {% endfor %}
+                            </div>
+                        <button type="button" class="addImg btn btn-info">+</button>
+                    </div> {% endcomment %}
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-md-center text-center mb-3">
+            <div class="col-sm-auto">
+                <button type="submit" class="btn btn-secondary listing_submit" >{% trans 'Guardar' %}</button>
+            </div>
+        </div>
+    </form>
+</div>  
+{% endblock %}
