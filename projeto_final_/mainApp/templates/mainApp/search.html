@@ -167,7 +167,9 @@
             <i class="fa fa-chevron-right text-primary pb-3 px-2 my-auto" id='pageRight' aria-hidden="right" onclick="nextPage()"></i>
             <div class="p-3" id='pageRightFiller' hidden></div>
         </div>
-        {% endif %}
+    {% else %}
+        <p id='resultsTitle' hidden></p>
+    {% endif %}
     </div>
 </div>
 

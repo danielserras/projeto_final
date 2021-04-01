@@ -5,6 +5,10 @@ $(document).ready(function() {
     numPages = $("#numPages").html();
     changePage(page)
 
+    $('#searchButton').click(function(){
+        $('#resultsCont').attr("hidden",false);
+    });
+
     function list_redirect(container){
         var container_img = container[1];
         var img_url = container_img.src.slice(22);
