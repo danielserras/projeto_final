@@ -20,6 +20,7 @@ from decouple import config
 from geopy.geocoders import MapBox
 from copy import deepcopy
 from django.utils.translation import gettext as _
+from datetime import datetime, timedelta, date
 import PIL
 import time
 import json
@@ -746,14 +747,15 @@ def profile(request):
     temp = False
     if request.session['typeUser'] == "Tenant":
         for i in Agreement.objects.all():
-            if i.tenant_id == a_user.id and i.associated_property_listing_id != None:
-                currentAgreementListing = int(i.associated_property_listing_id)
+            if Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id:
+                #check dates
+                agreement = i
+                endDate = agreement.endDate
+                presentTime = datetime.today().strftime('%d-%m-%Y')
+                now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
+                diffDates = (endDate - now_date).days
                 temp = True
-                context = {"idListing": currentAgreementListing}
-            elif i.tenant_id == a_user.id and i.associated_property_listing_id == None:
-                currentAgreementListing = int(i.associated_room_listing_id)
-                temp = True
-                context = {"idListing": currentAgreementListing}
+                context = {"diffDates": diffDates}
         if temp == False:
            context = {} 
     else:
@@ -1403,34 +1405,37 @@ def renewAgreement(request):
     a_user = App_user.objects.get(user_id=current_user)
     
     for i in Agreement.objects.all():
-        if i.tenant_id == a_user.id:
+        if Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id:
             agreement = i
-    print("room " + str(agreement.associated_room_listing_id), "property " +  str(agreement.associated_property_listing_id))
+    #print("room " + str(agreement.associated_room_listing_id), "property " +  str(agreement.associated_property_listing_id))
     request.session['room_listing'] = agreement.associated_room_listing_id
     request.session['property_listing'] = agreement.associated_property_listing_id
     request.session["landlord"] = agreement.landlord_id
     request.session["tenant"] = agreement.tenant_id
 
-    
     #Detalhes do agreement atual
-    startDate = agreement.startsDate
-    endDate = agreement.endDate
+    startDate = agreement.startsDate.strftime('%d-%m-%Y')
+    endDate = agreement.endDate.strftime('%d-%m-%Y')
+    startDate_v2 = agreement.endDate
+    modified_date = startDate_v2 + timedelta(days=1)
+    startDate_v3 = modified_date.strftime('%Y-%m-%d')
     prop_test = agreement.associated_property_listing_id
     room_test = agreement.associated_room_listing_id
     landlordName_firststep = Landlord.objects.get(id = agreement.landlord_id).lord_user_id
-    landlordName = User.objects.get(id = landlordName_firststep).username #(ir ao nome de utilizador do landlord através deste id)
+    landlordName = User.objects.get(id = landlordName_firststep).username 
+    
     if prop_test != None:
         propAddress_firststep = Property_listing.objects.get(id = prop_test) 
         propAddress_secndstep = Property.objects.get(id = propAddress_firststep.associated_property_id)
         propAddress = propAddress_secndstep.address
-        print(propAddress)
-        context = {"startDate":startDate,"endDate":endDate,"propAddress":propAddress,"landlordName":landlordName}
+        #print(propAddress)
+        context = {"startDate":startDate,"endDate":endDate,"propAddress":propAddress,"landlordName":landlordName,"startDate_v2":startDate_v3}
     else:
         roomAddress_firststep = Room_listing.objects.get(id =room_test)
         roomAddress_secndstep = Bedroom.objects.get(id = roomAddress_firststep.associated_room_id)
         roomAddress_thirdstep = Property.objects.get(id = roomAddress_secndstep.associated_property_id)
         roomAddress = roomAddress_thirdstep.address
-        roomAddress = "1 quarto em " + roomAddress 
-        context = {"startDate":startDate,"endDate":endDate,"propAddress":roomAddress,"landlordName":landlordName}
+        #roomAddress = "1 quarto em " + roomAddress 
+        context = {"startDate":startDate,"endDate":endDate,"propAddress":roomAddress,"landlordName":landlordName,"startDate_v2":startDate_v3}
     return render(request, "mainApp/renewAgreement.html", context)
    
