@@ -20,29 +20,29 @@
                     {% if request.session.typeUser == "Landlord" %}
                         <!--If landlord-->
                         <div class="col-sm-12 p-3">
-                            <a class="text-white" href="profile/propertiesManagement">{% trans 'Gerir Alojamentos' %}</a>
+                            <a class="text-white" href="profile/propertiesManagement"><button type="button" class="btn btn-info w-100">{% trans 'Gerir Alojamentos' %}</button></a>
                         </div>
                         <!--If landlord-->
                         <div class="col-sm-12 p-3">
-                            <a class="text-white" href="addProperty">{% trans 'Adicionar Alojamento' %}</a>
+                            <a class="text-white" href="addProperty"><button type="button" class="btn btn-info w-100">{% trans 'Adicionar Alojamento' %}</button></a>
                         </div>
                         <!--If landlord-->
                         <div class="col-sm-12 p-3">
-                            <a class="text-white" href="#">{% trans 'Gerir Acordos' %}</a>
+                            <a class="text-white" href="#"><button type="button" class="btn btn-info w-100">{% trans 'Gerir Acordos' %}</button></a>
                         </div>
                     {% else %}
                         <!--If tenant-->
                         <div class="col-sm-12 p-3">
-                            <a class="text-white" href="#">{% trans 'Ver Acordos' %}</a>
+                            <a class="text-white" href="#"><button type="button" class="btn btn-info w-100">{% trans 'Ver Acordos' %}</button></a>
                         </div>
                         <!--If tenant-->
                         <div class="col-sm-12 p-3">
-                            <a class="text-white" href="#">{% trans 'Cancelar Acordo' %}</a>
+                            <a class="text-white" href="#"><button type="button" class="btn btn-info w-100">{% trans 'Cancelar Acordo' %}</button></a>
                         </div> 
-                        {% if idListing %}
+                        {% if diffDates <= 30 and diffDates >= 1 %}
                             <!--If tenant-->
                             <div class="col-sm-12 p-3">
-                                <a class="text-white" href="profile/renewAgreement">{% trans 'Renovar Acordo' %}</a>
+                                <a class="text-white" href="profile/renewAgreement"><button type="button" class="btn btn-info w-100">{% trans 'Renovar Acordo' %}</button></a>
                             </div>
                         {% endif %}
                     {% endif %}

@@ -10,7 +10,7 @@
 <div class="container">
     <div class="row p-3" id="datesIntent">
         <div class="row col-sm-12 mb-0 mt-2 p-0 pl-0 ml-0 bg-warning">
-            <a onclick="history.back();">
+            <a href="#" onclick="history.back();">
                 <img src='{% static "mainApp/images/arrow.jpg" %}' class="rounded housesMsg mt-0" alt="arrow" width="45" height="50">
             </a>
             <h4 class="text-right text-info my-auto ml-3 font-weight-bold"> {% trans 'Quero renovar!' %} </h4>
@@ -20,7 +20,7 @@
             <div class="form-group row mt-4 mb-2">
                 <label for="example-date-input" class="col-sm-3 col-form-label">{% trans 'Data de Início' %}:</label>
                 <div class="col-sm-5">
-                    <input class="form-control" type="date" name="startsDate" value="">
+                    <input class="form-control" type="date" name="startsDate" value="{{ startDate_v2 }}">
                 </div>
             </div>
             <div class="form-group row mt-4 mb-2">
@@ -41,13 +41,13 @@
                 </div>
             </div>
         </form>
-        <div class="border col-sm-4 mt-4 mx-auto">
-                 <h5 class="font-weight-bold mb-4">Informação do contrato atual:</h5>
-                  <ul>
-                    <li>{% trans 'Data de Início' %}: {{ startDate }}</li>
-                    <li class="mt-4">{% trans 'Data de Fim' %}: {{ endDate }}</li>
-                    <li class="mt-4">{% trans 'Morada da propriedade' %}: {{ propAddress }}</li>
-                    <li class="mt-4">{% trans 'Nome do senhorio' %}: {{ landlordName }}</li>
+        <div class="col-sm-4 mt-4 mx-auto">
+                 <h5 class="font-weight-bold mb-4">Informação do acordo atual:</h5>
+                  <ul class="border border-info border-3">
+                    <li class="mt-4"><span class="font-weight-bold">{% trans 'Data de Início' %}:</span> {{ startDate }}</li>
+                    <li class="mt-4"><span class="font-weight-bold">{% trans 'Data de Fim' %}:</span> {{ endDate }}</li>
+                    <li class="mt-4"><span class="font-weight-bold">{% trans 'Morada da propriedade' %}:</span> {{ propAddress }}</li>
+                    <li class="mt-4 mb-4"><span class="font-weight-bold">{% trans 'Nome do senhorio' %}:</span> {{ landlordName }}</li>
                   </ul>
         </div>
     </div>
