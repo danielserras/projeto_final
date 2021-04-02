@@ -111,7 +111,7 @@
             {% endfor %}
         </div>
         <div class="row justify-content-md-center text-center mb-3">
-            {% if "no_living" in request.session %}
+            {% if request.session.no_living %}
                 <div class="col-sm-auto">
                     <button name="save" value="True" type="submit" class="btn btn-secondary" >{% trans 'Pretendo apenas guardar' %}</button>
                 </div>
