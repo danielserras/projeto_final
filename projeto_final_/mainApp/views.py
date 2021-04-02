@@ -70,6 +70,7 @@ def register_view(request):
         return redirect('index')
 
     form = CreateUserForm()
+    pform = ProfileForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         pform = ProfileForm(request.POST)
@@ -97,7 +98,7 @@ def register_view(request):
             request.session['popUp'] =  True
             return redirect('login_view')  
 
-    context = {'form':form, 'errors':form.errors} #, 'pform':pform
+    context = {'form':form, 'pform': pform, 'errors':form.errors} #, 'pform':pform
     return render(request, 'mainApp/register.html', context)
 
 """ def password_recovery_view(request):
@@ -240,7 +241,7 @@ def introduce_property_view (request):
     if request.user.is_active:
 
         if request.method == 'POST':
-
+            
             form_list = []
             bed_form = ''
             bath_form = ''
