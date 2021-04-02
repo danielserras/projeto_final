@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Textarea, TextInput, EmailInput, PasswordInput, NumberInput, SelectDateWidget
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
@@ -11,15 +11,71 @@ from django.forms import inlineformset_factory
 
 
 class CreateUserForm(UserCreationForm):
+
+    password1 = forms.CharField(
+        label="Password",
+        widget=forms.PasswordInput(attrs={'class':'inputType1', 'type':'password', 'placeholder':'Palavra-passe'}),
+    )
+    password2 = forms.CharField(
+        label="Confirm password",
+        widget=forms.PasswordInput(attrs={'class':'inputType1', 'type':'password', 'placeholder':'Confirme a palavra-passe'})
+    )
+
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'first_name', 'last_name']
+        fields = ['username', 'email', 'first_name', 'last_name']
+
+        widgets = {
+            "username": TextInput(
+                attrs={
+                    "placeholder":'Nome de Utilizador',
+                    'class': 'inputType1'
+                }
+            )
+            ,"first_name": TextInput(
+                attrs={
+                    "placeholder":'Primeiro nome',
+                    'class': 'inputType1'
+                }
+            )
+            ,"last_name": TextInput(
+                attrs={
+                    "placeholder":'Apelido',
+                    'class': 'inputType1'
+                }
+            )
+            ,"email": EmailInput(
+                attrs={
+                    "placeholder":'E-mail',
+                    'class': 'inputType1'
+                }
+            )
+        }
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = App_user
         fields = ['phoneNumber', 'birthDate',]
+
+        widgets = {
+            "phoneNumber": NumberInput(
+                attrs={
+                    "placeholder":'Número de Telefone',
+                    'class': 'inputType1'
+                }
+            )
+            ,"birthDate": DateInput(
+                attrs={
+                    'class': 'inputType1',
+                    'id': 'datefield'
+
+                }
+            )
+        }
 
 class ListingForm(forms.ModelForm):
 
