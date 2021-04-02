@@ -5,10 +5,21 @@
     <link rel="stylesheet" href='{% static "mainApp/css/listingsManagement.css" %}'>
 {% endblock %}
 {% block content %}
-    <div class="container mt-5 ">
-        <div class="row text-center">
+    <div class="container">
+        <div class="row mt-3 text-center">
             <div class="col-sm-12">
-                <h3>{% trans 'Gerir Alojamentos' %}</h3>
+                <div class="row mt-3 mb-3">
+                    <a href="#" onclick="history.back();">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="52" height="52" viewBox="0 0 24 24" stroke-width="2" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <line x1="5" y1="12" x2="11" y2="18" />
+                            <line x1="5" y1="12" x2="11" y2="6" />
+                        </svg>
+                    </a>
+                    <h3 class="mx-auto my-auto">{% trans 'Gerir Alojamentos' %}</h3>
+                </div>
+                <!--<h3>{% trans 'Gerir Alojamentos' %}</h3>-->
             </div> 
         </div>
         <div class="table-responsive">

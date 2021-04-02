@@ -51,9 +51,8 @@ def login_view(request):
                     request.session['typeUser'] = "Tenant"
                     return redirect('index') #placeholder, alterem depois
         else:
-            messages.info(request, _('Username ou password incorretos'))
-
-            context = {}
+            mistakes = 'Username ou password incorretos'
+            context = {'mistakes': mistakes}
             return render(request, 'mainApp/login.html', context) #placeholder
     context = {}
     return render(request,'mainApp/login.html', context) #placeholder
@@ -1002,8 +1001,8 @@ def notificationsTenant(request):
         userLand = _userLand_.user
         nomeLand = userLand.username
         message = a.message 
-        startsDate = a.startsDate
-        endDate = a.endDate
+        startsDate = a.startsDate.strftime("%d-%m-%Y")
+        endDate = a.endDate.strftime("%d-%m-%Y")
         accepted = a.accepted #para ver se esta null, aceite ou recusada
         dateOfRequest_ = a.dateOfRequest
         fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted,dateOfRequest_])
@@ -1037,8 +1036,8 @@ def notificationsLandlord(request):
         userTen = _user_.user
         nomeTen = userTen.username
         message_ = a.message 
-        startsDate_ = a.startsDate
-        endDate_ = a.endDate
+        startsDate_ = a.startsDate.strftime("%d-%m-%Y")
+        endDate_ = a.endDate.strftime("%d-%m-%Y")
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
         dateOfRequest_ = a.dateOfRequest
         fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_])

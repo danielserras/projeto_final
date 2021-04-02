@@ -100,7 +100,7 @@
             <div>
                 <a class="underlineHover textForget fadeIn third mx-auto" href="{% url 'password_reset' %}">{% trans 'Esqueceste-te da password' %}?</a>
             </div>
-            {% for message in messages %}
+            <!-- {% for message in messages %}
 
                 <div class="w-75 alert alert-danger mx-auto text-center m-2">
                     <a class="close" href="#" data-dismiss="alert">×</a>
@@ -108,7 +108,16 @@
                     <strong> {{ message }}</strong>
 
                 </div>
-            {% endfor %}
+            {% endfor %} -->
+                {% if mistakes %} 
+                    <div class="w-75 alert alert-danger mx-auto text-center m-2">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+
+                        <strong> {{ mistakes }}</strong>
+
+                    </div>
+                {% endif %}
+
             <button type="submit" class="inputType2 fadeIn fourth btn btn-secondary m-2 font-weight-bold">{% trans 'Login' %}</button>
           </form>
           <div id="formFooter">
