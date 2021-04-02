@@ -2,24 +2,26 @@
 {% load i18n %}
 {% load static %}
 {% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/style.css" %}'>
     <link rel="stylesheet" href='{% static "mainApp/css/addProperty.css" %}'>
     <link rel="stylesheet" href='{% static "mainApp/css/map.css" %}'> 
 {% endblock %}
 {% block scripts%}
     <script src='{% static "mainApp/js/addProperty.js" %}'></script>
+    <script src='{% static "mainApp/js/stepProgressBar.js" %}'></script>
     <script src='{% static "mainApp/js/map.js" %}'></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 {% endblock %}
 
 {% block content %}
 <div class="container ">
-    <!--<div class="row mt-5 mb-3 mx-5">
-        <div class="stepLine align-middle"></div>
-        <div class="completedStep"></div>
-        <div class="emptyStep"></div>
-    </div>-->
-    <div class="progress mt-5 mb-3">
-        <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+    <p id="numberOfSteps" hidden>6</p>
+    <p id="numberOfCompletedSteps" hidden>1</p>
+    <p id="labelsList" hidden>Início,Quartos,Casa de Banho,Cozinhas,Salas,Fim</p>
+    <div class="row m-5">
+        <div class="col-12 mx-auto pr-0" id="stepBarDiv" style="display: flex;">
+            <div class="progressLine"></div>
+        </div>
     </div>
     <form action="{% url 'addProperty' %}" method="POST" id="formContainer">
         {% csrf_token %}
