@@ -147,7 +147,7 @@
                     {% endif %}
                 {% endfor %}
             {% else %}
-                <p>{% trans 'Não foram encontrados resultados para a sua pesquisa.' %}</p>
+                <p class="mx-auto text-center text-24 py-5">{% trans 'Não foram encontrados resultados para a sua pesquisa.' %}</p>
             {% endif %}
         </div>
         <div class="pagesNumbersDiv col-12 row justify-content-center m-0">
@@ -167,7 +167,9 @@
             <i class="fa fa-chevron-right text-primary pb-3 px-2 my-auto" id='pageRight' aria-hidden="right" onclick="nextPage()"></i>
             <div class="p-3" id='pageRightFiller' hidden></div>
         </div>
-        {% endif %}
+    {% else %}
+        <p id='resultsTitle' hidden></p>
+    {% endif %}
     </div>
 </div>
 

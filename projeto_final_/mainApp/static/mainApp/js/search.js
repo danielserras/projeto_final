@@ -5,6 +5,10 @@ $(document).ready(function() {
     numPages = $("#numPages").html();
     changePage(page)
 
+    $('#searchButton').click(function(){
+        $('#resultsCont').attr("hidden",false);
+    });
+
     function list_redirect(container){
         var container_img = container[1];
         var img_url = container_img.src.slice(22);
@@ -132,6 +136,7 @@ function changePage(n){
             elemNum.attr("hidden",false);
         }
     }
+    console.log(numPages)
     page = n
     if(page == numPages){
         $('#pageRight').attr("hidden",true);
@@ -149,6 +154,13 @@ function changePage(n){
         $('#pageRight').attr("hidden",false);
         $('#pageRightFiller').attr("hidden",true);
         $('#pageLeft').attr("hidden",false);
+        $('#pageLeftFiller').attr("hidden",true);
+    }
+
+    if (numPages == 1){
+        $('#pageRight').attr("hidden",true);
+        $('#pageRightFiller').attr("hidden",true);
+        $('#pageLeft').attr("hidden",true);
         $('#pageLeftFiller').attr("hidden",true);
     }
     $('#resultsTitle')[0].scrollIntoView();

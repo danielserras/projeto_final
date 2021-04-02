@@ -20,6 +20,7 @@ from decouple import config
 from geopy.geocoders import MapBox
 from copy import deepcopy
 from django.utils.translation import gettext as _
+from datetime import datetime, timedelta, date
 import PIL
 import time
 import json
@@ -50,9 +51,8 @@ def login_view(request):
                     request.session['typeUser'] = "Tenant"
                     return redirect('index') #placeholder, alterem depois
         else:
-            messages.info(request, _('Username ou password incorretos'))
-
-            context = {}
+            mistakes = 'Username ou password incorretos'
+            context = {'mistakes': mistakes}
             return render(request, 'mainApp/login.html', context) #placeholder
     context = {}
     return render(request,'mainApp/login.html', context) #placeholder
@@ -69,6 +69,7 @@ def register_view(request):
         return redirect('index')
 
     form = CreateUserForm()
+    pform = ProfileForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         pform = ProfileForm(request.POST)
@@ -96,7 +97,7 @@ def register_view(request):
             request.session['popUp'] =  True
             return redirect('login_view')  
 
-    context = {'form':form, 'errors':form.errors} #, 'pform':pform
+    context = {'form':form, 'pform': pform, 'errors':form.errors} #, 'pform':pform
     return render(request, 'mainApp/register.html', context)
 
 """ def password_recovery_view(request):
@@ -239,7 +240,7 @@ def introduce_property_view (request):
     if request.user.is_active:
 
         if request.method == 'POST':
-
+            
             form_list = []
             bed_form = ''
             bath_form = ''
@@ -260,14 +261,15 @@ def introduce_property_view (request):
                 kitchen_form = KitchenFormSet(data=request.POST)
                 form_list.append(kitchen_form)
 
-            elif 'livingrooms_num' in request.session.keys():
-                live_form = LivingroomFormSet(data=request.POST)
-                form_list.append(live_form)
-
             elif 'listing' in request.session.keys():
                 listing_form = ListingForm(request.POST, request.FILES)
                 print(request.POST)
                 form_list.append(listing_form)
+
+            elif 'livingrooms_num' in request.session.keys():
+                live_form = LivingroomFormSet(data=request.POST)
+                form_list.append(live_form)
+
             else:
                 prop_form = PropertyForm(data=request.POST)
                 form_list.append(prop_form)
@@ -365,7 +367,7 @@ def introduce_property_view (request):
                             return redirect('index')
                         else:
                             del request.session['kitchens_num']
-                            del request.session['livingrooms_num']
+                            #del request.session['livingrooms_num']
 
                             listing_form = ListingForm()
                             request.session['listing'] =  True
@@ -402,7 +404,7 @@ def introduce_property_view (request):
                             listing_form = ListingForm()
                             save_property(request)
                             request.session['listing'] =  True
-                            del request.session['livingrooms_num']
+                            #del request.session['livingrooms_num']
 
                             imgformset = ImgFormSet(queryset=Image.objects.none())
                             context = {'listing_form': listing_form, 'imgformset' : imgformset}
@@ -437,7 +439,7 @@ def introduce_property_view (request):
                         if f.is_valid():
                             
                             assoc_prop = Property.objects.get(id=request.session['prop_id'])
-
+                            
                             """ if 'multiple_listing' in f.cleaned_data:
                                 if f.cleaned_data.get('multiple_listing') == 'separate':
 
@@ -490,6 +492,11 @@ def introduce_property_view (request):
                                         img_r.save(str(img.image))
 
                             del request.session['prop_serial']
+
+                            try:
+                                del request.session['livingrooms_num']
+                            except:
+                                pass
 
                             if request.session['l_type'] == 'Apartment' or request.session['l_type'] == 'House':
                                 #if f.cleaned_data.get('multiple_listing') == 'whole':
@@ -746,10 +753,15 @@ def profile(request):
     temp = False
     if request.session['typeUser'] == "Tenant":
         for i in Agreement.objects.all():
-            if i.tenant_id == a_user.id:
-                currentAgreementListing = int(i.associated_property_listing_id)
+            if Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id:
+                #check dates
+                agreement = i
+                endDate = agreement.endDate
+                presentTime = datetime.today().strftime('%d-%m-%Y')
+                now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
+                diffDates = (endDate - now_date).days
                 temp = True
-                context = {"idListing": currentAgreementListing}
+                context = {"diffDates": diffDates}
         if temp == False:
            context = {} 
     else:
@@ -1053,8 +1065,8 @@ def notificationsTenant(request):
         userLand = _userLand_.user
         nomeLand = userLand.username
         message = a.message 
-        startsDate = a.startsDate
-        endDate = a.endDate
+        startsDate = a.startsDate.strftime("%d-%m-%Y")
+        endDate = a.endDate.strftime("%d-%m-%Y")
         accepted = a.accepted #para ver se esta null, aceite ou recusada
         dateOfRequest_ = a.dateOfRequest
         fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted,dateOfRequest_])
@@ -1088,8 +1100,8 @@ def notificationsLandlord(request):
         userTen = _user_.user
         nomeTen = userTen.username
         message_ = a.message 
-        startsDate_ = a.startsDate
-        endDate_ = a.endDate
+        startsDate_ = a.startsDate.strftime("%d-%m-%Y")
+        endDate_ = a.endDate.strftime("%d-%m-%Y")
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
         dateOfRequest_ = a.dateOfRequest
         fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_])
@@ -1449,3 +1461,45 @@ def changeLanguage(request):
 def deletePopUp(request):
     request.session['popUp'] =  False
     return render(request, "mainApp/login.html", {})
+
+def renewAgreement(request):
+    #FALTA POR A OPÇAO DE RENOVAR A APARECER POR EXEMPLO 1 MES ANTES DO FINAL EM VEZ DE ESTAR SEMPRE VISIVEL
+
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+    
+    for i in Agreement.objects.all():
+        if Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id:
+            agreement = i
+    #print("room " + str(agreement.associated_room_listing_id), "property " +  str(agreement.associated_property_listing_id))
+    request.session['room_listing'] = agreement.associated_room_listing_id
+    request.session['property_listing'] = agreement.associated_property_listing_id
+    request.session["landlord"] = agreement.landlord_id
+    request.session["tenant"] = agreement.tenant_id
+
+    #Detalhes do agreement atual
+    startDate = agreement.startsDate.strftime('%d-%m-%Y')
+    endDate = agreement.endDate.strftime('%d-%m-%Y')
+    startDate_v2 = agreement.endDate
+    modified_date = startDate_v2 + timedelta(days=1)
+    startDate_v3 = modified_date.strftime('%Y-%m-%d')
+    prop_test = agreement.associated_property_listing_id
+    room_test = agreement.associated_room_listing_id
+    landlordName_firststep = Landlord.objects.get(id = agreement.landlord_id).lord_user_id
+    landlordName = User.objects.get(id = landlordName_firststep).username 
+    
+    if prop_test != None:
+        propAddress_firststep = Property_listing.objects.get(id = prop_test) 
+        propAddress_secndstep = Property.objects.get(id = propAddress_firststep.associated_property_id)
+        propAddress = propAddress_secndstep.address
+        #print(propAddress)
+        context = {"startDate":startDate,"endDate":endDate,"propAddress":propAddress,"landlordName":landlordName,"startDate_v2":startDate_v3}
+    else:
+        roomAddress_firststep = Room_listing.objects.get(id =room_test)
+        roomAddress_secndstep = Bedroom.objects.get(id = roomAddress_firststep.associated_room_id)
+        roomAddress_thirdstep = Property.objects.get(id = roomAddress_secndstep.associated_property_id)
+        roomAddress = roomAddress_thirdstep.address
+        #roomAddress = "1 quarto em " + roomAddress 
+        context = {"startDate":startDate,"endDate":endDate,"propAddress":roomAddress,"landlordName":landlordName,"startDate_v2":startDate_v3}
+    return render(request, "mainApp/renewAgreement.html", context)
+   
