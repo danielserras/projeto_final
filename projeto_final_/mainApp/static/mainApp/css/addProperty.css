@@ -6,37 +6,6 @@
     margin-right:auto;
 }
 
-.completedStep{
-    position: relative;
-    left: 0%;
-    top: 50%;
-    transform: translate(-15px, -15px);
-    background-color: #264653;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    box-shadow: 
-	    0 0 0 5px #2A9D8F;
-}
-
-.emptyStep{
-    position: relative;
-    left: 100%;
-    background-color: #2A9D8F;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    box-shadow: 
-        0 0 0 5px #2A9D8F;
-}
-
-.stepLine{
-    position: relative;
-    background-color: #264653;
-    width: 100%;
-    height: 5px;
-}
-
 /* Mobile */
 @media only screen and (max-width: 768px) {
     #mapid{
