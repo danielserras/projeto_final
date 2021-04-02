@@ -4,8 +4,11 @@
 {% block styles %}
     <link rel="stylesheet" href='{% static "mainApp/css/listingsManagement.css" %}'>
 {% endblock %}
+{% block scripts %}
+    <script src='{% static "mainApp/js/listingsManagement.js"%}'></script>
+{% endblock %}
 {% block content %}
-<div class="container mt-5 ">
+<div class="container mt-5 shadow-lg">
         <div class="row text-center">
             <div class="col-sm-12">
                 <h3>{% trans 'Gerir Anúncios' %}</h3>
@@ -25,9 +28,9 @@
             <tbody>
                 {% if main_listing|length == 0%}
                     <tr>
-                        <td>Não tem nenhum anúncio para esta propriedade, pretende anunciar esta propriedade?</td>
+                        <td>Não tem nenhum anúncio para esta propriedade, pretende anunciar esta propriedade?<a href="/mainApp/profile/propertiesManagement/listingEditing/createListing/{{property.id}}"> Sim</a></td>
                     </tr>
-                {%elif property_listing != None %}
+                {% else %}
                     {% for listing in main_listing%}
                         <tr>
                             <td>{{forloop.counter}}</td>
@@ -41,8 +44,13 @@
                             {% else %}
                                 <td class="text-center">Quarto</td>
                             {% endif %}
-                            <td class="custom-control custom-checkbox text-center"><input type="checkbox" name="isActive" id="isActive" class="custom-control-input d-flex"{%if listing.is_active == 1 %}checked{%endif%}>
-                            <label for="isActive" class="custom-control-label"></label>
+                            <td class="custom-control custom-switch text-center pl-5">
+                                <form action="" method="POST" class="text-center pl-2">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="name" value="{{listing.id}}">
+                                    <input type="checkbox" class="custom-control-input isActive" id="customSwitch1" name="isActive" {% if listing.is_active == 1%}checked{%endif%}>
+                                    <label class="custom-control-label" for="customSwitch1"></label>
+                                </form>
                             </td>
                             <td class="text-center"><a href="{{property.id}}/{{listing.id}}"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -52,7 +60,6 @@
                                                                             </svg></a></td>
                         </tr>
                     {%endfor%}
-                {%else%}
                 {%endif%}
             </tbody>
         </table>

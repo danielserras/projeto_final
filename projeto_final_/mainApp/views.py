@@ -927,14 +927,23 @@ def livingrooms_editing_view(request, property_id):
     
     return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_id)) """
 
-def listing_editing_view(request, property_id):
+def listings_management_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
     bedrooms = list(Bedroom.objects.filter(associated_property=property_object))
     
     property_listing = None
     main_listing  = []
-    rooms_listing = []
+    #rooms_listing = []
 
+    if request.method == 'POST':
+        listing_id = request.POST.get('name')
+        #print(request.POST.get("isActive"))
+        is_active = 1
+        if request.POST.get("isActive") == None:
+            is_active = 0
+        listing = Listing.objects.get(id=listing_id)
+        listing.is_active = is_active
+        listing.save()
     #property_listing
     try:
         property_listing = Property_listing.objects.get(associated_property=property_object)
@@ -943,15 +952,15 @@ def listing_editing_view(request, property_id):
         #bedrooms_listing
         try:
             for bedroom in bedrooms:
-                room_listing = Room_listing.objects.filter(associated_room=bedroom)
-                rooms_listing.append(room_listing)
+                room_listing = Room_listing.objects.get(associated_room=bedroom)
+                #rooms_listing.append(room_listing)
                 main_listing.append(room_listing.main_listing)
         except:
             pass
-    context = {'property_listing':property_listing, 'rooms_listing':rooms_listing, 'main_listing':main_listing, 'property':property_object}
+    context = {'property_listing':property_listing, 'main_listing':main_listing, 'property':property_object}
     return render(request, "mainApp/listingsManagement.html", context)
 
-def main_listing_editing_view(request, property_id, main_listing_id):
+def listing_editing_view(request, property_id, main_listing_id):
     
     main_listing = Listing.objects.get(id=main_listing_id)
     main_listing.availability_starts = main_listing.availability_starts.strftime('%Y-%m-%d')
@@ -971,6 +980,55 @@ def main_listing_editing_view(request, property_id, main_listing_id):
     img_formset.extra=0
 
     context = {'main_listing':main_listing, 'img_formset':img_formset}
+    return render(request, "mainApp/editListing.html", context)
+
+def create_listing_view(request, property_id):
+    porperty_object = Property.objects.get(id=property_id)
+
+    if request.method == 'POST':
+        prop_album = ImageAlbum(name=request.POST.get('title'))
+        #prop_album.save()
+        img_formset = ImgFormSet(request.POST, request.FILES)
+        print(img_formset)
+        listing_obj = Listing(
+            listing_type = "TESTE",
+            allowed_gender = request.POST.get('allowed_gender'),
+            monthly_payment =  request.POST.get('monthly_payment'),
+            availability_starts =  request.POST.get('availability_starts'),
+            availability_ending =  request.POST.get('availability_ending'),
+            title =  request.POST.get('title'),
+            description =  request.POST.get('description'),
+            security_deposit =  request.POST.get('security_deposit'),
+            max_capacity =  request.POST.get('max_capacity'),
+            is_active = True,
+            album = prop_album
+        )
+        #listing_obj.save()
+        """ imgformset = ImgFormSet(request.POST, request.FILES)
+        imgs = imgformset.cleaned_data
+
+        for d in imgs:
+            cover = False
+            if d == imgs[0]:
+                cover = True
+
+            for i in d.values():
+                if i != None:
+        
+                    img = Image(
+                        name= listing_obj.title+'_'+str(assoc_prop.id),
+                        is_cover = cover,
+                        image = i,
+                        album = prop_album)
+                    img.save()
+                    img_pli = PIL.Image.open(img.image)  
+                    img_r = img_pli.resize((600,337))
+                    img_r.save(str(img.image)) """
+
+    
+    img_formset = ImgFormSet(queryset=Image.objects.none())
+    img_formset.extra = 1
+    context = {'img_formset':img_formset}
     return render(request, "mainApp/editListing.html", context)
 
 def notificationsTenant(request):
