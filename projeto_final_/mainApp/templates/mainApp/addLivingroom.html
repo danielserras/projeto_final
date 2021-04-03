@@ -15,7 +15,7 @@
     {% if request.session.livingrooms_num > 0%}
         <p id="numberOfSteps" hidden>6</p>
         <p id="numberOfCompletedSteps" hidden>5</p>
-        <p id="labelsList" hidden>Início,Quartos,Casa de Banho,Cozinhas,Salas,Fim</p>
+        <p id="labelsList" hidden>{% trans 'Início,Quartos,Casas de Banho,Cozinhas,Salas,Fim' %}</p>
         <div class="row m-5">
             <div class="col-12 mx-auto pr-0" id="stepBarDiv" style="display: flex;">
                 <div class="progressLine"></div>

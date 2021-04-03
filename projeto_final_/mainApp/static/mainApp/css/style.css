@@ -130,7 +130,8 @@ img.blur {
     position: absolute;
     background-color: #264653;
     height: 3px;
-    align-self: center
+    align-self: center;
+    z-index: 99;
 }
 
 .stepLabel{

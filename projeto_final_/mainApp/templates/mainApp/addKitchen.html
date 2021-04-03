@@ -13,10 +13,10 @@
 <div class="container">
     {% if request.session.livingrooms_num > 0%}
         <p id="numberOfSteps" hidden>6</p>
-        <p id="labelsList" hidden>Início,Quartos,Casa de Banho,Cozinhas,Salas,Fim</p>   
+        <p id="labelsList" hidden>{% trans 'Início,Quartos,Casas de Banho,Cozinhas,Salas,Fim' %}</p>   
     {% else %}
         <p id="numberOfSteps" hidden>5</p>
-        <p id="labelsList" hidden>Início,Quartos,Casa de Banho,Cozinhas,Fim</p>   
+        <p id="labelsList" hidden>{% trans 'Início,Quartos,Casas de Banho,Cozinhas,Fim' %}</p>   
     {% endif %}
     <p id="numberOfCompletedSteps" hidden>4</p>
     <div class="row m-5 ">

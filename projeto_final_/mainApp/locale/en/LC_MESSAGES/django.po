@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-24 13:42+0000\n"
+"POT-Creation-Date: 2021-04-03 16:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,588 +18,685 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: projeto_final_/mainApp/templates/mainApp/addAlbum.html:28
-#: projeto_final_/mainApp/templates/mainApp/addBathroom.html:67
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:115
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:116
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:142
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:155
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:175
-#: projeto_final_/mainApp/templates/mainApp/editBathrooms.html:87
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:142
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:130
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:144
+#: mainApp/templates/mainApp/addAlbum.html:28
+#: mainApp/templates/mainApp/addBathroom.html:74
+#: mainApp/templates/mainApp/addBedroom.html:123
+#: mainApp/templates/mainApp/addKitchen.html:123
+#: mainApp/templates/mainApp/addListing.html:156
+#: mainApp/templates/mainApp/addListing.html:169
+#: mainApp/templates/mainApp/addProperty.html:193
+#: mainApp/templates/mainApp/editBathrooms.html:87
+#: mainApp/templates/mainApp/editBedrooms.html:142
+#: mainApp/templates/mainApp/editKitchens.html:130
+#: mainApp/templates/mainApp/editProperty.html:155
 msgid "Seguinte"
 msgstr "Next"
 
-#: projeto_final_/mainApp/templates/mainApp/addBathroom.html:27
-#: projeto_final_/mainApp/templates/mainApp/editBathrooms.html:27
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:171
+#: mainApp/templates/mainApp/addBathroom.html:16
+#: mainApp/templates/mainApp/addBedroom.html:16
+#: mainApp/templates/mainApp/addKitchen.html:16
+#: mainApp/templates/mainApp/addListing.html:18
+#: mainApp/templates/mainApp/addLivingroom.html:18
+#: mainApp/templates/mainApp/addProperty.html:31
+msgid "Início,Quartos,Casas de Banho,Cozinhas,Salas,Fim"
+msgstr "Start,Bedrooms,Bathrooms,Kitchens,Livingrooms,Finish"
+
+#: mainApp/templates/mainApp/addBathroom.html:19
+#: mainApp/templates/mainApp/addBedroom.html:19
+#: mainApp/templates/mainApp/addKitchen.html:19
+#: mainApp/templates/mainApp/addListing.html:22
+msgid "Início,Quartos,Casas de Banho,Cozinhas,Fim"
+msgstr "Start,Bedrooms,Bathrooms,Kitchens,Finish"
+
+#: mainApp/templates/mainApp/addBathroom.html:34
+#: mainApp/templates/mainApp/editBathrooms.html:27
+#: mainApp/templates/mainApp/listingPage.html:169
 msgid "Casa de Banho"
 msgstr "Bathroom"
 
-#: projeto_final_/mainApp/templates/mainApp/addBathroom.html:34
-#: projeto_final_/mainApp/templates/mainApp/editBathrooms.html:50
+#: mainApp/templates/mainApp/addBathroom.html:41
+#: mainApp/templates/mainApp/editBathrooms.html:50
 msgid "Banheira"
 msgstr "Bathtub"
 
-#: projeto_final_/mainApp/templates/mainApp/addBathroom.html:38
-#: projeto_final_/mainApp/templates/mainApp/editBathrooms.html:54
+#: mainApp/templates/mainApp/addBathroom.html:45
+#: mainApp/templates/mainApp/editBathrooms.html:54
 msgid "Bidé"
 msgstr "Bidet"
 
-#: projeto_final_/mainApp/templates/mainApp/addBathroom.html:42
-#: projeto_final_/mainApp/templates/mainApp/editBathrooms.html:58
+#: mainApp/templates/mainApp/addBathroom.html:49
+#: mainApp/templates/mainApp/editBathrooms.html:58
 msgid "Chuveiro"
 msgstr "Shower"
 
-#: projeto_final_/mainApp/templates/mainApp/addBathroom.html:49
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:62
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:56
-#: projeto_final_/mainApp/templates/mainApp/addLivingroom.html:36
-#: projeto_final_/mainApp/templates/mainApp/editBathrooms.html:65
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:85
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:73
-#: projeto_final_/mainApp/templates/mainApp/editLivingrooms.html:48
+#: mainApp/templates/mainApp/addBathroom.html:56
+#: mainApp/templates/mainApp/addBedroom.html:70
+#: mainApp/templates/mainApp/addKitchen.html:63
+#: mainApp/templates/mainApp/addLivingroom.html:43
+#: mainApp/templates/mainApp/editBathrooms.html:65
+#: mainApp/templates/mainApp/editBedrooms.html:85
+#: mainApp/templates/mainApp/editKitchens.html:73
+#: mainApp/templates/mainApp/editLivingrooms.html:48
 msgid "Janela"
 msgstr "Window"
 
-#: projeto_final_/mainApp/templates/mainApp/addBathroom.html:53
-#: projeto_final_/mainApp/templates/mainApp/editBathrooms.html:69
+#: mainApp/templates/mainApp/addBathroom.html:60
+#: mainApp/templates/mainApp/editBathrooms.html:69
 msgid "Lavatório"
 msgstr "Sink"
 
-#: projeto_final_/mainApp/templates/mainApp/addBathroom.html:57
-#: projeto_final_/mainApp/templates/mainApp/editBathrooms.html:73
+#: mainApp/templates/mainApp/addBathroom.html:64
+#: mainApp/templates/mainApp/editBathrooms.html:73
 msgid "Sanita"
 msgstr "Toilet"
 
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:34
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:57
+#: mainApp/templates/mainApp/addBedroom.html:42
+#: mainApp/templates/mainApp/editBedrooms.html:57
 msgid "Aquecedor"
 msgstr "Heater"
 
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:38
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:61
+#: mainApp/templates/mainApp/addBedroom.html:46
+#: mainApp/templates/mainApp/editBedrooms.html:61
 msgid "Ar condicionado"
 msgstr "Air conditioner"
 
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:42
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:65
+#: mainApp/templates/mainApp/addBedroom.html:50
+#: mainApp/templates/mainApp/editBedrooms.html:65
 msgid "Cadeira"
 msgstr "Chair"
 
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:48
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:71
+#: mainApp/templates/mainApp/addBedroom.html:56
+#: mainApp/templates/mainApp/editBedrooms.html:71
 msgid "Casa de Banho Privada"
 msgstr "Private Bathroom"
 
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:52
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:75
+#: mainApp/templates/mainApp/addBedroom.html:60
+#: mainApp/templates/mainApp/editBedrooms.html:75
 msgid "Cómoda"
 msgstr "Chest of drawers"
 
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:56
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:79
+#: mainApp/templates/mainApp/addBedroom.html:64
+#: mainApp/templates/mainApp/editBedrooms.html:79
 msgid "Guarda Roupa"
 msgstr "Wardrobe"
 
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:66
-#: projeto_final_/mainApp/templates/mainApp/addLivingroom.html:54
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:89
-#: projeto_final_/mainApp/templates/mainApp/editLivingrooms.html:66
+#: mainApp/templates/mainApp/addBedroom.html:74
+#: mainApp/templates/mainApp/addLivingroom.html:61
+#: mainApp/templates/mainApp/editBedrooms.html:89
+#: mainApp/templates/mainApp/editLivingrooms.html:66
 msgid "Secretária"
 msgstr "Desk"
 
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:70
-#: projeto_final_/mainApp/templates/mainApp/addLivingroom.html:46
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:93
-#: projeto_final_/mainApp/templates/mainApp/editLivingrooms.html:58
+#: mainApp/templates/mainApp/addBedroom.html:78
+#: mainApp/templates/mainApp/addLivingroom.html:53
+#: mainApp/templates/mainApp/editBedrooms.html:93
+#: mainApp/templates/mainApp/editLivingrooms.html:58
 msgid "Sofá"
 msgstr "Couch"
 
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:76
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:99
+#: mainApp/templates/mainApp/addBedroom.html:84
+#: mainApp/templates/mainApp/editBedrooms.html:99
 msgid "Sofá-Cama"
 msgstr "Sofa bed"
 
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:80
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:103
+#: mainApp/templates/mainApp/addBedroom.html:88
+#: mainApp/templates/mainApp/editBedrooms.html:103
 msgid "Tv"
 msgstr "Tv"
 
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:84
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:98
-#: projeto_final_/mainApp/templates/mainApp/addLivingroom.html:60
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:107
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:115
-#: projeto_final_/mainApp/templates/mainApp/editLivingrooms.html:72
+#: mainApp/templates/mainApp/addBedroom.html:92
+#: mainApp/templates/mainApp/addKitchen.html:105
+#: mainApp/templates/mainApp/addLivingroom.html:67
+#: mainApp/templates/mainApp/editBedrooms.html:107
+#: mainApp/templates/mainApp/editKitchens.html:115
+#: mainApp/templates/mainApp/editLivingrooms.html:72
 msgid "Varanda"
 msgstr "Balcony"
 
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:90
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:113
+#: mainApp/templates/mainApp/addBedroom.html:98
+#: mainApp/templates/mainApp/editBedrooms.html:113
 msgid "Fechadura"
 msgstr "Lock"
 
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:95
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:118
+#: mainApp/templates/mainApp/addBedroom.html:103
+#: mainApp/templates/mainApp/editBedrooms.html:118
 msgid "Camas de Casal"
 msgstr "Double bed"
 
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:99
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:122
+#: mainApp/templates/mainApp/addBedroom.html:107
+#: mainApp/templates/mainApp/editBedrooms.html:122
 msgid "Camas de Solteiro"
 msgstr "Single bed"
 
-#: projeto_final_/mainApp/templates/mainApp/addBedroom.html:103
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:66
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:126
+#: mainApp/templates/mainApp/addBedroom.html:111
+#: mainApp/templates/mainApp/addListing.html:80
+#: mainApp/templates/mainApp/editBedrooms.html:126
+#: mainApp/templates/mainApp/editListing.html:62
 msgid "Ocupação máxima"
 msgstr "Maximum occupancy"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:27
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:32
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:147
+#: mainApp/templates/mainApp/addKitchen.html:34
+#: mainApp/templates/mainApp/editKitchens.html:32
+#: mainApp/templates/mainApp/listingPage.html:145
 msgid "Cozinha"
 msgstr "Kitchen"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:34
-#: projeto_final_/mainApp/templates/mainApp/addLivingroom.html:32
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:51
-#: projeto_final_/mainApp/templates/mainApp/editLivingrooms.html:44
+#: mainApp/templates/mainApp/addKitchen.html:41
+#: mainApp/templates/mainApp/addLivingroom.html:39
+#: mainApp/templates/mainApp/editKitchens.html:51
+#: mainApp/templates/mainApp/editLivingrooms.html:44
 msgid "Cadeiras"
 msgstr "Chairs"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:38
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:55
+#: mainApp/templates/mainApp/addKitchen.html:45
+#: mainApp/templates/mainApp/editKitchens.html:55
 msgid "Congelador"
 msgstr "Freezer"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:42
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:59
+#: mainApp/templates/mainApp/addKitchen.html:49
+#: mainApp/templates/mainApp/editKitchens.html:59
 msgid "Fogão"
 msgstr "Stove"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:48
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:65
+#: mainApp/templates/mainApp/addKitchen.html:55
+#: mainApp/templates/mainApp/editKitchens.html:65
 msgid "Forno"
 msgstr "Oven"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:52
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:69
+#: mainApp/templates/mainApp/addKitchen.html:59
+#: mainApp/templates/mainApp/editKitchens.html:69
 msgid "Frigorífico"
 msgstr "Fridge"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:62
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:79
+#: mainApp/templates/mainApp/addKitchen.html:69
+#: mainApp/templates/mainApp/editKitchens.html:79
 msgid "Máquina de Lavar Loiça"
 msgstr "Dishwasher"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:66
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:83
+#: mainApp/templates/mainApp/addKitchen.html:73
+#: mainApp/templates/mainApp/editKitchens.html:83
 msgid "Máquina de Lavar Roupa"
 msgstr "Washing machine"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:70
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:87
+#: mainApp/templates/mainApp/addKitchen.html:77
+#: mainApp/templates/mainApp/editKitchens.html:87
 msgid "Máquina de Secar Roupa"
 msgstr "Clothes dryer"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:76
-#: projeto_final_/mainApp/templates/mainApp/addLivingroom.html:40
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:93
-#: projeto_final_/mainApp/templates/mainApp/editLivingrooms.html:52
+#: mainApp/templates/mainApp/addKitchen.html:83
+#: mainApp/templates/mainApp/addLivingroom.html:47
+#: mainApp/templates/mainApp/editKitchens.html:93
+#: mainApp/templates/mainApp/editLivingrooms.html:52
 msgid "Mesa"
 msgstr "Table"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:80
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:97
+#: mainApp/templates/mainApp/addKitchen.html:87
+#: mainApp/templates/mainApp/editKitchens.html:97
 msgid "Microondas"
 msgstr "Microwave"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:84
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:101
+#: mainApp/templates/mainApp/addKitchen.html:91
+#: mainApp/templates/mainApp/editKitchens.html:101
 msgid "Lava Loiças"
 msgstr "Dishwasher sink"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:90
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:107
+#: mainApp/templates/mainApp/addKitchen.html:97
+#: mainApp/templates/mainApp/editKitchens.html:107
 msgid "Panelas e Frigideiras"
 msgstr "Pots and pans"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:94
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:111
+#: mainApp/templates/mainApp/addKitchen.html:101
+#: mainApp/templates/mainApp/editKitchens.html:111
 msgid "Pratos e Talheres"
 msgstr "Plates and cutlery"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:109
-#: projeto_final_/mainApp/templates/mainApp/addLivingroom.html:70
+#: mainApp/templates/mainApp/addKitchen.html:116
+#: mainApp/templates/mainApp/addLivingroom.html:77
 msgid "Pretendo apenas guardar"
 msgstr "Just save the property"
 
-#: projeto_final_/mainApp/templates/mainApp/addKitchen.html:112
-#: projeto_final_/mainApp/templates/mainApp/addLivingroom.html:73
+#: mainApp/templates/mainApp/addKitchen.html:119
+#: mainApp/templates/mainApp/addLivingroom.html:80
 msgid "Prentendo listar"
 msgstr "I want to announce it"
 
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:22
+#: mainApp/templates/mainApp/addListing.html:36
 msgid "Outras informações"
 msgstr "Other information"
 
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:29
+#: mainApp/templates/mainApp/addListing.html:43
+#: mainApp/templates/mainApp/editListing.html:25
+#: mainApp/templates/mainApp/listingsManagement.html:22
 msgid "Título"
 msgstr "Title"
 
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:35
+#: mainApp/templates/mainApp/addListing.html:49
+#: mainApp/templates/mainApp/editListing.html:31
 msgid "Descrição"
 msgstr "Description"
 
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:41
+#: mainApp/templates/mainApp/addListing.html:55
+#: mainApp/templates/mainApp/editListing.html:37
 msgid "Disponível de"
 msgstr "Avaiable from"
 
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:45
+#: mainApp/templates/mainApp/addListing.html:59
+#: mainApp/templates/mainApp/editListing.html:41
 msgid "até"
 msgstr "to"
 
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:51
-#: projeto_final_/mainApp/templates/mainApp/search.html:93
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:37
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:36
+#: mainApp/templates/mainApp/addListing.html:65
+#: mainApp/templates/mainApp/editListing.html:47
+#: mainApp/templates/mainApp/search.html:93
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:37
+#: mainApp/templates/mainApp/startsAgreementTenent.html:36
 msgid "Renda"
 msgstr "Rent"
 
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:55
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:38
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:37
+#: mainApp/templates/mainApp/addListing.html:69
+#: mainApp/templates/mainApp/editListing.html:51
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:38
+#: mainApp/templates/mainApp/startsAgreementTenent.html:37
 msgid "Caução"
 msgstr "Security Deposit"
 
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:72
+#: mainApp/templates/mainApp/addListing.html:86
+#: mainApp/templates/mainApp/editListing.html:68
 msgid "Género Permitido"
 msgstr "Genders allowed"
 
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:74
+#: mainApp/templates/mainApp/addListing.html:88
+#: mainApp/templates/mainApp/editListing.html:70
 msgid "Ambos"
 msgstr "All"
 
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:76
+#: mainApp/templates/mainApp/addListing.html:89
+#: mainApp/templates/mainApp/editListing.html:71
+#, fuzzy
+#| msgid "Apenas Homens"
+msgid "Apenas Mulheres"
+msgstr "Male"
+
+#: mainApp/templates/mainApp/addListing.html:90
+#: mainApp/templates/mainApp/editListing.html:72
 msgid "Apenas Homens"
 msgstr "Male"
 
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:127
+#: mainApp/templates/mainApp/addListing.html:141
+#: mainApp/templates/mainApp/editListing.html:151
 msgid "Album de fotografias"
 msgstr "Image gallery"
 
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:148
+#: mainApp/templates/mainApp/addListing.html:162
 msgid "Como pretende anunciar"
 msgstr "How do you want to announce it"
 
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:151
+#: mainApp/templates/mainApp/addListing.html:165
 msgid "Anunciar toda a propriedade"
 msgstr "Announce the entire"
 
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:153
+#: mainApp/templates/mainApp/addListing.html:167
 msgid "Anunciar quartos separadamente"
 msgstr "Announce the bedrooms individually"
 
-#: projeto_final_/mainApp/templates/mainApp/addLivingroom.html:25
-#: projeto_final_/mainApp/templates/mainApp/editLivingrooms.html:25
+#: mainApp/templates/mainApp/addLivingroom.html:32
+#: mainApp/templates/mainApp/editLivingrooms.html:25
 msgid "Sala"
 msgstr "Livingroom"
 
-#: projeto_final_/mainApp/templates/mainApp/addLivingroom.html:50
-#: projeto_final_/mainApp/templates/mainApp/editLivingrooms.html:62
+#: mainApp/templates/mainApp/addLivingroom.html:57
+#: mainApp/templates/mainApp/editLivingrooms.html:62
 msgid "Sofá-cama"
 msgstr "Sofa bed"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:23
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:28
-#: projeto_final_/mainApp/templates/mainApp/propertiesManagement.html:19
+#: mainApp/templates/mainApp/addProperty.html:27
+#, fuzzy
+#| msgid "Anunciar toda a propriedade"
+msgid "Adicionar Propriedade"
+msgstr "Announce the entire"
+
+#: mainApp/templates/mainApp/addProperty.html:41
+#: mainApp/templates/mainApp/editProperty.html:39
+#: mainApp/templates/mainApp/propertiesManagement.html:30
 msgid "Morada"
 msgstr "Address"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:34
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:39
+#: mainApp/templates/mainApp/addProperty.html:52
+#: mainApp/templates/mainApp/editProperty.html:50
 msgid "Marcar"
 msgstr "Place marker"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:45
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:49
+#: mainApp/templates/mainApp/addProperty.html:63
+#: mainApp/templates/mainApp/editProperty.html:60
 msgid "Arraste o marcador no mapa para ajustar a morada"
 msgstr "Drag the marker over the map to adjust the address"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:55
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:58
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:238
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:46
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:45
+#: mainApp/templates/mainApp/addProperty.html:73
+#: mainApp/templates/mainApp/editProperty.html:69
+#: mainApp/templates/mainApp/listingPage.html:236
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:46
+#: mainApp/templates/mainApp/startsAgreementTenent.html:45
 msgid "Regras"
 msgstr "Rules"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:64
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:67
+#: mainApp/templates/mainApp/addProperty.html:82
+#: mainApp/templates/mainApp/editProperty.html:78
 msgid "Animais de Estimação"
 msgstr "Pets"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:68
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:71
+#: mainApp/templates/mainApp/addProperty.html:86
+#: mainApp/templates/mainApp/editProperty.html:82
 msgid "Fumar"
 msgstr "Smoking"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:72
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:75
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:58
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:53
+#: mainApp/templates/mainApp/addProperty.html:90
+#: mainApp/templates/mainApp/editProperty.html:86
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:58
+#: mainApp/templates/mainApp/startsAgreementTenent.html:53
 msgid "Visitas podem pernoitar ocasionalmente"
 msgstr "Visitors can stay overnight occasionally "
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:80
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:83
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:74
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:61
+#: mainApp/templates/mainApp/addProperty.html:98
+#: mainApp/templates/mainApp/editProperty.html:94
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:74
+#: mainApp/templates/mainApp/startsAgreementTenent.html:61
 msgid "Despesas Incluídas"
 msgstr "Expenses included"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:89
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:92
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:91
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:70
+#: mainApp/templates/mainApp/addProperty.html:107
+#: mainApp/templates/mainApp/editProperty.html:103
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:91
+#: mainApp/templates/mainApp/startsAgreementTenent.html:70
 msgid "Água"
 msgstr "Water"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:93
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:96
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:86
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:69
+#: mainApp/templates/mainApp/addProperty.html:111
+#: mainApp/templates/mainApp/editProperty.html:107
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:86
+#: mainApp/templates/mainApp/startsAgreementTenent.html:69
 msgid "Eletricidade"
 msgstr "Electricity"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:97
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:100
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:81
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:68
+#: mainApp/templates/mainApp/addProperty.html:115
+#: mainApp/templates/mainApp/editProperty.html:111
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:81
+#: mainApp/templates/mainApp/startsAgreementTenent.html:68
 msgid "Internet"
 msgstr "Internet"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:101
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:104
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:96
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:71
+#: mainApp/templates/mainApp/addProperty.html:119
+#: mainApp/templates/mainApp/editProperty.html:115
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:96
+#: mainApp/templates/mainApp/startsAgreementTenent.html:71
 msgid "Gás"
 msgstr "Gas"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:107
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:110
+#: mainApp/templates/mainApp/addProperty.html:125
+#: mainApp/templates/mainApp/editProperty.html:121
 msgid "Serviços de Limpeza"
 msgstr "Cleaning service"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:115
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:118
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:207
+#: mainApp/templates/mainApp/addProperty.html:133
+#: mainApp/templates/mainApp/editProperty.html:129
+#: mainApp/templates/mainApp/listingPage.html:205
 msgid "Exterior"
 msgstr "Outside"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:124
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:127
+#: mainApp/templates/mainApp/addProperty.html:142
+#: mainApp/templates/mainApp/editProperty.html:138
 msgid "Estacionamento"
 msgstr "Parking"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:128
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:131
+#: mainApp/templates/mainApp/addProperty.html:146
+#: mainApp/templates/mainApp/editProperty.html:142
 msgid "Garagem"
 msgstr "Garage"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:132
-#: projeto_final_/mainApp/templates/mainApp/editProperty.html:135
+#: mainApp/templates/mainApp/addProperty.html:150
+#: mainApp/templates/mainApp/editProperty.html:146
 msgid "Jardim"
 msgstr "Garden"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:141
+#: mainApp/templates/mainApp/addProperty.html:159
 msgid "Características da Casa"
 msgstr "House features "
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:146
+#: mainApp/templates/mainApp/addProperty.html:164
 msgid "O que pretende anunciar"
 msgstr "What are you announcing"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:148
-#: projeto_final_/mainApp/templates/mainApp/search.html:50
+#: mainApp/templates/mainApp/addProperty.html:166
+#: mainApp/templates/mainApp/search.html:50
 msgid "Casa"
 msgstr "House"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:151
-#: projeto_final_/mainApp/templates/mainApp/search.html:51
+#: mainApp/templates/mainApp/addProperty.html:169
+#: mainApp/templates/mainApp/search.html:51
 msgid "Estúdio"
 msgstr "Studio apartment"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:154
-#: projeto_final_/mainApp/templates/mainApp/search.html:49
+#: mainApp/templates/mainApp/addProperty.html:172
+#: mainApp/templates/mainApp/search.html:49
 msgid "Apartamento"
 msgstr "Apartment"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:157
-#: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:28
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:123
-#: projeto_final_/mainApp/templates/mainApp/search.html:52
+#: mainApp/templates/mainApp/addProperty.html:175
+#: mainApp/templates/mainApp/editBedrooms.html:28
+#: mainApp/templates/mainApp/listingPage.html:121
+#: mainApp/templates/mainApp/search.html:52
 msgid "Quarto"
 msgstr "Bedroom"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:163
-#: projeto_final_/mainApp/templates/mainApp/search.html:70
+#: mainApp/templates/mainApp/addProperty.html:181
+#: mainApp/templates/mainApp/search.html:70
 msgid "Número de Quartos"
 msgstr "Number of Bedrooms"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:165
+#: mainApp/templates/mainApp/addProperty.html:183
 msgid "Número de Casas de Banho"
 msgstr "Number of Bathrooms"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:167
+#: mainApp/templates/mainApp/addProperty.html:185
 msgid "Número de Cozinhas"
 msgstr "Number of Kitchens"
 
-#: projeto_final_/mainApp/templates/mainApp/addProperty.html:169
+#: mainApp/templates/mainApp/addProperty.html:187
 msgid "Número de Salas"
 msgstr "Number of Livingrooms"
 
-#: projeto_final_/mainApp/templates/mainApp/base.html:35
-#: projeto_final_/mainApp/templates/mainApp/base.html:51
-#: projeto_final_/mainApp/templates/mainApp/home.html:46
-#: projeto_final_/mainApp/templates/mainApp/search.html:107
+#: mainApp/templates/mainApp/base.html:35
+#: mainApp/templates/mainApp/base.html:72
+#: mainApp/templates/mainApp/home.html:46
+#: mainApp/templates/mainApp/search.html:107
 msgid "Pesquisar"
 msgstr "Search"
 
-#: projeto_final_/mainApp/templates/mainApp/base.html:54
+#: mainApp/templates/mainApp/base.html:75
 msgid "Registar"
 msgstr "Register"
 
-#: projeto_final_/mainApp/templates/mainApp/base.html:74
+#: mainApp/templates/mainApp/base.html:95
 msgid "Termos e Políticas"
 msgstr "Terms and policies"
 
-#: projeto_final_/mainApp/templates/mainApp/confirmPass.html:14
+#: mainApp/templates/mainApp/confirmPass.html:14
 msgid "Confirme a sua Palavra-passe"
 msgstr "Confirm your password"
 
-#: projeto_final_/mainApp/templates/mainApp/confirmPass.html:18
+#: mainApp/templates/mainApp/confirmPass.html:18
 msgid "Nova Palavra-passe"
 msgstr "New password"
 
-#: projeto_final_/mainApp/templates/mainApp/confirmPass.html:19
+#: mainApp/templates/mainApp/confirmPass.html:19
 msgid "Insira de novo a Palavra-passe"
 msgstr "Write your new password"
 
-#: projeto_final_/mainApp/templates/mainApp/confirmPass.html:20
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:144
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:118
+#: mainApp/templates/mainApp/confirmPass.html:20
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:144
+#: mainApp/templates/mainApp/startsAgreementTenent.html:118
 msgid "Confirmar"
 msgstr "Confirm"
 
-#: projeto_final_/mainApp/templates/mainApp/editKitchens.html:134
-#: projeto_final_/mainApp/templates/mainApp/editLivingrooms.html:86
+#: mainApp/templates/mainApp/editKitchens.html:134
+#: mainApp/templates/mainApp/editLivingrooms.html:86
 msgid "Terminar"
 msgstr "Finish"
 
-#: projeto_final_/mainApp/templates/mainApp/home.html:14
+#: mainApp/templates/mainApp/editListing.html:18
+#, fuzzy
+#| msgid "Editar Anúncio"
+msgid "Edição do Anúncio"
+msgstr "Edit announcement"
+
+#: mainApp/templates/mainApp/editListing.html:183
+#, fuzzy
+#| msgid "Guarda Roupa"
+msgid "Guardar"
+msgstr "Wardrobe"
+
+#: mainApp/templates/mainApp/editProperty.html:24
+#, fuzzy
+#| msgid "Anunciar toda a propriedade"
+msgid "Editar Propriedade"
+msgstr "Announce the entire"
+
+#: mainApp/templates/mainApp/emailBody.html:6
+#, fuzzy
+#| msgid "Descrição do Acordo"
+msgid "Verificação de conta"
+msgstr "Agreement description"
+
+#: mainApp/templates/mainApp/home.html:14
 msgid "Vais estudar e não sabes onde ficar? Nós podemos ajudar!"
 msgstr "Going away to study and have nowhere to stay? We can help"
 
-#: projeto_final_/mainApp/templates/mainApp/home.html:30
-#: projeto_final_/mainApp/templates/mainApp/search.html:25
+#: mainApp/templates/mainApp/home.html:30
+#: mainApp/templates/mainApp/search.html:25
 msgid "Localização"
 msgstr "Location"
 
-#: projeto_final_/mainApp/templates/mainApp/home.html:35
-#: projeto_final_/mainApp/templates/mainApp/search.html:30
+#: mainApp/templates/mainApp/home.html:35
+#: mainApp/templates/mainApp/search.html:30
 msgid "Raio"
 msgstr "Radius"
 
-#: projeto_final_/mainApp/templates/mainApp/home.html:69
+#: mainApp/templates/mainApp/home.html:69
 msgid "Sou estudante"
 msgstr "I'm a student"
 
-#: projeto_final_/mainApp/templates/mainApp/home.html:80
+#: mainApp/templates/mainApp/home.html:80
 msgid "Sou senhorio"
 msgstr "I'm a landlord"
 
-#: projeto_final_/mainApp/templates/mainApp/intent.html:15
+#: mainApp/templates/mainApp/intent.html:17
 msgid "Estou interessado!"
 msgstr "I'm interested!"
 
-#: projeto_final_/mainApp/templates/mainApp/intent.html:18
+#: mainApp/templates/mainApp/intent.html:22
+#: mainApp/templates/mainApp/renewAgreement.html:21
+#: mainApp/templates/mainApp/renewAgreement.html:47
 msgid "Data de Início"
 msgstr "Starting date"
 
-#: projeto_final_/mainApp/templates/mainApp/intent.html:24
+#: mainApp/templates/mainApp/intent.html:28
+#: mainApp/templates/mainApp/renewAgreement.html:27
+#: mainApp/templates/mainApp/renewAgreement.html:48
 msgid "Data de Fim"
 msgstr "Ending date"
 
-#: projeto_final_/mainApp/templates/mainApp/intent.html:30
+#: mainApp/templates/mainApp/intent.html:35
+#: mainApp/templates/mainApp/renewAgreement.html:34
 msgid "Mensagem a enviar ao senhorio"
 msgstr "Message to landlord"
 
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:59
+#: mainApp/templates/mainApp/intent.html:38
+#: mainApp/templates/mainApp/renewAgreement.html:37
+#, fuzzy
+#| msgid "Introduza aqui uma mensagem a enviar ao proprietário"
+msgid "Introduza uma mensagem a enviar ao senhorio..."
+msgstr "Write your message to the landlord here"
+
+#: mainApp/templates/mainApp/listingPage.html:59
 msgid "pessoas"
 msgstr "people"
 
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:59
+#: mainApp/templates/mainApp/listingPage.html:59
 msgid "pessoa"
 msgstr "person"
 
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:65
+#: mainApp/templates/mainApp/listingPage.html:65
 msgid "camas"
 msgstr "beds"
 
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:65
+#: mainApp/templates/mainApp/listingPage.html:65
 msgid "cama"
 msgstr "bed"
 
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:71
+#: mainApp/templates/mainApp/listingPage.html:71
 msgid "casas-de-banho"
 msgstr "bathrooms"
 
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:71
+#: mainApp/templates/mainApp/listingPage.html:71
 msgid "casa-de-banho"
 msgstr "bathroom"
 
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:90
+#: mainApp/templates/mainApp/listingPage.html:90
 msgid "mês"
 msgstr "month"
 
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:99
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:103
+#: mainApp/templates/mainApp/listingPage.html:99
+#: mainApp/templates/mainApp/listingPage.html:102
 msgid "Mostrar Interesse"
 msgstr "Show interest"
 
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:116
+#: mainApp/templates/mainApp/listingPage.html:114
 msgid "Detalhes"
 msgstr "Features"
 
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:189
+#: mainApp/templates/mainApp/listingPage.html:187
 msgid "Sala de estar"
 msgstr "Livingroom"
 
-#: projeto_final_/mainApp/templates/mainApp/listingPage.html:221
+#: mainApp/templates/mainApp/listingPage.html:219
 msgid "Despesas incluídas"
 msgstr "Expenses included"
 
-#: projeto_final_/mainApp/templates/mainApp/login.html:30
+#: mainApp/templates/mainApp/listingsManagement.html:14
+#, fuzzy
+#| msgid "Editar Anúncio"
+msgid "Gerir Anúncios"
+msgstr "Edit announcement"
+
+#: mainApp/templates/mainApp/listingsManagement.html:23
+msgid "Tipo"
+msgstr ""
+
+#: mainApp/templates/mainApp/listingsManagement.html:24
+msgid "Ativo"
+msgstr ""
+
+#: mainApp/templates/mainApp/listingsManagement.html:25
+#, fuzzy
+#| msgid "Aceitar"
+msgid "Editar"
+msgstr "Accept"
+
+#: mainApp/templates/mainApp/login.html:30
 msgid "Confirmação E-mail"
 msgstr "E-mail confirmation"
 
-#: projeto_final_/mainApp/templates/mainApp/login.html:36
+#: mainApp/templates/mainApp/login.html:39
 msgid ""
 "Enviámos-lhe um email de confirmação de conta, por favor confirme-a assim "
 "que possível."
 msgstr "We just sent you an email to confirm your account, please check it out"
 
-#: projeto_final_/mainApp/templates/mainApp/login.html:49
-#: projeto_final_/mainApp/templates/mainApp/pw_reset.html:16
+#: mainApp/templates/mainApp/login.html:55
+#: mainApp/templates/mainApp/pw_reset.html:16
 msgid "Mudança de password"
 msgstr "Password reset"
 
-#: projeto_final_/mainApp/templates/mainApp/login.html:55
+#: mainApp/templates/mainApp/login.html:61
 msgid ""
 "Enviámos-lhe um link por email para proceder à alteração da sua password, "
 "por favor efetue assim que possível."
@@ -607,143 +704,154 @@ msgstr ""
 "We just sent you an email to proceed with the password reset, please check "
 "it out"
 
-#: projeto_final_/mainApp/templates/mainApp/login.html:68
+#: mainApp/templates/mainApp/login.html:74
 msgid "Password alterada"
 msgstr "Password changed"
 
-#: projeto_final_/mainApp/templates/mainApp/login.html:74
+#: mainApp/templates/mainApp/login.html:80
 msgid "Password alterada com sucesso!"
 msgstr "Password successfully changed"
 
-#: projeto_final_/mainApp/templates/mainApp/login.html:77
+#: mainApp/templates/mainApp/login.html:83
 msgid "Fechar"
 msgstr "Close"
 
-#: projeto_final_/mainApp/templates/mainApp/login.html:92
-#: projeto_final_/mainApp/templates/mainApp/register.html:41
+#: mainApp/templates/mainApp/login.html:98
 msgid "Nome de Utilizador"
 msgstr "Username"
 
-#: projeto_final_/mainApp/templates/mainApp/login.html:93
-#: projeto_final_/mainApp/templates/mainApp/register.html:46
+#: mainApp/templates/mainApp/login.html:99
 msgid "Palavra-passe"
 msgstr "Palavra-passe"
 
-#: projeto_final_/mainApp/templates/mainApp/login.html:94
+#: mainApp/templates/mainApp/login.html:101
 msgid "Esqueceste-te da password"
 msgstr "Forgot you password"
 
-#: projeto_final_/mainApp/templates/mainApp/login.html:105
+#: mainApp/templates/mainApp/login.html:121
 msgid "Login"
 msgstr "Login"
 
-#: projeto_final_/mainApp/templates/mainApp/login.html:108
+#: mainApp/templates/mainApp/login.html:124
 msgid "Registe-se agora"
 msgstr "Register now"
 
-#: projeto_final_/mainApp/templates/mainApp/notificationsLandlord.html:45
-#: projeto_final_/mainApp/templates/mainApp/notificationsTenant.html:19
+#: mainApp/templates/mainApp/notificationsLandlord.html:45
+#: mainApp/templates/mainApp/notificationsTenant.html:19
 msgid "Recentemente"
 msgstr "Recently"
 
-#: projeto_final_/mainApp/templates/mainApp/notificationsLandlord.html:80
-#: projeto_final_/mainApp/templates/mainApp/notificationsTenant.html:55
+#: mainApp/templates/mainApp/notificationsLandlord.html:80
+#: mainApp/templates/mainApp/notificationsTenant.html:55
 msgid "Assunto"
 msgstr "Subject"
 
-#: projeto_final_/mainApp/templates/mainApp/notificationsLandlord.html:83
-#: projeto_final_/mainApp/templates/mainApp/notificationsTenant.html:58
+#: mainApp/templates/mainApp/notificationsLandlord.html:83
+#: mainApp/templates/mainApp/notificationsTenant.html:58
 msgid "Data Início"
 msgstr "Starting date"
 
-#: projeto_final_/mainApp/templates/mainApp/notificationsLandlord.html:87
-#: projeto_final_/mainApp/templates/mainApp/notificationsTenant.html:62
+#: mainApp/templates/mainApp/notificationsLandlord.html:87
+#: mainApp/templates/mainApp/notificationsTenant.html:62
 msgid "Data término"
 msgstr "Ending date"
 
-#: projeto_final_/mainApp/templates/mainApp/notificationsLandlord.html:92
-#: projeto_final_/mainApp/templates/mainApp/notificationsTenant.html:67
+#: mainApp/templates/mainApp/notificationsLandlord.html:92
+#: mainApp/templates/mainApp/notificationsTenant.html:67
 msgid "Mensagem"
 msgstr "Message"
 
-#: projeto_final_/mainApp/templates/mainApp/notificationsLandlord.html:101
+#: mainApp/templates/mainApp/notificationsLandlord.html:101
 msgid "Recusar"
 msgstr "Refuse"
 
-#: projeto_final_/mainApp/templates/mainApp/notificationsLandlord.html:107
+#: mainApp/templates/mainApp/notificationsLandlord.html:107
 msgid "Aceitar"
 msgstr "Accept"
 
-#: projeto_final_/mainApp/templates/mainApp/notificationsLandlord.html:113
+#: mainApp/templates/mainApp/notificationsLandlord.html:113
 msgid "Estado do pedido"
 msgstr "State of the request"
 
-#: projeto_final_/mainApp/templates/mainApp/notificationsLandlord.html:115
+#: mainApp/templates/mainApp/notificationsLandlord.html:115
 msgid "Aceite"
 msgstr "Accepted"
 
-#: projeto_final_/mainApp/templates/mainApp/notificationsLandlord.html:117
-#: projeto_final_/mainApp/templates/mainApp/notificationsTenant.html:81
+#: mainApp/templates/mainApp/notificationsLandlord.html:117
+#: mainApp/templates/mainApp/notificationsTenant.html:81
 msgid "Recusado"
 msgstr "Refused"
 
-#: projeto_final_/mainApp/templates/mainApp/notificationsTenant.html:33
-#: projeto_final_/mainApp/templates/mainApp/notificationsTenant.html:72
+#: mainApp/templates/mainApp/notificationsTenant.html:33
+#: mainApp/templates/mainApp/notificationsTenant.html:72
 msgid "Resposta ao seu pedido de alojamento"
 msgstr "Answer to your agreement proposal"
 
-#: projeto_final_/mainApp/templates/mainApp/notificationsTenant.html:77
+#: mainApp/templates/mainApp/notificationsTenant.html:77
 msgid "Realizar Pagamento"
 msgstr "Make payment"
 
-#: projeto_final_/mainApp/templates/mainApp/payment.html:35
-msgid "Nome do detentor do cartão"
-msgstr "Name of the card owner"
-
-#: projeto_final_/mainApp/templates/mainApp/payment.html:38
-msgid "Número do cartão"
-msgstr "Card number"
-
-#: projeto_final_/mainApp/templates/mainApp/profile.html:9
+#: mainApp/templates/mainApp/profile.html:9
 msgid "Perfil"
 msgstr "Profile"
 
-#: projeto_final_/mainApp/templates/mainApp/profile.html:22
-#: projeto_final_/mainApp/templates/mainApp/propertiesManagement.html:11
+#: mainApp/templates/mainApp/profile.html:23
+#: mainApp/templates/mainApp/propertiesManagement.html:20
+#: mainApp/templates/mainApp/propertiesManagement.html:22
 msgid "Gerir Alojamentos"
 msgstr "Manage properties"
 
-#: projeto_final_/mainApp/templates/mainApp/profile.html:26
+#: mainApp/templates/mainApp/profile.html:27
 msgid "Adicionar Alojamento"
 msgstr "Add property"
 
-#: projeto_final_/mainApp/templates/mainApp/profile.html:30
+#: mainApp/templates/mainApp/profile.html:31
 msgid "Gerir Acordos"
 msgstr "Manage agreements"
 
-#: projeto_final_/mainApp/templates/mainApp/profile.html:51
-msgid "info do perfil"
+#: mainApp/templates/mainApp/profile.html:36
+#, fuzzy
+#| msgid "Gerir Acordos"
+msgid "Ver Acordos"
+msgstr "Manage agreements"
+
+#: mainApp/templates/mainApp/profile.html:40
+#, fuzzy
+#| msgid "Aceitar Acordo"
+msgid "Cancelar Acordo"
+msgstr "Accept agreement"
+
+#: mainApp/templates/mainApp/profile.html:45
+#, fuzzy
+#| msgid "Recusar Acordo"
+msgid "Renovar Acordo"
+msgstr "Refuse agreement"
+
+#: mainApp/templates/mainApp/profile.html:56
+#, fuzzy
+#| msgid "info do perfil"
+msgid "Informação do perfil"
 msgstr "Profile Info"
 
-#: projeto_final_/mainApp/templates/mainApp/propertiesManagement.html:20
+#: mainApp/templates/mainApp/propertiesManagement.html:31
 msgid "Editar Alojamento"
 msgstr "Edit property"
 
-#: projeto_final_/mainApp/templates/mainApp/propertiesManagement.html:21
+#: mainApp/templates/mainApp/propertiesManagement.html:32
 msgid "Editar Anúncio"
 msgstr "Edit announcement"
 
-#: projeto_final_/mainApp/templates/mainApp/pw_reset.html:22
+#: mainApp/templates/mainApp/pw_reset.html:22
 msgid ""
 "Enviámos-lhe um link por email para proceder à alteração da password, por "
 "favor efetue assim que possível"
 msgstr "We just sent you a link by email, please check it out"
 
-#: projeto_final_/mainApp/templates/mainApp/pw_reset.html:36
+#: mainApp/templates/mainApp/pw_reset.html:36
 msgid "Recuperação password"
 msgstr "Password recovery"
 
-#: projeto_final_/mainApp/templates/mainApp/pw_reset.html:39
+#: mainApp/templates/mainApp/pw_reset.html:39
 msgid ""
 "Por favor insira o endereço de email associado à sua conta.<br> Será enviado "
 "um email em breve"
@@ -751,228 +859,234 @@ msgstr ""
 "Please write the email address associated to your account.<br> An email will "
 "be sent shortly "
 
-#: projeto_final_/mainApp/templates/mainApp/pw_reset.html:48
+#: mainApp/templates/mainApp/pw_reset.html:65
 msgid "Endereço de email"
 msgstr "Email address"
 
-#: projeto_final_/mainApp/templates/mainApp/pwd_reset_email.html:2
+#: mainApp/templates/mainApp/pwd_reset_confirm.html:17
+#, fuzzy
+#| msgid "Confirme a sua Palavra-passe"
+msgid "Alteração palavra-passe"
+msgstr "Confirm your password"
+
+#: mainApp/templates/mainApp/pwd_reset_confirm.html:19
+#, fuzzy
+#| msgid "Insira de novo a Palavra-passe"
+msgid "Por favor insira a sua nova palavra-passe"
+msgstr "Write your new password"
+
+#: mainApp/templates/mainApp/pwd_reset_email.html:2
 #, python-format
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
 msgstr ""
 
-#: projeto_final_/mainApp/templates/mainApp/pwd_reset_email.html:4
+#: mainApp/templates/mainApp/pwd_reset_email.html:4
 msgid "Please go to the following page and choose a new password:"
 msgstr ""
 
-#: projeto_final_/mainApp/templates/mainApp/pwd_reset_email.html:8
+#: mainApp/templates/mainApp/pwd_reset_email.html:8
 msgid "Your username, in case you’ve forgotten:"
 msgstr ""
 
-#: projeto_final_/mainApp/templates/mainApp/pwd_reset_email.html:10
+#: mainApp/templates/mainApp/pwd_reset_email.html:10
 msgid "Thanks for using our site!"
 msgstr ""
 
-#: projeto_final_/mainApp/templates/mainApp/pwd_reset_email.html:12
+#: mainApp/templates/mainApp/pwd_reset_email.html:12
 #, python-format
 msgid "The %(site_name)s team"
 msgstr ""
 
-#: projeto_final_/mainApp/templates/mainApp/register.html:17
+#: mainApp/templates/mainApp/register.html:20
 msgid "Registo"
 msgstr "Registration"
 
-#: projeto_final_/mainApp/templates/mainApp/register.html:51
-#, fuzzy
-#| msgid "Confirme a sua Palavra-passe"
-msgid "Confirme a palavra-passe"
-msgstr "Confirm your password"
-
-#: projeto_final_/mainApp/templates/mainApp/register.html:56
-msgid "Primeiro nome"
-msgstr "First Name"
-
-#: projeto_final_/mainApp/templates/mainApp/register.html:57
-msgid "Apelido"
-msgstr "Last Name"
-
-#: projeto_final_/mainApp/templates/mainApp/register.html:62
-msgid "E-mail"
-msgstr "E-mail"
-
-#: projeto_final_/mainApp/templates/mainApp/register.html:67
-msgid "Número de Telefone"
-msgstr "Phone number"
-
-#: projeto_final_/mainApp/templates/mainApp/register.html:72
+#: mainApp/templates/mainApp/register.html:79
 msgid "Data de Nascimento"
 msgstr "Birth date"
 
-#: projeto_final_/mainApp/templates/mainApp/register.html:78
+#: mainApp/templates/mainApp/register.html:92
 msgid "Tipo de Conta"
 msgstr "Account type"
 
-#: projeto_final_/mainApp/templates/mainApp/register.html:80
+#: mainApp/templates/mainApp/register.html:94
 msgid "Inquilino"
 msgstr "Tenant"
 
-#: projeto_final_/mainApp/templates/mainApp/register.html:83
+#: mainApp/templates/mainApp/register.html:97
 msgid "Senhorio"
 msgstr "Landlord"
 
-#: projeto_final_/mainApp/templates/mainApp/search.html:14
+#: mainApp/templates/mainApp/renewAgreement.html:16
+msgid "Quero renovar!"
+msgstr ""
+
+#: mainApp/templates/mainApp/renewAgreement.html:49
+#, fuzzy
+#| msgid "Anunciar toda a propriedade"
+msgid "Morada da propriedade"
+msgstr "Announce the entire"
+
+#: mainApp/templates/mainApp/renewAgreement.html:50
+#, fuzzy
+#| msgid "Sou senhorio"
+msgid "Nome do senhorio"
+msgstr "I'm a landlord"
+
+#: mainApp/templates/mainApp/search.html:14
 msgid "Encontra o teu alojamento!"
 msgstr "Find your accommodation"
 
-#: projeto_final_/mainApp/templates/mainApp/search.html:48
+#: mainApp/templates/mainApp/search.html:48
 msgid "Tipo de Alojamento"
 msgstr "Property type"
 
-#: projeto_final_/mainApp/templates/mainApp/search.html:53
+#: mainApp/templates/mainApp/search.html:53
 msgid "Residência de estudantes"
 msgstr "Student residence"
 
-#: projeto_final_/mainApp/templates/mainApp/search.html:58
+#: mainApp/templates/mainApp/search.html:58
 msgid "Número de Inquilinos"
 msgstr "Number of tenants"
 
-#: projeto_final_/mainApp/templates/mainApp/search.html:59
+#: mainApp/templates/mainApp/search.html:59
 msgid "inquilino"
 msgstr "tenant"
 
-#: projeto_final_/mainApp/templates/mainApp/search.html:60
-#: projeto_final_/mainApp/templates/mainApp/search.html:61
-#: projeto_final_/mainApp/templates/mainApp/search.html:62
-#: projeto_final_/mainApp/templates/mainApp/search.html:63
+#: mainApp/templates/mainApp/search.html:60
+#: mainApp/templates/mainApp/search.html:61
+#: mainApp/templates/mainApp/search.html:62
+#: mainApp/templates/mainApp/search.html:63
 msgid "inquilinos"
 msgstr "tenants"
 
-#: projeto_final_/mainApp/templates/mainApp/search.html:71
+#: mainApp/templates/mainApp/search.html:71
 msgid "quarto"
 msgstr "bedroom"
 
-#: projeto_final_/mainApp/templates/mainApp/search.html:72
-#: projeto_final_/mainApp/templates/mainApp/search.html:73
-#: projeto_final_/mainApp/templates/mainApp/search.html:74
-#: projeto_final_/mainApp/templates/mainApp/search.html:75
+#: mainApp/templates/mainApp/search.html:72
+#: mainApp/templates/mainApp/search.html:73
+#: mainApp/templates/mainApp/search.html:74
+#: mainApp/templates/mainApp/search.html:75
 msgid "quartos"
 msgstr "bedrooms"
 
-#: projeto_final_/mainApp/templates/mainApp/search.html:79
+#: mainApp/templates/mainApp/search.html:79
 msgid "Entrada"
 msgstr "Date-in"
 
-#: projeto_final_/mainApp/templates/mainApp/search.html:82
+#: mainApp/templates/mainApp/search.html:82
 msgid "Saída"
 msgstr "Date-out"
 
-#: projeto_final_/mainApp/templates/mainApp/search.html:106
+#: mainApp/templates/mainApp/search.html:106
 msgid "Limpar"
 msgstr "Clear"
 
-#: projeto_final_/mainApp/templates/mainApp/search.html:115
+#: mainApp/templates/mainApp/search.html:115
 msgid "Resultados"
 msgstr "Results"
 
-#: projeto_final_/mainApp/templates/mainApp/search.html:128
+#: mainApp/templates/mainApp/search.html:135
 msgid "Km de distância"
 msgstr "Km away"
 
-#: projeto_final_/mainApp/templates/mainApp/search.html:140
+#: mainApp/templates/mainApp/search.html:150
 msgid "Não foram encontrados resultados para a sua pesquisa."
 msgstr "No results found :("
 
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:15
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:14
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:15
+#: mainApp/templates/mainApp/startsAgreementTenent.html:14
 msgid "Descrição do Acordo"
 msgstr "Agreement description"
 
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:28
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:27
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:28
+#: mainApp/templates/mainApp/startsAgreementTenent.html:27
 msgid "Condições de Arrendamento"
 msgstr "Rental conditions"
 
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:35
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:34
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:35
+#: mainApp/templates/mainApp/startsAgreementTenent.html:34
 msgid "Data de entrada"
 msgstr "Entry date"
 
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:36
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:35
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:36
+#: mainApp/templates/mainApp/startsAgreementTenent.html:35
 msgid "Data de saída"
 msgstr "Leaving date"
 
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:39
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:38
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:39
+#: mainApp/templates/mainApp/startsAgreementTenent.html:38
 msgid "Frequência dos Serviços de limpeza"
 msgstr "Cleaning services frequency"
 
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:53
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:52
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:53
+#: mainApp/templates/mainApp/startsAgreementTenent.html:52
 msgid "Animais de estimação permitidos"
 msgstr "Pets allowed"
 
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:55
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:60
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:65
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:83
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:88
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:93
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:98
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:55
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:60
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:65
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:83
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:88
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:93
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:98
 msgid "Sim"
 msgstr "Yes"
 
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:57
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:62
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:67
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:85
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:90
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:95
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:100
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:57
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:62
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:67
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:85
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:90
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:95
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:100
 msgid "Não"
 msgstr "No"
 
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:107
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:78
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:107
+#: mainApp/templates/mainApp/startsAgreementTenent.html:78
 msgid "Outros"
 msgstr "Others"
 
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:131
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:131
 msgid "Enviar acordo"
 msgstr "Send agreement"
 
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:140
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:140
 msgid "Pretende enviar o acordo ao Inquilino"
 msgstr "Do you want to send the agreement to the tenant"
 
-#: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:143
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:117
+#: mainApp/templates/mainApp/sendAgreementLandlord.html:143
+#: mainApp/templates/mainApp/startsAgreementTenent.html:117
 msgid "Cancelar"
 msgstr "Cancel"
 
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:54
+#: mainApp/templates/mainApp/startsAgreementTenent.html:54
 msgid "Permitido fumar"
 msgstr "Smoking allowed"
 
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:94
+#: mainApp/templates/mainApp/startsAgreementTenent.html:94
 msgid "Li e aceito todas as regras acima estabelecidas"
 msgstr ""
 "I have read, understood and accept the rules and regulations set out above"
 
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:100
+#: mainApp/templates/mainApp/startsAgreementTenent.html:100
 msgid "Recusar Acordo"
 msgstr "Refuse agreement"
 
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:101
+#: mainApp/templates/mainApp/startsAgreementTenent.html:101
 msgid "Propor alterações"
 msgstr "Propose changes"
 
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:102
+#: mainApp/templates/mainApp/startsAgreementTenent.html:102
 msgid "Aceitar Acordo"
 msgstr "Accept agreement"
 
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:111
+#: mainApp/templates/mainApp/startsAgreementTenent.html:111
 msgid ""
 "Confirma que pretende iniciar o acordo com as condições impostas pelo "
 "Senhorio disponibilizadas no acordo"
@@ -980,7 +1094,7 @@ msgstr ""
 "I intend to start and agree with the conditions set out by the landlord in "
 "the agreement"
 
-#: projeto_final_/mainApp/templates/mainApp/startsAgreementTenent.html:114
+#: mainApp/templates/mainApp/startsAgreementTenent.html:114
 msgid ""
 "O Senhorio será notificado e a informação do acordo será guardada na sua "
 "área pessoal e na área pessoal do Senhorio"
@@ -988,24 +1102,36 @@ msgstr ""
 "The landlord will be notified and the agreement will be stored in both your "
 "personal areas"
 
-#: projeto_final_/mainApp/views.py:45
-msgid "Username ou password incorretos"
-msgstr "Username or password incorrect"
-
-#: projeto_final_/mainApp/views.py:85
-msgid "Utilizador "
-msgstr "User "
-
-#: projeto_final_/mainApp/views.py:85
-msgid " criado!"
-msgstr " created!"
-
-#: projeto_final_/mainApp/views.py:1113
+#: mainApp/views.py:1314
 msgid "Opção reservada a inquilinos."
 msgstr "Option available only to tenants"
 
-#~ msgid "Introduza aqui uma mensagem a enviar ao proprietário"
-#~ msgstr "Write your message to the landlord here"
+#~ msgid "Nome do detentor do cartão"
+#~ msgstr "Name of the card owner"
+
+#~ msgid "Número do cartão"
+#~ msgstr "Card number"
+
+#~ msgid "Primeiro nome"
+#~ msgstr "First Name"
+
+#~ msgid "Apelido"
+#~ msgstr "Last Name"
+
+#~ msgid "E-mail"
+#~ msgstr "E-mail"
+
+#~ msgid "Número de Telefone"
+#~ msgstr "Phone number"
+
+#~ msgid "Username ou password incorretos"
+#~ msgstr "Username or password incorrect"
+
+#~ msgid "Utilizador "
+#~ msgstr "User "
+
+#~ msgid " criado!"
+#~ msgstr " created!"
 
 #~ msgid "Tem que ter no mínimo uma casa de banho"
 #~ msgstr "You need at least one bathroom"
