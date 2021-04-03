@@ -12,6 +12,9 @@
 
 {% block content %}
 <div class="container">
+    <div class="progress mt-5 mb-3" id="progressbar" hidden>
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">100%</div>
+    </div>
     {% if request.session.livingrooms_num > 0%}
         <p id="numberOfSteps" hidden>6</p>
         <p id="numberOfCompletedSteps" hidden>6</p>
@@ -22,7 +25,7 @@
         <p id="labelsList" hidden>{% trans 'Início,Quartos,Casas de Banho,Cozinhas,Fim' %}</p>   
     {% endif %}
     
-    <div class="row m-5">
+    <div class="row m-5" id="stepBarRow" hidden>
         <div class="col-12 mx-auto pr-0" id="stepBarDiv" style="display: flex;">
             <div class="progressLine"></div>
         </div>
