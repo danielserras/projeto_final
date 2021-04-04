@@ -995,7 +995,7 @@ def listing_editing_view(request, property_id, main_listing_id):
     return render(request, "mainApp/editListing.html", context)
 
 def create_listing_view(request, property_id):
-    porperty_object = Property.objects.get(id=property_id)
+    property_object = Property.objects.get(id=property_id)
 
     if request.method == 'POST':
         #Falta o tipo de listing
@@ -1029,7 +1029,7 @@ def create_listing_view(request, property_id):
                 if i != None:
         
                     img = Image(
-                        name= listing_obj.title+'_'+str(assoc_prop.id),
+                        name= listing_obj.title+'_'+str(property_object.id),
                         is_cover = cover,
                         image = i,
                         album = prop_album)
