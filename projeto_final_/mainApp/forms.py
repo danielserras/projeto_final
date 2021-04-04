@@ -349,6 +349,10 @@ class ImageForm(forms.ModelForm):
                 field.widget.attrs['class'] += 'imgfield form-control-file'
             else:
                 field.widget.attrs['class']='imgfield form-control-file'
+            if field.widget.attrs.get('onchange'):
+                field.widget.attrs['onchange'] += 'upload_img(this);'
+            else:
+                field.widget.attrs['onchange']='upload_img(this);'
 
     images = forms.ImageField()
 

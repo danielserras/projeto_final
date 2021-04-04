@@ -998,10 +998,10 @@ def create_listing_view(request, property_id):
     porperty_object = Property.objects.get(id=property_id)
 
     if request.method == 'POST':
+        #Falta o tipo de listing
         prop_album = ImageAlbum(name=request.POST.get('title'))
-        #prop_album.save()
-        img_formset = ImgFormSet(request.POST, request.FILES)
-        print(img_formset)
+        prop_album.save()
+        print(request.FILES)
         listing_obj = Listing(
             listing_type = "TESTE",
             allowed_gender = request.POST.get('allowed_gender'),
@@ -1015,9 +1015,10 @@ def create_listing_view(request, property_id):
             is_active = True,
             album = prop_album
         )
-        #listing_obj.save()
-        """ imgformset = ImgFormSet(request.POST, request.FILES)
+        listing_obj.save()
+        imgformset = ImgFormSet(request.POST, request.FILES)
         imgs = imgformset.cleaned_data
+        print(imgs)
 
         for d in imgs:
             cover = False
@@ -1035,7 +1036,7 @@ def create_listing_view(request, property_id):
                     img.save()
                     img_pli = PIL.Image.open(img.image)  
                     img_r = img_pli.resize((600,337))
-                    img_r.save(str(img.image)) """
+                    img_r.save(str(img.image)) 
 
     
     img_formset = ImgFormSet(queryset=Image.objects.none())
