@@ -165,18 +165,14 @@
         <div class="row justify-content-md-center">
             <div class="col-sm-7">
                 <h4>{% trans 'O que pretende anunciar' %} ?</h4><br>
-                <label for="" class="radio-inline">
-                    <input type="radio" name="listing_type" class="house_type" value="House"> {% trans 'Casa' %}
-                </label> <br>
-                <label for="" class="radio-inline">
-                    <input type="radio" name="listing_type" class="studio_type" value="Studio"> {% trans 'Estúdio' %}
-                </label><br>
-                <label for="" class="radio-inline">
-                    <input type="radio" name="listing_type" class="apartment_type" value="Apartment"> {% trans 'Apartamento' %}
-                </label><br>
-                <label for="" class="radio-inline">
-                    <input type="radio" name="listing_type" class="bedroom_type" value="Bedroom"> {% trans 'Quarto' %}
-                </label><br>
+                <input type="radio" name="listing_type" class="house_type" id="house_type" value="House"> 
+                <label for="house_type" class="radio-inline"> {% trans 'Casa' %} </label><br>
+                <input type="radio" name="listing_type" class="studio_type" id="studio_type" value="Studio">
+                <label for="studio_type" class="radio-inline"> {% trans 'Estúdio' %} </label><br>
+                <input type="radio" name="listing_type" class="apartment_type" id="apartment_type" value="Apartment">
+                <label for="apartment_type" class="radio-inline"> {% trans 'Apartamento' %} </label><br>
+                <input type="radio" name="listing_type" class="bedroom_type" id="bedroom_type" value="Bedroom">
+                <label for="bedroom_type" class="radio-inline"> {% trans 'Quarto' %} </label><br>
             </div>
         </div>
         <div class="row justify-content-md-center num_divisions">
@@ -191,9 +187,16 @@
                 <input type="number" name="livingrooms_num" id="livingroomsNum" min="0" class="form-control border-info border-3 rounded-right" required> <br>
             </div>
         </div>
+        <div id='placeAndSelectWarning' class="row mt-4">
+            <div class="col-sm-12" >                
+                <div class="row mt-2 justify-content-md-center">
+                    <p class="text-primary">{% trans 'Para avançar marque a localização e selecione um tipo de alojamento' %}</p>
+                </div>
+            </div>
+        </div>
         <div class="row justify-content-md-center text-center mb-3">
             <div class="col-sm-auto">
-                <button type="submit" class="btn btn-secondary" >{% trans 'Seguinte' %}</button>
+                <button type="submit" class="btn btn-secondary" id="addPropertyNext" disabled>{% trans 'Seguinte' %}</button>
             </div>
         </div>
     </form>

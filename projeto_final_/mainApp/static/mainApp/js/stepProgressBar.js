@@ -11,7 +11,6 @@ $(document).ready(function(){
     var calcDistance = (100/(numSteps-1))*(completedSteps-1);
     
     var w = document.documentElement.clientWidth || window.innerWidth
-    console.log(w);
     if (w >= 768){
         $('#stepBarRow').attr("hidden",false);
         stepBarFunction(numSteps, stepLabels, completedSteps, calcDistance);

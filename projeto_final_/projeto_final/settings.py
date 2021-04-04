@@ -35,12 +35,14 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'noreply.unihouses@gmail.com'
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+HTML_MESSAGE_TEMPLATE = "mainApp/emailBody.html"
 VERIFICATION_SUCCESS_TEMPLATE = None
 LOGIN_URL = '/accounts/login'
 
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'mainApp.apps.MainappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -51,7 +53,6 @@ INSTALLED_APPS = [
     'verify_email',
     'paypal.standard.ipn',
     'myapi.apps.MyapiConfig',
-    'rest_framework',
 ]
 PAYPAL_TEST = True
 PAYPAL_RECEIVER_EMAIL = 'sb-st9me5441079@business.example.com'

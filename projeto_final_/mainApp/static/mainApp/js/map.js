@@ -1,5 +1,7 @@
 var mymap;
 var address;
+var latLong = false;
+var radioClicked = false;
 
 let marker = null;
 
@@ -15,42 +17,60 @@ $(document).ready(function(){
     accessToken: 'pk.eyJ1IjoidW5paG91c2VzIiwiYSI6ImNrbGltdHJxcDBlZWEyd25tYmtkc2xuNmIifQ.hX3RupN9qPRjEJ9oHAFMQg'
     }).addTo(mymap);
     //var marker = L.marker([38.73, -9.14]).addTo(mymap);
-    $("#addMarker").click(function(){
-      str = $("#address").val();
-      apiCall = formatCall(str, "normal");
-      $.getJSON(apiCall, function(data) {
-        console.log(data.features[0].center);
-        lat = data.features[0].center[1];
-        long = data.features[0].center[0];
-        document.getElementById('latitude').value = lat;
-        document.getElementById('longitude').value = long;
-        mymap.setView([lat, long], 15);
-        // JSON result in `data` variable
-        if (marker != null){
-          mymap.removeLayer(marker);
-        }
-        marker = L.marker([lat, long], {
-          draggable: true
-        }).addTo(mymap);
-        marker.on('dragend', function (e) {
-          document.getElementById('latitude').value = marker.getLatLng().lat;
-          document.getElementById('longitude').value = marker.getLatLng().lng;
-          console.log(marker.getLatLng().lat)
-          console.log(marker.getLatLng().lng)
 
-          apicall2 = formatCall(marker.getLatLng().lng + " " + marker.getLatLng().lat, "reverse")
-          console.log(apicall2)
-          $.getJSON(apicall2, function(data2) {
-            console.log(data2)
-            document.getElementById('address').value = data2.features[0].place_name;
-          })
-        })
+    //Button to place marker clicked
+    $("#addMarker").click(function (){addMarkerClick()});
+    
+    //Radio button clicked
+    $("#house_type").click(function (){radioClicked = true; validate()});
+    $("#studio_type").click(function (){radioClicked = true; validate()});
+    $("#apartment_type").click(function (){radioClicked = true; validate()});
+    $("#bedroom_type").click(function (){radioClicked = true; validate()});
+  });
 
+function validate(){
+  if (latLong && radioClicked){
+    $("#placeAndSelectWarning").attr("hidden",true);
+    $("#addPropertyNext").attr("disabled",false);
+  }else{
+    console.log("TA MAL")  
+  }
+}
+
+function addMarkerClick(){
+  str = $("#address").val();
+  apiCall = formatCall(str, "normal");
+  $.getJSON(apiCall, function(data) {
+    console.log(data.features[0].center);
+    lat = data.features[0].center[1];
+    long = data.features[0].center[0];
+    document.getElementById('latitude').value = lat;
+    document.getElementById('longitude').value = long;
+    mymap.setView([lat, long], 15);
+    // JSON result in `data` variable
+    if (marker != null){
+      mymap.removeLayer(marker);
+    }
+    marker = L.marker([lat, long], {
+      draggable: true
+    }).addTo(mymap);
+    marker.on('dragend', function (e) {
+      document.getElementById('latitude').value = marker.getLatLng().lat;
+      document.getElementById('longitude').value = marker.getLatLng().lng;
+      console.log(marker.getLatLng().lat)
+      console.log(marker.getLatLng().lng)
+
+      apicall2 = formatCall(marker.getLatLng().lng + " " + marker.getLatLng().lat, "reverse")
+      console.log(apicall2)
+      $.getJSON(apicall2, function(data2) {
+        console.log(data2)
+        document.getElementById('address').value = data2.features[0].place_name;
+      })
     })
-    });
-});
-
-
+  })
+  latLong = true
+  validate()
+}
 
 
 function addMarker(e){
