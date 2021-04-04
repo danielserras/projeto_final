@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'verify_email',
     'paypal.standard.ipn',
+    'myapi.apps.MyapiConfig',
+    'rest_framework',
 ]
 PAYPAL_TEST = True
 PAYPAL_RECEIVER_EMAIL = 'sb-st9me5441079@business.example.com'

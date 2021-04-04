@@ -12,14 +12,20 @@
 {% block content %}
 <div class="container">
     {% if request.session.livingrooms_num > 0%}
+        <div class="progress mt-5 mb-3" id="progressbar" hidden>
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">40%</div>
+        </div>
         <p id="numberOfSteps" hidden>6</p>
-        <p id="labelsList" hidden>Início,Quartos,Casa de Banho,Cozinhas,Salas,Fim</p>   
+        <p id="labelsList" hidden>{% trans 'Início,Quartos,Casas de Banho,Cozinhas,Salas,Fim' %}</p>   
     {% else %}
+        <div class="progress mt-5 mb-3" id="progressbar" hidden>
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">50%</div>
+        </div>
         <p id="numberOfSteps" hidden>5</p>
-        <p id="labelsList" hidden>Início,Quartos,Casa de Banho,Cozinhas,Fim</p>   
+        <p id="labelsList" hidden>{% trans 'Início,Quartos,Casas de Banho,Cozinhas,Fim' %}</p>   
     {% endif %}
     <p id="numberOfCompletedSteps" hidden>3</p>
-    <div class="row m-5 ">
+    <div class="row m-5" id="stepBarRow" hidden>
         <div class="col-12 mx-auto pr-0" id="stepBarDiv" style="display: flex;">
             <div class="progressLine"></div>
         </div>
@@ -30,12 +36,12 @@
         <div class="row">
             {% for form in bath_formset%}
             <div class="col-sm-12 bathroomF" id="pageListing-4">
-                <div class="row mt-2 mb-2 justify-content-md-center">
+                <div class="row mt-2 mb-2 p-3 justify-content-md-center">
                     <h3>{% trans "Casa de Banho" %} {{forloop.counter}}</h3>
                 </div>
                 <div class="row justify-content-md-center mb-2">
                     <div class="col-sm-7">
-                        <div class="row">
+                        <div class="row p-3">
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.bathtub}}
                                 <label for="{{ form.bathtub.id_for_label }}" class="custom-control-label">{% trans 'Banheira' %}</label>
@@ -50,7 +56,7 @@
                             </div>
                             
                         </div>
-                        <div class="row">
+                        <div class="row p-3">
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.b_window}}
                                 <label for="{{ form.b_window.id_for_label }}" class="custom-control-label">{% trans 'Janela' %}</label>

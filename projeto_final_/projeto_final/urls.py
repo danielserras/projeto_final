@@ -32,6 +32,7 @@ pw_confirm = d_auth.PasswordResetConfirmView.as_view(template_name = email_path,
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('myapi.urls')),
 
 ]
 

@@ -13,10 +13,13 @@
 {% block content %}
 <div class="container">
     {% if request.session.livingrooms_num > 0%}
+        <div class="progress mt-5 mb-3" id="progressbar" hidden>
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">80%</div>
+        </div>
         <p id="numberOfSteps" hidden>6</p>
         <p id="numberOfCompletedSteps" hidden>5</p>
-        <p id="labelsList" hidden>Início,Quartos,Casa de Banho,Cozinhas,Salas,Fim</p>
-        <div class="row m-5">
+        <p id="labelsList" hidden>{% trans 'Início,Quartos,Casas de Banho,Cozinhas,Salas,Fim' %}</p>
+        <div class="row m-5" id="stepBarRow" hidden>
             <div class="col-12 mx-auto pr-0" id="stepBarDiv" style="display: flex;">
                 <div class="progressLine"></div>
             </div>
@@ -28,12 +31,12 @@
         <div class="row ">
             {% for form in live_formset%}
             <div class="col-sm-12 livingroomF" id="pageListing-6">
-                <div class="row mt-2 mb-2 justify-content-md-center">
+                <div class="row mt-2 mb-2 p-3 justify-content-md-center">
                     <h3>{% trans 'Sala' %} {{forloop.counter}}</h3>
                 </div>
                 <div class="row justify-content-md-center mb-2">
                     <div class="col-sm-7">
-                        <div class="row">
+                        <div class="row p-3">
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.l_chairs}}
                                 <label for="{{ form.l_chairs.id_for_label }}" class="custom-control-label">{% trans 'Cadeiras' %}</label>
@@ -47,7 +50,7 @@
                                 <label for="{{ form.l_table.id_for_label }}" class="custom-control-label">{% trans 'Mesa' %}</label>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row p-3">
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.l_sofa}}
                                 <label for="{{ form.l_sofa.id_for_label }}" class="custom-control-label">{% trans 'Sofá' %}</label>
@@ -61,7 +64,7 @@
                                 <label for="{{ form.l_desk.id_for_label }}" class="custom-control-label">{% trans 'Secretária' %}</label>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row p-3">
                             <div class="col-sm-4 custom-control custom-checkbox">
                                 {{form.l_balcony}}
                                 <label for="{{ form.l_balcony.id_for_label }}" class="custom-control-label">{% trans 'Varanda' %}</label>
@@ -73,10 +76,10 @@
             {% endfor %}
         </div>
         <div class="row justify-content-md-center text-center mb-3">
-            <div class="col-sm-auto">
+            <div class="col-sm-auto my-3">
                 <button name="save" value="True" type="submit" class="btn btn-secondary" >{% trans 'Pretendo apenas guardar' %}</button>
             </div>
-            <div class="col-sm-auto">
+            <div class="col-sm-auto my-3">
                 <button type="submit" class="btn btn-secondary" >{% trans 'Prentendo listar' %}</button>
             </div>
         </div>
