@@ -171,6 +171,7 @@ class BedroomForm(forms.ModelForm):
                 else:
                     field.widget.attrs['class']='custom-control-input'
             else:
+                field.widget.attrs['min'] = '0'
                 field.widget.attrs['value'] = 0
                 
 

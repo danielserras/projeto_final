@@ -71,7 +71,8 @@
             <div class="big_text row m-2">
               <p class="text-info font-weight-bold">{% trans 'Resposta ao seu pedido de alojamento' %}:&nbsp</p>
               {% if f is True %}
-                <p class="text-info">Aceite</p>
+                <p class="text-info">{% trans 'Aceite' %}</p>
+                <br>
                 <form method="POST" action="{% url 'make_payment' a %}">
                   {% csrf_token %}
                   <button type="submit" class="btn btn-info font-weight-bold mx-auto">{% trans 'Realizar Pagamento' %}</button>
