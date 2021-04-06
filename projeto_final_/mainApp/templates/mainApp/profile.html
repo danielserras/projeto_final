@@ -5,6 +5,49 @@
     <link rel="stylesheet" href='{% static "mainApp/css/profile.css" %}'>
 {% endblock %}
 {% block content %}
+
+
+
+
+
+    {% if request.session.addPropPopUp %}
+        <script>
+            $(document).ready(function(){
+                $('#modalLoginAddProp').modal('show');
+                $(".deletePOP").click(function() {
+                    $('#modalLoginAddProp').modal('hide');
+                });
+            })
+        </script>
+    {% endif %}
+
+    <!--POP-UP-->
+    <div class="modal fade" id="modalLoginAddProp" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Adicionou uma nova propriedade!' %}</h5>
+        <form method="POST" action="{% url 'deletePopUpProp' %}">
+            {% csrf_token %}
+            <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        </div>
+        <div class="modal-body">
+        {% trans 'Parabéns, adicionou uma nova propriedade à sua conta!' %}
+        </div>
+        <div class="modal-footer">
+            <form method="POST" action="{% url 'deletePopUpProp' %}">
+                {% csrf_token %}
+                <button type="submit" id="fecharRegister" class="btn btn-primary deletePOP">Fechar</button>
+            </form>
+        </div>
+    </div>
+    </div>
+    </div>
+
+
     <div class="container mt-5">
         <div class="row bg-info p-2"><h3 class="mx-auto my-auto  text-white ">{% trans 'Perfil' %}</h3></div>
         <div class="row">
