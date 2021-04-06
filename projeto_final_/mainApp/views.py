@@ -364,7 +364,9 @@ def introduce_property_view (request):
                             if 'no_living' in request.session:
                                 del request.session['no_living']
                             del request.session['prop_serial']
-                            return redirect('index')
+
+                            request.session['addPropPopUp'] =  True
+                            return redirect('profile')  #sair
                         else:
                             del request.session['kitchens_num']
                             #del request.session['livingrooms_num']
@@ -398,7 +400,9 @@ def introduce_property_view (request):
                             if 'no_living' in request.session:
                                 del request.session['no_living']
                             del request.session['prop_serial']
-                            return redirect('index')
+
+                            request.session['addPropPopUp'] =  True
+                            return redirect('profile') #sair
 
                         else:
                             listing_form = ListingForm()
@@ -502,7 +506,7 @@ def introduce_property_view (request):
                                 #if f.cleaned_data.get('multiple_listing') == 'whole':
                                 apart_obj = Property_listing(main_listing = main_listing, associated_property = assoc_prop)
                                 apart_obj.save()
-                                return redirect('index')
+                                
                                 
 
                             elif request.session['l_type'] == 'Bedroom' or request.session['l_type'] == 'Studio':
@@ -511,7 +515,9 @@ def introduce_property_view (request):
                                     associated_room = Bedroom.objects.get(associated_property = assoc_prop))
                                 room_obj.save()
                                 
-                                return redirect('index')
+
+                            request.session['addPropPopUp'] =  True
+                            return redirect('profile') #sair 
 
 
             return redirect('index')     #PLACEHOLDER
@@ -1462,6 +1468,10 @@ def changeLanguage(request):
 def deletePopUp(request):
     request.session['popUp'] =  False
     return render(request, "mainApp/login.html", {})
+
+def deletePopUpProp(request):
+    request.session['addPropPopUp'] =  False
+    return render(request, "mainApp/profile.html", {})
 
 def renewAgreement(request):
     #FALTA POR A OPÇAO DE RENOVAR A APARECER POR EXEMPLO 1 MES ANTES DO FINAL EM VEZ DE ESTAR SEMPRE VISIVEL
