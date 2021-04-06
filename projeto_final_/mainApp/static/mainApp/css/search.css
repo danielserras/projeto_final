@@ -148,6 +148,10 @@
     left: 20px;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 /* Map */
 #mapid{
     height: 50vh;
