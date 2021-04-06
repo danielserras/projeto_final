@@ -59,6 +59,7 @@ class Property(models.Model):
     latitude = models.DecimalField(max_digits=20, decimal_places=14)
     longitude = models.DecimalField(max_digits=20, decimal_places=14)
     bedrooms_num = models.IntegerField()
+    listing_type = models.CharField(max_length=20)
     
 
 

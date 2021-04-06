@@ -138,6 +138,7 @@
                                     //input.before('<div class="col-sm-4"><img id="img_id" class="img-thumbnail" src="'+e.target.result+'" alt="your image" /></div>" />');
                                     let preview = document.createElement("div")
                                     let image = document.createElement("img")
+                                    image.setAttribute("class", "img-thumbnail")
                                     image.src = e.target.result
                                     preview.appendChild(image)
                                     input.before(preview)

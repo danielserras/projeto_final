@@ -4,6 +4,7 @@ from django.conf.urls.i18n import i18n_patterns
 from . import views
 
 urlpatterns = [
+    path('profile/propertiesManagement/listingEditing/deleteListing/<int:property_id>/<int:main_listing_id>', views.delete_listing_view, name='deleteListing'),
     path('profile/propertiesManagement/listingEditing/createListing/<int:property_id>', views.create_listing_view, name='createListing'),
     path('profile/propertiesManagement/listingEditing/<int:property_id>/<int:main_listing_id>', views.listing_editing_view, name='listingEditing'),
     path('profile/propertiesManagement/listingEditing/<int:property_id>', views.listings_management_view, name='listingsManagement'),

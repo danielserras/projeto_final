@@ -25,6 +25,7 @@ import PIL
 import time
 import json
 import math
+import os
 #tirar debug_mode no fim do proj
 #tirar test_mode do paypal no fim
 
@@ -135,7 +136,8 @@ def save_property(request):
         overnight_visits = prop_content.get('overnight_visits'),
         cleaning_services = prop_content.get('cleaning_services'),
         smoke = prop_content.get('smoke'),
-        bedrooms_num = prop_content.get('bedrooms_num')
+        bedrooms_num = prop_content.get('bedrooms_num'),
+        listing_type = request.session["l_type"]
     )
     prop_obj.save()
 
@@ -792,7 +794,7 @@ def property_editing_view(request, property_id=None):
 
     if request.method == 'POST':
         f = UpdatePropertyForm(request.POST, instance=property_object)
-        
+        print(f.errors)
         if f.is_valid():
             f.save() 
            
@@ -998,12 +1000,10 @@ def create_listing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
 
     if request.method == 'POST':
-        #Falta o tipo de listing
         prop_album = ImageAlbum(name=request.POST.get('title'))
         prop_album.save()
-        print(request.FILES)
         listing_obj = Listing(
-            listing_type = "TESTE",
+            listing_type = property_object.listing_type,
             allowed_gender = request.POST.get('allowed_gender'),
             monthly_payment =  request.POST.get('monthly_payment'),
             availability_starts =  request.POST.get('availability_starts'),
@@ -1016,9 +1016,23 @@ def create_listing_view(request, property_id):
             album = prop_album
         )
         listing_obj.save()
+
+        if listing_obj.listing_type == 'Apartment' or listing_obj.listing_type == 'House':
+            property_l_obj = Property_listing(
+                associated_property = property_object,
+                main_listing = listing_obj
+            )
+            property_l_obj.save()
+        else:
+            room_l_obj = Room_listing(
+                main_listing  = listing_obj,
+                associated_room = Bedroom.objects.get(associated_property = property_object)
+            )
+            room_l_obj.save()
+        
         imgformset = ImgFormSet(request.POST, request.FILES)
         imgs = imgformset.cleaned_data
-        print(imgs)
+        
 
         for d in imgs:
             cover = False
@@ -1038,11 +1052,51 @@ def create_listing_view(request, property_id):
                     img_r = img_pli.resize((600,337))
                     img_r.save(str(img.image)) 
 
+        return redirect("/mainApp/profile/propertiesManagement/listingEditing/{}".format(property_object.id))
     
     img_formset = ImgFormSet(queryset=Image.objects.none())
     img_formset.extra = 1
     context = {'img_formset':img_formset}
     return render(request, "mainApp/editListing.html", context)
+
+def delete_listing_view(request, property_id, main_listing_id):
+    main_listing_obj = Listing.objects.get(id=main_listing_id)
+    if main_listing_obj.listing_type == "Apartment" or main_listing_obj.listing_type == "House":
+        property_listing_objs = Property_listing.objects.filter(main_listing=main_listing_obj)
+        for e in property_listing_objs:
+            e.delete()
+    else:
+        room_listing_objs = Room_listing.objects.filter(main_listing=main_listing_obj)
+        for e in room_listing_objs:
+            e.delete()
+            
+    #delete albuns and photos
+    album_obj = main_listing_obj.album
+    
+    images = Image.objects.filter(album=album_obj)
+    for i in images:
+        i.delete()
+        
+    album_obj.delete()
+
+    #delete main_listing
+    main_listing_obj.delete()
+
+    #delete images and directory
+    folder = 'mainApp/static/mainApp/listings/'+ str(main_listing_id)
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print('Failed to delete')
+    
+    os.rmdir(folder)
+
+    return redirect("/mainApp/profile/propertiesManagement/listingEditing/{}".format(property_id))
 
 def notificationsTenant(request):
     current_user_ = request.user

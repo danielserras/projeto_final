@@ -148,6 +148,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-sm-7">
+                        <h4>{% trans 'Tipo de Anúncio' %} ?</h4><br>
+                        <input type="radio" name="listing_type" class="house_type" id="house_type" value="House" {% if property.listing_type == 'House'%}checked{% endif %}> 
+                        <label for="house_type" class="radio-inline"> {% trans 'Casa' %} </label><br>
+                        <input type="radio" name="listing_type" class="studio_type" id="studio_type" value="Studio" {% if property.listing_type == 'Studio'%}checked{% endif %}>
+                        <label for="studio_type" class="radio-inline"> {% trans 'Estúdio' %} </label><br>
+                        <input type="radio" name="listing_type" class="apartment_type" id="apartment_type" value="Apartment" {% if property.listing_type == 'Apartment'%}checked{% endif %}>
+                        <label for="apartment_type" class="radio-inline"> {% trans 'Apartamento' %} </label><br>
+                        <input type="radio" name="listing_type" class="bedroom_type" id="bedroom_type" value="Bedroom" {% if property.listing_type == 'Bedroom'%}checked{% endif %}>
+                        <label for="bedroom_type" class="radio-inline"> {% trans 'Quarto' %} </label><br>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row justify-content-md-center text-center mb-3">
