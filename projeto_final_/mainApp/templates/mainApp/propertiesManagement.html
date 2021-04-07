@@ -5,7 +5,7 @@
     <link rel="stylesheet" href='{% static "mainApp/css/listingsManagement.css" %}'>
 {% endblock %}
 {% block content %}
-    <div class="container mt-5 shadow-lg">
+    <div class="container my-5 p-3 shadow-lg">
         <div class="row text-center">
             <div class="col-sm-12">
                 <div class="row mt-3 mb-3">
@@ -28,8 +28,8 @@
                 <tr>
                 <th class="text-white" scope="col">#</th>
                 <th class="text-white" scope="col">{% trans 'Morada' %}</th>
-                <th class="text-white" scope="col">{% trans 'Editar Alojamento' %}</th>
-                <th class="text-white" scope="col">{% trans 'Editar Anúncio' %}</th>
+                <th class="text-white text-center" scope="col">{% trans 'Editar Alojamento' %}</th>
+                <th class="text-white text-center" scope="col">{% trans 'Editar Anúncio' %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,13 +37,13 @@
                     <tr>
                     <th scope="row">{{forloop.counter}}</th>
                     <td>{{p.address}}</td>
-                    <td><a href="propertiesManagement/propertyEditing/{{p.id}}"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <td class="text-center"><a href="propertiesManagement/propertyEditing/{{p.id}}"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                                                                 <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
                                                                                 <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />
                                                                                 <line x1="16" y1="5" x2="19" y2="8" />
                                                                             </svg></a></td>
-                    <td><a href="propertiesManagement/listingEditing/{{p.id}}"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <td class="text-center"><a href="propertiesManagement/listingEditing/{{p.id}}"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                                                                 <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3" />
                                                                                 <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3" />

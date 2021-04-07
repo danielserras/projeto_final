@@ -395,6 +395,7 @@ class UpdatePropertyForm(forms.ModelForm):
     livingrooms_num = forms.IntegerField(required=False)
     latitude = forms.CharField(required=True, max_length=100)
     longitude = forms.CharField(required=True, max_length=100)
+    listing_type = forms.CharField(required=True, max_length=20)
 
     #booleans
     smoke = forms.BooleanField(required=False, initial=False)
@@ -413,6 +414,7 @@ class UpdatePropertyForm(forms.ModelForm):
     class Meta:
         model = Property
         fields = [
+            'listing_type',
             'latitude',
             'longitude',
             'address',

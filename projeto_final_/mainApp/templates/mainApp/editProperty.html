@@ -11,7 +11,7 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 {% endblock %}
 {% block content %}
-    <div class="container ">
+    <div class="container shadow-lg my-5 p-3">
         <div class="row mt-3">
             <a href="#" onclick="history.back();">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="52" height="52" viewBox="0 0 24 24" stroke-width="2" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -146,6 +146,19 @@
                                 <label for="garden" class="custom-control-label">{% trans 'Jardim' %}</label>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-sm-7">
+                        <h4>{% trans 'Tipo de Anúncio' %} ?</h4><br>
+                        <input type="radio" name="listing_type" class="house_type" id="house_type" value="House" {% if property.listing_type == 'House'%}checked{% endif %}> 
+                        <label for="house_type" class="radio-inline"> {% trans 'Casa' %} </label><br>
+                        <input type="radio" name="listing_type" class="studio_type" id="studio_type" value="Studio" {% if property.listing_type == 'Studio'%}checked{% endif %}>
+                        <label for="studio_type" class="radio-inline"> {% trans 'Estúdio' %} </label><br>
+                        <input type="radio" name="listing_type" class="apartment_type" id="apartment_type" value="Apartment" {% if property.listing_type == 'Apartment'%}checked{% endif %}>
+                        <label for="apartment_type" class="radio-inline"> {% trans 'Apartamento' %} </label><br>
+                        <input type="radio" name="listing_type" class="bedroom_type" id="bedroom_type" value="Bedroom" {% if property.listing_type == 'Bedroom'%}checked{% endif %}>
+                        <label for="bedroom_type" class="radio-inline"> {% trans 'Quarto' %} </label><br>
                     </div>
                 </div>
             </div>
