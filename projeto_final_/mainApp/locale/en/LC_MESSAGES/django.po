@@ -266,7 +266,7 @@ msgstr "Just save the property"
 #: mainApp/templates/mainApp/addKitchen.html:125
 #: mainApp/templates/mainApp/addLivingroom.html:83
 msgid "Prentendo listar"
-msgstr "I want to announce it"
+msgstr "I want to list it"
 
 #: mainApp/templates/mainApp/addListing.html:39
 msgid "Outras informações"

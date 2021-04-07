@@ -24,7 +24,7 @@ import mainApp
 reset_path = 'mainApp/pw_reset.html'
 reset_success = '/accounts/login/'
 email = 'mainApp/pwd_reset_email.html'
-pw_reset = d_auth.PasswordResetView.as_view(template_name = reset_path, success_url = reset_success, email_template_name= email)
+pw_reset = d_auth.PasswordResetView.as_view(template_name = reset_path, success_url = reset_success, html_email_template_name= email)
 
 email_path = 'mainApp/pwd_reset_confirm.html'
 confirm_success = '/accounts/login/'
