@@ -358,10 +358,8 @@ msgid "Sofá-cama"
 msgstr "Sofa bed"
 
 #: mainApp/templates/mainApp/addProperty.html:27
-#, fuzzy
-#| msgid "Anunciar toda a propriedade"
 msgid "Adicionar Propriedade"
-msgstr "Announce the entire"
+msgstr "Add Property"
 
 #: mainApp/templates/mainApp/addProperty.html:44
 #: mainApp/templates/mainApp/editProperty.html:39
