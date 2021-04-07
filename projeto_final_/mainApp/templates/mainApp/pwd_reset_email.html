@@ -1,14 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
 {% load i18n %}{% autoescape off %}
-{% blocktranslate %}You're receiving this email because you requested a password reset for your user account at {{ site_name }}.{% endblocktranslate %}
-
-{% translate "Please go to the following page and choose a new password:" %}
-{% block reset_link %}
-{{ protocol }}://{{ domain }}{% url 'pwd_reset_confirm' uidb64=uid token=token %}
-{% endblock %}
-{% translate 'Your username, in case you’ve forgotten:' %} {{ user.get_username }}
-
-{% translate "Thanks for using our site!" %}
-
-{% blocktranslate %}The {{ site_name }} team{% endblocktranslate %}
-
+<div style="padding: 10px; background-color: #E76F51;">
+    <h1 style="text-align: center;margin: auto;font-size: 30px;color: white;">UniHouses</h1>
+</div>
+<h1 style="text-align: center; color: #E76F51;font-weight: bold;font-size: 35px;padding: 10px;">
+    {% blocktranslate %}Recebeu este email pois pediu a recuperação de password no site UniHouses{% endblocktranslate %}
+</h1>
+<p style="text-align: center;font-size: 16px;">
+    {% translate "Por favor visite o link abaixo para definir uma nova password" %}
+</p>
+<p style="text-align: center;font-size: 16px;">
+    {% block reset_link %}
+    {{ protocol }}://{{ domain }}{% url 'pwd_reset_confirm' uidb64=uid token=token %}
+    {% endblock %}
+</p>
+<p style="text-align: center;font-size: 16px;">
+    {% translate 'O seu nome de utilizador é:' %} {{ user.get_username }}
+</p>
+<p style="text-align: center;font-size: 16px;">
+    {% translate "Obrigado por utilizar o nosso site!" %}
+</p>
 {% endautoescape %}
+</body>
+</html>

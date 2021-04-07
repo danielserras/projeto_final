@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel="stylesheet" href='{% static "mainApp/css/emailBody.css" %}'>
 </head>
 <body>
     <div style="padding: 10px; background-color: #E76F51;">
         <h1 style="text-align: center;margin: auto;font-size: 30px;color: white;">UniHouses</h1>
     </div>
-    <h1 style="text-align: center; color: #E76F51;font-weight: bold;font-size: 35px;padding: 10px;">{% trans 'Verificação de conta' %}</h1>
-    <p style="text-align: center;font-size: 16px;">{% trans 'Este e-mail foi-lhe enviado porque tentou criar em UniHouses, 
-        clique no botão abaixo para confirmar o seu e-mail e ativar a sua conta.' %} </p>
+    <h1 style="text-align: center; color: #E76F51;font-weight: bold;font-size: 35px;padding: 10px;">Verificação de conta</h1>
+    <p style="text-align: center;font-size: 16px;">Este e-mail foi-lhe enviado porque tentou criar em UniHouses, 
+        clique no botão abaixo para confirmar o seu e-mail e ativar a sua conta.</p>
     <a style="text-align: center;" href="{{link}}"><button style="color: white;background-color: #E76F51;border: none;
     text-decoration: none;
     border-radius: 30px;
@@ -23,6 +21,6 @@
     position: relative;
     left: 50%;
     transform: translate(-50%, 0%);
-    -ms-transform: translate(-50%, 0%);" type="submit">{% trans 'Verificar' %}</button></a>
+    -ms-transform: translate(-50%, 0%);" type="submit">Verificar</button></a>
 </body>
 </html>
