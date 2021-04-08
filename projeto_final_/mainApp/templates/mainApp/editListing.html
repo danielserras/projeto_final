@@ -5,7 +5,7 @@
     <link rel="stylesheet" href='{% static "mainApp/css/addProperty.css" %}'>
 {% endblock %}
 {% block scripts %}
-    <script src='{%static "mainApp/js/editListing.js"%}'></script>
+    <script type="text/javascript" src='{%static "mainApp/js/editListing.js"%}'></script>
 {% endblock %}
 {% block content %}
 <div class="container">
@@ -129,27 +129,6 @@
                             </div>
                         <button type="button" class="addImg btn btn-info">+</button>
                     </div> {% endcomment %}
-                    <script type="text/javascript">
-                        function upload_img(input) {
-                            if (input.files && input.files[0]) {
-                                var reader = new FileReader();
-
-                                reader.onload = function (e) {
-                                    //input.before('<div class="col-sm-4"><img id="img_id" class="img-thumbnail" src="'+e.target.result+'" alt="your image" /></div>" />');
-                                    let preview = document.createElement("div")
-                                    let image = document.createElement("img")
-                                    image.setAttribute("class", "img-thumbnail")
-                                    image.src = e.target.result
-                                    preview.appendChild(image)
-                                    input.before(preview)
-                                }
-
-                                reader.readAsDataURL(input.files[0]);
-                                //$(".addImg").click();
-                            }
-                        }
-
-                    </script>
 
                     {% comment %} <div class="form-group col-sm-3">
                         <h4>{% trans 'Album de fotografias' %}</h4><br>
@@ -176,16 +155,25 @@
                             {% trans 'Escolha as imagens' %}
                         </p>
                     </label> {% endcomment %}
-                    <div class="form-group col-sm-3">
-                        <h4>{% trans 'Album de fotografias' %}</h4><br>
-                            <div class="form-group imgF">
+                    <div class="form-group col-sm-12">
+                        <h4 class="col-sm-12">{% trans 'Album de fotografias' %}</h4><br>
+                        <div class="form-group imgF row">
                             {{img_formset.management_form}}
                 
                             {% for form in img_formset%}
-                            {{form.images}}
+                                <div class="col-sm-2">
+                                    <div class="row">
+                                    </div>
+                                    <div class="row">
+                                        {{form.images}}
+                                    </div>
+                                </div>
                             {% endfor %}
-                            </div>
-                        <button type="button" class="addImg btn btn-info">+</button>
+                        </div>
+                        
+                        <div class="col-sm-12">
+                            <button type="button" class="addImg btn btn-info">+</button>
+                        </div>
                     </div>
                 </div>
             </div>
