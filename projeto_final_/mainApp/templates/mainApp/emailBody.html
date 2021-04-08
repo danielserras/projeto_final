@@ -4,21 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel="stylesheet" href='{% static "mainApp/css/bootstrap/css/bootstrap.min.css" %}'>
-    <link rel="stylesheet" href='{% static "mainApp/css/style.css" %}'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-{% load i18n %}
 <body>
-    <div class="container mt-5">
-        <div class="row bg-primary p-2 rounded-pill"><h2 class="mx-auto my-auto ml-2 text-white text-center font-weight-bold">{% trans 'Verificação de conta' %}</h2></div>
-        <div class = "row mt-4 border-bottom border-5 border-primary"><h4 class="mx-auto my-auto font-weight-bold"> E-mail de verificação</h4></div>
-        <h6 class= " text-center text-info mt-5">Este e-mail foi-lhe enviado porque tentou criar uma conta no nosso site, </h6>
-        <h6 class= " text-center text-info mt-0 pt-0">clique no botão abaixo para confirmar o seu e-mail e ativar a sua conta. </h6>
-        <h6 class= " text-center text-info mt-0 pt-0 font-weight-bold mt-5">Verifique aqui o seu e-mail:</h6>
-        <div class="d-flex justify-content-center mt-4"><a href="{{link}}"><button class=" btn btn-primary btn-lg rounded-pill" type="submit">Verificar</button></a></div>
+    <div style="padding: 10px; background-color: #E76F51;">
+        <h1 style="text-align: center;margin: auto;font-size: 30px;color: white;">UniHouses</h1>
     </div>
+    <h1 style="text-align: center; color: #E76F51;font-weight: bold;font-size: 35px;padding: 10px;">Verificação de conta</h1>
+    <p style="text-align: center;font-size: 16px;">Este e-mail foi-lhe enviado porque tentou criar em UniHouses, 
+        clique no botão abaixo para confirmar o seu e-mail e ativar a sua conta.</p>
+    <a style="text-align: center;" href="{{link}}"><button style="color: white;background-color: #E76F51;border: none;
+    text-decoration: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    color: white;
+    margin-top: 25px;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    -ms-transform: translate(-50%, 0%);" type="submit">Verificar</button></a>
 </body>
-
 </html>

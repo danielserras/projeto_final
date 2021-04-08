@@ -252,27 +252,46 @@ def introduce_property_view (request):
             prop_form = ''
             
             if 'bedrooms_num' in request.session.keys():
+                try:
+                    del request.session['bedroom_serial']
+                except:
+                    pass
                 bed_form = BedroomFormSet(data=request.POST)
                 form_list.append(bed_form)
 
             elif 'bathrooms_num' in request.session.keys():
+                try:
+                    del request.session['bathroom_serial']
+                except:
+                    pass
                 bath_form = BathroomFormSet(data=request.POST)
                 form_list.append(bath_form)
 
             elif 'kitchens_num' in request.session.keys():
+                try:
+                    del request.session['kitchen_serial']
+                except:
+                    pass
                 kitchen_form = KitchenFormSet(data=request.POST)
                 form_list.append(kitchen_form)
 
             elif 'listing' in request.session.keys():
                 listing_form = ListingForm(request.POST, request.FILES)
-                print(request.POST)
                 form_list.append(listing_form)
 
             elif 'livingrooms_num' in request.session.keys():
+                try:
+                    del request.session['livingroom_serial']
+                except:
+                    pass
                 live_form = LivingroomFormSet(data=request.POST)
                 form_list.append(live_form)
 
             else:
+                try:
+                    del request.session['prop_serial']
+                except:
+                    pass
                 prop_form = PropertyForm(data=request.POST)
                 form_list.append(prop_form)
 
@@ -283,7 +302,6 @@ def introduce_property_view (request):
                 if f.is_bound:
 
                     if f == prop_form:
-                        print(f.errors)
                         if f.is_valid():
 
                             bed_formset = BedroomFormSet(queryset=Bedroom.objects.none())
@@ -525,6 +543,13 @@ def introduce_property_view (request):
             return redirect('index')     #PLACEHOLDER
                             
         else:
+            vars = ['bedrooms_num', 'bathrooms_num', 'kitchens_num', 'livingrooms_num', 'no_living', 'multiple_bedrooms', 'multiple_listing', 'l_type']
+            for v in vars:
+                try:
+                    del request.session[v]
+                except:
+                    pass
+
             prop_form = PropertyForm()
             bath_formset = BathroomFormSet(queryset=Bathroom.objects.none())
             kitchen_formset = KitchenFormSet(queryset=Kitchen.objects.none())
