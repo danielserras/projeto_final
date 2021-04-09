@@ -89,7 +89,13 @@
                 <p class="text-white text-size-40 font-weight-bold">{{listing.monthly_payment}}€</p>
                 <p class="text-white my-auto h-100">/{% trans 'mês' %}</p>
             </div>
+            <div class="row justify-content-center mt-2">
+                <p class="text-white text-size-24 font-weight-bold m-0">Disponibilidade</p>
+            </div>
             <div class="row justify-content-center">
+                <p class="text-white my-auto">{{listing.availability_starts}} {% trans 'até' %} {{listing.availability_ending}}</p>
+            </div>
+            <div class="row justify-content-center mt-4">
                 <p class="text-white my-auto mr-2">{{landlord_user.first_name}} {{landlord_user.last_name}}</p>
                 <img src='{% static "mainApp/images/user.svg" %}' width='13%'>
             </div>
