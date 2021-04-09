@@ -238,7 +238,7 @@ def introduce_property_view (request):
     except:
         return redirect('index')
 
-    print(request.session.items())
+
     if request.user.is_active:
 
         if request.method == 'POST':
@@ -296,7 +296,7 @@ def introduce_property_view (request):
                 form_list.append(prop_form)
 
 
-            
+            current_date = datetime.today().strftime('%Y-%m-%d')
 
             for f in form_list:
                 if f.is_bound:
@@ -395,7 +395,7 @@ def introduce_property_view (request):
                             request.session['listing'] =  True
                             save_property(request)
                             imgformset = ImgFormSet(queryset=Image.objects.none())
-                            context = {'listing_form': listing_form, 'imgformset' : imgformset}
+                            context = {'listing_form': listing_form, 'imgformset' : imgformset, "start": current_date}
 
                             return render(request, 'mainApp/addListing.html', context)
 
@@ -431,7 +431,7 @@ def introduce_property_view (request):
                             #del request.session['livingrooms_num']
 
                             imgformset = ImgFormSet(queryset=Image.objects.none())
-                            context = {'listing_form': listing_form, 'imgformset' : imgformset}
+                            context = {'listing_form': listing_form, 'imgformset' : imgformset, "start": current_date}
 
                             return render(request, 'mainApp/addListing.html', context)
                         
@@ -776,7 +776,29 @@ def create_request(request):
 
                 return redirect('index')
     else:
-        return render(request, 'mainApp/intent.html')
+
+        room_id = request.session.get('room_listing')
+        prop_id = request.session.get('property_listing')
+
+        if room_id:
+
+            assoc_listing = Room_listing.objects.get(id=room_id)
+            main_listing = assoc_listing.main_listing
+            start = main_listing.availability_starts.strftime('%Y-%m-%d')
+            end = main_listing.availability_ending.strftime('%Y-%m-%d')
+
+            context = {"start": start, "end": end}
+        
+        else:
+
+            assoc_listing = Property_listing.objects.get(id=prop_id)
+            main_listing = assoc_listing.main_listing
+            start = main_listing.availability_starts.strftime('%Y-%m-%d')
+            end = main_listing.availability_ending.strftime('%Y-%m-%d')
+
+            context = {"start": start, "end": end}
+
+        return render(request, 'mainApp/intent.html', context)
 
 @login_required(login_url='login_view')
 def profile(request):

@@ -25,22 +25,25 @@ $(document).ready(function(){
         $('.num_divisions').show();
     })
 
-    $(".listing_form").hide();
-    $(".multiple_form").show();
-    $(".multiple_form_next").click(function(){
-        var whole = $('.whole');
-        var separate = $('.separate');
-        if (whole.prop('checked')){
-            $(".listing_form").show();
-            $(".multiple_form").remove();
-        }
-        if (separate.prop('checked')){
-            $(".multiple_form").attr("method", "POST");
-            $(".multiple_form_next").attr("type", "submit");
-            $(".multiple_form").submit();
-        }
+    if (!$(".multiple_form").is(":hidden")){
+        console.log($(".multiple_form").not(":hidden"));
+        $(".listing_form").hide();
+        $(".multiple_form_next").click(function(){
+            var whole = $('.whole');
+            var separate = $('.separate');
+            if (whole.prop('checked')){
+                $(".listing_form").show();
+                $(".multiple_form").remove();
+            }
+            if (separate.prop('checked')){
+                $(".multiple_form").attr("method", "POST");
+                $(".multiple_form_next").attr("type", "submit");
+                $(".multiple_form").submit();
+            }
         
     })
+    }
+    
 
     /* $(".separate").click(function(){
         window.location.href = "/mainApp/profile/propertiesManagement"
