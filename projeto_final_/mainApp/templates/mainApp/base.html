@@ -20,7 +20,7 @@
 </head>
 {% load i18n %}
 <body>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary p-2">
         <div class="container-fluid">
             <a class="navbar-brand" href="/mainApp">
                 <img src='{% static "mainApp/images/logo.svg" %}' width='170'>
@@ -82,7 +82,7 @@
             {% endif %}
         </div>
     </nav>
-    <main id="main">
+    <main class = "" id="main">
         {% block content %} {% endblock %}
     </main>
     <footer class="container-fluid bg-info text-light p-4" id="footer">

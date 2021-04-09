@@ -1592,4 +1592,6 @@ def renewAgreement(request):
         #roomAddress = "1 quarto em " + roomAddress 
         context = {"startDate":startDate,"endDate":endDate,"propAddress":roomAddress,"landlordName":landlordName,"startDate_v2":startDate_v3}
     return render(request, "mainApp/renewAgreement.html", context)
-   
+
+def landlord(request):
+    return render(request, "mainApp/landLord.html", {})
