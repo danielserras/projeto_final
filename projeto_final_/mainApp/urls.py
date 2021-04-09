@@ -39,6 +39,7 @@ urlpatterns = [
     path('login/confirmed', views.deletePopUp, name='deletePopUp'),
     path('profile/confirmed', views.deletePopUpProp, name='deletePopUpProp'),
     path('profile/renewAgreement', views.renewAgreement, name='renewAgreement'),
+    path('landLord', views.landlord, name='landlord'),
     
 ]
 

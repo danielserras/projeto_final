@@ -1,0 +1,86 @@
+.card .card-title {
+    margin-bottom: 0.625rem;
+    text-transform: capitalize;
+    font-size: 0.875rem;
+    font-weight: 500
+}
+
+.card .card-description {
+    margin-bottom: .875rem;
+    font-weight: 400;
+}
+
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.56rem 1.13rem;
+    margin-bottom: 1rem;
+    list-style: none;
+    background-color: transparent;
+    border-radius: 0.25rem
+}
+
+nav {
+    display: block
+}
+
+.breadcrumb.breadcrumb-custom .breadcrumb-item {
+    font-size: 0.875rem;
+    padding: 0.56rem 10px;
+    display: inline-block;
+    vertical-align: top
+}
+
+.breadcrumb.breadcrumb-custom .breadcrumb-item:before {
+    content: ""
+}
+
+.breadcrumb.breadcrumb-custom .breadcrumb-item a {
+    position: relative;
+    color: inherit;
+    display: inline-block;
+    vertical-align: top
+}
+
+.breadcrumb.breadcrumb-custom .breadcrumb-item a:before {
+    right: -22px;
+    z-index: 3;
+    border-left-style: solid;
+    border-left-width: 12px
+}
+
+.breadcrumb.breadcrumb-custom .breadcrumb-item a:after {
+    border-top: 21px solid transparent;
+    border-bottom: 22px solid transparent;
+    top: -9px;
+    right: -23px
+}
+
+.breadcrumb.breadcrumb-custom .breadcrumb-item:last-child {
+    background: transparent
+}
+
+.breadcrumb.breadcrumb-custom .breadcrumb-item:before {
+    content: ""
+}
+
+.breadcrumb.breadcrumb-custom .breadcrumb-item a:before,
+.breadcrumb.breadcrumb-custom .breadcrumb-item a:after {
+    position: absolute;
+    top: -1px;
+    width: 0;
+    height: 0;
+    content: "";
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent
+}
+
+a:link {
+    text-decoration: none
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    display: inline-block;
+    padding-right: 0.7rem;
+    content: "/"
+}
