@@ -462,6 +462,9 @@ def introduce_property_view (request):
                         print(f)
                         if f.is_valid():
                             
+                            if 'separate' in f.cleaned_data:
+                                print('nigger')
+                                
                             assoc_prop = Property.objects.get(id=request.session['prop_id'])
                             
                             """ if 'multiple_listing' in f.cleaned_data:

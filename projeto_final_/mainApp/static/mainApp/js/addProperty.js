@@ -26,20 +26,20 @@ $(document).ready(function(){
     })
 
     if (!$(".multiple_form").is(":hidden")){
-        console.log($(".multiple_form").not(":hidden"));
+
         $(".listing_form").hide();
         $(".multiple_form_next").click(function(){
             var whole = $('.whole');
             var separate = $('.separate');
-            if (whole.prop('checked')){
-                $(".listing_form").show();
-                $(".multiple_form").remove();
-            }
+            
             if (separate.prop('checked')){
-                $(".multiple_form").attr("method", "POST");
+                /* $(".multiple_form").attr("method", "POST");
                 $(".multiple_form_next").attr("type", "submit");
-                $(".multiple_form").submit();
+                $(".multiple_form").submit(); */
+                $('<input>').attr({type: 'hidden',name: 'separate', value: '1'}).appendTo('.listing_form');
             }
+            $(".listing_form").show();
+            $(".multiple_form").remove();
         
     })
     }
