@@ -1,0 +1,64 @@
+{% extends 'mainApp/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/landlord.css" %}'>
+{% endblock %}
+{% block scripts %}
+    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row p-2 mb-4"><h3 class="my-auto mx-auto text-info font-weight-bold ">{% trans 'Ajuda-nos a procurar a melhorar a tua experiência!' %}</h3></div>
+    <div class="row">
+        <div class="col-sm-12 bg-primary border-top rounded">
+            <div class="col-sm-12 p-3 text-center border-bottom">
+                <div class="page-content page-container" id="page-content">
+                    <div class="padding">
+                        <h5 class= "text-white mb-3">Adiciona a tua primeira propriedade!</h5>
+                        <div class="row container d-flex justify-content-center">
+                            <div class="col-md-12 grid-margin stretch-card pl-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <!--<h4 class="card-title text-primary font-weight-bold">Adiciona a tua primeira propriedade!</h4>
+                                        <p class="card-description">Adiciona uma propriedade seguindo estes passos!</p> -->
+                                            <nav aria-label="breadcrumb">
+                                                <ol class="breadcrumb breadcrumb-custom mt-2">
+                                                    <li class="breadcrumb-item"><a href="#" data-abc="true">Passo 1</a></li>
+                                                    <li class="breadcrumb-item"><a href="#" data-abc="true">Passo 2</a></li>
+                                                    <li class="breadcrumb-item active" aria-current="page"><span>Passo 3</span></li>
+                                                </ol>
+                                            </nav> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-section text-secondary mt-5 mx-auto">
+                    <nav class="breadcrumb breadcrumb_type2" aria-label="Breadcrumb">
+                        <ol class="breadcrumb__list r-list">
+                            <li class="breadcrumb__group">
+                                <a href="#0" class="breadcrumb__point r-link"><h5>Passo 1</h5></a>
+                                <span class="breadcrumb__divider mr-3" aria-hidden="true"><i class="fas fa-arrow-down"></i></span>
+                            </li>
+                            <li class="breadcrumb__group">
+                                <a href="#0" class="breadcrumb__point r-link"><h5>Passo 2</h5></a>
+                                <span class="breadcrumb__divider mr-3" aria-hidden="true"><i class="fas fa-arrow-down"></i></span>
+                            </li>
+                            <li class="breadcrumb__group">
+                                <span class="breadcrumb__point" aria-current="page"><h5>Passo 3</h5></span>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 mt-3">
+                
+        </div>
+    </div>
+</div>
+{% endblock %}
+

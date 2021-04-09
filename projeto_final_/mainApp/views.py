@@ -1086,7 +1086,6 @@ def create_listing_view(request, property_id):
         imgformset = ImgFormSet(request.POST, request.FILES)
         imgs = imgformset.cleaned_data
         
-
         for d in imgs:
             cover = False
             if d == imgs[0]:
@@ -1614,4 +1613,6 @@ def renewAgreement(request):
         #roomAddress = "1 quarto em " + roomAddress 
         context = {"startDate":startDate,"endDate":endDate,"propAddress":roomAddress,"landlordName":landlordName,"startDate_v2":startDate_v3}
     return render(request, "mainApp/renewAgreement.html", context)
-   
+
+def landlord(request):
+    return render(request, "mainApp/landLord.html", {})

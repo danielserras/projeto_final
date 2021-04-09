@@ -1,7 +1,6 @@
 $(document).ready(function () {
     var imgSlots = 0;
     $(".addImg").click(function(){
-        console.log("ENTREI1")
         imgSlots++;
         addimgSlot(imgSlots);
     })
@@ -43,7 +42,7 @@ function upload_img(input) {
         reader.onload = function (e) {
             //input.before('<div class="col-sm-4"><img id="img_id" class="img-thumbnail" src="'+e.target.result+'" alt="your image" /></div>" />');
             let image = document.createElement("img")
-            image.setAttribute("class", "rounded img-thumbnail border-info")
+            image.setAttribute("class", "rounded ")
             image.src = e.target.result
             input.setAttribute("title", "");
             input.parentElement.parentElement.childNodes[1].innerHTML='';
@@ -51,6 +50,9 @@ function upload_img(input) {
         }
 
         reader.readAsDataURL(input.files[0]);
-        $(".addImg").click();
     }
+}
+
+function browseFile(btn){
+    btn.parentElement.childNodes[1].click();
 }

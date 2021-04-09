@@ -10,21 +10,21 @@
 <div style="padding: 10px; background-color: #E76F51;">
     <h1 style="text-align: center;margin: auto;font-size: 30px;color: white;">UniHouses</h1>
 </div>
-<h1 style="text-align: center; color: #E76F51;font-weight: bold;font-size: 35px;padding: 10px;">
+<h1 style="text-align: center; color: #E76F51;font-weight: bold;font-size: 25px;padding: 10px;">
     {% blocktranslate %}Recebeu este email pois pediu a recuperação de password no site UniHouses{% endblocktranslate %}
 </h1>
-<p style="text-align: center;font-size: 16px;">
+<p style="text-align: center;font-size: 20px; font-weight: bold;color: #264653;">
     {% translate "Por favor visite o link abaixo para definir uma nova password" %}
 </p>
-<p style="text-align: center;font-size: 16px;">
-    {% block reset_link %}
+<a href="{{ protocol }}://{{ domain }}{% url 'pwd_reset_confirm' uidb64=uid token=token %}" style="text-align: center;font-size: 16px; margin: auto;">
     {{ protocol }}://{{ domain }}{% url 'pwd_reset_confirm' uidb64=uid token=token %}
-    {% endblock %}
-</p>
-<p style="text-align: center;font-size: 16px;">
+</a>
+<br>
+<p style="text-align: center;font-size: 18px; font-weight: bold;color: #264653;">
     {% translate 'O seu nome de utilizador é:' %} {{ user.get_username }}
 </p>
-<p style="text-align: center;font-size: 16px;">
+<br>
+<p style="text-align: center;font-size: 16px; color: #E76F51;">
     {% translate "Obrigado por utilizar o nosso site!" %}
 </p>
 {% endautoescape %}
