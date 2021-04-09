@@ -43,14 +43,14 @@ function upload_img(input) {
         reader.onload = function (e) {
             //input.before('<div class="col-sm-4"><img id="img_id" class="img-thumbnail" src="'+e.target.result+'" alt="your image" /></div>" />');
             let image = document.createElement("img")
-            image.setAttribute("class", "img-thumbnail")
+            image.setAttribute("class", "rounded img-thumbnail border-info")
             image.src = e.target.result
-            console.log(input.parentElement.parentElement.childNodes[1])
+            input.setAttribute("title", "");
             input.parentElement.parentElement.childNodes[1].innerHTML='';
             input.parentElement.parentElement.childNodes[1].append(image);
         }
 
         reader.readAsDataURL(input.files[0]);
-        //$(".addImg").click();
+        $(".addImg").click();
     }
 }

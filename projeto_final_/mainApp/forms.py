@@ -347,9 +347,9 @@ class ImageForm(forms.ModelForm):
         super(ImageForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             if field.widget.attrs.get('class'):
-                field.widget.attrs['class'] += 'imgfield form-control-file'
+                field.widget.attrs['class'] += 'imgfield form-control'
             else:
-                field.widget.attrs['class']='imgfield form-control-file'
+                field.widget.attrs['class']='imgfield form-control'
             if field.widget.attrs.get('onchange'):
                 field.widget.attrs['onchange'] += 'upload_img(this);'
             else:
