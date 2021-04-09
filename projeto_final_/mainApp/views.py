@@ -1286,7 +1286,7 @@ def search(request):
                 queryWhere += " AND p.bedrooms_num >= 5"
             
             #Property type is filled and is either Bedroom, Studio or Residency
-            if any( form.cleaned_data.get('type') == x for x in ('Bedroom', 'Studio', 'Residency')):
+            if any( form.cleaned_data.get('type') == x for x in ('Bedroom', 'Studio')):
                 queryFrom += ', mainApp_room_listing AS rl'
                 queryWhere += " AND l.listing_type = '" + form.cleaned_data.get('type') + "'\
                                 AND rl.associated_room_id = p.id AND rl.main_listing_id = l.id"
