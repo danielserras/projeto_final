@@ -1020,11 +1020,43 @@ def listing_editing_view(request, property_id, main_listing_id):
         #f.cleaned_data()
         if f.is_valid():
             f.save()
-        return redirect("/mainApp/profile/propertiesManagement/listingEditing/{}".format(property_id))
-    img_formset = ImgFormSet(queryset=images)
-    img_formset.extra=0
 
-    context = {'main_listing':main_listing, 'img_formset':img_formset}
+        imgformset = ImgFormSet(request.POST, request.FILES)
+        imgs = imgformset.cleaned_data
+
+        prop_album = main_listing.album
+
+        for d in imgs:
+            cover = False
+            if d == imgs[0]:
+                cover = True
+
+            for i in d.values():
+                if i != None:
+        
+                    img = Image(
+                        name= main_listing.title+'_'+str(property_id),
+                        is_cover = cover,
+                        image = i,
+                        album = prop_album)
+                    img.save()
+                    img_pli = PIL.Image.open(img.image)  
+                    img_r = img_pli.resize((600,337))
+                    img_r.save(str(img.image)) 
+
+        return redirect("/mainApp/profile/propertiesManagement/listingEditing/{}".format(property_id))
+
+    img_formset = ImgFormSet(queryset=Image.objects.none())
+    img_formset.extra=1
+
+    imagesPaths = []
+    range = [0,]
+    for i in list(images):
+        pathSplited = str(i.image).split('mainApp/static/')
+        imagesPaths.append(pathSplited[1])
+        range.append(int(range[-1]) + 1)
+
+    context = {'main_listing':main_listing, 'img_formset':img_formset, "imagesPath":imagesPaths, 'editListing':True}
     return render(request, "mainApp/editListing.html", context)
 
 def create_listing_view(request, property_id):
@@ -1086,7 +1118,7 @@ def create_listing_view(request, property_id):
     
     img_formset = ImgFormSet(queryset=Image.objects.none())
     img_formset.extra = 1
-    context = {'img_formset':img_formset}
+    context = {'img_formset':img_formset, 'editListing':False}
     return render(request, "mainApp/editListing.html", context)
 
 def delete_listing_view(request, property_id, main_listing_id):
