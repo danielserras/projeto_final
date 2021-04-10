@@ -38,44 +38,44 @@
             {% csrf_token %}
             <div class="row form-group">
                 <div class="col-sm">
-                    <label for="Nome de Utilizador">Nome de Utilizador:</label>
+                    <label for="Nome de Utilizador">{% trans 'Nome de Utilizador' %}:</label>
                     {{ form.username  }}
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
-                    <label for="Palavra-passe">Palavra-passe:</label>
+                    <label for="Palavra-passe">{% trans 'Palavra-passe' %}:</label>
                     {{ form.password1  }}
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
-                    <label for="Confirme a palavra-passe">Confirme a palavra-passe:</label>
+                    <label for="Confirme a palavra-passe">{% trans 'Confirme a palavra-passe' %}:</label>
                     {{ form.password2  }}
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
-                    <label for="Primeiro nome">Primeiro nome:</label>
+                    <label for="Primeiro nome">{% trans 'Primeiro nome' %}:</label>
                     {{ form.first_name  }}
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
-                    <label for="Apelido">Apelido:</label>
+                    <label for="Apelido">{% trans 'Apelido' %}:</label>
                     {{ form.last_name  }}
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
-                    <label for="Email">E-mail:</label>
+                    <label for="Email">{% trans 'E-mail' %}:</label>
                     <br>
                     {{ form.email  }}
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
-                    <label for="Número de telefone">Número de telefone:</label>
+                    <label for="Número de telefone">{% trans 'Número de telefone' %}:</label>
                     {{ pform.phoneNumber  }}
                 </div>
             </div>

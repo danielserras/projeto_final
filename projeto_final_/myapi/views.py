@@ -13,7 +13,6 @@ from mainApp.models import *
 # Create your views here.
 
 class registerViewSet(viewsets.ModelViewSet):
-    print("ola")
     queryset = User.objects.all()
     serializer_class = App_userSerializer
 
