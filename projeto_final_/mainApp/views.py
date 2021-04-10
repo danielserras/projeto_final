@@ -1505,9 +1505,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://179c45eda6a9.ngrok.io/paymentStatus/",
-            "return_url": "http://179c45eda6a9.ngrok.io/mainApp/search",
-            "cancel_return": "http://179c45eda6a9.ngrok.io/mainApp/search",
+            "notify_url": "http://485f38b23de5.ngrok.io/paymentStatus/",
+            "return_url": "http://485f38b23de5.ngrok.io/mainApp/search",
+            "cancel_return": "http://485f38b23de5.ngrok.io/mainApp/search",
 
             }
 
