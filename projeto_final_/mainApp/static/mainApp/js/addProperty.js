@@ -25,22 +25,27 @@ $(document).ready(function(){
         $('.num_divisions').show();
     })
 
-    $(".listing_form").hide();
-    $(".multiple_form").show();
-    $(".multiple_form_next").click(function(){
-        var whole = $('.whole');
-        var separate = $('.separate');
-        if (whole.prop('checked')){
+    if (!$(".multiple_form").is(":hidden")){
+
+        $(".listing_form").hide();
+        $(".multiple_form_next").click(function(){
+            var whole = $('.whole');
+            var separate = $('.separate');
+            
+            if (separate.prop('checked')){
+                /* $(".multiple_form").attr("method", "POST");
+                $(".multiple_form_next").attr("type", "submit");
+                $(".multiple_form").submit(); */
+                console.log("caralho");
+                $('<input>').attr({type: 'hidden',name: 'separate', id: 'sep'}).appendTo('.listing_form');
+                $("#sep").val("1");
+            }
             $(".listing_form").show();
             $(".multiple_form").remove();
-        }
-        if (separate.prop('checked')){
-            $(".multiple_form").attr("method", "POST");
-            $(".multiple_form_next").attr("type", "submit");
-            $(".multiple_form").submit();
-        }
         
     })
+    }
+    
 
     /* $(".separate").click(function(){
         window.location.href = "/mainApp/profile/propertiesManagement"

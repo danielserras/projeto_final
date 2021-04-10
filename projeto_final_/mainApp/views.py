@@ -238,7 +238,7 @@ def introduce_property_view (request):
     except:
         return redirect('index')
 
-    print(request.session.items())
+
     if request.user.is_active:
 
         if request.method == 'POST':
@@ -296,7 +296,7 @@ def introduce_property_view (request):
                 form_list.append(prop_form)
 
 
-            
+            current_date = datetime.today().strftime('%Y-%m-%d')
 
             for f in form_list:
                 if f.is_bound:
@@ -395,7 +395,7 @@ def introduce_property_view (request):
                             request.session['listing'] =  True
                             save_property(request)
                             imgformset = ImgFormSet(queryset=Image.objects.none())
-                            context = {'listing_form': listing_form, 'imgformset' : imgformset}
+                            context = {'listing_form': listing_form, 'imgformset' : imgformset, "start": current_date}
 
                             return render(request, 'mainApp/addListing.html', context)
 
@@ -431,7 +431,7 @@ def introduce_property_view (request):
                             #del request.session['livingrooms_num']
 
                             imgformset = ImgFormSet(queryset=Image.objects.none())
-                            context = {'listing_form': listing_form, 'imgformset' : imgformset}
+                            context = {'listing_form': listing_form, 'imgformset' : imgformset, "start": current_date}
 
                             return render(request, 'mainApp/addListing.html', context)
                         
@@ -462,6 +462,9 @@ def introduce_property_view (request):
                         print(f)
                         if f.is_valid():
                             
+                            separate= f.cleaned_data.get('separate')
+                            print(separate)
+
                             assoc_prop = Property.objects.get(id=request.session['prop_id'])
                             
                             """ if 'multiple_listing' in f.cleaned_data:
@@ -776,7 +779,29 @@ def create_request(request):
 
                 return redirect('index')
     else:
-        return render(request, 'mainApp/intent.html')
+
+        room_id = request.session.get('room_listing')
+        prop_id = request.session.get('property_listing')
+
+        if room_id:
+
+            assoc_listing = Room_listing.objects.get(id=room_id)
+            main_listing = assoc_listing.main_listing
+            start = main_listing.availability_starts.strftime('%Y-%m-%d')
+            end = main_listing.availability_ending.strftime('%Y-%m-%d')
+
+            context = {"start": start, "end": end}
+        
+        else:
+
+            assoc_listing = Property_listing.objects.get(id=prop_id)
+            main_listing = assoc_listing.main_listing
+            start = main_listing.availability_starts.strftime('%Y-%m-%d')
+            end = main_listing.availability_ending.strftime('%Y-%m-%d')
+
+            context = {"start": start, "end": end}
+
+        return render(request, 'mainApp/intent.html', context)
 
 @login_required(login_url='login_view')
 def profile(request):
@@ -1317,7 +1342,7 @@ def search(request):
                 queryWhere += " AND p.bedrooms_num >= 5"
             
             #Property type is filled and is either Bedroom, Studio or Residency
-            if any( form.cleaned_data.get('type') == x for x in ('Bedroom', 'Studio', 'Residency')):
+            if any( form.cleaned_data.get('type') == x for x in ('Bedroom', 'Studio')):
                 queryFrom += ', mainApp_room_listing AS rl'
                 queryWhere += " AND l.listing_type = '" + form.cleaned_data.get('type') + "'\
                                 AND rl.associated_room_id = p.id AND rl.main_listing_id = l.id"
@@ -1515,9 +1540,15 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://179c45eda6a9.ngrok.io/paymentStatus/",
-            "return_url": "http://179c45eda6a9.ngrok.io/mainApp/search",
-            "cancel_return": "http://179c45eda6a9.ngrok.io/mainApp/search",
+<<<<<<< HEAD
+            "notify_url": "http://485f38b23de5.ngrok.io/paymentStatus/",
+            "return_url": "http://485f38b23de5.ngrok.io/mainApp/search",
+            "cancel_return": "http://485f38b23de5.ngrok.io/mainApp/search",
+=======
+            "notify_url": " http://269b8371dfda.ngrok.io/paymentStatus/",
+            "return_url": " http://269b8371dfda.ngrok.io/mainApp/search",
+            "cancel_return": " http://269b8371dfda.ngrok.io/mainApp/search",
+>>>>>>> 92197d1dc5b776d446ef83f9de9b70595b13e966
 
             }
 
@@ -1623,4 +1654,6 @@ def renewAgreement(request):
         #roomAddress = "1 quarto em " + roomAddress 
         context = {"startDate":startDate,"endDate":endDate,"propAddress":roomAddress,"landlordName":landlordName,"startDate_v2":startDate_v3}
     return render(request, "mainApp/renewAgreement.html", context)
-   
+
+def landlord(request):
+    return render(request, "mainApp/landLord.html", {})

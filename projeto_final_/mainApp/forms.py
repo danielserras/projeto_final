@@ -441,3 +441,5 @@ BathroomFormSet = modelformset_factory(model = Bathroom, form = BathroomForm, ex
 LivingroomFormSet = modelformset_factory(model = Livingroom, form = LivingroomForm, extra=1)
 
 ImgFormSet = modelformset_factory(model = Image, form = ImageForm, extra=1)
+
+ListingFormSet = modelformset_factory(model = Listing, form = ListingForm, extra=1)
