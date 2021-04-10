@@ -26,20 +26,22 @@ $(document).ready(function(){
     })
 
     if (!$(".multiple_form").is(":hidden")){
-        console.log($(".multiple_form").not(":hidden"));
+
         $(".listing_form").hide();
         $(".multiple_form_next").click(function(){
             var whole = $('.whole');
             var separate = $('.separate');
-            if (whole.prop('checked')){
-                $(".listing_form").show();
-                $(".multiple_form").remove();
-            }
+            
             if (separate.prop('checked')){
-                $(".multiple_form").attr("method", "POST");
+                /* $(".multiple_form").attr("method", "POST");
                 $(".multiple_form_next").attr("type", "submit");
-                $(".multiple_form").submit();
+                $(".multiple_form").submit(); */
+                console.log("caralho");
+                $('<input>').attr({type: 'hidden',name: 'separate', id: 'sep'}).appendTo('.listing_form');
+                $("#sep").val("1");
             }
+            $(".listing_form").show();
+            $(".multiple_form").remove();
         
     })
     }

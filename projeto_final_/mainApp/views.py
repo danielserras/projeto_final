@@ -462,6 +462,9 @@ def introduce_property_view (request):
                         print(f)
                         if f.is_valid():
                             
+                            separate= f.cleaned_data.get('separate')
+                            print(separate)
+
                             assoc_prop = Property.objects.get(id=request.session['prop_id'])
                             
                             """ if 'multiple_listing' in f.cleaned_data:
@@ -1505,9 +1508,15 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
+<<<<<<< HEAD
             "notify_url": "http://485f38b23de5.ngrok.io/paymentStatus/",
             "return_url": "http://485f38b23de5.ngrok.io/mainApp/search",
             "cancel_return": "http://485f38b23de5.ngrok.io/mainApp/search",
+=======
+            "notify_url": " http://269b8371dfda.ngrok.io/paymentStatus/",
+            "return_url": " http://269b8371dfda.ngrok.io/mainApp/search",
+            "cancel_return": " http://269b8371dfda.ngrok.io/mainApp/search",
+>>>>>>> 92197d1dc5b776d446ef83f9de9b70595b13e966
 
             }
 
