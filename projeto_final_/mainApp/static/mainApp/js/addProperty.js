@@ -36,7 +36,9 @@ $(document).ready(function(){
                 /* $(".multiple_form").attr("method", "POST");
                 $(".multiple_form_next").attr("type", "submit");
                 $(".multiple_form").submit(); */
-                $('<input>').attr({type: 'hidden',name: 'separate', value: '1'}).appendTo('.listing_form');
+                console.log("caralho");
+                $('<input>').attr({type: 'hidden',name: 'separate', id: 'sep'}).appendTo('.listing_form');
+                $("#sep").val("1");
             }
             $(".listing_form").show();
             $(".multiple_form").remove();
