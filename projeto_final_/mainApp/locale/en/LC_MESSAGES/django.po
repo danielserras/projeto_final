@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-11 15:16+0100\n"
+"POT-Creation-Date: 2021-04-11 20:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,7 +54,6 @@ msgstr "Phone number"
 #: projeto_final_/mainApp/templates/mainApp/addBathroom.html:80
 #: projeto_final_/mainApp/templates/mainApp/addBedroom.html:129
 #: projeto_final_/mainApp/templates/mainApp/addKitchen.html:129
-#: projeto_final_/mainApp/templates/mainApp/addListing.html:159
 #: projeto_final_/mainApp/templates/mainApp/addListing.html:173
 #: projeto_final_/mainApp/templates/mainApp/addListing.html:187
 #: projeto_final_/mainApp/templates/mainApp/addProperty.html:199
@@ -364,35 +363,37 @@ msgstr "All"
 
 #: projeto_final_/mainApp/templates/mainApp/addListing.html:92
 #: projeto_final_/mainApp/templates/mainApp/editListing.html:71
-#, fuzzy
-#| msgid "Apenas Homens"
 msgid "Apenas Mulheres"
-msgstr "Male"
+msgstr "Only women"
 
 #: projeto_final_/mainApp/templates/mainApp/addListing.html:93
 #: projeto_final_/mainApp/templates/mainApp/editListing.html:72
 msgid "Apenas Homens"
-msgstr "Male"
+msgstr "Only men"
 
 #: projeto_final_/mainApp/templates/mainApp/addListing.html:144
 #: projeto_final_/mainApp/templates/mainApp/editListing.html:158
 msgid "Album de fotografias"
 msgstr "Image gallery"
 
+#: projeto_final_/mainApp/templates/mainApp/addListing.html:159
+msgid "Listar"
+msgstr "List it"
+
 #: projeto_final_/mainApp/templates/mainApp/addListing.html:166
 #: projeto_final_/mainApp/templates/mainApp/addListing.html:180
 msgid "Como pretende anunciar"
-msgstr "How do you want to announce it"
+msgstr "How do you want to list it"
 
 #: projeto_final_/mainApp/templates/mainApp/addListing.html:169
 #: projeto_final_/mainApp/templates/mainApp/addListing.html:183
 msgid "Anunciar toda a propriedade"
-msgstr "Announce the entire"
+msgstr "List the entire"
 
 #: projeto_final_/mainApp/templates/mainApp/addListing.html:171
 #: projeto_final_/mainApp/templates/mainApp/addListing.html:185
 msgid "Anunciar quartos separadamente"
-msgstr "Announce the bedrooms individually"
+msgstr "List the bedrooms individually"
 
 #: projeto_final_/mainApp/templates/mainApp/addLivingroom.html:33
 #: projeto_final_/mainApp/templates/mainApp/editLivingrooms.html:44
@@ -516,7 +517,7 @@ msgstr "House features "
 
 #: projeto_final_/mainApp/templates/mainApp/addProperty.html:167
 msgid "O que pretende anunciar"
-msgstr "What are you announcing"
+msgstr "What are you listing"
 
 #: projeto_final_/mainApp/templates/mainApp/addProperty.html:169
 #: projeto_final_/mainApp/templates/mainApp/editProperty.html:165
@@ -557,34 +558,36 @@ msgstr "Number of Livingrooms"
 msgid "Para avançar marque a localização e selecione um tipo de alojamento"
 msgstr "To advance mark your location and select the type of property"
 
-#: projeto_final_/mainApp/templates/mainApp/base.html:37
-#, fuzzy
-#| msgid "Ar condicionado"
-msgid "Adicionar"
-msgstr "Air conditioner"
+#: projeto_final_/mainApp/templates/mainApp/base.html:38
+msgid "Propriedades"
+msgstr "Properties"
 
-#: projeto_final_/mainApp/templates/mainApp/base.html:40
+#: projeto_final_/mainApp/templates/mainApp/base.html:41
+msgid "Adicionar"
+msgstr "Add"
+
+#: projeto_final_/mainApp/templates/mainApp/base.html:42
 msgid "Gerir"
 msgstr "Manage"
 
-#: projeto_final_/mainApp/templates/mainApp/base.html:43
-#: projeto_final_/mainApp/templates/mainApp/base.html:50
+#: projeto_final_/mainApp/templates/mainApp/base.html:46
+#: projeto_final_/mainApp/templates/mainApp/base.html:53
 msgid "Notificações"
 msgstr "Notifications"
 
-#: projeto_final_/mainApp/templates/mainApp/base.html:47
-#: projeto_final_/mainApp/templates/mainApp/base.html:63
+#: projeto_final_/mainApp/templates/mainApp/base.html:50
+#: projeto_final_/mainApp/templates/mainApp/base.html:66
 #: projeto_final_/mainApp/templates/mainApp/home.html:46
 #: projeto_final_/mainApp/templates/mainApp/search.html:106
 msgid "Pesquisar"
 msgstr "Search"
 
-#: projeto_final_/mainApp/templates/mainApp/base.html:66
+#: projeto_final_/mainApp/templates/mainApp/base.html:69
 #: projeto_final_/mainApp/templates/mainApp/register.html:107
 msgid "Registar"
 msgstr "Register"
 
-#: projeto_final_/mainApp/templates/mainApp/base.html:86
+#: projeto_final_/mainApp/templates/mainApp/base.html:89
 msgid "Termos e Políticas"
 msgstr "Terms and policies"
 
@@ -607,22 +610,16 @@ msgid "Confirmar"
 msgstr "Confirm"
 
 #: projeto_final_/mainApp/templates/mainApp/editBathrooms.html:19
-#, fuzzy
-#| msgid "Casa de Banho"
 msgid "Editar Casas de Banho"
-msgstr "Bathroom"
+msgstr "Edit bathrooms"
 
 #: projeto_final_/mainApp/templates/mainApp/editBedrooms.html:19
-#, fuzzy
-#| msgid "Editar Alojamento"
 msgid "Editar Quartos"
-msgstr "Edit property"
+msgstr "Edit bedrooms"
 
 #: projeto_final_/mainApp/templates/mainApp/editKitchens.html:24
-#, fuzzy
-#| msgid "Cozinha"
 msgid "Editar Cozinhas"
-msgstr "Kitchen"
+msgstr "Edit kitchens"
 
 #: projeto_final_/mainApp/templates/mainApp/editKitchens.html:155
 #: projeto_final_/mainApp/templates/mainApp/editLivingrooms.html:105
@@ -630,52 +627,43 @@ msgid "Terminar"
 msgstr "Finish"
 
 #: projeto_final_/mainApp/templates/mainApp/editListing.html:18
-#, fuzzy
-#| msgid "Editar Anúncio"
 msgid "Edição do Anúncio"
-msgstr "Edit announcement"
+msgstr "Edit listing"
 
 #: projeto_final_/mainApp/templates/mainApp/editListing.html:222
-#, fuzzy
-#| msgid "Adicionar Alojamento"
 msgid "Adicionar mais fotos"
-msgstr "Add property"
+msgstr "Add more images"
 
 #: projeto_final_/mainApp/templates/mainApp/editListing.html:230
-#, fuzzy
-#| msgid "Guarda Roupa"
 msgid "Guardar"
-msgstr "Wardrobe"
+msgstr "Save"
 
 #: projeto_final_/mainApp/templates/mainApp/editLivingrooms.html:23
-#, fuzzy
-#| msgid "Aceitar"
 msgid "Editar Salas"
-msgstr "Accept"
+msgstr "Edit Livingrooms"
 
 #: projeto_final_/mainApp/templates/mainApp/editProperty.html:25
-#, fuzzy
-#| msgid "Anunciar toda a propriedade"
 msgid "Editar Propriedade"
-msgstr "Announce the entire"
+msgstr "Edit property"
 
 #: projeto_final_/mainApp/templates/mainApp/editProperty.html:163
-#, fuzzy
-#| msgid "Editar Anúncio"
 msgid "Tipo de Anúncio"
-msgstr "Edit announcement"
+msgstr "Listing type"
 
-#: projeto_final_/mainApp/templates/mainApp/emailBody.html:12
+#: projeto_final_/mainApp/templates/mainApp/emailBody.html:13
 msgid "Verificação de conta"
 msgstr "Account verification"
 
-#: projeto_final_/mainApp/templates/mainApp/emailBody.html:13
+#: projeto_final_/mainApp/templates/mainApp/emailBody.html:14
 msgid ""
 "Este e-mail foi-lhe enviado porque tentou criar em UniHouses, clique no "
 "botão abaixo para confirmar o seu e-mail e ativar a sua conta."
-msgstr "This email was sent to you because you tried to create a new account at UniHouses. Click on the button to verify your email and activate your account."
+msgstr ""
+"This email was sent to you because you tried to create a new account at "
+"UniHouses. Click on the button to verify your email and activate your "
+"account."
 
-#: projeto_final_/mainApp/templates/mainApp/emailBody.html:23
+#: projeto_final_/mainApp/templates/mainApp/emailBody.html:24
 msgid "Verificar"
 msgstr "Verify"
 
@@ -693,11 +681,11 @@ msgstr "Location"
 msgid "Raio"
 msgstr "Radius"
 
-#: projeto_final_/mainApp/templates/mainApp/home.html:69
+#: projeto_final_/mainApp/templates/mainApp/home.html:73
 msgid "Sou estudante"
 msgstr "I'm a student"
 
-#: projeto_final_/mainApp/templates/mainApp/home.html:80
+#: projeto_final_/mainApp/templates/mainApp/home.html:84
 msgid "Sou senhorio"
 msgstr "I'm a landlord"
 
@@ -724,8 +712,6 @@ msgstr "Message to landlord"
 
 #: projeto_final_/mainApp/templates/mainApp/intent.html:38
 #: projeto_final_/mainApp/templates/mainApp/renewAgreement.html:37
-#, fuzzy
-#| msgid "Introduza aqui uma mensagem a enviar ao proprietário"
 msgid "Introduza uma mensagem a enviar ao senhorio..."
 msgstr "Write your message to the landlord here"
 
@@ -779,10 +765,8 @@ msgid "Despesas incluídas"
 msgstr "Expenses included"
 
 #: projeto_final_/mainApp/templates/mainApp/listingsManagement.html:23
-#, fuzzy
-#| msgid "Editar Anúncio"
 msgid "Gerir Anúncios"
-msgstr "Edit announcement"
+msgstr "Manage listings"
 
 #: projeto_final_/mainApp/templates/mainApp/listingsManagement.html:25
 #: projeto_final_/mainApp/templates/mainApp/propertiesManagement.html:20
@@ -799,10 +783,8 @@ msgid "Ativo"
 msgstr "Active"
 
 #: projeto_final_/mainApp/templates/mainApp/listingsManagement.html:36
-#, fuzzy
-#| msgid "Aceitar"
 msgid "Editar"
-msgstr "Accept"
+msgstr "Edit"
 
 #: projeto_final_/mainApp/templates/mainApp/listingsManagement.html:37
 msgid "Apagar"
@@ -925,10 +907,8 @@ msgid "Senhorio"
 msgstr "Landlord"
 
 #: projeto_final_/mainApp/templates/mainApp/payment.html:26
-#, fuzzy
-#| msgid "Editar Anúncio"
 msgid "Anúncio"
-msgstr "Edit announcement"
+msgstr "Listing"
 
 #: projeto_final_/mainApp/templates/mainApp/payment.html:30
 #: projeto_final_/mainApp/templates/mainApp/sendAgreementLandlord.html:35
@@ -943,10 +923,8 @@ msgid "Data de saída"
 msgstr "Leaving date"
 
 #: projeto_final_/mainApp/templates/mainApp/profile.html:29
-#, fuzzy
-#| msgid "Adicionar Propriedade"
 msgid "Adicionou uma nova propriedade!"
-msgstr "Add Property"
+msgstr "You just added a new property"
 
 #: projeto_final_/mainApp/templates/mainApp/profile.html:38
 msgid "Parabéns, adicionou uma nova propriedade à sua conta!"
@@ -957,10 +935,8 @@ msgid "Perfil"
 msgstr "Profile"
 
 #: projeto_final_/mainApp/templates/mainApp/profile.html:66
-#, fuzzy
-#| msgid "Gerir Alojamentos"
 msgid "Gerir Alojamentos/Anuncios"
-msgstr "Manage properties"
+msgstr "Manage properties and listings"
 
 #: projeto_final_/mainApp/templates/mainApp/profile.html:70
 msgid "Adicionar Alojamento"
@@ -971,26 +947,18 @@ msgid "Gerir Acordos"
 msgstr "Manage agreements"
 
 #: projeto_final_/mainApp/templates/mainApp/profile.html:79
-#, fuzzy
-#| msgid "Gerir Acordos"
 msgid "Ver Acordos"
-msgstr "Manage agreements"
+msgstr "See agreements"
 
 #: projeto_final_/mainApp/templates/mainApp/profile.html:83
-#, fuzzy
-#| msgid "Aceitar Acordo"
 msgid "Cancelar Acordo"
-msgstr "Accept agreement"
-
-#: projeto_final_/mainApp/templates/mainApp/profile.html:88
-#, fuzzy
-#| msgid "Recusar Acordo"
-msgid "Renovar Acordo"
 msgstr "Refuse agreement"
 
+#: projeto_final_/mainApp/templates/mainApp/profile.html:88
+msgid "Renovar Acordo"
+msgstr "Renew agreement"
+
 #: projeto_final_/mainApp/templates/mainApp/profile.html:104
-#, fuzzy
-#| msgid "info do perfil"
 msgid "Informação do perfil"
 msgstr "Profile Info"
 
@@ -1000,7 +968,7 @@ msgstr "Edit property"
 
 #: projeto_final_/mainApp/templates/mainApp/propertiesManagement.html:32
 msgid "Editar Anúncio"
-msgstr "Edit announcement"
+msgstr "Edit listing"
 
 #: projeto_final_/mainApp/templates/mainApp/pw_reset.html:22
 msgid ""
@@ -1088,16 +1056,12 @@ msgid "Quero renovar!"
 msgstr "I want to extend it!"
 
 #: projeto_final_/mainApp/templates/mainApp/renewAgreement.html:49
-#, fuzzy
-#| msgid "Anunciar toda a propriedade"
 msgid "Morada da propriedade"
-msgstr "Announce the entire"
+msgstr "Property address"
 
 #: projeto_final_/mainApp/templates/mainApp/renewAgreement.html:50
-#, fuzzy
-#| msgid "Sou senhorio"
 msgid "Nome do senhorio"
-msgstr "I'm a landlord"
+msgstr "Landlord's name"
 
 #: projeto_final_/mainApp/templates/mainApp/search.html:14
 msgid "Encontra o teu alojamento!"
@@ -1252,7 +1216,7 @@ msgstr ""
 "The landlord will be notified and the agreement will be stored in both your "
 "personal areas"
 
-#: projeto_final_/mainApp/views.py:1456
+#: projeto_final_/mainApp/views.py:1455
 msgid "Opção reservada a inquilinos."
 msgstr "Option available only to tenants"
 
@@ -1284,7 +1248,7 @@ msgstr "Option available only to tenants"
 #~ msgstr "You need at least one bathroom"
 
 #~ msgid "Não é possível remover quartos que estejam anunciados"
-#~ msgstr "You can not remove currently announced bedrooms"
+#~ msgstr "You can not remove currently listed bedrooms"
 
 #~ msgid "Tem que ter no mínimo um quarto"
 #~ msgstr "You need at least one bedroom"

@@ -80,7 +80,7 @@
                             </div> {% endcomment %}
                             <div class="col-sm-6">
                                 <label for="max_capacity">{% trans 'Ocupação máxima' %}:</label>
-                                <input type="number" class="form-control border-info border-3 rounded" name="max_capacity"  min="1">
+                                <input type="number" class="form-control border-info border-3 rounded" name="max_capacity"  min="1" required>
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -155,7 +155,7 @@
         </div>
         <div class="row justify-content-md-center text-center mb-3">
             <div class="col-sm-auto">
-                <button type="submit" class="btn btn-secondary listing_submit" >{% trans 'Seguinte' %}</button>
+                <button type="submit" class="btn btn-secondary listing_submit" >{% trans 'Listar' %}</button>
             </div>
         </div>
     </form>

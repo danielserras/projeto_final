@@ -109,24 +109,31 @@ function changePage(n){
     if (numPages > 6){
         $('#page_num_' + (n-1)).attr("hidden",false);
         $('#page_num_' + (n+1)).attr("hidden",false);
+        //First Page
         if (n == 1){
             $('#page_num_' + (n+2)).attr("hidden",false);
             $('#page_num_' + (n+3)).attr("hidden",false);
         }
+        //Second Page
         else if (n == 2){
             $('#page_num_' + (n+2)).attr("hidden",false);
         }
-        else{
+        //Any other page
+        else if(n > 3){
             $('#etc1').attr("hidden",false); 
         }
-        if (numPages-n == 1){
-            $('#page_num_' + (n-2)).attr("hidden",false);
-        }
-        else if (numPages == n){
+
+        //Last Page
+        if (numPages == n){
             $('#page_num_' + (n-2)).attr("hidden",false);
             $('#page_num_' + (n-3)).attr("hidden",false);
         }
-        else{
+        //Second Last Page
+        else if (numPages-n == 1){
+            $('#page_num_' + (n-2)).attr("hidden",false);
+        }
+        //Any other Page
+        else if(numPages-n > 2){
             $('#etc2').attr("hidden",false); 
         }
     }
@@ -136,9 +143,15 @@ function changePage(n){
             elemNum.attr("hidden",false);
         }
     }
-    console.log(numPages)
+    console.log(numPages, page)
     page = n
-    if(page == numPages){
+    if(numPages == 0){
+        $('#pageRight').attr("hidden",true);
+        $('#pageRightFiller').attr("hidden",true);
+        $('#pageLeft').attr("hidden",true);
+        $('#pageLeftFiller').attr("hidden",true);
+    }
+    else if(page == numPages){
         $('#pageRight').attr("hidden",true);
         $('#pageRightFiller').attr("hidden",false);
         $('#pageLeft').attr("hidden",false);
