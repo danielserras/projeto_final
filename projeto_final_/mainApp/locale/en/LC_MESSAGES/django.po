@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-10 22:17+0100\n"
+"POT-Creation-Date: 2021-04-11 15:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,38 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: projeto_final_/mainApp/forms.py:18
+#: projeto_final_/mainApp/templates/mainApp/login.html:99
+#: projeto_final_/mainApp/templates/mainApp/register.html:47
+msgid "Palavra-passe"
+msgstr "Password"
+
+#: projeto_final_/mainApp/forms.py:22
+#: projeto_final_/mainApp/templates/mainApp/register.html:53
+msgid "Confirme a palavra-passe"
+msgstr "Confirm your password"
+
+#: projeto_final_/mainApp/forms.py:32
+#: projeto_final_/mainApp/templates/mainApp/login.html:98
+#: projeto_final_/mainApp/templates/mainApp/register.html:41
+msgid "Nome de Utilizador"
+msgstr "Username"
+
+#: projeto_final_/mainApp/forms.py:38
+#: projeto_final_/mainApp/templates/mainApp/register.html:59
+msgid "Primeiro nome"
+msgstr "First Name"
+
+#: projeto_final_/mainApp/forms.py:44
+#: projeto_final_/mainApp/templates/mainApp/register.html:65
+msgid "Apelido"
+msgstr "Last Name"
+
+#: projeto_final_/mainApp/forms.py:81
+#: projeto_final_/mainApp/templates/mainApp/register.html:78
+msgid "Número de telefone"
+msgstr "Phone number"
 
 #: projeto_final_/mainApp/templates/mainApp/addAlbum.html:28
 #: projeto_final_/mainApp/templates/mainApp/addBathroom.html:80
@@ -548,6 +580,7 @@ msgid "Pesquisar"
 msgstr "Search"
 
 #: projeto_final_/mainApp/templates/mainApp/base.html:66
+#: projeto_final_/mainApp/templates/mainApp/register.html:107
 msgid "Registar"
 msgstr "Register"
 
@@ -602,17 +635,13 @@ msgstr "Finish"
 msgid "Edição do Anúncio"
 msgstr "Edit announcement"
 
-#: projeto_final_/mainApp/templates/mainApp/editListing.html:175
-msgid "Escolher ficheiro"
-msgstr "Choose file"
-
-#: projeto_final_/mainApp/templates/mainApp/editListing.html:184
+#: projeto_final_/mainApp/templates/mainApp/editListing.html:222
 #, fuzzy
 #| msgid "Adicionar Alojamento"
 msgid "Adicionar mais fotos"
 msgstr "Add property"
 
-#: projeto_final_/mainApp/templates/mainApp/editListing.html:192
+#: projeto_final_/mainApp/templates/mainApp/editListing.html:230
 #, fuzzy
 #| msgid "Guarda Roupa"
 msgid "Guardar"
@@ -635,6 +664,20 @@ msgstr "Announce the entire"
 #| msgid "Editar Anúncio"
 msgid "Tipo de Anúncio"
 msgstr "Edit announcement"
+
+#: projeto_final_/mainApp/templates/mainApp/emailBody.html:12
+msgid "Verificação de conta"
+msgstr "Account verification"
+
+#: projeto_final_/mainApp/templates/mainApp/emailBody.html:13
+msgid ""
+"Este e-mail foi-lhe enviado porque tentou criar em UniHouses, clique no "
+"botão abaixo para confirmar o seu e-mail e ativar a sua conta."
+msgstr "This email was sent to you because you tried to create a new account at UniHouses. Click on the button to verify your email and activate your account."
+
+#: projeto_final_/mainApp/templates/mainApp/emailBody.html:23
+msgid "Verificar"
+msgstr "Verify"
 
 #: projeto_final_/mainApp/templates/mainApp/home.html:14
 msgid "Vais estudar e não sabes onde ficar? Nós podemos ajudar!"
@@ -775,6 +818,14 @@ msgid ""
 "que possível."
 msgstr "We just sent you an email to confirm your account, please check it out"
 
+#: projeto_final_/mainApp/templates/mainApp/login.html:44
+#: projeto_final_/mainApp/templates/mainApp/login.html:64
+#: projeto_final_/mainApp/templates/mainApp/login.html:83
+#: projeto_final_/mainApp/templates/mainApp/profile.html:43
+#: projeto_final_/mainApp/templates/mainApp/pw_reset.html:25
+msgid "Fechar"
+msgstr "Close"
+
 #: projeto_final_/mainApp/templates/mainApp/login.html:55
 #: projeto_final_/mainApp/templates/mainApp/pw_reset.html:16
 msgid "Mudança de password"
@@ -794,21 +845,7 @@ msgstr "Password changed"
 
 #: projeto_final_/mainApp/templates/mainApp/login.html:80
 msgid "Password alterada com sucesso!"
-msgstr "Password successfully changed"
-
-#: projeto_final_/mainApp/templates/mainApp/login.html:83
-msgid "Fechar"
-msgstr "Close"
-
-#: projeto_final_/mainApp/templates/mainApp/login.html:98
-#: projeto_final_/mainApp/templates/mainApp/register.html:41
-msgid "Nome de Utilizador"
-msgstr "Username"
-
-#: projeto_final_/mainApp/templates/mainApp/login.html:99
-#: projeto_final_/mainApp/templates/mainApp/register.html:47
-msgid "Palavra-passe"
-msgstr "Palavra-passe"
+msgstr "Password successfully changed!"
 
 #: projeto_final_/mainApp/templates/mainApp/login.html:101
 msgid "Esqueceste-te da password"
@@ -975,7 +1012,7 @@ msgstr "We just sent you a link by email, please check it out"
 msgid "Recuperação password"
 msgstr "Password recovery"
 
-#: projeto_final_/mainApp/templates/mainApp/pw_reset.html:39
+#: projeto_final_/mainApp/templates/mainApp/pw_reset.html:37
 msgid ""
 "Por favor insira o endereço de email associado à sua conta.<br> Será enviado "
 "um email em breve"
@@ -983,48 +1020,44 @@ msgstr ""
 "Please write the email address associated to your account.<br> An email will "
 "be sent shortly "
 
-#: projeto_final_/mainApp/templates/mainApp/pw_reset.html:65
+#: projeto_final_/mainApp/templates/mainApp/pw_reset.html:63
 msgid "Endereço de email"
 msgstr "Email address"
 
+#: projeto_final_/mainApp/templates/mainApp/pw_reset.html:73
+msgid "Enviar email"
+msgstr "Send email"
+
 #: projeto_final_/mainApp/templates/mainApp/pwd_reset_confirm.html:17
-#, fuzzy
-#| msgid "Confirme a sua Palavra-passe"
 msgid "Alteração palavra-passe"
 msgstr "Confirm your password"
 
-#: projeto_final_/mainApp/templates/mainApp/pwd_reset_confirm.html:19
-#, fuzzy
-#| msgid "Insira de novo a Palavra-passe"
-msgid "Por favor insira a sua nova palavra-passe"
-msgstr "Write your new password"
-
-#: projeto_final_/mainApp/templates/mainApp/pwd_reset_confirm.html:48
-#, fuzzy
-#| msgid "Nova Palavra-passe"
+#: projeto_final_/mainApp/templates/mainApp/pwd_reset_confirm.html:46
 msgid "Nova palavra-passe"
 msgstr "New password"
 
-#: projeto_final_/mainApp/templates/mainApp/pwd_reset_confirm.html:62
-#, fuzzy
-#| msgid "Confirme a sua Palavra-passe"
+#: projeto_final_/mainApp/templates/mainApp/pwd_reset_confirm.html:60
 msgid "Confirmar nova palavra-passe"
 msgstr "Confirm your password"
+
+#: projeto_final_/mainApp/templates/mainApp/pwd_reset_confirm.html:70
+msgid "Alterar password"
+msgstr "Change password"
 
 #: projeto_final_/mainApp/templates/mainApp/pwd_reset_email.html:14
 msgid ""
 "Recebeu este email pois pediu a recuperação de password no site UniHouses"
-msgstr "You received this email because you asked for a password recovery at UniHouses"
+msgstr ""
+"You received this email because you asked for a password recovery at "
+"UniHouses"
 
 #: projeto_final_/mainApp/templates/mainApp/pwd_reset_email.html:17
 msgid "Por favor visite o link abaixo para definir uma nova password"
 msgstr "Please visit the link below to create a new password"
 
 #: projeto_final_/mainApp/templates/mainApp/pwd_reset_email.html:24
-#, fuzzy
-#| msgid "Nome de Utilizador"
 msgid "O seu nome de utilizador é:"
-msgstr "Username"
+msgstr "Your username is:"
 
 #: projeto_final_/mainApp/templates/mainApp/pwd_reset_email.html:28
 msgid "Obrigado por utilizar o nosso site!"
@@ -1034,29 +1067,9 @@ msgstr "Thank you for choosing our website"
 msgid "Registo"
 msgstr "Registration"
 
-#: projeto_final_/mainApp/templates/mainApp/register.html:53
-#, fuzzy
-#| msgid "Confirme a sua Palavra-passe"
-msgid "Confirme a palavra-passe"
-msgstr "Confirm your password"
-
-#: projeto_final_/mainApp/templates/mainApp/register.html:59
-msgid "Primeiro nome"
-msgstr "First Name"
-
-#: projeto_final_/mainApp/templates/mainApp/register.html:65
-msgid "Apelido"
-msgstr "Last Name"
-
 #: projeto_final_/mainApp/templates/mainApp/register.html:71
 msgid "E-mail"
 msgstr "E-mail"
-
-#: projeto_final_/mainApp/templates/mainApp/register.html:78
-#, fuzzy
-#| msgid "Número de Telefone"
-msgid "Número de telefone"
-msgstr "Phone number"
 
 #: projeto_final_/mainApp/templates/mainApp/register.html:84
 msgid "Data de Nascimento"
@@ -1239,17 +1252,15 @@ msgstr ""
 "The landlord will be notified and the agreement will be stored in both your "
 "personal areas"
 
-#: projeto_final_/mainApp/views.py:1421
+#: projeto_final_/mainApp/views.py:1456
 msgid "Opção reservada a inquilinos."
 msgstr "Option available only to tenants"
 
-#, fuzzy
-#~| msgid "Descrição do Acordo"
-#~ msgid "Verificação de conta"
-#~ msgstr "Agreement description"
+#~ msgid "Por favor insira a sua nova palavra-passe"
+#~ msgstr "Write your new password"
 
-#~ msgid "Verificar"
-#~ msgstr "Verify"
+#~ msgid "Escolher ficheiro"
+#~ msgstr "Choose file"
 
 #~ msgid "Residência de estudantes"
 #~ msgstr "Student residence"

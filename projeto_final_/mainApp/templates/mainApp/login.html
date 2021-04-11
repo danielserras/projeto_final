@@ -41,7 +41,7 @@
             <div class="modal-footer">
                 <form method="POST" action="{% url 'deletePopUp' %}">
                     {% csrf_token %}
-                    <button type="submit" id="fecharRegister" class="btn btn-primary deletePOP">Fechar</button>
+                    <button type="submit" id="fecharRegister" class="btn btn-primary deletePOP">{% trans 'Fechar' %}</button>
                 </form>
             </div>
         </div>
@@ -61,7 +61,7 @@
             {% trans 'Enviámos-lhe um link por email para proceder à alteração da sua password, por favor efetue assim que possível.' %}
             </div>
             <div class="modal-footer">
-            <button type="button" id="close_mail_popup" class="btn btn-primary">Fechar</button>
+            <button type="button" id="close_mail_popup" class="btn btn-primary">{% trans 'Fechar' %}</button>
             </div>
         </div>
         </div>

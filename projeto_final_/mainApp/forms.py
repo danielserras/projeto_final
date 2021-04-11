@@ -7,6 +7,7 @@ from django.forms import modelformset_factory
 from django.forms.models import inlineformset_factory
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.forms import inlineformset_factory
+from django.utils.translation import ugettext_lazy as _
 #from PIL import *
 
 
@@ -14,11 +15,11 @@ class CreateUserForm(UserCreationForm):
 
     password1 = forms.CharField(
         label="Password",
-        widget=forms.PasswordInput(attrs={'class':'inputType1', 'type':'password', 'placeholder':'Palavra-passe'}),
+        widget=forms.PasswordInput(attrs={'class':'inputType1', 'type':'password', 'placeholder':_('Palavra-passe')}),
     )
     password2 = forms.CharField(
         label="Confirm password",
-        widget=forms.PasswordInput(attrs={'class':'inputType1', 'type':'password', 'placeholder':'Confirme a palavra-passe'})
+        widget=forms.PasswordInput(attrs={'class':'inputType1', 'type':'password', 'placeholder':_('Confirme a palavra-passe')})
     )
 
     class Meta:
@@ -28,19 +29,19 @@ class CreateUserForm(UserCreationForm):
         widgets = {
             "username": TextInput(
                 attrs={
-                    "placeholder":'Nome de Utilizador',
+                    "placeholder":_('Nome de Utilizador'),
                     'class': 'inputType1'
                 }
             )
             ,"first_name": TextInput(
                 attrs={
-                    "placeholder":'Primeiro nome',
+                    "placeholder":_('Primeiro nome'),
                     'class': 'inputType1'
                 }
             )
             ,"last_name": TextInput(
                 attrs={
-                    "placeholder":'Apelido',
+                    "placeholder":_('Apelido'),
                     'class': 'inputType1'
                 }
             )
@@ -77,7 +78,7 @@ class ProfileForm(forms.ModelForm):
         widgets = {
             "phoneNumber": NumberInput(
                 attrs={
-                    "placeholder":'Número de Telefone',
+                    "placeholder":_('Número de telefone'),
                     'class': 'inputType1'
                 }
             )

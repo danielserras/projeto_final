@@ -40,7 +40,7 @@
         <div class="modal-footer">
             <form method="POST" action="{% url 'deletePopUpProp' %}">
                 {% csrf_token %}
-                <button type="submit" id="fecharRegister" class="btn btn-primary deletePOP">Fechar</button>
+                <button type="submit" id="fecharRegister" class="btn btn-primary deletePOP">{% trans 'Fechar' %}</button>
             </form>
         </div>
     </div>
