@@ -124,15 +124,16 @@
                         <input type="text" class="inputType1 ml-4" value="{{user.email}}">
                     </div>
                     <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">Número de telefone</p>
+                        <p class="text-info pl-5 mb-0 font-weight-bold">Número de telefone:</p>
                         <input type="text" class="inputType1 ml-4" value="Número de telefone">
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">Data de Nascimento</p>
+                        <p class="text-info pl-5 mb-0 font-weight-bold">Data de Nascimento:</p>
                         <input type="date" class="inputType1 ml-4" value="Data de Nascimento">
                     </div>
+            {% if request.session.typeUser == "Landlord" %}
                     <div class="col-6 p-3 mt-3">
                         <div class="row mt-4">
                             <div class="col-6 mx-auto">
@@ -140,7 +141,28 @@
                             </div>
                         </div>
                     </div>
+            {% else %}
+                    <div class="col-6 p-3">
+                        <p class="text-info pl-5 mb-0 font-weight-bold">Universidade:</p>
+                        <input type="text" class="inputType1 ml-4" value="Universidade">
+                    </div>
                 </div>
+                <div class="row justify-content-center">
+                    <div class="col-6 p-3">
+                        <p class="text-info pl-5 mb-0 font-weight-bold">Valor mínimo da pesquisa:</p>
+                        <input type="text" class="inputType1 ml-4" value="Valor mínimo da pesquisa€">
+                    </div>
+                    <div class="col-6 p-3">
+                        <p class="text-info pl-5 mb-0 font-weight-bold">Valor máximo da pesquisa:</p>
+                        <input type="text" class="inputType1 ml-4" value="Valor máximo da pesquisa€">
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-3 p-3">
+                        <button type="submit" class="btn btn-info font-weight-bold">Guardar Alterações</button>
+                    </div>
+                </div>
+            {% endif %}
             </div>
         </div>
     </div>
