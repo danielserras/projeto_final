@@ -57,6 +57,11 @@
                         <li class="nav-item active my-auto">
                             <a class="nav-link" href="/mainApp/profile">{{user.username}}</a>
                         </li>
+                        <li class="nav-item active my-auto">
+                            <form action="{% url 'logout_view' %}">
+                                <button type="submit"  class="btn btn-secondary ml-4 font-weight-bold">Logout</button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             {% else %}
