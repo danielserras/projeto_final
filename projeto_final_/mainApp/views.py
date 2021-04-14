@@ -807,24 +807,76 @@ def create_request(request):
 def profile(request):
     current_user = request.user
     a_user = App_user.objects.get(user_id=current_user)
-    
-    temp = False
-    if request.session['typeUser'] == "Tenant":
-        for i in Agreement.objects.all():
-            if Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id:
-                #check dates
-                agreement = i
-                endDate = agreement.endDate
-                presentTime = datetime.today().strftime('%d-%m-%Y')
-                now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
-                diffDates = (endDate - now_date).days
-                temp = True
-                context = {"diffDates": diffDates}
-        if temp == False:
-           context = {} 
+
+    if request.method == 'POST':
+        
+        user_form = UpdateUserForm(data=request.POST)
+        print(user_form.errors)
+        if user_form.is_valid():
+            current_user.first_name = user_form.cleaned_data.get('first_name')
+            current_user.last_name = user_form.cleaned_data.get('last_name')
+            current_user.email = user_form.cleaned_data.get('email')
+            current_user.save()
+
+            a_user.phoneNumber = user_form.cleaned_data.get('phoneNumber')
+            a_user.birthDate = user_form.cleaned_data.get('birthDate')
+            a_user.save()
+
+            if request.session['typeUser'] == "Tenant":
+
+                ten_user = Tenant.objects.get(ten_user=a_user)
+
+                ten_user.university = user_form.cleaned_data.get('university')
+                ten_user.min_search = user_form.cleaned_data.get('min_search')
+                ten_user.max_search = user_form.cleaned_data.get('max_search')
+                ten_user.save()
+        
+        return redirect('index')
+
     else:
-        context = {}
-    return render(request, "mainApp/profile.html", context)
+    
+        temp = False
+        if request.session['typeUser'] == "Tenant":
+            for i in Agreement.objects.all():
+                if Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id:
+                    #check dates
+                    agreement = i
+                    endDate = agreement.endDate
+                    presentTime = datetime.today().strftime('%d-%m-%Y')
+                    now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
+                    diffDates = (endDate - now_date).days
+                    temp = True
+
+                    user_birth = a_user.birthDate.strftime('%Y-%m-%d')
+                    user_phone = a_user.phoneNumber
+                    user_type = 'Inquilino'
+
+                    ten_user = Tenant.objects.get(ten_user=a_user)
+                    user_min_search = ten_user.min_search
+                    user_max_search = ten_user.max_search
+                    user_university = ten_user.university
+
+                    context = {"diffDates": diffDates,
+                    "birth": user_birth,
+                    "phone": user_phone,
+                    "type": _(user_type),
+                    "min": user_min_search,
+                    "max": user_max_search,
+                    "university": user_university}
+
+            if temp == False:
+                context = {}
+        else:
+
+            user_birth = a_user.birthDate.strftime('%Y-%m-%d')
+            user_phone = a_user.phoneNumber
+            user_type = 'Senhorio'
+
+            context = {"birth": user_birth, "phone": user_phone, "type": user_type}
+
+        user_form = UpdateUserForm()
+        context['user_form'] = user_form
+        return render(request, "mainApp/profile.html", context)
 
 def properties_management_view(request):
     current_user = request.user
@@ -1650,3 +1702,43 @@ def renewAgreement(request):
 
 def landlord(request):
     return render(request, "mainApp/landLord.html", {})
+
+def delete_account(request):
+
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+    user_type = ''
+
+    try:
+        tenant = Tenant.objects.get(ten_user=a_user)
+        user_type = 'tenant'
+    except:
+        lord = Landlord.objects.get(lord_user=a_user)
+        user_type = 'lord'
+
+    if user_type == 'tenant':
+
+        for ag in Agreement.objects.all():
+            if Tenant.objects.get(id = (ag.tenant_id)).ten_user_id == tenant.ten_user_id:
+                
+                #falta verificar se o agreement esta ativo
+                messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'))
+                return redirect('index')
+
+
+        logout(request)
+        tenant.delete()
+        a_user.delete()
+        current_user.delete()
+        return redirect('login_view')
+
+    else:
+
+        #to be continued amanha
+        pass
+
+    return redirect('index')
+        
+
+
+    

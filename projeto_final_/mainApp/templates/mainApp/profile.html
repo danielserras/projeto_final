@@ -89,12 +89,16 @@
                         <form action="{% url 'logout_view' %}">
                             <button type="submit" class="btn btn-info border border-white border-3 font-weight-bold w-100">Logout</button>
                         </form>
-                    </div> 
+                    </div>
+                    <div class="col-sm-12 p-3">
+                        <a class="text-white" href="#"><button type="button" class="btn btn-info w-100">{% trans 'Eliminar conta' %}</button></a>
+                    </div>
 
                 </div>
             </div>
             <!--User Details-->
-            <div class="col-sm-9">
+            <form class="col-sm-9" action="{% url 'profile' %}" method="POST">
+                {% csrf_token %}
                 <div class="row justify-content-center">
                     <div class="col-2 pt-3">
                         <img src='{% static "mainApp/images/user.svg" %}' alt="" class="img-fluid">
@@ -105,33 +109,33 @@
                         <h2 class="mb-0 text-info text-right" style="font-size: 28px;">{{user.username}}</h2>
                     </div>
                     <div class="col-3 px-2">
-                        <h2 class="mb-0 text-primary text-left" style="font-size: 28px;">Tipo conta</h2>
+                        <h2 class="mb-0 text-primary text-left" style="font-size: 28px;">{{ type }}</h2>
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold mx-auto">Primeiro Nome:</p>
-                        <input type="text" class="inputType1 ml-4" value="{{user.first_name}}">
+                        <input type="text" class="inputType1 ml-4" value="{{user.first_name}}" name="first_name">
                     </div>
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">Último Nome:</p>
-                        <input type="text" class="inputType1 ml-4" value="{{user.last_name}}">
+                        <input type="text" class="inputType1 ml-4" value="{{user.last_name}}" name="last_name">
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">Email:</p>
-                        <input type="text" class="inputType1 ml-4" value="{{user.email}}">
+                        <input type="text" class="inputType1 ml-4" value="{{user.email}}" name="email">
                     </div>
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">Número de telefone:</p>
-                        <input type="text" class="inputType1 ml-4" value="Número de telefone">
+                        <input type="text" class="inputType1 ml-4" value="{{ phone }}" name="phoneNumber">
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">Data de Nascimento:</p>
-                        <input type="date" class="inputType1 ml-4" value="Data de Nascimento">
+                        <input type="date" class="inputType1 ml-4" value="{{ birth }}" name="birthDate">
                     </div>
             {% if request.session.typeUser == "Landlord" %}
                     <div class="col-6 p-3 mt-3">
@@ -144,17 +148,17 @@
             {% else %}
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">Universidade:</p>
-                        <input type="text" class="inputType1 ml-4" value="Universidade">
+                        <input type="text" class="inputType1 ml-4" value="{{ university }}" name="university">
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">Valor mínimo da pesquisa:</p>
-                        <input type="text" class="inputType1 ml-4" value="Valor mínimo da pesquisa€">
+                        <input type="text" class="inputType1 ml-4" value="{{ min }}" min="0" max="2000" name="min_search">
                     </div>
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">Valor máximo da pesquisa:</p>
-                        <input type="text" class="inputType1 ml-4" value="Valor máximo da pesquisa€">
+                        <input type="text" class="inputType1 ml-4" value="{{ max }}" min="0" max="2000" name="max_search">
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -163,7 +167,7 @@
                     </div>
                 </div>
             {% endif %}
-            </div>
+            </form>
         </div>
     </div>
 {% endblock %}
