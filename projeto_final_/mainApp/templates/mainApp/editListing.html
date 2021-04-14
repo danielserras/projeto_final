@@ -150,32 +150,32 @@
                             {% trans 'Escolha as imagens' %}
                         </p>
                     </label> {% endcomment %}
-                    <div class="form-group col-sm-8 text-center">
+                    <div class="form-group col-sm-8 text-center justify-content-center">
                         <h4>{% trans 'Album de fotografias' %}</h4><br>
-                        <div class="form-group imgF row p-2 justify-content-sm-center">
+                        <div class="form-group imgF row p-2 justify-content-center">
                             {{img_formset.management_form}}
                             {% comment %} {% for i in imagesPath%}
                             <img src="{%static i%}" alt="">
                             {%endfor%} {% endcomment %}
                             {% if editListing%}
                                 {% for i in imagesZip%}
-                                    <div class="col-sm-3 mr-1 justify-content-sm-center">
-                                        <div class="row p-1 imgPreview justify-content-md-center">
+                                    <div class="col-sm-3 col-md-3 col-6 justify-content-center">
+                                        <div class="row p-1 imgPreview justify-content-center">
                                             <img src="{% static i.0 %}" alt="" class="img-thumbnail">
                                         </div>
-                                        <div class="row  justify-content-md-center">
-                                            <a href="/removeImage/{{i.1}}" class="mt-2 btn btn-primary">Remover</a>                                         
+                                        <div class="row  justify-content-xs-center">
+                                            <a href="{{request.get_full_path}}/removeImage/{{i.1}}" class="mt-2 btn btn-primary">Remover</a>      
                                         </div>
                                     </div>
                                 {% endfor %}
                                 {% for form in img_formset%}
                                     <div class="col-sm-3 mr-1 justify-content-sm-center">
-                                        <div class="row p-1 imgPreview justify-content-md-center">
+                                        <div class="row p-1 imgPreview justify-content-center">
                                         </div>
                                         <div class="row  justify-content-md-center">
                                             {{form.images}}
-                                            <button type="button" class="btn" onclick="browseFile(this)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-upload" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <button type="button" class="btn col-xs-8 px-0" onclick="browseFile(this)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-upload" width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                                     <path d="M14 3v4a1 1 0 0 0 1 1h4" />
                                                     <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
@@ -183,6 +183,13 @@
                                                     <polyline points="9 14 12 11 15 14" />
                                                 </svg>
                                                 Choose file
+                                            </button>
+                                            <button class="btn removeImage col-xs-4 px-0" type="button" onclick="remove_img(this)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#e76f51" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                    <line x1="18" y1="6" x2="6" y2="18" />
+                                                    <line x1="6" y1="6" x2="18" y2="18" />
+                                                </svg>
                                             </button>
                                             
                                         </div>

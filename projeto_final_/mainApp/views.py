@@ -1139,7 +1139,17 @@ def listing_editing_view(request, property_id, main_listing_id):
     return render(request, "mainApp/editListing.html", context)
 
 def remove_image_view(request, property_id, main_listing_id, image_id):
-    pass
+    try:
+        image_obj = Image.objects.get(id=image_id)
+        image_path = image_obj.image.url
+        if os.path.exists(image_path[1:]):
+            os.remove(image_path[1:])
+        image_obj.delete()
+
+    except :
+        pass
+
+    return redirect("/mainApp/profile/propertiesManagement/listingEditing/{}/{}".format(property_id,main_listing_id))
 
 def create_listing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
