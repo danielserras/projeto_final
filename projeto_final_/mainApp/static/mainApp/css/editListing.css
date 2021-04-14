@@ -8,9 +8,21 @@
 }
 .imgPreview > img{
     max-width:100%;
-    height:150px;
+    height:100%;
 }
 
 .imgPreview {
     height:150px;
+}
+  
+@media screen and (max-width: 992px) {    
+    .imgPreview {
+        height:150px;
+    }
+}
+  
+@media screen and (max-width: 600px) {
+.imgPreview {
+    height:125px;
+}
 }
