@@ -158,13 +158,13 @@
                             <img src="{%static i%}" alt="">
                             {%endfor%} {% endcomment %}
                             {% if editListing%}
-                                {% for i in imagesPath%}
+                                {% for i in imagesZip%}
                                     <div class="col-sm-3 mr-1 justify-content-sm-center">
                                         <div class="row p-1 imgPreview justify-content-md-center">
-                                            <img src="{% static i %}" alt="" class="img-thumbnail">
+                                            <img src="{% static i.0 %}" alt="" class="img-thumbnail">
                                         </div>
                                         <div class="row  justify-content-md-center">
-                                            <button class="mt-2 btn btn-primary">Remover</button>                                         
+                                            <a href="/removeImage/{{i.1}}" class="mt-2 btn btn-primary">Remover</a>                                         
                                         </div>
                                     </div>
                                 {% endfor %}
