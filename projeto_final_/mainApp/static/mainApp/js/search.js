@@ -15,7 +15,6 @@ $(document).ready(function() {
         var patt = /[1-9]/;
         var id_location = img_url.search(patt);
         var listing_id = 0;
-        console.log(img_url.slice(24));
         for (var c=id_location; c<img_url.length; c++){
             
             if (isNaN(img_url.slice(c,c+1))){
@@ -32,11 +31,8 @@ $(document).ready(function() {
     })
     //Show/Hide advanced search at button press
     document.querySelector('.advancedSearchFormButton').addEventListener('click', function() {
-        console.log($("#advancedSearchDiv").css('display'));
         if ($("#advancedSearchDiv").css('display') === 'none') {
-            console.log('hello');
             $("#advancedSearchDiv").css('display', 'block');
-            console.log($("#advancedSearchDiv").css('display'));
         } else {
             $("#advancedSearchDiv").css('display', 'none');
         }
@@ -143,7 +139,6 @@ function changePage(n){
             elemNum.attr("hidden",false);
         }
     }
-    console.log(numPages, page)
     page = n
     if(numPages == 0){
         $('#pageRight').attr("hidden",true);
@@ -186,7 +181,6 @@ function previousPage(){
 }
 
 function nextPage(){
-    console.log('numPages');
     if (numPages > page){
         changePage(page+1);
     }

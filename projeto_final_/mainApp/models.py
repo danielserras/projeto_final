@@ -15,6 +15,9 @@ class App_user(models.Model):
 
 class Tenant(models.Model):
     ten_user = models.OneToOneField(App_user, on_delete=models.CASCADE)
+    university = models.CharField(max_length=100, null=True, blank=True)
+    min_search = models.IntegerField(default=500)
+    max_search = models.IntegerField(default=1200)
 
 class Landlord(models.Model):
     lord_user = models.OneToOneField(App_user, on_delete=models.CASCADE)

@@ -2,14 +2,10 @@
 {% load i18n %}
 {% load static %}
 {% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/login.css" %}'>
     <link rel="stylesheet" href='{% static "mainApp/css/profile.css" %}'>
 {% endblock %}
 {% block content %}
-
-
-
-
-
     {% if request.session.addPropPopUp %}
         <script>
             $(document).ready(function(){
@@ -48,18 +44,18 @@
     </div>
 
 
-    <div class="container mt-5">
-        <div class="row bg-info p-2"><h3 class="mx-auto my-auto  text-white ">{% trans 'Perfil' %}</h3></div>
+    <div class="container my-5 border border-info border-5 rounded shadow-lg">
+        <div class="row bg-info p-2"><h1 class="mx-auto my-auto text-white text-24">{% trans 'Perfil' %}</h1></div>
         <div class="row">
             <!-- List of options-->
-            <div class="col-sm-3 bg-secondary">
+            <div class="col-sm-3 bg-secondary border-right border-info">
                 <div class="row text-white">
-                    <!-- Options-->    
+                    <!-- Options   
                     <div class="col-sm-12 p-3 text-center border-bottom">
-                        <a class="text-white" href="profile" id="profile"><img src='{% static "mainApp/images/user.svg" %}' alt="" class="img-fluid">
+                        <a href="profile" id="profile"><img src='{% static "mainApp/images/user.svg" %}' alt="" class="img-fluid">
                             <h3 class="mb-0 text-white">{{user.first_name}} {{user.last_name}}</h3>
                         </a>
-                    </div>
+                    </div>--> 
                     {% if request.session.typeUser == "Landlord" %}
                         <!--If landlord-->
                         <div class="col-sm-12 p-3">
@@ -93,20 +89,85 @@
                         <form action="{% url 'logout_view' %}">
                             <button type="submit" class="btn btn-info border border-white border-3 font-weight-bold w-100">Logout</button>
                         </form>
-                    </div> 
+                    </div>
+                    <div class="col-sm-12 p-3">
+                        <a class="text-white" href="#"><button type="button" class="btn btn-info w-100">{% trans 'Eliminar conta' %}</button></a>
+                    </div>
 
                 </div>
             </div>
-            <!--Details-->
-            <div class="col-sm-9">
-                <div class="row">
-                    <div class="col-sm-12 p-3 ">
-                        {% trans 'Informação do perfil' %}  <br><br>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at ante est. Etiam et leo quis lorem euismod eleifend in non nulla. Suspendisse venenatis id enim a facilisis. Curabitur pulvinar felis eget quam feugiat aliquam.
-                         Cras vitae nisi magna. Praesent sodales vestibulum facilisis. Vivamus non congue tortor, sit amet iaculis eros. Fusce fringilla augue eu dolor eleifend, et suscipit nunc vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            <!--User Details-->
+            <form class="col-sm-9" action="{% url 'profile' %}" method="POST">
+                {% csrf_token %}
+                <div class="row justify-content-center">
+                    <div class="col-2 pt-3">
+                        <img src='{% static "mainApp/images/user.svg" %}' alt="" class="img-fluid">
                     </div>
                 </div>
-            </div>
+                <div class="row justify-content-center pt-2 pb-4">
+                    <div class="col-3 px-2">
+                        <h2 class="mb-0 text-info text-right" style="font-size: 28px;">{{user.username}}</h2>
+                    </div>
+                    <div class="col-3 px-2">
+                        <h2 class="mb-0 text-primary text-left" style="font-size: 28px;">{{ type }}</h2>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-6 p-3">
+                        <p class="text-info pl-5 mb-0 font-weight-bold mx-auto">Primeiro Nome:</p>
+                        <input type="text" class="inputType1 ml-4" value="{{user.first_name}}" name="first_name">
+                    </div>
+                    <div class="col-6 p-3">
+                        <p class="text-info pl-5 mb-0 font-weight-bold">Último Nome:</p>
+                        <input type="text" class="inputType1 ml-4" value="{{user.last_name}}" name="last_name">
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-6 p-3">
+                        <p class="text-info pl-5 mb-0 font-weight-bold">Email:</p>
+                        <input type="text" class="inputType1 ml-4" value="{{user.email}}" name="email">
+                    </div>
+                    <div class="col-6 p-3">
+                        <p class="text-info pl-5 mb-0 font-weight-bold">Número de telefone:</p>
+                        <input type="text" class="inputType1 ml-4" value="{{ phone }}" name="phoneNumber">
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-6 p-3">
+                        <p class="text-info pl-5 mb-0 font-weight-bold">Data de Nascimento:</p>
+                        <input type="date" class="inputType1 ml-4" value="{{ birth }}" name="birthDate">
+                    </div>
+            {% if request.session.typeUser == "Landlord" %}
+                    <div class="col-6 p-3 mt-3">
+                        <div class="row mt-4">
+                            <div class="col-6 mx-auto">
+                                <button type="submit" class="btn btn-info font-weight-bold">Guardar Alterações</button>
+                            </div>
+                        </div>
+                    </div>
+            {% else %}
+                    <div class="col-6 p-3">
+                        <p class="text-info pl-5 mb-0 font-weight-bold">Universidade:</p>
+                        <input type="text" class="inputType1 ml-4" value="{{ university }}" name="university">
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-6 p-3">
+                        <p class="text-info pl-5 mb-0 font-weight-bold">Valor mínimo da pesquisa:</p>
+                        <input type="text" class="inputType1 ml-4" value="{{ min }}" min="0" max="2000" name="min_search">
+                    </div>
+                    <div class="col-6 p-3">
+                        <p class="text-info pl-5 mb-0 font-weight-bold">Valor máximo da pesquisa:</p>
+                        <input type="text" class="inputType1 ml-4" value="{{ max }}" min="0" max="2000" name="max_search">
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-3 p-3">
+                        <button type="submit" class="btn btn-info font-weight-bold">Guardar Alterações</button>
+                    </div>
+                </div>
+            {% endif %}
+            </form>
         </div>
     </div>
 {% endblock %}
