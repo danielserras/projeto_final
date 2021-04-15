@@ -4,7 +4,6 @@ var measuresArray;
 var stepDistancing = 0
 
 $(document).ready(function(){
-    console.log('hello')
     const numSteps = $("#numberOfSteps").html();
     const stepLabels = getStepLabels();
     const completedSteps = $("#numberOfCompletedSteps").html();

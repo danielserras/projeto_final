@@ -2,6 +2,8 @@ from rest_framework import serializers
 
 from mainApp.models import *
 
+from django.utils import timezone
+
 
 class App_userSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -24,7 +26,7 @@ class LandlordSerializer(serializers.HyperlinkedModelSerializer):
 
 # Register Serializer
 
-#FALTA ACRESCENTAR OS CAMPOS PHONENUMBER E DATANASCIMENTO
+#FALTA ACRESCENTAR OS CAMPOS PHONENUMBER E DATANASCIMENTO e definir se é tenant ou landlord
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -37,21 +39,65 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-# # Register Serializer
-# class RegisterSerializer(serializers.ModelSerializer):
+class agreementRequestSerializer(serializers.ModelSerializer): 
+    idNumber = serializers.IntegerField()
+    class Meta:
+        model = Agreement_Request
 
-#     class Meta:
-#         model = User
-#         fields = ( 'username', 'email', 'password')
-#         extra_kwargs = {'password': {'write_only': True}} 
-
-#     def create(self, validated_data):
-#         user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
-#         user.save()
-#         return user
-
+        fields = ('idNumber', 'accepted')
     
+    def create(self, validated_data):
+        idN = validated_data['idNumber']
+        accepted = validated_data['accepted']
+        #print(Agreement_Request.objects.get(id=idN).accepted)
+        agreement_request = Agreement_Request.objects.get(id=idN)
+        agreement_request.accepted = accepted
+        #print(agreement_request.accepted)
+        agreement_request.save()
+        return agreement_request
 
+class createAgreementRequestSerializer(serializers.ModelSerializer):
+    tenant_id = serializers.IntegerField() #id
+    landlord_id = serializers.IntegerField() #id
+    associated_room_listing_id = serializers.IntegerField() #id
+    associated_property_listing_id = serializers.IntegerField() #id
+
+    class Meta:
+        model = Agreement_Request
+        fields = ('id', 'startsDate', 'endDate', 'message', 'tenant_id', 'landlord_id', 'associated_property_listing_id', 'associated_room_listing_id')
+        
+
+    def create(self, validated_data):
+        if validated_data['associated_room_listing_id'] == 0:
+            validated_data.pop('associated_room_listing_id')
+            dateNow = timezone.now()
+            validated_data['dateOfRequest'] = dateNow
+            print(validated_data['dateOfRequest'])
+            agreement_request = Agreement_Request.objects.create(**validated_data)
+
+            return agreement_request
+        else:
+            validated_data.pop('associated_property_listing_id')
+            dateNow = timezone.now()
+            validated_data['dateOfRequest'] = dateNow
+            print(validated_data['dateOfRequest'])
+            agreement_request = Agreement_Request.objects.create(**validated_data)
+
+            return agreement_request
     
-
+    # def create(self, validated_data):
+    #         dateNow = timezone.now()
+    #         validated_data['dateOfRequest'] = dateNow
+    #         print(validated_data['dateOfRequest'])
+    #         #agreement_request = Agreement_Request.objects.create(**validated_data)
+    #         agreement_request = Agreement_Request()
+    #         agreement_request.startsDate = validated_data['startsDate']
+    #         agreement_request.endDate = validated_data['endDate']
+    #         agreement_request.message = validated_data['message']
+    #         agreement_request.tenant = validated_data['tenant']
+    #         agreement_request.landlord = validated_data['landlord']
+    #         agreement_request.associated_property_listing = validated_data['associated_property_listing']
+    #         agreement_request.dateOfRequest = validated_data['dateOfRequest'] = dateNow
+    #         agreement_request.save()
+    #         return agreement_request
    

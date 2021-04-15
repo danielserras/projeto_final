@@ -284,7 +284,7 @@ class BathroomForm(forms.ModelForm):
             'shower',
             'bathtub',
             'bidet',
-            'toilet',
+            'toilet', 
             'sink',
             'b_window']
 
