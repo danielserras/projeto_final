@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.http import HttpResponse
 from .models import *
 from .forms import *
+from .utils import render_to_pdf
 from django.conf import settings 
 from django.core.mail import send_mail
 from verify_email.email_handler import send_verification_email
@@ -15,12 +16,14 @@ from paypal.standard.ipn.signals import valid_ipn_received, invalid_ipn_received
 from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 from django.template.loader import render_to_string
+from django.template.loader import get_template
 from django.db import connection
 from decouple import config
 from geopy.geocoders import MapBox
 from copy import deepcopy
 from django.utils.translation import gettext as _
 from datetime import datetime, timedelta, date
+from django.views.generic import View
 import PIL
 import time
 import json
@@ -1606,9 +1609,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": " http://269b8371dfda.ngrok.io/paymentStatus/",
-            "return_url": " http://269b8371dfda.ngrok.io/mainApp/search",
-            "cancel_return": " http://269b8371dfda.ngrok.io/mainApp/search",
+            "notify_url": " http://78fb3b8e2d99.ngrok.io/paymentStatus/",
+            "return_url": " http://78fb3b8e2d99.ngrok.io/mainApp/search",
+            "cancel_return": " http://78fb3b8e2d99.ngrok.io/mainApp/search",
 
             }
 
@@ -1635,7 +1638,6 @@ def make_payment(request, ag_request_id):
 
 @csrf_exempt
 def get_payment_status(sender, **kwargs):
-    
     ipn_obj = sender.POST
     if ipn_obj['payment_status'] == ST_PP_COMPLETED:
 
@@ -1753,7 +1755,17 @@ def delete_account(request):
         pass
 
     return redirect('index')
-        
 
+def manage_agreements_view(request):
+    return render(request, "mainApp/manageAgreements.html", {})
 
+def get_invoice_pdf(request, *args, **kwargs):
+    data = {
+        'today': date.today(), 
+        'amount': 39.99,
+        'customer_name': 'Cooper Mann',
+        'order_id': 1233434,
+    }
+    pdf = render_to_pdf('mainApp/invoice.html', data)
+    return HttpResponse(pdf, content_type='application/pdf')
     
