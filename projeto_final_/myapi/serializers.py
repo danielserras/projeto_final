@@ -24,7 +24,7 @@ class LandlordSerializer(serializers.HyperlinkedModelSerializer):
 
 # Register Serializer
 
-#FALTA ACRESCENTAR OS CAMPOS PHONENUMBER E DATANASCIMENTO
+#FALTA ACRESCENTAR OS CAMPOS PHONENUMBER E DATANASCIMENTO e definir se é tenant ou landlord
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -36,21 +36,30 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         return user
 
-
-# # Register Serializer
-# class RegisterSerializer(serializers.ModelSerializer):
-
-#     class Meta:
-#         model = User
-#         fields = ( 'username', 'email', 'password')
-#         extra_kwargs = {'password': {'write_only': True}} 
-
-#     def create(self, validated_data):
-#         user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
-#         user.save()
-#         return user
+class AgreementReqStatusSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Agreement_Request
+        fields = '__all__'
 
     
+
+class agreementRequestSerializer(serializers.ModelSerializer): 
+    idNumber = serializers.IntegerField()
+    class Meta:
+        model = Agreement_Request
+
+        fields = ('idNumber', 'accepted')
+    
+    def create(self, validated_data):
+        idN = validated_data['idNumber']
+        accepted = validated_data['accepted']
+        print(Agreement_Request.objects.get(id=idN).accepted)
+        agreement_request = Agreement_Request.objects.get(id=idN)
+        agreement_request.accepted = accepted
+        print(agreement_request.accepted)
+        agreement_request.save()
+        return agreement_request
+
 
     
 

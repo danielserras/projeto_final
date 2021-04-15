@@ -39,11 +39,6 @@ def response_maker(status, code, data, message):
 
 # Create your views here.
 
-class registerViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = App_userSerializer
-
-
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
@@ -89,6 +84,35 @@ class IntroduceProperty(APIView):
         }
         return Response(content)
 
+# class UpdateName(generics.UpdateAPIView):
+#     queryset = ClientUser.objects.all()
+#     serializer_class = ClientNameSerializer
+#     permission_classes = (permissions.IsAuthenticated,)
+
+#     def update(self, request, *args, **kwargs):
+#         instance = self.get_object()
+#         instance.name = request.data.get("name")
+#         instance.save()
+
+#         serializer = self.get_serializer(instance)
+#         serializer.is_valid(raise_exception=True)
+#         self.perform_update(serializer)
+
+#         return Response(serializer.data)
+
+#RF-9 FALTA VERIFICAR SE ESTA COM LOGIN DE SENHORIO FEITO?
+class receiveNotification(generics.GenericAPIView):
+    """Accept or refuse agreement request"""
+    serializer_class = agreementRequestSerializer
+
+    def put(self, request, *args, **kwargs):
+        try:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            agreement = serializer.save()
+            return response_maker("success", 200, None, "Alteração realizada")
+        except:
+            return response_maker("error", 401, None, "Alteração falhada")
 
 # @api_view(['POST',])
 # def registration_view(request):
