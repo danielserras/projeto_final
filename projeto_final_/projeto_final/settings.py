@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'paypal.standard.ipn',
     'myapi.apps.MyapiConfig',
     'knox',
+    'rest_framework.authtoken',
 ]
 PAYPAL_TEST = True
 PAYPAL_RECEIVER_EMAIL = 'sb-st9me5441079@business.example.com'
@@ -161,6 +162,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
         'knox.auth.TokenAuthentication',
     ]
 }
