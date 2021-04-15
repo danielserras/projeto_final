@@ -23,25 +23,35 @@ class LandlordSerializer(serializers.HyperlinkedModelSerializer):
 
 
 # Register Serializer
-class RegisterSerializer(serializers.ModelSerializer):
 
+#FALTA ACRESCENTAR OS CAMPOS PHONENUMBER E DATANASCIMENTO
+class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ( 'username', 'email', 'password')
-        extra_kwargs = {'password': {'write_only': True}} 
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
-        user.save()
+        user = User.objects.create_user(**validated_data)
+
         return user
 
-    
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender, instance, created, **kwargs):
+
+# # Register Serializer
+# class RegisterSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = User
+#         fields = ( 'username', 'email', 'password')
+#         extra_kwargs = {'password': {'write_only': True}} 
+
+#     def create(self, validated_data):
+#         user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
+#         user.save()
+#         return user
+
     
 
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender, instance, **kwargs):
     
 
    

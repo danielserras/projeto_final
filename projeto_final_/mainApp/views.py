@@ -1127,14 +1127,29 @@ def listing_editing_view(request, property_id, main_listing_id):
     img_formset.extra=1
 
     imagesPaths = []
-    range = [0,]
+    imagesId = []
     for i in list(images):
         pathSplited = str(i.image).split('mainApp/static/')
         imagesPaths.append(pathSplited[1])
-        range.append(int(range[-1]) + 1)
+        imagesId.append(i.id)
 
-    context = {'main_listing':main_listing, 'img_formset':img_formset, "imagesPath":imagesPaths, 'editListing':True}
+    imagesZip = zip(imagesPaths, imagesId)
+
+    context = {'main_listing':main_listing, 'img_formset':img_formset, "imagesZip":imagesZip, 'editListing':True}
     return render(request, "mainApp/editListing.html", context)
+
+def remove_image_view(request, property_id, main_listing_id, image_id):
+    try:
+        image_obj = Image.objects.get(id=image_id)
+        image_path = image_obj.image.url
+        if os.path.exists(image_path[1:]):
+            os.remove(image_path[1:])
+        image_obj.delete()
+
+    except :
+        pass
+
+    return redirect("/mainApp/profile/propertiesManagement/listingEditing/{}/{}".format(property_id,main_listing_id))
 
 def create_listing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)

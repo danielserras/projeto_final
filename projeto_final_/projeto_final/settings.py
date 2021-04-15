@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'verify_email',
     'paypal.standard.ipn',
     'myapi.apps.MyapiConfig',
+    'knox',
 ]
 PAYPAL_TEST = True
 PAYPAL_RECEIVER_EMAIL = 'sb-st9me5441079@business.example.com'
@@ -151,3 +152,15 @@ LANGUAGES = (
     ('pt', _('Portuguese')),
 
 )
+
+# Makes knox’s TokenAuthentication the default authentification 
+# class for django-rest-framework
+# allows both session based and token based authentication.
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'knox.auth.TokenAuthentication',
+    ]
+}
