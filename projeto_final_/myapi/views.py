@@ -84,24 +84,9 @@ class IntroduceProperty(APIView):
         }
         return Response(content)
 
-# class UpdateName(generics.UpdateAPIView):
-#     queryset = ClientUser.objects.all()
-#     serializer_class = ClientNameSerializer
-#     permission_classes = (permissions.IsAuthenticated,)
 
-#     def update(self, request, *args, **kwargs):
-#         instance = self.get_object()
-#         instance.name = request.data.get("name")
-#         instance.save()
-
-#         serializer = self.get_serializer(instance)
-#         serializer.is_valid(raise_exception=True)
-#         self.perform_update(serializer)
-
-#         return Response(serializer.data)
-
-#RF-9 FALTA VERIFICAR SE ESTA COM LOGIN DE SENHORIO FEITO?
-class receiveNotification(generics.GenericAPIView):
+#RF-9 
+class receiveNotificationAPI(generics.GenericAPIView):
     """Accept or refuse agreement request"""
     serializer_class = agreementRequestSerializer
 
@@ -113,6 +98,26 @@ class receiveNotification(generics.GenericAPIView):
             return response_maker("success", 200, None, "Alteração realizada")
         except:
             return response_maker("error", 401, None, "Alteração falhada")
+
+
+#RF-18
+class agreementRequestAPI(generics.GenericAPIView):
+    serializer_class = createAgreementRequestSerializer
+
+    def post(self, request, *args, **kwargs):
+        try:
+            serializer = self.get_serializer(data=request.data)
+            print("ola1")
+            serializer.is_valid(raise_exception=True)
+            print("ola2")
+            agreement_request = serializer.save()
+            print("ola3")
+            # return Response({
+            # "user": App_userSerializer(user, context=self.get_serializer_context()).data,
+            # })
+            return response_maker("success", 200, None, "Criação do Agreement request criado.")
+        except:
+            return response_maker("error", 401, None, "Criação do Agreement request falhou.")
 
 # @api_view(['POST',])
 # def registration_view(request):

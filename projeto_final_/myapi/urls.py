@@ -22,5 +22,6 @@ urlpatterns = [
     path('api/logout/', knox_views.LogoutView.as_view(), name='logout'),
     path('api/logoutall/', knox_views.LogoutAllView.as_view(), name='logoutall'),
     path('api/getAuthToken/', views.getAuthToken.as_view(), name="getAuthToken"),
-    path('api/receiveNotification/', views.receiveNotification.as_view(), name="receiveNotification"),
+    path('api/receiveNotification/', views.receiveNotificationAPI.as_view(), name="receiveNotification"),
+    path('api/agreementRequest/', views.agreementRequestAPI.as_view(), name="agreement_request"),
 ]
