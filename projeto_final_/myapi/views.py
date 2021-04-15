@@ -1,4 +1,7 @@
+import json
 from django.shortcuts import render
+
+from rest_framework.response import Response
 
 from rest_framework import viewsets, status, generics, permissions
 
@@ -13,8 +16,25 @@ from mainApp.models import *
 from django.contrib.auth import login
 
 from knox.views import LoginView 
+from rest_framework.views import APIView
 
+from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate, login, logout
+
+#Funcoes acessorias
+
+def response_maker(status, code, data, message):
+    """
+    Devolve um objeto response com um body em json e um codigo de status
+    Status str, 'success' ou 'error'
+    code int, codigo http de resposta dependendo do metodo e do resultado
+    data dict, corpo de resposta da mensagem quando aplicavel
+    message str, mensagem adicional de resposta quando aplicavel
+    """
+    body = {"status" : status, "code" : code, "data" : data, "message" : message}
+    
+    return Response(body, status=code)
+
 
 
 # Create your views here.
@@ -46,13 +66,29 @@ class LoginAPI(LoginView):
         user = authenticate(request, username=request.data['username'], password=request.data['password'])
         if user is not None:
             login(request, user)
-            return Response({
-                "Login realizado"
-                })
+            return response_maker("success", 200, None, "Login realizado")
         else:
-            return Response({
-            "Login falhado"
-            })
+            return response_maker("error", 401, None, "Login falhado")
+
+class getAuthToken(LoginView):
+    permission_classes = (permissions.AllowAny,)
+    def post(self, request, format=None):
+        user = authenticate(request, username=request.data['username'], password=request.data['password'])
+        if user is not None:
+            token = Token.objects.get_or_create(user=user)
+            print(token[0])
+            return response_maker("success", 200, {"authToken": str(token[0])}, None)
+        else:
+            return response_maker("error", 401, None, "password/username combination did not match any user")
+
+class IntroduceProperty(APIView):
+    def get(self, request, format=None):
+        content = {
+            'user': str(request.user),  # `django.contrib.auth.User` instance.
+            'auth': str(request.auth),  # None
+        }
+        return Response(content)
+
 
 # @api_view(['POST',])
 # def registration_view(request):
