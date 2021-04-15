@@ -25,7 +25,7 @@ totalForms.value = imgFormNum+1; */
     let totalForms = $('[id=id_form-TOTAL_FORMS]')[0];
     let imgFormNum = slots-1;
     let newForm;
-    if(window.location.href.includes("createListing")){
+    if(window.location.href.includes("createListing") || window.location.href.includes("addProperty")){
         newForm = imgFormContainer.children()[4].cloneNode(true);
     }
     else{
@@ -37,6 +37,7 @@ totalForms.value = imgFormNum+1; */
     newForm.childNodes[3].childNodes[1].setAttribute('id', 'id_form-'+imgFormNum.toString()+'-images');
     newForm.childNodes[3].childNodes[1].setAttribute('name', `form-${imgFormNum.toString()}-images`);
     newForm.childNodes[3].childNodes[1].value='';
+    $(newForm.childNodes[3].childNodes[5]).hide()
     imgFormContainer.append(newForm) //Insert the new form at the end of the list of forms
 
     totalForms.value = imgFormNum+1;

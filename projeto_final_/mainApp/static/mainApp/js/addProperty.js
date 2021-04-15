@@ -5,12 +5,12 @@ $(document).ready(function(){
     var bathroomsNum = 1;
     var livingroomsNum = 0;
     var kitchensNum = 1;
-    var imgSlots = 0;
+    /* var imgSlots = 0;
 
     $(".addImg").click(function(){
         imgSlots++;
         addimgSlot(imgSlots);
-    })
+    }) */
 
     $('.num_divisions').hide();
     $('.studio_type, .bedroom_type').click(function(){
@@ -262,7 +262,7 @@ function addFormLiving() {
     
 }
 
-function addimgSlot(slots) {
+/* function addimgSlot(slots) {
 
     let imgFormContainer = $(".imgF");
     let totalForms = $('[id=id_form-TOTAL_FORMS]')[0];
@@ -276,5 +276,5 @@ function addimgSlot(slots) {
     imgFormContainer.append(newForm) //Insert the new form at the end of the list of forms
 
     totalForms.value = imgFormNum+1;
-}
+} */
 
