@@ -159,7 +159,7 @@
                 {% if p == pageNumbers|length %}
                     <p class="px-1 font-weight-bold my-auto pb-2" id='etc2' hidden>...</p>
                 {% endif %}
-                <p class="mx-2 px-1 py-0 font-weight-bold border-primary border-3 text-24 pointer" id='page_num_{{p}}' onclick='changePage({{p}})' hidden>
+                <p class="mx-2 px-1 py-0 font-weight-bold border-primary border-3 text-24 pointer" id='page_num_{{p}}' onclick='changePage({p})' hidden>
                     {{p}}
                 </p>
             {% endfor %}

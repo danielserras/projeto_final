@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-13 23:17+0100\n"
+"POT-Creation-Date: 2021-04-14 17:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,7 +40,8 @@ msgstr "First Name"
 msgid "Apelido"
 msgstr "Last Name"
 
-#: mainApp/forms.py:81 mainApp/templates/mainApp/register.html:78
+#: mainApp/forms.py:81 mainApp/templates/mainApp/profile.html:156
+#: mainApp/templates/mainApp/register.html:78
 msgid "Número de telefone"
 msgstr "Phone number"
 
@@ -797,7 +798,7 @@ msgstr "We just sent you an email to confirm your account, please check it out"
 #: mainApp/templates/mainApp/login.html:44
 #: mainApp/templates/mainApp/login.html:64
 #: mainApp/templates/mainApp/login.html:83
-#: mainApp/templates/mainApp/profile.html:39
+#: mainApp/templates/mainApp/profile.html:42
 #: mainApp/templates/mainApp/pw_reset.html:25
 msgid "Fechar"
 msgstr "Close"
@@ -896,7 +897,7 @@ msgid "VALOR A PAGAR"
 msgstr "AMOUNT TO PAY"
 
 #: mainApp/templates/mainApp/payment.html:21
-#: mainApp/templates/mainApp/register.html:102
+#: mainApp/templates/mainApp/register.html:102 mainApp/views.py:873
 msgid "Senhorio"
 msgstr "Landlord"
 
@@ -916,41 +917,94 @@ msgstr "Entry date"
 msgid "Data de saída"
 msgstr "Leaving date"
 
-#: mainApp/templates/mainApp/profile.html:25
+#: mainApp/templates/mainApp/profile.html:28
 msgid "Adicionou uma nova propriedade!"
 msgstr "You just added a new property"
 
-#: mainApp/templates/mainApp/profile.html:34
+#: mainApp/templates/mainApp/profile.html:37
 msgid "Parabéns, adicionou uma nova propriedade à sua conta!"
 msgstr "Congratulations, you just added a new property!"
 
-#: mainApp/templates/mainApp/profile.html:48
+#: mainApp/templates/mainApp/profile.html:54
+#: mainApp/templates/mainApp/profile.html:119
+msgid "Eliminar conta"
+msgstr "Delete account"
+
+#: mainApp/templates/mainApp/profile.html:60
+msgid ""
+"Tem a certeza que pretede apagar a sua conta? Todos os seus dados serão "
+"eliminados e não poderam ser recuperados."
+msgstr ""
+"Are you sure you want to delete your account? All your information will be "
+"permanently deleted and impossible to recover."
+
+#: mainApp/templates/mainApp/profile.html:65
+msgid "Sim, pretendo eliminar a minha conta"
+msgstr "Yes, I want to delete my account"
+
+#: mainApp/templates/mainApp/profile.html:74
 msgid "Perfil"
 msgstr "Profile"
 
-#: mainApp/templates/mainApp/profile.html:62
+#: mainApp/templates/mainApp/profile.html:89
 msgid "Gerir Alojamentos/Anuncios"
 msgstr "Manage properties and listings"
 
-#: mainApp/templates/mainApp/profile.html:66
+#: mainApp/templates/mainApp/profile.html:94
 msgid "Adicionar Alojamento"
 msgstr "Add property"
 
-#: mainApp/templates/mainApp/profile.html:70
+#: mainApp/templates/mainApp/profile.html:99
 msgid "Gerir Acordos"
 msgstr "Manage agreements"
 
-#: mainApp/templates/mainApp/profile.html:75
+#: mainApp/templates/mainApp/profile.html:106
 msgid "Ver Acordos"
 msgstr "See agreements"
 
-#: mainApp/templates/mainApp/profile.html:79
+#: mainApp/templates/mainApp/profile.html:109
 msgid "Cancelar Acordo"
 msgstr "Refuse agreement"
 
-#: mainApp/templates/mainApp/profile.html:84
+#: mainApp/templates/mainApp/profile.html:113
 msgid "Renovar Acordo"
 msgstr "Renew agreement"
+
+#: mainApp/templates/mainApp/profile.html:142
+msgid "Primeiro Nome"
+msgstr "First Name"
+
+#: mainApp/templates/mainApp/profile.html:146
+msgid "Último Nome"
+msgstr "Last Name"
+
+#: mainApp/templates/mainApp/profile.html:152
+#, fuzzy
+#| msgid "E-mail"
+msgid "Email"
+msgstr "E-mail"
+
+#: mainApp/templates/mainApp/profile.html:162
+#: mainApp/templates/mainApp/register.html:84
+msgid "Data de Nascimento"
+msgstr "Birth date"
+
+#: mainApp/templates/mainApp/profile.html:169
+#: mainApp/templates/mainApp/profile.html:191
+msgid "Guardar Alterações"
+msgstr "Save changes"
+
+#: mainApp/templates/mainApp/profile.html:175
+msgid "Universidade"
+msgstr "University"
+
+#: mainApp/templates/mainApp/profile.html:181
+msgid "Valor mínimo da pesquisa"
+msgstr "Lowest search price"
+
+#: mainApp/templates/mainApp/profile.html:185
+msgid "Valor máximo da pesquisa"
+msgstr "Highest search price"
 
 #: mainApp/templates/mainApp/propertiesManagement.html:31
 msgid "Editar Alojamento"
@@ -1029,15 +1083,11 @@ msgstr "Registration"
 msgid "E-mail"
 msgstr "E-mail"
 
-#: mainApp/templates/mainApp/register.html:84
-msgid "Data de Nascimento"
-msgstr "Birth date"
-
 #: mainApp/templates/mainApp/register.html:97
 msgid "Tipo de Conta"
 msgstr "Account type"
 
-#: mainApp/templates/mainApp/register.html:99
+#: mainApp/templates/mainApp/register.html:99 mainApp/views.py:852
 msgid "Inquilino"
 msgstr "Tenant"
 
@@ -1206,9 +1256,17 @@ msgstr ""
 "The landlord will be notified and the agreement will be stored in both your "
 "personal areas"
 
-#: mainApp/views.py:1467
+#: mainApp/views.py:1507
 msgid "Opção reservada a inquilinos."
 msgstr "Option available only to tenants"
+
+#: mainApp/views.py:1725
+msgid ""
+"Ainda possui contratos ativos. Terá de terminar os contratos antes de "
+"eliminar os seus dados."
+msgstr ""
+"You still have active agreements. You need to terminate them in order to "
+"delete your account."
 
 #~ msgid "Informação do perfil"
 #~ msgstr "Profile Info"

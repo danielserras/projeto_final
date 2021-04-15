@@ -5,6 +5,9 @@
     <link rel="stylesheet" href='{% static "mainApp/css/login.css" %}'>
     <link rel="stylesheet" href='{% static "mainApp/css/profile.css" %}'>
 {% endblock %}
+{% block scripts %}
+    <script src='{% static "mainApp/js/profile.js" %}'></script>
+{% endblock %}
 {% block content %}
     {% if request.session.addPropPopUp %}
         <script>
@@ -17,7 +20,7 @@
         </script>
     {% endif %}
 
-    <!--POP-UP-->
+    <!--POP-UP NEW PROPERTY-->
     <div class="modal fade" id="modalLoginAddProp" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -43,13 +46,36 @@
     </div>
     </div>
 
+    <!--POP-UP DELETE ACCOUNT-->
+    <div class="modal fade" id="modalDeleteAccount" tabindex="-1" role="dialog" aria-labelledby="modalDeleteAccount" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-3 border-danger">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Eliminar conta' %}</h5>
+            <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+        {% trans 'Tem a certeza que pretede apagar a sua conta? Todos os seus dados serão eliminados e não poderam ser recuperados.' %}
+        </div>
+        <div class="modal-footer">
+            <form method="POST" action="{% url 'deletePopUpProp' %}">
+                {% csrf_token %}
+                <button type="submit" id="modalButtonDeleteAccount" class="btn btn-danger deletePOP">{% trans 'Sim, pretendo eliminar a minha conta' %}</button>
+            </form>
+        </div>
+    </div>
+    </div>
+    </div>
+
 
     <div class="container my-5 border border-info border-5 rounded shadow-lg">
         <div class="row bg-info p-2"><h1 class="mx-auto my-auto text-white text-24">{% trans 'Perfil' %}</h1></div>
         <div class="row">
             <!-- List of options-->
             <div class="col-sm-3 bg-secondary border-right border-info">
-                <div class="row text-white">
+
                     <!-- Options   
                     <div class="col-sm-12 p-3 text-center border-bottom">
                         <a href="profile" id="profile"><img src='{% static "mainApp/images/user.svg" %}' alt="" class="img-fluid">
@@ -58,44 +84,43 @@
                     </div>--> 
                     {% if request.session.typeUser == "Landlord" %}
                         <!--If landlord-->
-                        <div class="col-sm-12 p-3">
-                            <a class="text-white" href="/mainApp/profile/propertiesManagement"><button type="button" class="btn btn-info w-100">{% trans 'Gerir Alojamentos/Anuncios' %}</button></a>
+                        <div class="row">
+                            <div class="col-12 p-3">
+                                <a class="text-white" href="/mainApp/profile/propertiesManagement"><button type="button" class="btn btn-info w-100">{% trans 'Gerir Alojamentos/Anuncios' %}</button></a>
+                            </div>
                         </div>
-                        <!--If landlord-->
-                        <div class="col-sm-12 p-3">
-                            <a class="text-white" href="/mainApp/addProperty"><button type="button" class="btn btn-info w-100">{% trans 'Adicionar Alojamento' %}</button></a>
+                        <div class="row">
+                            <div class="col-12 p-3">
+                                <a class="text-white" href="/mainApp/addProperty"><button type="button" class="btn btn-info w-100">{% trans 'Adicionar Alojamento' %}</button></a>
+                            </div>
                         </div>
-                        <!--If landlord-->
-                        <div class="col-sm-12 p-3">
-                            <a class="text-white" href="#"><button type="button" class="btn btn-info w-100">{% trans 'Gerir Acordos' %}</button></a>
+                        <div class="row">
+                            <div class="col-12 p-3">
+                                <a class="text-white" href="#"><button type="button" class="btn btn-info w-100">{% trans 'Gerir Acordos' %}</button></a>
+                            </div>
                         </div>
+                        
                     {% else %}
                         <!--If tenant-->
                         <div class="col-sm-12 p-3">
                             <a class="text-white" href="#"><button type="button" class="btn btn-info w-100">{% trans 'Ver Acordos' %}</button></a>
                         </div>
-                        <!--If tenant-->
                         <div class="col-sm-12 p-3">
                             <a class="text-white" href="#"><button type="button" class="btn btn-info w-100">{% trans 'Cancelar Acordo' %}</button></a>
                         </div> 
                         {% if diffDates <= 30 and diffDates >= 1 %}
-                            <!--If tenant-->
                             <div class="col-sm-12 p-3">
                                 <a class="text-white" href="profile/renewAgreement"><button type="button" class="btn btn-info w-100">{% trans 'Renovar Acordo' %}</button></a>
                             </div>
                         {% endif %}
                     {% endif %}
-                    <div class="col-sm-12 p-3">
-                        <form action="{% url 'logout_view' %}">
-                            <button type="submit" class="btn btn-info border border-white border-3 font-weight-bold w-100">Logout</button>
-                        </form>
+                    <div class="row w-100" style="position: absolute; bottom:0px;">
+                        <div class="col-sm-12 p-3">
+                            <button type="button" class="btn btn-info w-100 text-white font-weight-bold border border-danger bg-danger" onclick="showDeleteAccountPopUp()">{% trans 'Eliminar conta' %}</button>
+                        </div>
                     </div>
-                    <div class="col-sm-12 p-3">
-                        <a class="text-white" href="#"><button type="button" class="btn btn-info w-100">{% trans 'Eliminar conta' %}</button></a>
-                    </div>
-
-                </div>
             </div>
+
             <!--User Details-->
             <form class="col-sm-9" action="{% url 'profile' %}" method="POST">
                 {% csrf_token %}
@@ -105,65 +130,65 @@
                     </div>
                 </div>
                 <div class="row justify-content-center pt-2 pb-4">
-                    <div class="col-3 px-2">
+                    <div class="col-4 px-2">
                         <h2 class="mb-0 text-info text-right" style="font-size: 28px;">{{user.username}}</h2>
                     </div>
-                    <div class="col-3 px-2">
+                    <div class="col-4 px-2">
                         <h2 class="mb-0 text-primary text-left" style="font-size: 28px;">{{ type }}</h2>
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold mx-auto">Primeiro Nome:</p>
+                        <p class="text-info pl-5 mb-0 font-weight-bold mx-auto">{% trans 'Primeiro Nome' %}:</p>
                         <input type="text" class="inputType1 ml-4" value="{{user.first_name}}" name="first_name">
                     </div>
                     <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">Último Nome:</p>
+                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Último Nome' %}:</p>
                         <input type="text" class="inputType1 ml-4" value="{{user.last_name}}" name="last_name">
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">Email:</p>
+                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Email' %}:</p>
                         <input type="text" class="inputType1 ml-4" value="{{user.email}}" name="email">
                     </div>
                     <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">Número de telefone:</p>
+                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Número de telefone' %}:</p>
                         <input type="text" class="inputType1 ml-4" value="{{ phone }}" name="phoneNumber">
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">Data de Nascimento:</p>
+                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Data de Nascimento' %}:</p>
                         <input type="date" class="inputType1 ml-4" value="{{ birth }}" name="birthDate">
                     </div>
             {% if request.session.typeUser == "Landlord" %}
                     <div class="col-6 p-3 mt-3">
                         <div class="row mt-4">
                             <div class="col-6 mx-auto">
-                                <button type="submit" class="btn btn-info font-weight-bold">Guardar Alterações</button>
+                                <button type="submit" class="btn btn-info font-weight-bold">{% trans 'Guardar Alterações' %}</button>
                             </div>
                         </div>
                     </div>
             {% else %}
                     <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">Universidade:</p>
+                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Universidade' %}:</p>
                         <input type="text" class="inputType1 ml-4" value="{{ university }}" name="university">
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">Valor mínimo da pesquisa:</p>
-                        <input type="text" class="inputType1 ml-4" value="{{ min }}" min="0" max="2000" name="min_search">
+                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Valor mínimo da pesquisa' %}:</p>
+                        <input type="number" class="inputType1 ml-4" id="minProfile" value="{{ min }}" min="0" max="2000" name="min_search">
                     </div>
                     <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">Valor máximo da pesquisa:</p>
-                        <input type="text" class="inputType1 ml-4" value="{{ max }}" min="0" max="2000" name="max_search">
+                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Valor máximo da pesquisa' %}:</p>
+                        <input type="number" class="inputType1 ml-4" id="maxProfile" value="{{ max }}" min="0" max="2000" name="max_search">
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-3 p-3">
-                        <button type="submit" class="btn btn-info font-weight-bold">Guardar Alterações</button>
+                        <button type="submit" class="btn btn-info font-weight-bold">{% trans 'Guardar Alterações' %}</button>
                     </div>
                 </div>
             {% endif %}

@@ -849,7 +849,7 @@ def profile(request):
 
                     user_birth = a_user.birthDate.strftime('%Y-%m-%d')
                     user_phone = a_user.phoneNumber
-                    user_type = 'Inquilino'
+                    user_type = _('Inquilino')
 
                     ten_user = Tenant.objects.get(ten_user=a_user)
                     user_min_search = ten_user.min_search
@@ -859,7 +859,7 @@ def profile(request):
                     context = {"diffDates": diffDates,
                     "birth": user_birth,
                     "phone": user_phone,
-                    "type": _(user_type),
+                    "type": user_type,
                     "min": user_min_search,
                     "max": user_max_search,
                     "university": user_university}
@@ -870,7 +870,7 @@ def profile(request):
 
             user_birth = a_user.birthDate.strftime('%Y-%m-%d')
             user_phone = a_user.phoneNumber
-            user_type = 'Senhorio'
+            user_type = _('Senhorio')
 
             context = {"birth": user_birth, "phone": user_phone, "type": user_type}
 
