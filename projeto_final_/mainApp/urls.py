@@ -21,6 +21,7 @@ urlpatterns = [
     path('addProperty/kitchen/', views.introduce_property_view, name='addKitchen'),
     path('addProperty/livingroom/', views.introduce_property_view, name='addLivingroom'),
     path('addProperty/listing/', views.introduce_property_view, name='addListing'),
+    path('profile/manageAgreements', views.manage_agreements_view, name='manage_agreements_view'),
     #path('login', views.login_view, name='login_view'),
     #path('logout', views.logout_view, name='logout_view'),
     #path('register', views.register_view, name='register_view'),
@@ -41,6 +42,6 @@ urlpatterns = [
     path('profile/confirmed', views.deletePopUpProp, name='deletePopUpProp'),
     path('profile/renewAgreement', views.renewAgreement, name='renewAgreement'),
     path('landLord', views.landlord, name='landlord'),
-    
+    path('invoice', views.get_invoice_pdf, name='get_invoice_pdf'),
 ]
 
