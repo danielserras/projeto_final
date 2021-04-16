@@ -21,6 +21,7 @@ from django.db import connection
 from decouple import config
 from geopy.geocoders import MapBox
 from copy import deepcopy
+from django.utils import translation
 from django.utils.translation import gettext as _
 from datetime import datetime, timedelta, date
 from django.views.generic import View
@@ -1276,17 +1277,15 @@ def notificationsTenant(request):
         _userLand_ = _landlord_.lord_user
         userLand = _userLand_.user
         nomeLand = userLand.username
+        tenantName = tenant_.ten_user.user.username
         message = a.message 
         startsDate = a.startsDate.strftime("%d-%m-%Y")
         endDate = a.endDate.strftime("%d-%m-%Y")
         accepted = a.accepted #para ver se esta null, aceite ou recusada
         dateOfRequest_ = a.dateOfRequest
-        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted,dateOfRequest_])
+        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted,dateOfRequest_, tenantName])
     sizeList = len(fullList)
     reverseList = list(reversed(fullList))
-    #print(fullList)
-    #ola = Agreement_Request.objects.get(landlord_id=1)
-    #print(ola.tenant_id)
     context = {"fullList" : reverseList, "sizeList": sizeList}
     return render(request, "mainApp/notificationsTenant.html", context)
 
@@ -1609,9 +1608,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": " http://c9dc093f0075.ngrok.io/paymentStatus/",
-            "return_url": " http://c9dc093f0075.ngrok.io/mainApp/search",
-            "cancel_return": " http://c9dc093f0075.ngrok.io/mainApp/search",
+            "notify_url": " http://daf7bb482200.ngrok.io/paymentStatus/",
+            "return_url": " http://daf7bb482200.ngrok.io/mainApp/search",
+            "cancel_return": " http://daf7bb482200.ngrok.io/mainApp/search",
 
             }
 
@@ -1659,8 +1658,6 @@ def emailBody(request):
     return render(request, "mainApp/emailBody.html", {})
 
 def changeLanguage(request):
-    print("ENALKSED")
-    from django.utils import translation
     if request.method == 'POST':
         form = SearchForm(data=request.POST)
         if form.is_valid():
@@ -1757,14 +1754,31 @@ def delete_account(request):
     return redirect('index')
 
 def manage_agreements_view(request):
-    return render(request, "mainApp/manageAgreements.html", {})
+    current_user = request.user
+    app_user = App_user.objects.get(user_id = current_user)
+    a_user = Landlord.objects.get(lord_user_id=app_user)
+    agreement = list(Agreement.objects.filter(landlord = a_user))
+    if (agreement[0].associated_room_listing == None):
+        listing = agreement[0].associated_property_listing.main_listing.title
+    else:
+        listing = agreement[0].associated_room_listing.main_listing.title
+    print(listing)
+    context = {
+        "agreement":agreement,
+        "listing": listing,
+    }
+    return render(request, "mainApp/manageAgreements.html", context)
 
-def get_invoice_pdf(request, *args, **kwargs):
+def get_invoice_pdf(request):
+    if request.method == 'POST':
+        htmlInfo=request.POST['customer_name']
     data = {
         'today': date.today(), 
         'amount': 39.99,
-        'customer_name': 'Cooper Mann',
+        'customer_name': htmlInfo,
         'order_id': 1233434,
+        'phone_number': 967254021,
+        'adress': 'Adress',
     }
     pdf = render_to_pdf('mainApp/invoice.html', data)
     return HttpResponse(pdf, content_type='application/pdf')

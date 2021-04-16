@@ -25,7 +25,7 @@
         <thead class="thead bg-info">
             <tr>
             <th class="text-white" scope="col">#</th>
-            <th class="text-white" scope="col">{% trans 'Anúncio' %}</th>
+            <th class="text-white text-center" scope="col">{% trans 'Anúncio' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Início' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Fim' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Inquilino' %}</th>
@@ -35,7 +35,23 @@
             </tr>
         </thead>
         <tbody>
-            
+            {% for a in agreement%}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td class="text-center">{{listing}}</td>
+                        <td class="text-center">{{a.startsDate}}</td>
+                        <td class="text-center">{{a.endDate}}</td>
+                        <td class="text-center">{{a.tenant.ten_user.user}}</td>
+                        <td>hello</td>
+                        <td class="text-center">
+                            <form action="{% url 'get_invoice_pdf' %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn bg-primary text-white">Emitir</button>
+                            </form>
+                        </td>
+                        <td>hello</td>
+                    </tr>
+                {% endfor %}
         </tbody>
     </table>
     </div>
