@@ -56,7 +56,7 @@ def login_view(request):
                     request.session['typeUser'] = "Tenant"
                     return redirect('index') #placeholder, alterem depois
         else:
-            mistakes = 'Username ou password incorretos'
+            mistakes = 'Nome de utilizador ou palavra-passe incorretos'
             context = {'mistakes': mistakes}
             return render(request, 'mainApp/login.html', context) #placeholder
     context = {}
@@ -1109,8 +1109,9 @@ def listing_editing_view(request, property_id, main_listing_id):
 
         for d in imgs:
             cover = False
-            if d == imgs[0]:
-                cover = True
+            if len(images) == 0:
+                if d == imgs[0]:
+                    cover = True
 
             for i in d.values():
                 if i != None:
@@ -1138,8 +1139,8 @@ def listing_editing_view(request, property_id, main_listing_id):
         imagesId.append(i.id)
 
     imagesZip = zip(imagesPaths, imagesId)
-
-    context = {'main_listing':main_listing, 'img_formset':img_formset, "imagesZip":imagesZip, 'editListing':True}
+    imagesNum = len(imagesPaths)
+    context = {'main_listing':main_listing, 'img_formset':img_formset, "imagesZip":imagesZip, 'editListing':True, "imagesNum": imagesNum}
     return render(request, "mainApp/editListing.html", context)
 
 def remove_image_view(request, property_id, main_listing_id, image_id):
@@ -1153,7 +1154,7 @@ def remove_image_view(request, property_id, main_listing_id, image_id):
     except :
         pass
 
-    return redirect("/mainApp/profile/propertiesManagement/listingEditing/{}/{}".format(property_id,main_listing_id))
+    return redirect("/mainApp/profile/propertiesManagement/listingEditing/{}/{}#imagesDiv".format(property_id,main_listing_id))
 
 def create_listing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)

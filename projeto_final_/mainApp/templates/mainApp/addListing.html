@@ -135,7 +135,8 @@
                     </div>
                     <div class="col-sm-8 justify-content-md-center text-center mb-3">
                         <div class="col-sm-auto">
-                            <button type="submit" class="btn btn-secondary listing_submit" >{% trans 'Listar' %}</button>
+                            <button type="submit" id="saveListing" class="btn btn-secondary listing_submit"{% if "addProperty" in request.get_full_path %}disabled{%endif%} >{% trans 'Listar' %}</button>
+                             {% if "addProperty" in request.get_full_path%}<p id="photoAlert"class="text-danger">Tem que ter no mínimo uma fotografia</p>{%endif%}
                         </div>
                     </div>
                 </div>
