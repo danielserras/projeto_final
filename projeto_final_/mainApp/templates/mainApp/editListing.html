@@ -158,7 +158,7 @@
         <div class="row justify-content-md-center text-center mb-3">
             <div class="col-sm-auto">
                 <button type="submit" id="saveListing" class="btn btn-secondary listing_submit" {% if imagesNum == 0 or "createListing" in request.get_full_path %}disabled{%endif%}>{% trans 'Guardar' %}</button>
-                {% if imagesNum == 0 or "createListing" in request.get_full_path%}<p id="photoAlert"class="text-danger">Tem que ter no mínimo uma foto</p>{%endif%}
+                {% if imagesNum == 0 or "createListing" in request.get_full_path%}<p id="photoAlert"class="text-danger">Tem que ter no mínimo uma fotografia</p>{%endif%}
             </div>
         </div>
     </form>

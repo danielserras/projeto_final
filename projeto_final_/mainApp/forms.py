@@ -22,6 +22,9 @@ class CreateUserForm(UserCreationForm):
         widget=forms.PasswordInput(attrs={'class':'inputType1', 'type':'password', 'placeholder':_('Confirme a palavra-passe')})
     )
 
+    error_messages = {
+        'password_mismatch': _("As passwords não são iguais"),
+    }
     class Meta:
         model = User
         fields = ['username', 'email', 'first_name', 'last_name']

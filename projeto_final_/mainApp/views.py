@@ -55,7 +55,7 @@ def login_view(request):
                     request.session['typeUser'] = "Tenant"
                     return redirect('index') #placeholder, alterem depois
         else:
-            mistakes = 'Username ou password incorretos'
+            mistakes = 'Nome de utilizador ou palavra-passe incorretos'
             context = {'mistakes': mistakes}
             return render(request, 'mainApp/login.html', context) #placeholder
     context = {}
