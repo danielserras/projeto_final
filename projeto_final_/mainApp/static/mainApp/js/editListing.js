@@ -1,3 +1,4 @@
+var imgSlotsWValue = 0;
 $(document).ready(function () {
     $(".removeImage").hide();
     var imgSlots = 0;
@@ -5,6 +6,7 @@ $(document).ready(function () {
         imgSlots++;
         addimgSlot(imgSlots);
     })
+    imgSlotsWValue = $("#bdImgs").children().length;
 });
 
 function addimgSlot(slots) {
@@ -60,7 +62,10 @@ function upload_img(input) {
 
         reader.readAsDataURL(input.files[0]);
 
-        console.log($(input).next().next().show())
+        $(input).next().next().show();
+        $("#saveListing").attr("disabled", false);
+        $("#photoAlert").hide();
+        imgSlotsWValue++;
     }
 }
 
@@ -70,23 +75,13 @@ function remove_img(removeButton) {
     let imageDiv = fInput.parent().prev();
     imageDiv.html("");
     $(removeButton).hide();
-    /* if (input.files && input.files[0]) {
-        var reader = new FileReader();
 
-        reader.onload = function (e) {
-            //input.before('<div class="col-sm-4"><img id="img_id" class="img-thumbnail" src="'+e.target.result+'" alt="your image" /></div>" />');
-            let image = document.createElement("img")
-            image.setAttribute("class", "img-thumbnail ")
-            image.src = e.target.result
-            input.setAttribute("title", "");
-            input.parentElement.parentElement.childNodes[1].innerHTML='';
-            input.parentElement.parentElement.childNodes[1].append(image);
-        }
+    imgSlotsWValue--;
+    if(imgSlotsWValue == 0){
+        $("#saveListing").attr("disabled", true);
+        $("#photoAlert").show(); 
+    }
 
-        reader.readAsDataURL(input.files[0]);
-
-        console.log($(input).next().next().show())
-    } */
 }
 
 function browseFile(btn){

@@ -75,104 +75,27 @@
                     
                     </div>
                 </div>
-                <div class="row justify-content-center">
-                    <!-- <div class="form-group col-sm-4">
-                        {% if "multiple_bedrooms" in request.session %}
-                            <h4>O que pretende anunciar?</h4><br>
-                            <label for="" class="radio-inline">
-                                <input type="radio" name="listing_type" class="" value="House"> Casa
-                            </label> <br>
-                            <label for="" class="radio-inline">
-                                <input type="radio" name="listing_type" class="" value="Studio" disabled> Estúdio
-                            </label><br>
-                            <label for="" class="radio-inline">
-                                <input type="radio" name="listing_type" class="" value="Apartment"> Apartamento
-                            </label><br>
-                            <label for="" class="radio-inline">
-                                <input type="radio" name="listing_type" class="" value="Bedroom" disabled> Quarto
-                            </label><br>
-                            <label for="" class="radio-inline">
-                                <input type="radio" name="listing_type" class="" value="Residency"> Residência
-                            </label><br>
-                        {% else %}
-                            <h4>O que pretende anunciar?</h4><br>
-                            <label for="" class="radio-inline">
-                                <input type="radio" name="listing_type" class="" value="Home"> Casa
-                            </label> <br>
-                            <label for="" class="radio-inline">
-                                <input type="radio" name="listing_type" class="" value="Studio"> Estúdio
-                            </label><br>
-                            <label for="" class="radio-inline">
-                                <input type="radio" name="listing_type" class="" value="Apartment"> Apartamento
-                            </label><br>
-                            <label for="" class="radio-inline">
-                                <input type="radio" name="listing_type" class="" value="Bedroom"> Quarto
-                            </label><br>
-                            <label for="" class="radio-inline">
-                                <input type="radio" name="listing_type" class="" value="Residency"> Residência
-                            </label><br>
-                        {% endif %}
-                    </div> -->
-                    {% comment %} <div class="form-group col-sm-3">
-                        <h4>{% trans 'Album de fotografias' %}</h4><br>
-                            <div class="form-group imgF">
-                            {{img_formset.management_form}}
-                            {% for form in img_formset%}
-                            {{form.id}}
-                            {{form.images}}
-                            {% endfor %}
-                            </div>
-                        <button type="button" class="addImg btn btn-info">+</button>
-                    </div> {% endcomment %}
-
-                    {% comment %} <div class="form-group col-sm-3">
-                        <h4>{% trans 'Album de fotografias' %}</h4><br>
-                            <div class="form-group imgF">
-                                {{img_formset.management_form}}
-                                {% for form in img_formset%}
-                                    <div id="imgPreview" class="img-form">
-                                    </div>
-                                    <input type="file" name="images[]" onchange="upload_img(this);" /> 
-                                    {{form.images}}
-                                {% endfor %}
-                            </div>
-                        <button type="button" id="addImg" class="btn btn-info">+</button>
-                    </div> {% endcomment %}
-                    {% comment %} <label class="button">
-                        <input style="display: none;" type="file" name="images[]" accept="{{accept}}" multiple onchange="UploadForm.handleFiles(this.files)">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-upload" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#e76f51" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                            <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
-                            <polyline points="7 9 12 4 17 9" />
-                            <line x1="12" y1="4" x2="12" y2="16" />
-                        </svg>
-                        <p>
-                            {% trans 'Escolha as imagens' %}
-                        </p>
-                    </label> {% endcomment %}
+                <div class="row justify-content-center" id="imagesDiv">
                     <div class="form-group col-sm-8 text-center justify-content-center">
                         <h4>{% trans 'Album de fotografias' %}</h4><br>
                         <div class="form-group imgF row p-2 justify-content-center">
                             {{img_formset.management_form}}
-                            {% comment %} {% for i in imagesPath%}
-                            <img src="{%static i%}" alt="">
-                            {%endfor%} {% endcomment %}
                             {% if editListing%}
                                 {% for i in imagesZip%}
-                                    <div class="col-sm-3 col-md-3 col-6 justify-content-center">
+                                    <div class="col-sm-3 col-md-3 col-6 justify-content-center" id="bdImgs">
                                         <div class="row p-1 imgPreview justify-content-center">
                                             <img src="{% static i.0 %}" alt="" class="img-thumbnail">
                                         </div>
                                         <div class="row  justify-content-xs-center">
-                                            <a href="{{request.get_full_path}}/removeImage/{{i.1}}" class="mt-2 btn btn-primary">Remover</a>      
+                                            <a href="{{request.get_full_path}}/removeImage/{{i.1}}" class="mt-2 btn btn-primary">Remover</a>    
                                         </div>
                                     </div>
                                 {% endfor %}
                                 {% for form in img_formset%}
-                                    <div class="col-sm-3 mr-1 justify-content-sm-center">
+                                    <div class="col-sm-3 col-md-3 col-6 justify-content-sm-center">
                                         <div class="row p-1 imgPreview justify-content-center">
                                         </div>
-                                        <div class="row  justify-content-md-center">
+                                        <div class="row justify-content-md-center">
                                             {{form.images}}
                                             <button type="button" class="btn col-xs-8 px-0" onclick="browseFile(this)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-file-upload" width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -225,8 +148,7 @@
                             {%endif%}
 
                         </div>
-                        
-                        <div class="row mt-3">
+                        <div class="row mt-3 justify-content-center">
                             <button type="button" class="addImg btn btn-info">{% trans 'Adicionar mais fotos' %}</button>
                         </div>
                     </div>
@@ -235,7 +157,8 @@
         </div>
         <div class="row justify-content-md-center text-center mb-3">
             <div class="col-sm-auto">
-                <button type="submit" class="btn btn-secondary listing_submit" >{% trans 'Guardar' %}</button>
+                <button type="submit" id="saveListing" class="btn btn-secondary listing_submit" {% if imagesNum == 0 or "createListing" in request.get_full_path %}disabled{%endif%}>{% trans 'Guardar' %}</button>
+                {% if imagesNum == 0 or "createListing" in request.get_full_path%}<p id="photoAlert"class="text-danger">Tem que ter no mínimo uma foto</p>{%endif%}
             </div>
         </div>
     </form>
