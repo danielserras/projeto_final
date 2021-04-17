@@ -596,12 +596,41 @@ def accept_request(request, request_id):
     ag_request.accepted = True
     ag_request.save()
 
+    #INVOICE CREATION
+    invoice = Invoice(
+        agreement_request = ag_request,
+        timestamp = timezone.now().date())
+    invoice.save()
+
+    if ag_request.associated_property_listing == None:
+        room_listing = ag_request.associated_room_listing
+        main_listing = room_listing.main_listing
+    else:
+        prop_listing = ag_request.associated_property_listing
+        main_listing = prop_listing.main_listing
+    
+    deposit = main_listing.security_deposit
+
+    invoice_line_deposit = Invoice_Line(
+        description = _("Depósito de Entrada"),
+        amount = deposit
+    )
+    invoice_line_deposit.save()
+
+    duration_days = (ag_request.endDate - ag_request.startsDate).days
+    total_amount = int((duration_days/30) * main_listing.monthly_payment)
+
+    invoice_line_rent = Invoice_Line(
+        description = _("Renda"),
+        amount = total_amount
+    )
+    invoice_line_rent.save()
 
     listOfAgreements_ = []
     for e in Agreement_Request.objects.all():
         if e.landlord_id == lord.id:
             listOfAgreements_.append(e)
-    print("LISTA DOS AGREEMENTS DESTE LANDLORD: ", listOfAgreements_)
+    
     fullList_ = []
     for a in listOfAgreements_:
         id_req = a.id
@@ -678,6 +707,7 @@ def create_agreement(user_id, ag_request_id):
 
     request_id = ag_request_id
     ag_request = Agreement_Request.objects.get(id= request_id)
+    last_invoice = Invoice.objects.get(agreement_request = ag_request) 
     assoc_listing = ''
     new_ag = ''
 
@@ -690,7 +720,8 @@ def create_agreement(user_id, ag_request_id):
             tenant = tenant,
             landlord = lord,
             startsDate = ag_request.startsDate,
-            endDate= ag_request.endDate
+            endDate= ag_request.endDate,
+            last_invoice_date = last_invoice.timestamp,
         )
         new_ag.save()
         assoc_listing.main_listing.is_active = False
@@ -1278,13 +1309,12 @@ def notificationsTenant(request):
         _userLand_ = _landlord_.lord_user
         userLand = _userLand_.user
         nomeLand = userLand.username
-        tenantName = tenant_.ten_user.user.username
         message = a.message 
         startsDate = a.startsDate.strftime("%d-%m-%Y")
         endDate = a.endDate.strftime("%d-%m-%Y")
         accepted = a.accepted #para ver se esta null, aceite ou recusada
         dateOfRequest_ = a.dateOfRequest
-        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted,dateOfRequest_, tenantName])
+        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted,dateOfRequest_])
     sizeList = len(fullList)
     reverseList = list(reversed(fullList))
     context = {"fullList" : reverseList, "sizeList": sizeList}
@@ -1772,15 +1802,25 @@ def manage_agreements_view(request):
 
 def get_invoice_pdf(request):
     if request.method == 'POST':
-        htmlInfo=request.POST['customer_name']
-    data = {
-        'today': date.today(), 
-        'amount': 39.99,
-        'customer_name': htmlInfo,
-        'order_id': 1233434,
-        'phone_number': 967254021,
-        'adress': 'Adress',
-    }
-    pdf = render_to_pdf('mainApp/invoice.html', data)
-    return HttpResponse(pdf, content_type='application/pdf')
+        request_id=request.POST['request_payment_number']
+
+        ag_request = Agreement_Request.objects.get(id=request_id)
+        tenant = Tenant.objects.get(ten_user_id=ag_request.tenant_id)
+        tenant_app = App_user.objects.get(user_id=tenant.ten_user_id)
+        tenant_user = User.objects.get(id=tenant_app.user_id)
+
+        data = {
+            'today': ag_request.dateOfRequest.date(), 
+            'amount': 39.99,
+            'customer_name': str(tenant_user.first_name) + " " + str(tenant_user.last_name),
+            'order_id': request_id,
+            'phone_number': tenant_app.phoneNumber,
+            'adress': 'Adress',
+        }
+        pdf = render_to_pdf('mainApp/invoice.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')
+
+def send_invoice(request):
+    if request.method == 'POST':
+        request_id=request.POST['request_payment_number']
     
