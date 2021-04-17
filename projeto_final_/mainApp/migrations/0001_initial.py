@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('be_window', models.BooleanField()),
                 ('num_single_beds', models.IntegerField()),
                 ('num_double_beds', models.IntegerField()),
-                ('max_occupacity', models.IntegerField()),
+                ('max_occupancy', models.IntegerField()),
                 ('be_balcony', models.BooleanField()),
                 ('wardrobe', models.BooleanField()),
                 ('be_desk', models.BooleanField()),

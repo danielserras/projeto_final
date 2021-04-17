@@ -36,7 +36,6 @@ urlpatterns = [
     path('notificationsLandlord/requestAccepted/<int:request_id>', views.accept_request, name='accept_request'),
     path('notificationsLandlord/requestDenied/<int:request_id>', views.deny_request, name='deny_request'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('login/changeToRegister', views.changeToRegister, name='changeToRegister'),
     path('i18n/', include('django.conf.urls.i18n')),
     path('login/confirmed', views.deletePopUp, name='deletePopUp'),
     path('profile/confirmed', views.deletePopUpProp, name='deletePopUpProp'),
