@@ -166,7 +166,7 @@ def save_property(request):
             heater = c.get('heater'),
             air_conditioning = c.get('air_conditioning'),
             ensuite_bathroom = c.get('ensuite_bathroom'),
-            max_occupacity = c.get('max_occupacity'),
+            max_occupancy = c.get('max_occupancy'),
         )
         bed_obj.save()
 
@@ -1681,9 +1681,6 @@ def get_payment_status(sender, **kwargs):
 
 valid_ipn_received.connect(get_payment_status)
 invalid_ipn_received.connect(get_payment_status)
-
-def changeToRegister(request):
-    return render(request, "mainApp/register.html", {})
 
 def emailBody(request):
     return render(request, "mainApp/emailBody.html", {})

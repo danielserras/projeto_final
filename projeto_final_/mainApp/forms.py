@@ -169,7 +169,7 @@ class BedroomForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(BedroomForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            if "num_" not in field_name and field_name != "max_occupacity":
+            if "num_" not in field_name and field_name != "max_occupancy":
                 if field.widget.attrs.get('class'):
                     field.widget.attrs['class'] += 'custom-control-input'
                 else:
@@ -185,7 +185,7 @@ class BedroomForm(forms.ModelForm):
     be_window = forms.BooleanField(required=False, initial=False)
     num_single_beds = forms.IntegerField(required=True)
     num_double_beds = forms.IntegerField(required=True)
-    max_occupacity = forms.IntegerField(required=True)
+    max_occupancy = forms.IntegerField(required=True)
     be_balcony = forms.BooleanField(required=False, initial=False)
     wardrobe = forms.BooleanField(required=False, initial=False)
     be_desk = forms.BooleanField(required=False, initial=False)
@@ -205,7 +205,7 @@ class BedroomForm(forms.ModelForm):
             "be_window",
             "num_single_beds",
             "num_double_beds",
-            "max_occupacity",
+            "max_occupancy",
             "be_balcony",
             "wardrobe",
             "be_desk",
