@@ -175,4 +175,5 @@ class Invoice(models.Model):
 class Invoice_Line(models.Model):
     description = models.CharField(max_length=280)
     amount = models.IntegerField()
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
 # Create your models here.

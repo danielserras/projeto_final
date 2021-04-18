@@ -43,5 +43,6 @@ urlpatterns = [
     path('landLord', views.landlord, name='landlord'),
     path('invoice', views.get_invoice_pdf, name='get_invoice_pdf'),
     path('sendInvoice', views.send_invoice, name='send_invoice'),
+    path('invoicesLandlord', views.invoicesLandlord, name='invoicesLandlord'),
 ]
 

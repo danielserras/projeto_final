@@ -613,7 +613,8 @@ def accept_request(request, request_id):
 
     invoice_line_deposit = Invoice_Line(
         description = _("Depósito de Entrada"),
-        amount = deposit
+        amount = deposit,
+        invoice_id = invoice.id,
     )
     invoice_line_deposit.save()
 
@@ -622,7 +623,8 @@ def accept_request(request, request_id):
 
     invoice_line_rent = Invoice_Line(
         description = _("Renda"),
-        amount = total_amount
+        amount = total_amount,
+        invoice_id = invoice.id,
     )
     invoice_line_rent.save()
 
@@ -741,7 +743,9 @@ def create_agreement(user_id, ag_request_id):
         new_ag.save()
         assoc_listing.main_listing.is_active = False
         assoc_listing.save()
-        
+
+    last_invoice.agreement = new_ag.id
+    last_invoice.save()
 
 @login_required(login_url='login_view')
 def create_request(request):
@@ -1301,7 +1305,7 @@ def notificationsTenant(request):
     for e in Agreement_Request.objects.all():
         if e.tenant_id == tenant_.id:
             listOfAgreements.append(e)
-    print("LISTA DOS AGREEMENTS DESTE USER: ", listOfAgreements)
+
     fullList = []
     for a in listOfAgreements:
         _id_req = a.id
@@ -1314,7 +1318,8 @@ def notificationsTenant(request):
         endDate = a.endDate.strftime("%d-%m-%Y")
         accepted = a.accepted #para ver se esta null, aceite ou recusada
         dateOfRequest_ = a.dateOfRequest
-        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted,dateOfRequest_])
+        invoice_id = Invoice.objects.get(agreement_request_id=e.id).id
+        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted, dateOfRequest_, invoice_id])
     sizeList = len(fullList)
     reverseList = list(reversed(fullList))
     context = {"fullList" : reverseList, "sizeList": sizeList}
@@ -1333,7 +1338,8 @@ def notificationsLandlord(request):
     for e in Agreement_Request.objects.all():
         if e.landlord_id == landlord_.id:
             listOfAgreements_.append(e)
-    print("LISTA DOS AGREEMENTS DESTE LANDLORD: ", listOfAgreements_)
+            
+
     fullList_ = []
     for a in listOfAgreements_:
         id_req = a.id
@@ -1639,9 +1645,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": " http://daf7bb482200.ngrok.io/paymentStatus/",
-            "return_url": " http://daf7bb482200.ngrok.io/mainApp/search",
-            "cancel_return": " http://daf7bb482200.ngrok.io/mainApp/search",
+            "notify_url": " http://99c2fa0a7e35.ngrok.io/paymentStatus/",
+            "return_url": " http://99c2fa0a7e35.ngrok.io/mainApp/search",
+            "cancel_return": " http://99c2fa0a7e35.ngrok.io/mainApp/search",
 
             }
 
@@ -1785,12 +1791,15 @@ def manage_agreements_view(request):
     current_user = request.user
     app_user = App_user.objects.get(user_id = current_user)
     a_user = Landlord.objects.get(lord_user_id=app_user)
-    agreement = list(Agreement.objects.filter(landlord = a_user))
-    if (agreement[0].associated_room_listing == None):
-        listing = agreement[0].associated_property_listing.main_listing.title
-    else:
-        listing = agreement[0].associated_room_listing.main_listing.title
-    print(listing)
+    agreement = Agreement.objects.filter(landlord = a_user)
+    listing = ""
+    
+    for a in agreement:
+        if (a.associated_room_listing == None):
+            listing = a.associated_property_listing.main_listing.title
+        else:
+            listing = a.associated_room_listing.main_listing.title
+
     context = {
         "agreement":agreement,
         "listing": listing,
@@ -1799,25 +1808,49 @@ def manage_agreements_view(request):
 
 def get_invoice_pdf(request):
     if request.method == 'POST':
-        request_id=request.POST['request_payment_number']
+        total = 0
+        invoice_id=request.POST['invoice_id']
 
-        ag_request = Agreement_Request.objects.get(id=request_id)
-        tenant = Tenant.objects.get(ten_user_id=ag_request.tenant_id)
+        invoice = Invoice.objects.get(id=invoice_id)
+        print(invoice.agreement_id)
+        if (invoice.agreement_id == None):
+            ag = Agreement_Request.objects.get(id=invoice.agreement_request_id)
+        else:
+            ag = Agreement.objects.get(id=invoice.agreement_id)
+        tenant = Tenant.objects.get(id=ag.tenant_id)
         tenant_app = App_user.objects.get(user_id=tenant.ten_user_id)
         tenant_user = User.objects.get(id=tenant_app.user_id)
+        list_invoice_line = Invoice_Line.objects.filter(invoice_id = invoice_id)
+
+        for line in list_invoice_line:
+            total += line.amount
 
         data = {
-            'today': ag_request.dateOfRequest.date(), 
-            'amount': 39.99,
+            'today': invoice.timestamp, 
             'customer_name': str(tenant_user.first_name) + " " + str(tenant_user.last_name),
-            'order_id': request_id,
+            'order_id': invoice.id,
             'phone_number': tenant_app.phoneNumber,
             'adress': 'Adress',
+            'list_lines': list_invoice_line,
+            'total_amount': total,
         }
         pdf = render_to_pdf('mainApp/invoice.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
 
-def send_invoice(request):
+def invoicesLandlord(request):
+    context={}
+
     if request.method == 'POST':
-        request_id=request.POST['request_payment_number']
+        agreement=request.POST['agreement_id']
+        
+        list_invoices = Invoice.objects.filter(agreement_id = agreement)
+        
+        context={
+            'invoices': list_invoices
+        }
+    
+    return render(request, "mainApp/invoicesLandlord.html", context)
+
+def send_invoice(request):
+    pass
     
