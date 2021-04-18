@@ -118,6 +118,15 @@ class agreementRequestAPI(generics.GenericAPIView):
         except:
             return response_maker("error", 401, None, "Criação do Agreement request falhou.")
 
+<<<<<<< HEAD
+class imageTest(generics.GenericAPIView):
+    serializer_class = imageTestSerializer
+    def post(self, request):
+        print(request.data)
+        return response_maker("success", 200, None, "Criação do Agreement request criado.")
+        
+
+=======
 #RF-4
 class UserAPI(APIView):
     """Show specific user and Delete him/her from database"""
@@ -150,6 +159,7 @@ class UserAPI(APIView):
         
 
 
+>>>>>>> 8cb8efd30873c839d28474fdb802f4297831a7d5
 # @api_view(['POST',])
 # def registration_view(request):
 #     if request.method == 'POST':
