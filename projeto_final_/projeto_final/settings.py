@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'daf7bb482200.ngrok.io']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '99c2fa0a7e35.ngrok.io']
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
