@@ -1820,4 +1820,6 @@ def get_invoice_pdf(request):
 def send_invoice(request):
     if request.method == 'POST':
         request_id=request.POST['request_payment_number']
-    
+
+def tenant(request):
+    return render(request, "mainApp/tenant.html", {})
