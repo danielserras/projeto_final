@@ -83,7 +83,7 @@ class Bedroom(models.Model):
     be_window = models.BooleanField()
     num_single_beds = models.IntegerField()
     num_double_beds = models.IntegerField()
-    max_occupacity = models.IntegerField()
+    max_occupancy = models.IntegerField()
     be_balcony = models.BooleanField()
     wardrobe = models.BooleanField()
     be_desk = models.BooleanField()
@@ -154,6 +154,7 @@ class Agreement(models.Model):
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
     startsDate = models.DateField()
     endDate = models.DateField()
+    last_invoice_date = models.DateField()
 
 class Agreement_Request(models.Model):
     associated_room_listing = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)
@@ -166,4 +167,12 @@ class Agreement_Request(models.Model):
     accepted = models.BooleanField(null=True, blank=True)
     dateOfRequest = models.DateTimeField()
 
+class Invoice(models.Model):
+    agreement_request = models.ForeignKey(Agreement_Request, null=True, on_delete=models.CASCADE)
+    agreement = models.ForeignKey(Agreement, null=True, on_delete=models.CASCADE)
+    timestamp = models.DateField()
+
+class Invoice_Line(models.Model):
+    description = models.CharField(max_length=280)
+    amount = models.IntegerField()
 # Create your models here.

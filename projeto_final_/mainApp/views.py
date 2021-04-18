@@ -21,6 +21,7 @@ from django.db import connection
 from decouple import config
 from geopy.geocoders import MapBox
 from copy import deepcopy
+from django.utils import translation
 from django.utils.translation import gettext as _
 from datetime import datetime, timedelta, date
 from django.views.generic import View
@@ -55,7 +56,7 @@ def login_view(request):
                     request.session['typeUser'] = "Tenant"
                     return redirect('index') #placeholder, alterem depois
         else:
-            mistakes = 'Username ou password incorretos'
+            mistakes = 'Nome de utilizador ou palavra-passe incorretos'
             context = {'mistakes': mistakes}
             return render(request, 'mainApp/login.html', context) #placeholder
     context = {}
@@ -165,7 +166,7 @@ def save_property(request):
             heater = c.get('heater'),
             air_conditioning = c.get('air_conditioning'),
             ensuite_bathroom = c.get('ensuite_bathroom'),
-            max_occupacity = c.get('max_occupacity'),
+            max_occupancy = c.get('max_occupancy'),
         )
         bed_obj.save()
 
@@ -595,12 +596,41 @@ def accept_request(request, request_id):
     ag_request.accepted = True
     ag_request.save()
 
+    #INVOICE CREATION
+    invoice = Invoice(
+        agreement_request = ag_request,
+        timestamp = timezone.now().date())
+    invoice.save()
+
+    if ag_request.associated_property_listing == None:
+        room_listing = ag_request.associated_room_listing
+        main_listing = room_listing.main_listing
+    else:
+        prop_listing = ag_request.associated_property_listing
+        main_listing = prop_listing.main_listing
+    
+    deposit = main_listing.security_deposit
+
+    invoice_line_deposit = Invoice_Line(
+        description = _("Depósito de Entrada"),
+        amount = deposit
+    )
+    invoice_line_deposit.save()
+
+    duration_days = (ag_request.endDate - ag_request.startsDate).days
+    total_amount = int((duration_days/30) * main_listing.monthly_payment)
+
+    invoice_line_rent = Invoice_Line(
+        description = _("Renda"),
+        amount = total_amount
+    )
+    invoice_line_rent.save()
 
     listOfAgreements_ = []
     for e in Agreement_Request.objects.all():
         if e.landlord_id == lord.id:
             listOfAgreements_.append(e)
-    print("LISTA DOS AGREEMENTS DESTE LANDLORD: ", listOfAgreements_)
+    
     fullList_ = []
     for a in listOfAgreements_:
         id_req = a.id
@@ -677,6 +707,7 @@ def create_agreement(user_id, ag_request_id):
 
     request_id = ag_request_id
     ag_request = Agreement_Request.objects.get(id= request_id)
+    last_invoice = Invoice.objects.get(agreement_request = ag_request) 
     assoc_listing = ''
     new_ag = ''
 
@@ -689,7 +720,8 @@ def create_agreement(user_id, ag_request_id):
             tenant = tenant,
             landlord = lord,
             startsDate = ag_request.startsDate,
-            endDate= ag_request.endDate
+            endDate= ag_request.endDate,
+            last_invoice_date = last_invoice.timestamp,
         )
         new_ag.save()
         assoc_listing.main_listing.is_active = False
@@ -1285,9 +1317,6 @@ def notificationsTenant(request):
         fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted,dateOfRequest_])
     sizeList = len(fullList)
     reverseList = list(reversed(fullList))
-    #print(fullList)
-    #ola = Agreement_Request.objects.get(landlord_id=1)
-    #print(ola.tenant_id)
     context = {"fullList" : reverseList, "sizeList": sizeList}
     return render(request, "mainApp/notificationsTenant.html", context)
 
@@ -1610,9 +1639,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": " http://6eb76d967349.ngrok.io/paymentStatus/",
-            "return_url": " http://6eb76d967349.ngrok.io/mainApp/search",
-            "cancel_return": " http://6eb76d967349.ngrok.io/mainApp/search",
+            "notify_url": " http://daf7bb482200.ngrok.io/paymentStatus/",
+            "return_url": " http://daf7bb482200.ngrok.io/mainApp/search",
+            "cancel_return": " http://daf7bb482200.ngrok.io/mainApp/search",
 
             }
 
@@ -1653,15 +1682,10 @@ def get_payment_status(sender, **kwargs):
 valid_ipn_received.connect(get_payment_status)
 invalid_ipn_received.connect(get_payment_status)
 
-def changeToRegister(request):
-    return render(request, "mainApp/register.html", {})
-
 def emailBody(request):
     return render(request, "mainApp/emailBody.html", {})
 
 def changeLanguage(request):
-    print("ENALKSED")
-    from django.utils import translation
     if request.method == 'POST':
         form = SearchForm(data=request.POST)
         if form.is_valid():
@@ -1758,15 +1782,42 @@ def delete_account(request):
     return redirect('index')
 
 def manage_agreements_view(request):
-    return render(request, "mainApp/manageAgreements.html", {})
-
-def get_invoice_pdf(request, *args, **kwargs):
-    data = {
-        'today': date.today(), 
-        'amount': 39.99,
-        'customer_name': 'Cooper Mann',
-        'order_id': 1233434,
+    current_user = request.user
+    app_user = App_user.objects.get(user_id = current_user)
+    a_user = Landlord.objects.get(lord_user_id=app_user)
+    agreement = list(Agreement.objects.filter(landlord = a_user))
+    if (agreement[0].associated_room_listing == None):
+        listing = agreement[0].associated_property_listing.main_listing.title
+    else:
+        listing = agreement[0].associated_room_listing.main_listing.title
+    print(listing)
+    context = {
+        "agreement":agreement,
+        "listing": listing,
     }
-    pdf = render_to_pdf('mainApp/invoice.html', data)
-    return HttpResponse(pdf, content_type='application/pdf')
+    return render(request, "mainApp/manageAgreements.html", context)
+
+def get_invoice_pdf(request):
+    if request.method == 'POST':
+        request_id=request.POST['request_payment_number']
+
+        ag_request = Agreement_Request.objects.get(id=request_id)
+        tenant = Tenant.objects.get(ten_user_id=ag_request.tenant_id)
+        tenant_app = App_user.objects.get(user_id=tenant.ten_user_id)
+        tenant_user = User.objects.get(id=tenant_app.user_id)
+
+        data = {
+            'today': ag_request.dateOfRequest.date(), 
+            'amount': 39.99,
+            'customer_name': str(tenant_user.first_name) + " " + str(tenant_user.last_name),
+            'order_id': request_id,
+            'phone_number': tenant_app.phoneNumber,
+            'adress': 'Adress',
+        }
+        pdf = render_to_pdf('mainApp/invoice.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')
+
+def send_invoice(request):
+    if request.method == 'POST':
+        request_id=request.POST['request_payment_number']
     
