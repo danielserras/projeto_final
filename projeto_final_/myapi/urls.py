@@ -24,9 +24,6 @@ urlpatterns = [
     path('api/getAuthToken/', views.getAuthToken.as_view(), name="getAuthToken"),
     path('api/agreementRequestAccept/', views.agreementRequestAcceptAPI.as_view(), name="agreementRequestAccept"),
     path('api/agreementRequest/', views.agreementRequestAPI.as_view(), name="agreement_request"),
-<<<<<<< HEAD
     path('api/imageTest/', views.imageTest.as_view(), name="imageTest"),
-=======
     path('api/User/<int:pk>/', views.UserAPI.as_view(), name="User"),
->>>>>>> 8cb8efd30873c839d28474fdb802f4297831a7d5
 ]

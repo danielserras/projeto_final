@@ -86,7 +86,6 @@ class createAgreementRequestSerializer(serializers.ModelSerializer):
 
             return agreement_request
     
-<<<<<<< HEAD
     # def create(self, validated_data):
     #         dateNow = timezone.now()
     #         validated_data['dateOfRequest'] = dateNow
@@ -118,11 +117,9 @@ class imageTestSerializer(serializers.ModelSerializer):
 
 
 # class PropertySerializer(serializers.ModelSerializer):
-=======
 class UserSerializer(serializers.ModelSerializer): 
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'first_name', 'last_name', 'password')
 
    
->>>>>>> 8cb8efd30873c839d28474fdb802f4297831a7d5
