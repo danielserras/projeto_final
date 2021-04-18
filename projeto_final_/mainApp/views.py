@@ -1852,5 +1852,11 @@ def invoicesLandlord(request):
     return render(request, "mainApp/invoicesLandlord.html", context)
 
 def send_invoice(request):
-    pass
-    
+    if request.method == 'POST':
+        agreement=request.POST['agreement_id']
+        #INVOICE CREATION
+        invoice = Invoice(
+            agreement = Agreement.objects.get(id=agreement),
+            timestamp = timezone.now().date())
+        invoice.save()
+    return redirect('index')

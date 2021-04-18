@@ -46,6 +46,7 @@
                         <td class="text-center">
                             <form action="{% url 'send_invoice' %}" method="POST">
                                 {% csrf_token %}
+                                <input name="agreement_id" type='hidden' value="{{a.id}}">
                                 <button type="submit" class="btn bg-primary text-white">Emitir Fatura</button>
                             </form>
                         </td>
