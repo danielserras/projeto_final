@@ -1,0 +1,76 @@
+{% extends 'mainApp/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block styles %}
+
+{% endblock %}
+{% block scripts%}
+<script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+
+{% endblock %}
+
+{% block content %}
+<div class = "container-fluid my-auto mt-4">
+    <div class= "text-center mt-5 mb-4"><h1 class = "text-info font-weight-bold">Ajuda-nos a procurar o melhor alojamento para ti!</h1></div>
+    <div class="row align-items-start p-4">
+        <div class="col-sm-8 border border-5 border-top rounded border-secondary">
+            <div class="p-5">
+                <h5 class="text-secondary text-left ml-5 font-weight-bold mb-4">Seleciona as características que mais procuras num alojamento</h5>
+                <form>
+                    <div class="form-check text-left ml-5">
+                        <input class="form-check-input mr-2" type="checkbox">
+                        <i class = "fas fa-graduation-cap"></i>
+                        <label class="form-check-label">Perto da faculdade</label>
+                    </div>
+                    <div class="form-check text-left ml-5">
+                        <input class="form-check-input mr-2" type="checkbox">
+                        <i class = "fas fa-bus"></i>
+                        <label class="form-check-label">Perto de supermercados e transportes públicos</label>
+                    </div>
+                    <div class="form-check text-left ml-5">
+                        <input class="form-check-input mr-2" type="checkbox">
+                        <i class = "fas fa-restroom"></i>
+                        <label class="form-check-label">Casa de banho privada</label>
+                    </div>
+                    <div class="form-check text-left ml-5">
+                        <input class="form-check-input mr-2" type="checkbox">
+                        <i class = "fas fa-broom"></i>
+                        <label class="form-check-label">Serviço de limpeza</label>
+                    </div>
+                    <div class="form-check text-left ml-5">
+                        <input class="form-check-input mr-2" type="checkbox">
+                        <i class = "fas fa-wifi"></i>
+                        <label class="form-check-label">Acesso a internet</label>
+                    </div>
+                    <div class="form-check text-left ml-5">
+                        <input class="form-check-input mr-2" type="checkbox">
+                        <i class = "fas fa-tshirt"></i>
+                        <label class="form-check-label">Lavandaria</label>
+                    </div>
+                    <div class="form-check text-left ml-5">
+                        <input class="form-check-input mr-2" type="checkbox">
+                        <i class = "fas fa-user-shield"></i>
+                        <label class="form-check-label">Vigilância noturna</label>
+                    </div>
+                    <div class="form-check text-left ml-5">
+                        <input class="form-check-input mr-2" type="checkbox">
+                        <i class = "fas fa-venus-mars"></i>
+                        <label class="form-check-label">Separação por sexo</label>
+                    </div>
+                    <div class="form-check text-left ml-5">
+                        <input class="form-check-input mr-2" type="checkbox">
+                        <i class = "fas fa-user-check"></i>
+                        <label class="form-check-label">Visitas ocasionais</label>
+                    </div>
+                </form>
+                <div class="row justify-content-end">
+                    <button type="button" class="btn btn-secondary mt-3">Continuar a procurar</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 text-center">
+            <img src='{% static "mainApp/images/tenant.jpg" %}' class="img-fluid mx-auto" alt="landlord image">
+        </div>
+
+
+{% endblock %}

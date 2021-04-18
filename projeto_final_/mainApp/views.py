@@ -1841,15 +1841,7 @@ def invoicesLandlord(request):
     context={}
 
     if request.method == 'POST':
-        agreement=request.POST['agreement_id']
-        
-        list_invoices = Invoice.objects.filter(agreement_id = agreement)
-        
-        context={
-            'invoices': list_invoices
-        }
-    
-    return render(request, "mainApp/invoicesLandlord.html", context)
+        request_id=request.POST['request_payment_number']
 
 def send_invoice(request):
     if request.method == 'POST':
@@ -1860,3 +1852,6 @@ def send_invoice(request):
             timestamp = timezone.now().date())
         invoice.save()
     return redirect('index')
+    
+def tenant(request):
+    return render(request, "mainApp/tenant.html", {})
