@@ -724,7 +724,7 @@ def create_agreement(user_id, ag_request_id):
             landlord = lord,
             startsDate = ag_request.startsDate,
             endDate= ag_request.endDate,
-            last_invoice_date = last_invoice.timestamp,
+            last_invoice_date = last_invoice.timestamp.month(),
         )
         new_ag.save()
         assoc_listing.main_listing.is_active = False
@@ -1296,6 +1296,7 @@ def delete_listing_view(request, property_id, main_listing_id):
 def notificationsTenant(request):
     current_user_ = request.user
     a_user_ = App_user.objects.get(user_id=current_user_)
+    invoice_id = None
 
     try:
         tenant_ = Tenant.objects.get(ten_user=a_user_)
@@ -1319,7 +1320,10 @@ def notificationsTenant(request):
         endDate = a.endDate.strftime("%d-%m-%Y")
         accepted = a.accepted #para ver se esta null, aceite ou recusada
         dateOfRequest_ = a.dateOfRequest
-        invoice_id = Invoice.objects.get(agreement_request_id=e.id).id
+        try:
+            invoice_id = Invoice.objects.get(agreement_request_id=a.id).id
+        except:
+            pass
         fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted, dateOfRequest_, invoice_id])
     sizeList = len(fullList)
     reverseList = list(reversed(fullList))
@@ -1356,9 +1360,6 @@ def notificationsLandlord(request):
         fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
-    #ola = Agreement_Request.objects.get(landlord_id=1)
-    #print(ola.tenant_id)
-    #print(reversed(fullList_))
     context = {"fullList_": reverseList, 'range': range(sizeList)}
     return render(request, "mainApp/notificationsLandlord.html", context)
 
@@ -1698,7 +1699,6 @@ def changeLanguage(request):
         if form.is_valid():
             user_language = form.cleaned_data.get('language')
             translation.activate(user_language)
-        print(user_language)
 
 def deletePopUp(request):
     request.session['popUp'] =  False
@@ -1809,50 +1809,76 @@ def manage_agreements_view(request):
 
 def get_invoice_pdf(request):
     if request.method == 'POST':
-        total = 0
         invoice_id=request.POST['invoice_id']
+        if invoice_id != None:
+            total = 0
 
-        invoice = Invoice.objects.get(id=invoice_id)
-        print(invoice.agreement_id)
-        if (invoice.agreement_id == None):
-            ag = Agreement_Request.objects.get(id=invoice.agreement_request_id)
-        else:
-            ag = Agreement.objects.get(id=invoice.agreement_id)
-        tenant = Tenant.objects.get(id=ag.tenant_id)
-        tenant_app = App_user.objects.get(user_id=tenant.ten_user_id)
-        tenant_user = User.objects.get(id=tenant_app.user_id)
-        list_invoice_line = Invoice_Line.objects.filter(invoice_id = invoice_id)
+            invoice = Invoice.objects.get(id=invoice_id)
+            if (invoice.agreement_id == None):
+                ag = Agreement_Request.objects.get(id=invoice.agreement_request_id)
+            else:
+                ag = Agreement.objects.get(id=invoice.agreement_id)
+            tenant = Tenant.objects.get(id=ag.tenant_id)
+            tenant_app = App_user.objects.get(user_id=tenant.ten_user_id)
+            tenant_user = User.objects.get(id=tenant_app.user_id)
+            list_invoice_line = Invoice_Line.objects.filter(invoice_id = invoice_id)
 
-        for line in list_invoice_line:
-            total += line.amount
+            for line in list_invoice_line:
+                total += line.amount
 
-        data = {
-            'today': invoice.timestamp, 
-            'customer_name': str(tenant_user.first_name) + " " + str(tenant_user.last_name),
-            'order_id': invoice.id,
-            'phone_number': tenant_app.phoneNumber,
-            'adress': 'Adress',
-            'list_lines': list_invoice_line,
-            'total_amount': total,
-        }
-        pdf = render_to_pdf('mainApp/invoice.html', data)
-        return HttpResponse(pdf, content_type='application/pdf')
+            data = {
+                'today': invoice.timestamp, 
+                'customer_name': str(tenant_user.first_name) + " " + str(tenant_user.last_name),
+                'order_id': invoice.id,
+                'phone_number': tenant_app.phoneNumber,
+                'adress': 'Adress',
+                'list_lines': list_invoice_line,
+                'total_amount': total,
+            }
+            pdf = render_to_pdf('mainApp/invoice.html', data)
+            return HttpResponse(pdf, content_type='application/pdf')
 
 def invoicesLandlord(request):
     context={}
 
     if request.method == 'POST':
-        request_id=request.POST['request_payment_number']
+        agreement=request.POST['agreement_id']
+
+        list_invoices = Invoice.objects.filter(agreement_id = agreement)
+
+        context={
+            'invoices': list_invoices
+        }
+
+    return render(request, "mainApp/invoicesLandlord.html", context)
 
 def send_invoice(request):
     if request.method == 'POST':
-        agreement=request.POST['agreement_id']
+        agreement_id=request.POST['agreement_id']
+
+        agreement = Agreement.objects.get(id=agreement_id)
+
         #INVOICE CREATION
         invoice = Invoice(
-            agreement = Agreement.objects.get(id=agreement),
+            agreement = agreement,
             timestamp = timezone.now().date())
         invoice.save()
+
+        if agreement.associated_property_listing == None:
+            room_listing = agreement.associated_room_listing
+            main_listing = room_listing.main_listing
+        else:
+            prop_listing = agreement.associated_property_listing
+            main_listing = prop_listing.main_listing
+
+        invoice_line_rent = Invoice_Line(
+            description = _("Renda"),
+            amount = main_listing.monthly_payment,
+            invoice_id = invoice.id,
+        )
+        invoice_line_rent.save()
+
     return redirect('index')
-    
+
 def tenant(request):
     return render(request, "mainApp/tenant.html", {})
