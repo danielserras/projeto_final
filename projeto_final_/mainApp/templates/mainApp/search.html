@@ -22,12 +22,16 @@
                                         <img src='{% static "mainApp/images/map-pin.svg" %}' class='img-fluid' alt='Location pin'>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control border-left-0 pl-0 border-info border-3 rounded-right" placeholder="{% trans 'Localização' %}" name="location" required>
+                                {% comment %} <input type="text" class="form-control border-left-0 pl-0 border-info border-3 rounded-right" 
+                                placeholder="{% trans 'Localização' %}" name="location" required> {% endcomment %}
+                                {{searchForm.location}}
+
                             </div>
                         </div>
                         <div class="form-group col-sm-4 my-auto p-2">
                             <div class="input-group">
-                                <input type="number" min="1" class="form-control border-info border-3 rounded-left" placeholder="{% trans 'Raio' %}" name="radius" required>
+                                <input type="number" min="1" class="form-control border-info border-3 rounded-left" placeholder="{% trans 'Raio' %}" 
+                                name="radius" required>
                                 <div class="input-group-append">
                                     <span class="input-group-text bg-white border-info border-3 border-left-0 p-1">Km</span>
                                 </div>

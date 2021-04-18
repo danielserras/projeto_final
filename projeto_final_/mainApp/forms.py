@@ -383,7 +383,13 @@ NUM_CHOICES =(
     ("5", "Five"), 
 ) 
 class SearchForm(forms.Form):
-    location = forms.CharField(required=False, max_length=100)
+    location = forms.CharField(required=False, max_length=100, 
+        widget=forms.TextInput(
+            attrs={
+                "class":"form-control border-left-0 pl-0 border-info border-3 rounded-right",
+                "placeholder":_("Localização")
+            }
+        ))
     radius = forms.IntegerField(required=False)
     type = forms.ChoiceField(choices = TYPE_CHOICES, required=False)
     num_tenants = forms.ChoiceField(choices = NUM_CHOICES, required=False)
@@ -392,6 +398,9 @@ class SearchForm(forms.Form):
     date_out = forms.DateField(required=False)
     minPrice = forms.CharField(required=True)
     maxPrice = forms.CharField(required=True)
+
+
+    
 class UpdatePropertyForm(forms.ModelForm):
     address = forms.CharField(required=True, max_length=100)
     bedrooms_num = forms.IntegerField(required=False) 

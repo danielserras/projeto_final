@@ -1365,6 +1365,9 @@ def search(request):
     pageNumbers = []
 
     searched_values = []
+
+    form = SearchForm()
+
     if request.method == 'POST':
         form = SearchForm(data=request.POST)
         if form.is_valid():
@@ -1405,7 +1408,6 @@ def search(request):
                 queryWhere += " AND '" + str(form.cleaned_data.get('date_out')) + "' <= l.availability_ending"
 
             #Number of bedrooms is filled
-            print(form.cleaned_data.get('num_bedrooms'))
             if any(form.cleaned_data.get('num_bedrooms') == x for x in ('1','2','3','4')):
                 queryWhere += " AND p.bedrooms_num = '" + form.cleaned_data.get('num_bedrooms') + "'"
             elif(form.cleaned_data.get('num_bedrooms') == '5'):
@@ -1453,7 +1455,6 @@ def search(request):
         if (i % previewPerPage == 0):
             pageNumbers.append(int(i/previewPerPage)+1)
 
-    
     context = {
         'searched_values' : searched_values,  #list with 3 elements containing the coordinates of the searched address and radius of the search 
         'num_results' : len(row), 
@@ -1462,6 +1463,7 @@ def search(request):
         'pageNumbers':  pageNumbers,
         'previewPerPage': previewPerPage,
         'zipPreviews': zip(row, rangeList),
+        'searchForm':form,
     }
     return render(request, "mainApp/search.html", context)
 
