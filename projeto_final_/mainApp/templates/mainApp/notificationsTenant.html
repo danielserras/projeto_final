@@ -21,7 +21,7 @@
 
         <div class="messages-box">
           <div id="leftStart" class="list-group rounded-0">
-            {% for a,b,c,d,e,f,g,h in fullList %}
+            {% for a,b,c,d,e,f,g in fullList %}
               {% if f is not None %}
                   <a href="#" id="notificationsTen_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
                     {% load static %}
@@ -49,7 +49,7 @@
           {% load static %}
           <img src='{% static "mainApp/images/message.svg" %}' class='img' id="defaultImg" alt='Image representing a message' />
       </div>
-        {% for a,b,c,d,e,f,g,h in fullList %}
+        {% for a,b,c,d,e,f,g in fullList %}
           <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
             <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                 <h4 class="text-white mt-3 pl-3"> {% trans 'Assunto' %} </h4>
@@ -81,7 +81,7 @@
                 <!-- FATURA -->
                 <form action="{% url 'get_invoice_pdf' %}" method="POST" target="_blank">
                   {% csrf_token %}
-                  <input name="customer_name" type='hidden' value="{{h}}">
+                  <input name="request_payment_number" type='hidden' value="{{a}}">
                   <button type="submit" class="btn btn-info font-weight-bold ml-3">Fatura</button>
                 </form>
               {% else %}

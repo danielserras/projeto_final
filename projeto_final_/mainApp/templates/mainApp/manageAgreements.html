@@ -29,8 +29,9 @@
             <th class="text-white text-center" scope="col">{% trans 'Início' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Fim' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Inquilino' %}</th>
+            <th class="text-white text-center" scope="col">{% trans 'Pagamento' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Pagamento em atraso' %}</th>
-            <th class="text-white text-center" scope="col">{% trans 'Fatura' %}</th>
+            <th class="text-white text-center" scope="col">{% trans 'Faturas' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Recibo' %}</th>
             </tr>
         </thead>
@@ -42,11 +43,17 @@
                         <td class="text-center">{{a.startsDate}}</td>
                         <td class="text-center">{{a.endDate}}</td>
                         <td class="text-center">{{a.tenant.ten_user.user}}</td>
+                        <td class="text-center">
+                            <form action="{% url 'send_invoice' %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn bg-primary text-white">Emitir Fatura</button>
+                            </form>
+                        </td>
                         <td>hello</td>
                         <td class="text-center">
                             <form action="{% url 'get_invoice_pdf' %}" method="POST">
                                 {% csrf_token %}
-                                <button type="submit" class="btn bg-primary text-white">Emitir</button>
+                                <button type="submit" class="btn bg-primary text-white">Ver</button>
                             </form>
                         </td>
                         <td>hello</td>
