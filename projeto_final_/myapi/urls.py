@@ -24,4 +24,5 @@ urlpatterns = [
     path('api/getAuthToken/', views.getAuthToken.as_view(), name="getAuthToken"),
     path('api/receiveNotification/', views.receiveNotificationAPI.as_view(), name="receiveNotification"),
     path('api/agreementRequest/', views.agreementRequestAPI.as_view(), name="agreement_request"),
+    path('api/imageTest/', views.imageTest.as_view(), name="imageTest"),
 ]

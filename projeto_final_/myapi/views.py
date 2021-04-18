@@ -119,6 +119,13 @@ class agreementRequestAPI(generics.GenericAPIView):
         except:
             return response_maker("error", 401, None, "Criação do Agreement request falhou.")
 
+class imageTest(generics.GenericAPIView):
+    serializer_class = imageTestSerializer
+    def post(self, request):
+        print(request.data)
+        return response_maker("success", 200, None, "Criação do Agreement request criado.")
+        
+
 # @api_view(['POST',])
 # def registration_view(request):
 #     if request.method == 'POST':

@@ -100,4 +100,19 @@ class createAgreementRequestSerializer(serializers.ModelSerializer):
     #         agreement_request.dateOfRequest = validated_data['dateOfRequest'] = dateNow
     #         agreement_request.save()
     #         return agreement_request
-   
+
+
+
+class imageTestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ('image', 'name', 'album')
+
+# class RoomSerializer(serializers.ModelSerializer):
+
+# class LivingRoomSerializer(serializers.ModelSerializer):
+
+
+
+
+# class PropertySerializer(serializers.ModelSerializer):
