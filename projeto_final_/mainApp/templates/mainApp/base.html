@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% load static %}
     <link rel="stylesheet" href='{% static "mainApp/css/bootstrap/css/bootstrap.min.css" %}'>
     <link rel="stylesheet" href='{% static "mainApp/css/style.css" %}'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" /> {% block styles %} {% endblock %}
@@ -59,7 +60,7 @@
                         </li>
                         <li class="nav-item active my-auto">
                             <form action="{% url 'logout_view' %}">
-                                <button type="submit"  class="btn btn-secondary ml-4 font-weight-bold">Logout</button>
+                                <button type="submit"  class="btn btn-secondary font-weight-bold">Logout</button>
                             </form>
                         </li>
                     </ul>
@@ -74,7 +75,7 @@
                             <a class="nav-link" href="/accounts/register">{% trans "Registar" %}</a>
                         </li>
                         <li class="nav-item active">
-                            <button type="button" onclick="location.href='/accounts/login'" class="btn btn-secondary ml-4 font-weight-bold">Login</button>
+                            <button type="button" onclick="location.href='/accounts/login'" class="btn btn-secondary font-weight-bold">Login</button>
                         </li>
                     </ul>
                 </div>
@@ -83,6 +84,7 @@
     </nav>
     <main class = "" id="main">
         {% block content %} {% endblock %}
+        <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" data-toggle="tooltip" data-placement="left"><i class="fas fa-angle-double-up"></i></a>
     </main>
     <footer class="container-fluid bg-info text-light p-4" id="footer">
         <div class="row justify-content-center">

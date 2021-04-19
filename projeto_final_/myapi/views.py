@@ -16,10 +16,14 @@ from mainApp.models import *
 from django.contrib.auth import login
 
 from knox.views import LoginView 
+
 from rest_framework.views import APIView
 
 from rest_framework.authtoken.models import Token
+
 from django.contrib.auth import authenticate, login, logout
+
+from django.shortcuts import get_object_or_404
 
 #Funcoes acessorias
 
@@ -48,9 +52,7 @@ class RegisterAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        return Response({
-        "user": App_userSerializer(user, context=self.get_serializer_context()).data,
-        })
+        return response_maker("success", 200, None, "Utilizador registado.")
 
 class LoginAPI(LoginView):
     permission_classes = (permissions.AllowAny,)
@@ -77,31 +79,16 @@ class getAuthToken(LoginView):
             return response_maker("error", 401, None, "password/username combination did not match any user")
 
 class IntroduceProperty(APIView):
-    def get(self, request, format=None):
+    def post(self, request, format=None):
         content = {
-            'user': str(request.user),  # `django.contrib.auth.User` instance.
-            'auth': str(request.auth),  # None
+            'user': str(request.user),  
+            'auth': str(request.auth), 
         }
         return Response(content)
 
-# class UpdateName(generics.UpdateAPIView):
-#     queryset = ClientUser.objects.all()
-#     serializer_class = ClientNameSerializer
-#     permission_classes = (permissions.IsAuthenticated,)
 
-#     def update(self, request, *args, **kwargs):
-#         instance = self.get_object()
-#         instance.name = request.data.get("name")
-#         instance.save()
-
-#         serializer = self.get_serializer(instance)
-#         serializer.is_valid(raise_exception=True)
-#         self.perform_update(serializer)
-
-#         return Response(serializer.data)
-
-#RF-9 FALTA VERIFICAR SE ESTA COM LOGIN DE SENHORIO FEITO?
-class receiveNotification(generics.GenericAPIView):
+#RF-9 
+class agreementRequestAcceptAPI(generics.GenericAPIView):
     """Accept or refuse agreement request"""
     serializer_class = agreementRequestSerializer
 
@@ -110,23 +97,62 @@ class receiveNotification(generics.GenericAPIView):
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             agreement = serializer.save()
-            return response_maker("success", 200, None, "Alteração realizada")
+            return response_maker("success", 200, None, "Agreement request aceite.")
         except:
-            return response_maker("error", 401, None, "Alteração falhada")
+            return response_maker("error", 401, None, "Algo correu mal.")
 
-# @api_view(['POST',])
-# def registration_view(request):
-#     if request.method == 'POST':
-#         serializer = RegisterSerializer(data=request.data)
-#         data = {}
-#         if serializer.is_valid():
-#             user = serializer.save()
-#             data['response'] = "Successfully registered a new user"
-#             data['username'] = user.username
-#             data['email'] = user.email
-#             data['first_name'] = user.first_name
-#             data['last_name'] = user.last_name
-#         else:
-#             data = serializer.errors
-#         return Response(data)
+
+#RF-18
+class agreementRequestAPI(generics.GenericAPIView):
+    serializer_class = createAgreementRequestSerializer
+
+    def post(self, request, *args, **kwargs):
+        try:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            agreement_request = serializer.save()
+            # return Response({
+            # "user": App_userSerializer(user, context=self.get_serializer_context()).data,
+            # })
+            return response_maker("success", 200, None, "Criação do Agreement request feita.")
+        except:
+            return response_maker("error", 401, None, "Criação do Agreement request falhou.")
+
+class imageTest(generics.GenericAPIView):
+    serializer_class = imageTestSerializer
+    def post(self, request):
+        print(request.data)
+        return response_maker("success", 200, None, "Criação do Agreement request criado.")
+        
+
+#RF-4
+class UserAPI(APIView):
+    """Show specific user, Delete user from database and update specific info about the user"""
+
+    def get(self, request, pk):
+        user = User.objects.get(id = pk)
+        serializer = UserSerializer(user, many=False)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        user = get_object_or_404(User, id=pk)
+        data = request.data 
+
+        user.username = data.get('username', user.username)
+        user.email = data.get('email', user.email)
+        user.first_name = data.get('first_name', user.first_name)
+        user.last_name = data.get('last_name', user.last_name)
+        user.password = data.get('password', user.password)
+        user.save()
+        serializer = UserSerializer(user)
+
+        return Response(serializer.data)
+
+    #falta poder alterar info do lado do app_user
+    def delete(self, request, pk):
+        
+        user = get_object_or_404(User, id=pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        
 

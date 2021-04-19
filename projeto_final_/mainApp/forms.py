@@ -22,6 +22,9 @@ class CreateUserForm(UserCreationForm):
         widget=forms.PasswordInput(attrs={'class':'inputType1', 'type':'password', 'placeholder':_('Confirme a palavra-passe')})
     )
 
+    error_messages = {
+        'password_mismatch': _("As passwords não são iguais"),
+    }
     class Meta:
         model = User
         fields = ['username', 'email', 'first_name', 'last_name']
@@ -73,7 +76,7 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = App_user
-        fields = ['phoneNumber', 'birthDate',]
+        fields = ['phoneNumber', 'birthDate','address']
 
         widgets = {
             "phoneNumber": NumberInput(
@@ -87,6 +90,12 @@ class ProfileForm(forms.ModelForm):
                     'class': 'inputType1',
                     'id': 'datefield'
 
+                }
+            )
+            , "address" : TextInput(
+                attrs={
+                    'placeholder': _('Morada'),
+                    'class': 'inputType1'
                 }
             )
         }
@@ -166,7 +175,7 @@ class BedroomForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(BedroomForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            if "num_" not in field_name and field_name != "max_occupacity":
+            if "num_" not in field_name and field_name != "max_occupancy":
                 if field.widget.attrs.get('class'):
                     field.widget.attrs['class'] += 'custom-control-input'
                 else:
@@ -182,7 +191,7 @@ class BedroomForm(forms.ModelForm):
     be_window = forms.BooleanField(required=False, initial=False)
     num_single_beds = forms.IntegerField(required=True)
     num_double_beds = forms.IntegerField(required=True)
-    max_occupacity = forms.IntegerField(required=True)
+    max_occupancy = forms.IntegerField(required=True)
     be_balcony = forms.BooleanField(required=False, initial=False)
     wardrobe = forms.BooleanField(required=False, initial=False)
     be_desk = forms.BooleanField(required=False, initial=False)
@@ -202,7 +211,7 @@ class BedroomForm(forms.ModelForm):
             "be_window",
             "num_single_beds",
             "num_double_beds",
-            "max_occupacity",
+            "max_occupancy",
             "be_balcony",
             "wardrobe",
             "be_desk",
@@ -284,7 +293,7 @@ class BathroomForm(forms.ModelForm):
             'shower',
             'bathtub',
             'bidet',
-            'toilet',
+            'toilet', 
             'sink',
             'b_window']
 
