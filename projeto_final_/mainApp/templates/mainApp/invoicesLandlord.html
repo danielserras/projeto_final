@@ -37,7 +37,7 @@
                         <td class="text-center font-weight-bold">#{{i.id}}</td>
                         <td class="text-center">{{i.timestamp}}</td>
                         <td class="text-center">
-                            <form action="{% url 'get_invoice_pdf' %}" method="POST">
+                            <form action="{% url 'get_invoice_pdf' %}" method="POST" target="_blank">
                                 {% csrf_token %}
                                 <input name="invoice_id" type='hidden' value="{{i.id}}">
                                 <button type="submit" class="btn bg-primary text-white">Ver</button>
