@@ -1930,3 +1930,18 @@ def send_invoice(request):
 
 def tenant(request):
     return render(request, "mainApp/tenant.html", {})
+
+def deleteAgreement(request):
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+
+    try:
+        tenant = Tenant.objects.get(ten_user=a_user)
+    except:
+        return redirect('index')
+
+    for i in Agreement.objects.all():
+        if i.tenant_id == tenant.id:
+            i.delete()
+
+    return render(request, "mainApp/profile.html", {})
