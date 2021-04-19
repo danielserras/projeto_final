@@ -1799,8 +1799,12 @@ def delete_account(request):
             if Tenant.objects.get(id = (ag.tenant_id)).ten_user_id == tenant.ten_user_id:
                 
                 #falta verificar se o agreement esta ativo
-                messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'))
-                return redirect('index')
+                today = datetime.today()
+                ag_end_date = ag.endDate
+
+                if today < ag_end_date:
+                    messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'))
+                    return redirect('index')
 
 
         logout(request)

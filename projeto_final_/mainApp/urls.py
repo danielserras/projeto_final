@@ -45,5 +45,6 @@ urlpatterns = [
     path('invoice', views.get_invoice_pdf, name='get_invoice_pdf'),
     path('sendInvoice', views.send_invoice, name='send_invoice'),
     path('invoicesLandlord', views.invoicesLandlord, name='invoicesLandlord'),
+    path('profile/agreementDeleted', views.deleteAgreement, name='deleteAgreement'),
 ]
 
