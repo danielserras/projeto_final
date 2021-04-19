@@ -880,7 +880,7 @@ def profile(request):
         temp = False
         if request.session['typeUser'] == "Tenant":
             for i in Agreement.objects.all():
-                if Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id:
+                if Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id and i.status == True:
 
                     #check dates
                     agreement = i
@@ -1687,9 +1687,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://d0835c0251b1.ngrok.io/paymentStatus/",
-            "return_url": "http://d0835c0251b1.ngrok.io/mainApp/search",
-            "cancel_return": "http://d0835c0251b1.ngrok.io/mainApp/profile",
+            "notify_url": "http://1ff8c3b22ca7.ngrok.io/paymentStatus/",
+            "return_url": "http://1ff8c3b22ca7.ngrok.io/mainApp/search",
+            "cancel_return": "http://1ff8c3b22ca7.ngrok.io/mainApp/profile",
 
             }
 
@@ -1942,6 +1942,6 @@ def deleteAgreement(request):
 
     for i in Agreement.objects.all():
         if i.tenant_id == tenant.id:
-            i.delete()
+            Agreement.objects.filter(id=i.id).update(status=False)
 
-    return render(request, "mainApp/profile.html", {})
+    return redirect('profile')
