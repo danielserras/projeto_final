@@ -726,6 +726,7 @@ def create_agreement(user_id, ag_request_id):
             startsDate = ag_request.startsDate,
             endDate= ag_request.endDate,
             last_invoice_date = last_invoice.timestamp,
+            status = True,
         )
         new_ag.save()
         assoc_listing.main_listing.is_active = False
@@ -740,7 +741,8 @@ def create_agreement(user_id, ag_request_id):
             tenant = tenant,
             landlord = lord,
             startsDate = ag_request.startsDate,
-            endDate= ag_request.endDate
+            endDate= ag_request.endDate,
+            status = True,
         )
         new_ag.save()
         assoc_listing.main_listing.is_active = False
@@ -880,6 +882,7 @@ def profile(request):
         if request.session['typeUser'] == "Tenant":
             for i in Agreement.objects.all():
                 if Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id:
+
                     #check dates
                     agreement = i
                     endDate = agreement.endDate
@@ -897,13 +900,23 @@ def profile(request):
                     user_max_search = ten_user.max_search
                     user_university = ten_user.university
 
+                    #in case of a cancelled agreement shows the money which the tenant will get back
+                    if i.associated_property_listing_id == None:
+                        listingRent = Listing.objects.get(id = Room_listing.objects.get(id=i.associated_room_listing_id).main_listing_id).monthly_payment
+                        rent_to_be_returned = (listingRent / 30) * diffDates
+                    else:
+                        listingRent = Listing.objects.get(id = Property_listing.objects.get(id=i.associated_property_listing_id).main_listing_id).monthly_payment
+                        rent_to_be_returned = round((listingRent / 30) * diffDates,2)
+
+
                     context = {"diffDates": diffDates,
                     "birth": user_birth,
                     "phone": user_phone,
                     "type": user_type,
                     "min": user_min_search,
                     "max": user_max_search,
-                    "university": user_university}
+                    "university": user_university,
+                    "rent_to_be_returned": rent_to_be_returned}
 
             if temp == False:
                 context = {}

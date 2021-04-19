@@ -93,7 +93,10 @@
             </button>
             </div>
             <div class="modal-body">
-            {% trans 'Tem a certeza que deseja eliminar o seu acordo atual' %}?
+            {% trans 'Tem a certeza que deseja eliminar o seu acordo atual?' %}
+            <br>
+            <br>
+            {% trans 'Receberá um reembolso de' %} {{ rent_to_be_returned }} €.
             </div>
             <div class="modal-footer">
                 <form action="{% url 'deleteAgreement' %}" method="POST">
