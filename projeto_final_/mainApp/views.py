@@ -1224,6 +1224,7 @@ def create_listing_view(request, property_id):
         imgformset = ImgFormSet(request.POST, request.FILES)
         imgs = imgformset.cleaned_data
         
+        #add images to database
         for d in imgs:
             cover = False
             if d == imgs[0]:
