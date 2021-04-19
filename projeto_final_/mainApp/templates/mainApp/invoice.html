@@ -104,12 +104,14 @@
               <th width="80%">Descrição</th>
               <th class="amount" width="20%">Valor (Euros)</th> 
             </tr>
-            <tr>
-              <td class="description">Depósito de Entrada</td>
-              <td class="amount">{{amount}} &euro;</td>
-            </tr>
+            {% for line in list_lines %}
+                <tr>
+                    <td width="80%">{{line.description}}</td>
+                    <td class="amount" width="20%">{{line.amount}}&euro;</td> 
+                </tr>
+            {% endfor %}
         </table>
-        <h2 class="right-align total">TOTAL: {{amount}}&euro;</h2>
+        <h2 class="right-align total">TOTAL: {{total_amount}}&euro;</h2>
         {% endautoescape %}
     </body>
 </html>

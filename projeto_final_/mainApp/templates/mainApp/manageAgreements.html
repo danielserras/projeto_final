@@ -46,13 +46,15 @@
                         <td class="text-center">
                             <form action="{% url 'send_invoice' %}" method="POST">
                                 {% csrf_token %}
+                                <input name="agreement_id" type='hidden' value="{{a.id}}">
                                 <button type="submit" class="btn bg-primary text-white">Emitir Fatura</button>
                             </form>
                         </td>
                         <td>hello</td>
                         <td class="text-center">
-                            <form action="{% url 'get_invoice_pdf' %}" method="POST">
+                            <form action="{% url 'invoicesLandlord' %}" method="POST">
                                 {% csrf_token %}
+                                <input name="agreement_id" type='hidden' value="{{a.id}}">
                                 <button type="submit" class="btn bg-primary text-white">Ver</button>
                             </form>
                         </td>
