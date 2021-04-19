@@ -20,6 +20,20 @@
         </script>
     {% endif %}
 
+
+    <script>
+    $(document).ready(function(){
+        $("#cancelAgreement").click(function() {
+            $('#modalLogin2').modal('show');
+
+        });  
+        $(".deletePOP").click(function() {
+            $('#modalLogin2').modal('hide');
+        });
+    })
+    </script>
+
+
     <!--POP-UP NEW PROPERTY-->
     <div class="modal fade" id="modalLoginAddProp" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -60,13 +74,39 @@
         {% trans 'Tem a certeza que pretede apagar a sua conta? Todos os seus dados serão eliminados e não poderam ser recuperados.' %}
         </div>
         <div class="modal-footer">
-            <form method="POST" action="{% url 'deletePopUpProp' %}">
-                {% csrf_token %}
-                <button type="submit" id="modalButtonDeleteAccount" class="btn btn-danger deletePOP">{% trans 'Sim, pretendo eliminar a minha conta' %}</button>
-            </form>
+            {% csrf_token %}
+            <button type="submit" id="modalButtonDeleteAccount" class="btn btn-danger deletePOP">{% trans 'Sim, pretendo eliminar a minha conta' %}</button>
         </div>
     </div>
     </div>
+    </div>
+
+    <!--POP-UP CANCEL AGREEMENT(TENANT)-->
+    <div class="modal fade" id="modalLogin2" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-3 border-danger">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Eliminar acordo' %}</h5>
+            {% csrf_token %}
+            <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            {% trans 'Tem a certeza que deseja eliminar o seu acordo atual?' %}
+            <br>
+            <br>
+            {% trans 'Receberá um reembolso de' %} {{ rent_to_be_returned }} €.
+            </div>
+            <div class="modal-footer">
+                <form action="{% url 'deleteAgreement' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary deletePOP" id="deleteYes">{% trans 'Sim' %}</button>
+                </form>
+                <button type="submit" class="btn btn-primary deletePOP">{% trans 'Não' %}</button>
+            </div>
+        </div>
+        </div>
     </div>
 
 
@@ -105,9 +145,11 @@
                         <div class="col-sm-12 p-3">
                             <a class="text-white" href="#"><button type="button" class="btn btn-info w-100">{% trans 'Ver Acordos' %}</button></a>
                         </div>
-                        <div class="col-sm-12 p-3">
-                            <a class="text-white" href="#"><button type="button" class="btn btn-info w-100">{% trans 'Cancelar Acordo' %}</button></a>
-                        </div> 
+                        {% if diffDates %}
+                            <div class="col-sm-12 p-3">
+                                <a class="text-white" href="#"><button type="button" class="btn btn-info w-100" id="cancelAgreement">{% trans 'Cancelar Acordo' %}</button></a>
+                            </div>
+                        {% endif %}
                         {% if diffDates <= 30 and diffDates >= 1 %}
                             <div class="col-sm-12 p-3">
                                 <a class="text-white" href="profile/renewAgreement"><button type="button" class="btn btn-info w-100">{% trans 'Renovar Acordo' %}</button></a>

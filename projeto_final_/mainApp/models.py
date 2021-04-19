@@ -156,6 +156,7 @@ class Agreement(models.Model):
     startsDate = models.DateField()
     endDate = models.DateField()
     last_invoice_date = models.DateField()
+    status = models.BooleanField()
 
 class Agreement_Request(models.Model):
     associated_room_listing = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)

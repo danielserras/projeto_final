@@ -36,7 +36,20 @@
                   </a>
               {% endif %}
             {% endfor %}
-
+            <!-- FOR LOOP PELOS INVOICES COM SIZELIST + FORLOOP.COUNTER-->
+            {% for land, month, sentDate, paymentLimit, address, name, invoice_id in invoiceList %}
+              <a href="#" id="notificationsTen_{{forloop.counter|add:sizeList}}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
+                {% load static %}
+                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                  <div class="media-body ml-4">
+                    <div class="d-flex align-items-center justify-content-between mb-1">
+                      <h6 class="mb-0">{{ land }}</h6><small class="small font-weight-bold">{{ month }}</small>
+                    </div>
+                    <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Fatura do mês de '%}{{ month }}.</p>
+                  </div>
+                </div>
+              </a>
+            {% endfor %}
           </div>
         </div>
       </div>
@@ -87,6 +100,41 @@
               {% else %}
                 <p class="text-info">{% trans 'Recusado' %}</p>
               {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+        {% for land, month, sentDate, paymentLimit, address, name, invoice_id in invoiceList %}
+          <div id = "content_{{forloop.counter|add:sizeList}}"class='contentNotification' style="display:none">
+            <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
+                <h4 class="text-white mt-3 pl-3"> {% trans 'Fatura' %} </h4>
+            </div>
+            <div class="row m-2">
+                <p class= "text-info font-weight-bold">{% trans 'Data de envio' %}:&nbsp </p>
+                <p class= "text-info"> {{sentDate}} </p>
+            </div>
+            <div class="row m-2">
+                <p class= "text-info font-weight-bold">{% trans 'Data limite de pagamento' %}: &nbsp </p>
+                <p class= "text-info"> {{paymentLimit}} </p>
+            </div>
+            <div class="row m-2">
+              <div>
+                <p class="text-info font-weight-bold">{% trans 'Mensagem' %}:&nbsp</p>
+              </div>
+            </div>
+            <div class="big_text row m-2">
+                <p class= "text-info font-weight-bold">{% trans 'Envio-lhe a fatura do mês de' %}
+                  {{ month }}{% trans ', relativa ao alojamento localizado em' %}
+                  {{ address }} {% trans 'e com um anúncio intitulado' %}
+                  "{{ name }}" &nbsp</p>
+            </div>
+            <div class="row m-2">
+              <div class="mx-auto">
+                <form action="{% url 'get_invoice_pdf'%}" method="POST" target="_blank">
+                  {% csrf_token %}
+                  <input name="invoice_id" type='hidden' value="{{invoice_id}}">
+                  <button type="submit" class="btn btn-info font-weight-bold ml-3">Fatura</button>
+                </form>
+              </div>
             </div>
           </div>
         {% endfor %}
