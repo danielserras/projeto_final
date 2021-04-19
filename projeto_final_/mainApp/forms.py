@@ -133,6 +133,7 @@ class PropertyForm(forms.ModelForm):
     latitude = forms.CharField(required=True, max_length=100)
     longitude = forms.CharField(required=True, max_length=100)
     listing_type = forms.CharField(required=True, max_length=25)
+    floor_area = forms.IntegerField(required=True, initial=0)
 
     #booleans
     smoke = forms.BooleanField(required=False, initial=False)
@@ -146,7 +147,6 @@ class PropertyForm(forms.ModelForm):
     pets = forms.BooleanField(required=False, initial=False)
     overnight_visits = forms.BooleanField(required=False, initial=False)
     cleaning_services = forms.BooleanField(required=False, initial=False)
-    floor_area = forms.BooleanField(required=False, initial=False)
 
     class Meta:
         model = Property
