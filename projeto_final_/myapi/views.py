@@ -127,7 +127,7 @@ class imageTest(generics.GenericAPIView):
 
 #RF-4
 class UserAPI(APIView):
-    """Show specific user and Delete him/her from database"""
+    """Show specific user, Delete user from database and update specific info about the user"""
 
     def get(self, request, pk):
         user = User.objects.get(id = pk)
@@ -155,21 +155,4 @@ class UserAPI(APIView):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
         
-
-
-# @api_view(['POST',])
-# def registration_view(request):
-#     if request.method == 'POST':
-#         serializer = RegisterSerializer(data=request.data)
-#         data = {}
-#         if serializer.is_valid():
-#             user = serializer.save()
-#             data['response'] = "Successfully registered a new user"
-#             data['username'] = user.username
-#             data['email'] = user.email
-#             data['first_name'] = user.first_name
-#             data['last_name'] = user.last_name
-#         else:
-#             data = serializer.errors
-#         return Response(data)
 

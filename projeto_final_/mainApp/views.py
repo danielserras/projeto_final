@@ -86,6 +86,7 @@ def register_view(request):
             app_user_object = App_user.objects.get(user_id=inactive_user)
             app_user_object.phoneNumber = pform.cleaned_data['phoneNumber']
             app_user_object.birthDate = pform.cleaned_data['birthDate']
+            app_user_object.address = pform.cleaned_data['address']
             app_user_object.save()
 
             if request.POST['tipo'] == 'Inquilino':
@@ -1673,9 +1674,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": " http://99c2fa0a7e35.ngrok.io/paymentStatus/",
-            "return_url": " http://99c2fa0a7e35.ngrok.io/mainApp/search",
-            "cancel_return": " http://99c2fa0a7e35.ngrok.io/mainApp/search",
+            "notify_url": " http://6044dec947b5.ngrok.io/paymentStatus/",
+            "return_url": " http://6044dec947b5.ngrok.io/mainApp/search",
+            "cancel_return": " http://6044dec947b5.ngrok.io/mainApp/search",
 
             }
 
