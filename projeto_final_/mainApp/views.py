@@ -705,8 +705,7 @@ def create_agreement(user_id, ag_request_id):
     try:
         tenant = Tenant.objects.get(ten_user=a_user)
     except:
-        print("erro")
-        return redirect('index')
+        return redirect('search')
 
 
     request_id = ag_request_id
@@ -748,7 +747,7 @@ def create_agreement(user_id, ag_request_id):
         assoc_listing.main_listing.is_active = False
         assoc_listing.save()
 
-    last_invoice.agreement = new_ag.id
+    last_invoice.agreement = new_ag
     last_invoice.save()
 
 @login_required(login_url='login_view')
@@ -1688,9 +1687,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": " http://795a4150cbbd.ngrok.io/paymentStatus/",
-            "return_url": " http://795a4150cbbd.ngrok.io/mainApp/search",
-            "cancel_return": " http://795a4150cbbd.ngrok.io/mainApp/search",
+            "notify_url": "http://d0835c0251b1.ngrok.io/paymentStatus/",
+            "return_url": "http://d0835c0251b1.ngrok.io/mainApp/search",
+            "cancel_return": "http://d0835c0251b1.ngrok.io/mainApp/profile",
 
             }
 
@@ -1717,13 +1716,11 @@ def make_payment(request, ag_request_id):
 
 @csrf_exempt
 def get_payment_status(sender, **kwargs):
-    print("ola1")
     ipn_obj = sender.POST
+    print(ipn_obj)
     if ipn_obj['payment_status'] == ST_PP_COMPLETED:
-        print("ola2")
 
         if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
-            print("ola3")
 
             ag_request_id = ipn_obj['item_number']
             user_id = ipn_obj['custom']
@@ -1753,6 +1750,7 @@ def deletePopUpProp(request):
     return render(request, "mainApp/profile.html", {})
 
 def renewAgreement(request):
+    #FALTA POR A OPÇAO DE RENOVAR A APARECER POR EXEMPLO 1 MES ANTES DO FINAL EM VEZ DE ESTAR SEMPRE VISIVEL
 
     current_user = request.user
     a_user = App_user.objects.get(user_id=current_user)
@@ -1814,8 +1812,12 @@ def delete_account(request):
             if Tenant.objects.get(id = (ag.tenant_id)).ten_user_id == tenant.ten_user_id:
                 
                 #falta verificar se o agreement esta ativo
-                messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'))
-                return redirect('index')
+                today = datetime.today()
+                ag_end_date = ag.endDate
+
+                if today < ag_end_date:
+                    messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'))
+                    return redirect('index')
 
 
         logout(request)
@@ -1928,18 +1930,3 @@ def send_invoice(request):
 
 def tenant(request):
     return render(request, "mainApp/tenant.html", {})
-
-def deleteAgreement(request):
-    current_user = request.user
-    a_user = App_user.objects.get(user_id=current_user)
-    
-    try:
-        tenant = Tenant.objects.get(ten_user=a_user)
-    except:
-        return redirect('index')
-
-    for i in Agreement.objects.all():
-        if i.tenant_id == tenant.id:
-            i.delete()
-    
-    return render(request, "mainApp/profile.html", {})
