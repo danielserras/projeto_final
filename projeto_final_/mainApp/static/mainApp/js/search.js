@@ -41,7 +41,8 @@ $(document).ready(function() {
     });
     //Range bar for rent. Search page
     const ShiftLeftValues = { '2': '0,1', '3': '-0.2', '4': '-0.5', '5': '-0.8', '7': '-1.8' };
-    var v = [550, 1200];
+    //var v = [550, 1200];
+    var v = [$("#minPrice").val(), $("#maxPrice").val()];
     var numTooClose = 150;
     var r = 20;
     if ($(window).width() < 960) {
@@ -50,6 +51,7 @@ $(document).ready(function() {
     if ($(window).width() < 480) {
         var numTooClose = 350;
     }
+
     $("#slider").slider({
         range: true,
         min: 0,

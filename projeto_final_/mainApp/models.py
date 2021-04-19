@@ -132,7 +132,7 @@ class Listing(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=280)
     security_deposit = models.IntegerField()
-    max_capacity = models.IntegerField()
+    max_occupancy = models.IntegerField()
     listing_type = models.CharField(max_length=20)
     is_active = models.BooleanField()
     album = models.OneToOneField(ImageAlbum, related_name="ListingAlbum", on_delete=models.CASCADE, blank=True, null=True)

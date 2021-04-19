@@ -490,7 +490,7 @@ def introduce_property_view (request):
                                 title =  f.cleaned_data.get('title'),
                                 description =  f.cleaned_data.get('description'),
                                 security_deposit =  f.cleaned_data.get('security_deposit'),
-                                max_capacity =  f.cleaned_data.get('max_capacity'),
+                                max_occupancy =  f.cleaned_data.get('max_occupancy'),
                                 is_active = True,
                                 album = prop_album
                             )
@@ -1202,7 +1202,7 @@ def create_listing_view(request, property_id):
             title =  request.POST.get('title'),
             description =  request.POST.get('description'),
             security_deposit =  request.POST.get('security_deposit'),
-            max_capacity =  request.POST.get('max_capacity'),
+            max_occupancy =  request.POST.get('max_occupancy'),
             is_active = True,
             album = prop_album
         )
@@ -1425,9 +1425,9 @@ def search(request):
 
             #Number of tenants is filled
             if any(form.cleaned_data.get('num_tenants') == x for x in ('1','2','3','4')):
-                queryWhere += " AND l.max_capacity = '" + form.cleaned_data.get('num_tenants') + "'"
+                queryWhere += " AND l.max_occupancy = '" + form.cleaned_data.get('num_tenants') + "'"
             elif(form.cleaned_data.get('num_tenants') == '5'):
-                queryWhere += " AND l.max_capacity >= 5"
+                queryWhere += " AND l.max_occupancy >= 5"
 
             #Date in is filled
             if form.cleaned_data.get('date_in') is not None:

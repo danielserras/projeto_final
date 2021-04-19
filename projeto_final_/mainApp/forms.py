@@ -104,7 +104,7 @@ class ListingForm(forms.ModelForm):
     title = forms.CharField(max_length=50)
     description = forms.CharField(max_length=100)
     security_deposit = forms.IntegerField()
-    max_capacity = forms.IntegerField(required=True)
+    max_occupancy = forms.IntegerField(required=True)
 
     class Meta:
         model = Listing
@@ -116,7 +116,7 @@ class ListingForm(forms.ModelForm):
             'title',
             'description',
             'security_deposit',
-            'max_capacity']
+            'max_occupancy']
 
 class PropertyForm(forms.ModelForm):
     address = forms.CharField(required=True, max_length=100)
@@ -367,37 +367,106 @@ class ImageForm(forms.ModelForm):
         fields = ['images' ]
 
 TYPE_CHOICES =( 
-    ("", "Zero"), 
-    ("Apartment", "One"), 
-    ("House", "Two"), 
-    ("Studio", "One"), 
-    ("Bedroom", "Three"), 
-    ("Residency", "Four"), 
+    ("", _("Tipo de Alojamento")), 
+    ("Apartment", _("Apartamento")), 
+    ("House", _("Casa")), 
+    ("Studio", _("Estúdio")), 
+    ("Bedroom", _("Quarto"))
 ) 
-NUM_CHOICES =( 
-    ("", "Zero"), 
-    ("1", "One"), 
-    ("2", "Two"), 
-    ("3", "Three"), 
-    ("4", "Four"), 
-    ("5", "Five"), 
+NUM_TENANTS_CHOICES =( 
+    ("", _("Número de Inquilinos")), 
+    ("1", _("1 inquilino")), 
+    ("2", _("2 inquilinos")), 
+    ("3", _("3 inquilinos")), 
+    ("4", _("4 inquilinos")), 
+    ("5", _("5+ inquilinos")), 
+) 
+NUM_BEDROOMS_CHOICES =( 
+    ("", _("Número de Quartos")), 
+    ("1", _("1 quarto")), 
+    ("2", _("2 quartos")), 
+    ("3", _("3 quartos")), 
+    ("4", _("4 quartos")), 
+    ("5", _("5+ quartos")), 
 ) 
 class SearchForm(forms.Form):
     location = forms.CharField(required=False, max_length=100, 
         widget=forms.TextInput(
             attrs={
                 "class":"form-control border-left-0 pl-0 border-info border-3 rounded-right",
-                "placeholder":_("Localização")
+                "placeholder":_("Localização"),
+                "required":True
             }
-        ))
-    radius = forms.IntegerField(required=False)
-    type = forms.ChoiceField(choices = TYPE_CHOICES, required=False)
-    num_tenants = forms.ChoiceField(choices = NUM_CHOICES, required=False)
-    num_bedrooms = forms.ChoiceField(choices = NUM_CHOICES, required=False)
-    date_in = forms.DateField(required=False)
-    date_out = forms.DateField(required=False)
-    minPrice = forms.CharField(required=True)
-    maxPrice = forms.CharField(required=True)
+        )
+    )
+    radius = forms.IntegerField(required=False,
+        widget=forms.NumberInput(
+            attrs={
+                "class":"form-control border-info border-3 rounded-left",
+                "placeholder":_("Raio"),
+                "required":True
+            }
+        )
+    )
+    type = forms.ChoiceField(choices = TYPE_CHOICES, required=False,
+        widget=forms.Select(
+            attrs={
+                "class":"form-select form-control border-info border-3 p-1"
+            }
+        )
+    )
+    num_tenants = forms.ChoiceField(choices = NUM_TENANTS_CHOICES, required=False,
+        widget=forms.Select(
+            attrs={
+                "class":"form-select form-control border-info border-3 p-1"
+            }
+        )
+    )
+    num_bedrooms = forms.ChoiceField(choices = NUM_BEDROOMS_CHOICES, required=False,
+        widget=forms.Select(
+            attrs={
+                "class":"form-select form-control border-info border-3 p-1"
+            }
+        )
+    )
+    date_in = forms.DateField(required=False,
+        widget=forms.DateInput(
+            attrs={
+                "class":"form-control border-info border-3 textbox-n",
+                "placeholder": _("Entrada"),
+                "onfocus":"(this.type='date')",
+                "onblur":"(this.type='text')"
+            }
+        )
+    )
+    date_out = forms.DateField(required=False,
+        widget=forms.DateInput(
+            attrs={
+                "class":"form-control border-info border-3 textbox-n",
+                "placeholder": _("Saída"),
+                "onfocus":"(this.type='date')",
+                "onblur":"(this.type='text')"
+            }
+        )
+    )
+    minPrice = forms.CharField(required=True,
+        widget=forms.TextInput(
+            attrs={
+                "hidden":True,
+                "id":"minPrice",
+                "value":"450"
+            }
+        )
+    )
+    maxPrice = forms.CharField(required=True,
+        widget=forms.TextInput(
+            attrs={
+                "hidden":True,
+                "id":"maxPrice",
+                "value":"1200"
+            }
+        )
+    )
 
 
     

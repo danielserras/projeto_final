@@ -30,8 +30,9 @@
                         </div>
                         <div class="form-group col-sm-4 my-auto p-2">
                             <div class="input-group">
-                                <input type="number" min="1" class="form-control border-info border-3 rounded-left" placeholder="{% trans 'Raio' %}" 
-                                name="radius" required>
+                                {% comment %} <input type="number" min="1" class="form-control border-info border-3 rounded-left" placeholder="{% trans 'Raio' %}" 
+                                name="radius" required> {% endcomment %}
+                                {{searchForm.radius}}
                                 <div class="input-group-append">
                                     <span class="input-group-text bg-white border-info border-3 border-left-0 p-1">Km</span>
                                 </div>
@@ -48,41 +49,46 @@
                     <div id="advancedSearchDiv">
                         <div class="form-row border-border-primary">
                             <div class="form-group col-sm pt-2">
-                                <select class="form-select form-control border-info border-3 p-1" aria-label="Tipo de Alojamento" name='type'>
+                                {{searchForm.type}}
+                                {% comment %} <select class="form-select form-control border-info border-3 p-1" aria-label="Tipo de Alojamento" name='type'>
                                     <option value="" selected>{% trans 'Tipo de Alojamento' %}</option>
                                     <option value="Apartment">{% trans 'Apartamento' %}</option>
                                     <option value="House">{% trans 'Casa' %}</option>
                                     <option value="Studio">{% trans 'Estúdio' %}</option>
                                     <option value="Bedroom">{% trans 'Quarto' %}</option>
-                                </select>
+                                </select> {% endcomment %}
                             </div>
                             <div class="form-group col-sm pt-2">
-                                <select class="form-select form-control border-info border-3 p-1" aria-label="Número de Inquilinos" name='num_tenants'>
+                                {{searchForm.num_tenants}}
+                                {% comment %} <select class="form-select form-control border-info border-3 p-1" aria-label="Número de Inquilinos" name='num_tenants'>
                                     <option value="" selected>{% trans 'Número de Inquilinos' %}</option>
                                     <option value="1">1 {% trans 'inquilino' %}</option>
                                     <option value="2">2 {% trans 'inquilinos' %}</option>
                                     <option value="3">3 {% trans 'inquilinos' %}</option>
                                     <option value="4">4 {% trans 'inquilinos' %}</option>
                                     <option value="5">5+ {% trans 'inquilinos' %}</option>
-                                </select>
+                                </select> {% endcomment %}
                             </div>
                         </div>
                         <div class="form-row border-border-primary">
                             <div class="form-group col-sm">
-                                <select class="form-select form-control border-info border-3 p-1" aria-label="Número de Quartos" name='num_bedrooms'>
+                                {{searchForm.num_bedrooms}}
+                                {% comment %} <select class="form-select form-control border-info border-3 p-1" aria-label="Número de Quartos" name='num_bedrooms'>
                                     <option value="" selected>{% trans 'Número de Quartos' %}</option>
                                     <option value="1">1 {% trans 'quarto' %}</option>
                                     <option value="2">2 {% trans 'quartos' %}</option>
                                     <option value="3">3 {% trans 'quartos' %}</option>
                                     <option value="4">4 {% trans 'quartos' %}</option>
                                     <option value="5">5+ {% trans 'quartos' %}</option>
-                                </select>
+                                </select> {% endcomment %}
                             </div>
                             <div class="form-group col-sm">
-                                <input placeholder="{% trans 'Entrada' %}" class="form-control border-info border-3 textbox-n" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date-in" name='date_in'/>
+                                {{searchForm.date_in}}
+                                {% comment %} <input placeholder="{% trans 'Entrada' %}" class="form-control border-info border-3 textbox-n" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date-in" name='date_in'/> {% endcomment %}
                             </div>
                             <div class="form-group col-sm">
-                                <input placeholder="{% trans 'Saída' %}" class="form-control border-info border-3 textbox-n" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date-out" name='date_out'/>
+                                {{searchForm.date_out}}
+                                {% comment %} <input placeholder="{% trans 'Saída' %}" class="form-control border-info border-3 textbox-n" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date-out" name='date_out'/> {% endcomment %}
                             </div>
                         </div>
                     </div>
@@ -95,8 +101,10 @@
         <div>
             <h2>{% trans 'Renda' %}:</h2>
             <div class="row" id="rangeLabelDiv">
-                <input type="text" id="minPrice" name="minPrice" hidden>
-                <input type="text" id="maxPrice" name="maxPrice" hidden>
+                {% comment %} <input type="text" id="minPrice" name="minPrice" hidden>
+                <input type="text" id="maxPrice" name="maxPrice" hidden> {% endcomment %}
+                {{searchForm.minPrice}}
+                {{searchForm.maxPrice}}
                 <span id="labelMin"></span>
                 <span id="labelMinToMax"></span>
                 <span id="labelMax"></span>
