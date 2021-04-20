@@ -46,5 +46,6 @@ urlpatterns = [
     path('sendInvoice', views.send_invoice, name='send_invoice'),
     path('invoicesLandlord', views.invoicesLandlord, name='invoicesLandlord'),
     path('profile/agreementDeleted', views.deleteAgreement, name='deleteAgreement'),
+    path('profile/accountDeleted', views.delete_account, name='delete_account'),
 ]
 

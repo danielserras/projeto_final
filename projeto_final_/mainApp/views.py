@@ -479,7 +479,7 @@ def introduce_property_view (request):
                                     del request.session['prop_serial']
                                     return redirect('propertiesManagement') """
 
-                            prop_album = ImageAlbum(name=f.cleaned_data.get('title'))
+                            prop_album = ImageAlbum(name=f.cleaned_data.get('title')+"_"+str(Listing.objects.all().order_by("-id")[0].id+1))
                             prop_album.save()
                             
                             listing_obj = Listing(
@@ -1717,7 +1717,7 @@ def make_payment(request, ag_request_id):
 @csrf_exempt
 def get_payment_status(sender, **kwargs):
     ipn_obj = sender.POST
-    print(ipn_obj)
+
     if ipn_obj['payment_status'] == ST_PP_COMPLETED:
 
         if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
@@ -1812,10 +1812,9 @@ def delete_account(request):
             if Tenant.objects.get(id = (ag.tenant_id)).ten_user_id == tenant.ten_user_id:
                 
                 #falta verificar se o agreement esta ativo
-                today = datetime.today()
-                ag_end_date = ag.endDate
 
-                if today < ag_end_date:
+                if ag.status == True:
+
                     messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'))
                     return redirect('index')
 
@@ -1827,9 +1826,40 @@ def delete_account(request):
         return redirect('login_view')
 
     else:
+        
+        for ag in Agreement.objects.all():
+            if Landlord.objects.get(id = (ag.landlord_id)).lord_user_id == lord.lord_user_id:
 
-        #to be continued amanha
-        pass
+                if ag.status == True:
+
+                    messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'))
+                    return redirect('index')
+
+        
+        for p_listing in Property_listing.objects.all():
+            assoc_prop = Property.objects.get(id=p_listing.associated_property.id)
+
+            if assoc_prop.landlord.id == lord.id:
+                main_listing = p_listing.main_listing
+                listing_album = main_listing.album
+                listing_album.delete()
+                #main_listing will be auto deleted after this
+
+        for r_listing in Room_listing.objects.all():
+            assoc_room = Bedroom.objects.get(id=r_listing.associated_room.id)
+            assoc_prop = assoc_room.associated_property
+
+            if assoc_prop.landlord.id == lord.id:
+                main_listing = r_listing.main_listing
+                listing_album = main_listing.album
+                listing_album.delete()
+                #main_listing will be auto deleted after this
+
+        logout(request)
+        lord.delete()
+        a_user.delete()
+        current_user.delete()
+        return redirect('login_view')
 
     return redirect('index')
 
@@ -1944,4 +1974,4 @@ def deleteAgreement(request):
         if i.tenant_id == tenant.id:
             i.delete()
 
-    return render(request, "mainApp/profile.html", {})
+    return redirect('profile')

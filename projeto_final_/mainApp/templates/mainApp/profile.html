@@ -73,10 +73,10 @@
         <div class="modal-body">
         {% trans 'Tem a certeza que pretede apagar a sua conta? Todos os seus dados serão eliminados e não poderam ser recuperados.' %}
         </div>
-        <div class="modal-footer">
+        <form action="{% url 'delete_account' %}" class="modal-footer" method="POST">
             {% csrf_token %}
             <button type="submit" id="modalButtonDeleteAccount" class="btn btn-danger deletePOP">{% trans 'Sim, pretendo eliminar a minha conta' %}</button>
-        </div>
+        </form>
     </div>
     </div>
     </div>
