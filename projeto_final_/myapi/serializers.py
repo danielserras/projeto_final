@@ -7,8 +7,9 @@ from django.utils import timezone
 
 class App_userSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = User
+        model = App_user
         fields = '__all__'
+
 
     
 class TenantSerializer(serializers.HyperlinkedModelSerializer):
@@ -18,10 +19,10 @@ class TenantSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'ten_user')
     
 class LandlordSerializer(serializers.HyperlinkedModelSerializer):
-    lord_user = App_userSerializer(many=False)
     class Meta:
         model = Landlord
         fields = ('id', 'lord_type', 'lord_user')
+        
 
 
 # Register Serializer
@@ -85,23 +86,12 @@ class createAgreementRequestSerializer(serializers.ModelSerializer):
             agreement_request = Agreement_Request.objects.create(**validated_data)
 
             return agreement_request
-    
-    # def create(self, validated_data):
-    #         dateNow = timezone.now()
-    #         validated_data['dateOfRequest'] = dateNow
-    #         print(validated_data['dateOfRequest'])
-    #         #agreement_request = Agreement_Request.objects.create(**validated_data)
-    #         agreement_request = Agreement_Request()
-    #         agreement_request.startsDate = validated_data['startsDate']
-    #         agreement_request.endDate = validated_data['endDate']
-    #         agreement_request.message = validated_data['message']
-    #         agreement_request.tenant = validated_data['tenant']
-    #         agreement_request.landlord = validated_data['landlord']
-    #         agreement_request.associated_property_listing = validated_data['associated_property_listing']
-    #         agreement_request.dateOfRequest = validated_data['dateOfRequest'] = dateNow
-    #         agreement_request.save()
-    #         return agreement_request
 
+
+class PropertySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Property
+        fields =  '__all__'
 
 
 class imageTestSerializer(serializers.ModelSerializer):
@@ -114,9 +104,6 @@ class imageTestSerializer(serializers.ModelSerializer):
 # class LivingRoomSerializer(serializers.ModelSerializer):
 
 
-
-
-# class PropertySerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer): 
     class Meta:
         model = User

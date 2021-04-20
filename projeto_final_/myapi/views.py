@@ -1,13 +1,19 @@
 import json
 from django.shortcuts import render
+from django.forms.models import model_to_dict
 
 from rest_framework.response import Response
+
+from decouple import config
+
 
 from rest_framework import viewsets, status, generics, permissions
 
 from rest_framework.response import Response
 
 from rest_framework.decorators import api_view
+
+from rest_framework.permissions import IsAuthenticated
 
 from .serializers import *
 
@@ -24,6 +30,9 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate, login, logout
 
 from django.shortcuts import get_object_or_404
+
+from geopy.geocoders import MapBox
+
 
 #Funcoes acessorias
 
@@ -78,14 +87,6 @@ class getAuthToken(LoginView):
         else:
             return response_maker("error", 401, None, "password/username combination did not match any user")
 
-class IntroduceProperty(APIView):
-    def post(self, request, format=None):
-        content = {
-            'user': str(request.user),  
-            'auth': str(request.auth), 
-        }
-        return Response(content)
-
 
 #RF-9 
 class agreementRequestAcceptAPI(generics.GenericAPIView):
@@ -117,6 +118,59 @@ class agreementRequestAPI(generics.GenericAPIView):
             return response_maker("success", 200, None, "Criação do Agreement request feita.")
         except:
             return response_maker("error", 401, None, "Criação do Agreement request falhou.")
+
+
+#um URI para adicionar propriedade, outro URI para listar Propriedade, outro URI por divisao (quarto, sala, sala de estar, casa de banho cozinha)
+class Property(APIView):
+    geolocator = MapBox(config('MAPBOX_KEY'), scheme=None, user_agent=None, domain='api.mapbox.com')
+
+    permission_classes = (IsAuthenticated,)
+    def post(self, request, format=None):
+        token = (request.META["HTTP_AUTHORIZATION"].split("Token ")[1])
+        user = Token.objects.get(key=token).user
+        appUser = App_user.objects.get(user = user)
+        landLord = Landlord.objects.filter(lord_user = appUser)
+        if not landLord:
+            return response_maker("error", 405, None, "O tipo de utilizador não permite criação de propriedades")
+            print(landLord)
+        else:
+            try:
+                data = request.data
+                print(data, "HERE")
+                print(landLord[0])
+                location = self.geolocator.geocode(data["address"])
+                dictToSerialize = {
+                    "landlord": landLord[0].pk,
+                    "address": data["address"],
+                    "floor_area": data["floor_area"],
+                    "garden": data["garden"],
+                    "garage": data["garage"],
+                    "street_parking": data["street_parking"],
+                    "internet": data["internet"],
+                    "electricity": data["electricity"],
+                    "water": data["water"],
+                    "gas": data["gas"],
+                    "pets": data["pets"],
+                    "overnight_visits": data["overnight_visits"],
+                    "cleaning_services": data["cleaning_services"],
+                    "smoke": data["smoke"],
+                    "latitude": location.latitude,
+                    "longitude": location.longitude, 
+                    "bedrooms_num": data["bedrooms_num"],
+                    "listing_type": data["listing_type"]
+                }
+            except:
+                return response_maker("error", 409, None, "Missing necessary fields")
+                print("u suck nigga")
+            serializer = PropertySerializer(data=dictToSerialize)
+            serializer.is_valid(raise_exception=True)
+            newProperty = serializer.save()
+            responseData = serializer.data
+            responseData["id"] = newProperty.id
+            return response_maker("success", 200, serializer.data, "New Property created w/ id %d"%newProperty.id)
+
+
+
 
 class imageTest(generics.GenericAPIView):
     serializer_class = imageTestSerializer
@@ -155,21 +209,3 @@ class UserAPI(APIView):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
         
-
-
-# @api_view(['POST',])
-# def registration_view(request):
-#     if request.method == 'POST':
-#         serializer = RegisterSerializer(data=request.data)
-#         data = {}
-#         if serializer.is_valid():
-#             user = serializer.save()
-#             data['response'] = "Successfully registered a new user"
-#             data['username'] = user.username
-#             data['email'] = user.email
-#             data['first_name'] = user.first_name
-#             data['last_name'] = user.last_name
-#         else:
-#             data = serializer.errors
-#         return Response(data)
-
