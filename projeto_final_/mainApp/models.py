@@ -12,6 +12,7 @@ class App_user(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phoneNumber = models.IntegerField(null=True, blank=True)
     birthDate = models.DateField(null=True, blank=True)
+    address = models.CharField(max_length=100)
 
 class Tenant(models.Model):
     ten_user = models.OneToOneField(App_user, on_delete=models.CASCADE)
@@ -132,7 +133,7 @@ class Listing(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=280)
     security_deposit = models.IntegerField()
-    max_capacity = models.IntegerField()
+    max_occupancy = models.IntegerField()
     listing_type = models.CharField(max_length=20)
     is_active = models.BooleanField()
     album = models.OneToOneField(ImageAlbum, related_name="ListingAlbum", on_delete=models.CASCADE, blank=True, null=True)
@@ -148,19 +149,20 @@ class Property_listing(models.Model):
     associated_property = models.ForeignKey(Property, on_delete = models.CASCADE)
 
 class Agreement(models.Model):
-    associated_room_listing = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)
-    associated_property_listing = models.ForeignKey(Property_listing, null=True, on_delete=models.CASCADE)
-    tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
-    landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
+    associated_room_listing = models.ForeignKey(Room_listing, models.SET_NULL, null=True)
+    associated_property_listing = models.ForeignKey(Property_listing, models.SET_NULL, null=True)
+    tenant = models.ForeignKey(Tenant, models.SET_NULL, null=True)
+    landlord = models.ForeignKey(Landlord, models.SET_NULL, null=True)
     startsDate = models.DateField()
     endDate = models.DateField()
     last_invoice_date = models.DateField()
+    status = models.BooleanField()
 
 class Agreement_Request(models.Model):
-    associated_room_listing = models.ForeignKey(Room_listing, null=True, on_delete=models.CASCADE)
-    associated_property_listing = models.ForeignKey(Property_listing, null=True, on_delete=models.CASCADE)
-    tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
-    landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
+    associated_room_listing = models.ForeignKey(Room_listing, models.SET_NULL, null=True)
+    associated_property_listing = models.ForeignKey(Property_listing, models.SET_NULL, null=True)
+    tenant = models.ForeignKey(Tenant, models.SET_NULL, null=True)
+    landlord = models.ForeignKey(Landlord, models.SET_NULL, null=True)
     startsDate = models.DateField()
     endDate = models.DateField()
     message = models.TextField(null=True, blank=True)

@@ -181,7 +181,7 @@ class imageTest(generics.GenericAPIView):
 
 #RF-4
 class UserAPI(APIView):
-    """Show specific user and Delete him/her from database"""
+    """Show specific user, Delete user from database and update specific info about the user"""
 
     def get(self, request, pk):
         user = User.objects.get(id = pk)
@@ -209,3 +209,4 @@ class UserAPI(APIView):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
         
+
