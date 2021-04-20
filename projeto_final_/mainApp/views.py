@@ -545,7 +545,11 @@ def introduce_property_view (request):
                                 
 
                             request.session['addPropPopUp'] =  True
-                            return redirect('profile') #sair 
+                            user_birth = a_user.birthDate.strftime('%Y-%m-%d')
+                            user_phone = a_user.phoneNumber
+                            context = {"birth": user_birth, "phone": user_phone}
+                            
+                            return render(request, 'mainApp/profile.html', context=context) #sair 
 
 
             return redirect('index')     #PLACEHOLDER
@@ -919,7 +923,7 @@ def profile(request):
             if temp == False:
                 context = {}
         else:
-
+            print('caralho')
             user_birth = a_user.birthDate.strftime('%Y-%m-%d')
             user_phone = a_user.phoneNumber
             user_type = _('Senhorio')
@@ -1727,7 +1731,7 @@ def deletePopUp(request):
 
 def deletePopUpProp(request):
     request.session['addPropPopUp'] =  False
-    return render(request, "mainApp/profile.html", {})
+    return redirect('profile')
 
 def renewAgreement(request):
     #FALTA POR A OPÇAO DE RENOVAR A APARECER POR EXEMPLO 1 MES ANTES DO FINAL EM VEZ DE ESTAR SEMPRE VISIVEL
