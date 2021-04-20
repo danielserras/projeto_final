@@ -36,7 +36,7 @@
     <form action="" method="POST">
         {% csrf_token %}
         {{live_formset.management_form}}
-        <div class="row livingroomF">
+        <div class="row p-3">
             {% for form in live_formset%}
             {{form.id}}
             <div class="col-sm-12 livingroomF" id="pageListing-6">

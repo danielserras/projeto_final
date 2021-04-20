@@ -41,13 +41,16 @@ ol{
 
 .previous{
     /*left: 2.5%;*/
-    background: linear-gradient(-90deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.4) 100%);
+    /* background: linear-gradient(-90deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.4) 100%); */
+    text-shadow: 2px 2px 1px #000000;
+    font-size: 24px;
 }
 
 
 .next{
-    right: 2.5%;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.4) 100%);
+    font-size: 24px;
+    text-shadow: 2px 2px 1px #000000;
+    /* background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.4) 100%); */
 }
 
 #slideOrder{

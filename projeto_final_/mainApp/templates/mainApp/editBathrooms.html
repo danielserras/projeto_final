@@ -40,7 +40,7 @@
     <form method="POST" id="form-container">
         {% csrf_token %}
         {{bath_formset.management_form}}
-        <div class="row bathroomF">
+        <div class="row p-3">
             {% for form in bath_formset %}
             {{form.id}}
             <div class="col-sm-12" id="pageListing-4">

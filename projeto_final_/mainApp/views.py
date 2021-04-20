@@ -478,8 +478,10 @@ def introduce_property_view (request):
                                     del request.session['listing']
                                     del request.session['prop_serial']
                                     return redirect('propertiesManagement') """
-
-                            prop_album = ImageAlbum(name=f.cleaned_data.get('title')+"_"+str(Listing.objects.all().order_by("-id")[0].id+1))
+                            try:
+                                prop_album = ImageAlbum(name=f.cleaned_data.get('title')+"_"+str(Listing.objects.all().order_by("-id")[0].id+1))
+                            except:
+                                prop_album = ImageAlbum(name=f.cleaned_data.get('title')+"_0")
                             prop_album.save()
                             
                             listing_obj = Listing(
@@ -1124,7 +1126,6 @@ def listing_editing_view(request, property_id, main_listing_id):
 
     if request.method == 'POST':
         f = ListingForm(request.POST, instance=main_listing)
-        #f.cleaned_data()
         if f.is_valid():
             f.save()
 
@@ -1166,7 +1167,10 @@ def listing_editing_view(request, property_id, main_listing_id):
 
     imagesZip = zip(imagesPaths, imagesId)
     imagesNum = len(imagesPaths)
-    context = {'main_listing':main_listing, 'img_formset':img_formset, "imagesZip":imagesZip, 'editListing':True, "imagesNum": imagesNum}
+
+    current_date = datetime.today().strftime('%Y-%m-%d')
+
+    context = {'main_listing':main_listing, 'img_formset':img_formset, "imagesZip":imagesZip, 'editListing':True, "imagesNum": imagesNum, "current_date":current_date}
     return render(request, "mainApp/editListing.html", context)
 
 def remove_image_view(request, property_id, main_listing_id, image_id):
@@ -1242,7 +1246,10 @@ def create_listing_view(request, property_id):
     
     img_formset = ImgFormSet(queryset=Image.objects.none())
     img_formset.extra = 1
-    context = {'img_formset':img_formset, 'editListing':False}
+
+    current_date = datetime.today().strftime('%Y-%m-%d')
+
+    context = {'img_formset':img_formset, 'editListing':False, "current_date":current_date}
     return render(request, "mainApp/editListing.html", context)
 
 def delete_listing_view(request, property_id, main_listing_id):

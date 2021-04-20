@@ -9,15 +9,21 @@
 {% endblock %}
 {% block content %}
 <div class="container my-5 p-3 shadow-lg">
+    <div class="row mt-3">
+        <a href="#" onclick="history.back();">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="52" height="52" viewBox="0 0 24 24" stroke-width="2" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <line x1="5" y1="12" x2="11" y2="18" />
+                <line x1="5" y1="12" x2="11" y2="6" />
+            </svg>
+        </a>
+        <h3 class="mx-auto my-auto">{% trans 'Editar Anúncios' %}</h3>
+    </div>
     <form enctype="multipart/form-data" action="" class="listing_form" method="POST">
         {% csrf_token %}
         <div class="row ">
             <div class="col-sm-12">
-                <div class="row mt-2 mb-2 justify-content-md-center">
-                    <div class="col-sm-7">
-                        <h3>{% trans 'Edição do Anúncio' %}</h3>
-                    </div>
-                </div>
                 <div class="row justify-content-md-center mb-2">
                     <div class="col-sm-7">
                         <div class="row">
@@ -35,11 +41,11 @@
                         <div class="row mt-2">
                             <div class="col-sm-6">
                                 <label for="availability_starts">{% trans 'Disponível de' %}:</label>
-                                <input type="date"  class="form-control border-info border-3 rounded" name="availability_starts" value="{{main_listing.availability_starts}}" required>
+                                <input type="date"  class="form-control border-info border-3 rounded" min="{{current_date}}" name="availability_starts" value="{{main_listing.availability_starts}}" required>
                             </div>
                             <div class="col-sm-6">
                                 <label for="availability_ending">{% trans 'até' %}:</label>
-                                <input type="date" class="form-control border-info border-3 rounded" name="availability_ending" value="{{main_listing.availability_ending}}" required >
+                                <input type="date" class="form-control border-info border-3 rounded" min="{{current_date}}" name="availability_ending" value="{{main_listing.availability_ending}}" required >
                             </div>
                         </div>
                         <div class="row mt-2">

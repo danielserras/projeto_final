@@ -2,28 +2,38 @@
 {% load i18n %}
 {% block styles%} <link rel="stylesheet" href='{% static "mainApp/css/listingPage.css" %}'> {% endblock %}
 {% block scripts%} <script src='{% static "mainApp/js/listingPage.js" %}'></script> {% endblock %} {% block content %}
-<div class="container">
-    <div class="row justify-content-md-center m-5" id="a">
-        <div class="col-sm-7 h-75">
+<div class="container shadow-lg my-5 p-5">
+    <div class="row mt-3">
+        <a href="#" onclick="history.back();">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="52" height="52" viewBox="0 0 24 24" stroke-width="2" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <line x1="5" y1="12" x2="11" y2="18" />
+                <line x1="5" y1="12" x2="11" y2="6" />
+            </svg>
+        </a>
+    </div>
+    <div class="row justify-content-md-center p-0" id="a">
+        <div class="col-12 col-sm-7 h-75 p-0">
             <div class="slider">
                 <figure id="slidesFigure">
                     {% for p in imagesPaths %}
                         <img src="{% static p %}">
                     {% endfor %}
                 </figure>
-                <div class="previous px-5" onclick="previous()">
-                    <i class="fa fa-chevron-left" aria-hidden="true"'></i>
+                <div class="previous carousel-control-prev" onclick="previous()">
+                    <i class="fa fa-chevron-left" aria-hidden="left"></i>
                 </div>
-                <div class="next px-5" onclick="next()">
-                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                <div class="next carousel-control-next" onclick="next()">
+                    <i class="fa fa-chevron-right" aria-hidden="right"></i>
                 </div>
             </div>
             <ol id='slideOrder' class="p-0">
                 {% for i in range %}
                     {% if forloop.first %}
-                        <li id='order_bullet_{{ i }}'><i class="fa fa-circle" aria-hidden="true"></i></li>
+                        <li id='order_bullet_{{ i }}'><i class="fa fa-circle" aria-hidden="image{{i}}"></i></li>
                     {% else %}
-                        <li id='order_bullet_{{ i }}'><i class="fa fa-circle-o" aria-hidden="true"></i></li>
+                        <li id='order_bullet_{{ i }}'><i class="fa fa-circle-o" aria-hidden="image{{i}}"></i></li>
                     {% endif %}
                 {% endfor %}
             </ol>
@@ -45,33 +55,31 @@
             <i class="fa fa-chevron-down col_image_btn" id='col_image_btn_down' aria-hidden="down" onclick="nextInColumn()" title="Scroll Down"></i>
         </div> 
     </div>
-</div>
-<div class="container mb-3">
     <div class="row">
         <div class="col-sm-8">
             <div class="row p-1">
                 <h2 class="text-secondary font-weight-bold">{{listing.title}}</h2>
             </div>
             <div class="row ml-2">
-                <div class="col-md-2 my-auto">
+                <div class="col-6 col-sm-3 my-auto">
                     <div class="row justify-content-center">
                         <img src='{% static "mainApp/images/user_listing_icon.svg" %}' width="28px" class='img-fluid' alt='Maximum number of tenants'>
                         <p class="my-auto font-weight-bold">{{listing.max_occupancy}}  {% if listing.max_occupancy > 1 %} {% trans 'pessoas' %} {% else %} {% trans 'pessoa' %} {% endif %} </p>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-6 col-sm-3">
                     <div class="row justify-content-center">
                         <img src='{% static "mainApp/images/bed.svg" %}' width="38px" class='img-fluid' alt='Number of beds'>
                         <p class="my-auto font-weight-bold">{{num_beds}}  {% if num_beds > 1 %} {% trans 'camas' %} {% else %} {% trans 'cama' %} {% endif %}</p>
                     </div>
                 </div>
-                <div class="col-md-3 my-auto">
+                <div class="col-8 col-sm-3 my-auto">
                     <div class="row justify-content-center">
                         <img src='{% static "mainApp/images/shower.svg" %}' width="24px" class='img-fluid' alt='Number of bathrooms'>
                         <p class="my-auto font-weight-bold">{{bathrooms|length}} {% if bathrooms|length > 1 %} {% trans 'casas-de-banho' %} {% else %} {% trans 'casa-de-banho' %} {% endif %} </p>
                     </div>
                 </div>
-                <div class="col-md-1 my-auto">
+                <div class="col-4 col-sm-3 my-auto">
                     <div class="row justify-content-center">
                         <p class="my-auto font-weight-bold">{{property.floor_area}}</p>
                         <span class="text-primary font-weight-bold text-size-24 mb-1">&#13217;</span>

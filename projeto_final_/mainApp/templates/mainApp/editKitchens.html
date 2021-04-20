@@ -45,7 +45,7 @@
     <form action="" method="POST">
         {% csrf_token %}
         {{kitchen_formset.management_form}}
-        <div class="row kitchenF">
+        <div class="row p-3">
             {% for form in kitchen_formset %}
             {{form.id}}
             <div class="col-sm-12">
