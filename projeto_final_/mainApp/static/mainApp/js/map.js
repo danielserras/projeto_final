@@ -7,7 +7,7 @@ let marker = null;
 
 
 $(document).ready(function(){
-    mymap = L.map('mapid').setView([38.73, -9.14], 13);
+    mymap = L.map('mapid').setView([39.50, -8.04], 7);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -38,7 +38,7 @@ function validate(){
 }
 
 function addMarkerClick(){
-  str = $("#address").val();
+  str = $("#address").val() + " " + "Portugal";
   apiCall = formatCall(str, "normal");
   $.getJSON(apiCall, function(data) {
     console.log(data.features[0].center);
@@ -105,4 +105,3 @@ function formatCall(address, type){
   //https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=YOUR_MAPBOX_ACCESS_TOKEN
   return formatedQuery
 }
-//"https://api.mapbox.com/geocoding/v5/mapbox.places/-73.989,40.733.json?access_token=pk.eyJ1IjoidW5paG91c2VzIiwiYSI6ImNrbGltdHJxcDBlZWEyd25tYmtkc2xuNmIifQ.hX3RupN9qPRjEJ9oHAFMQg"
