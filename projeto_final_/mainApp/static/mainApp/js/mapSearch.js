@@ -1,6 +1,6 @@
 var mymap;
 $(document).ready(function(){
-    mymap = L.map('mapid').setView([38.73, -9.14], 13);
+    mymap = L.map('mapid').setView([39.50, -8.04], 7);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -11,9 +11,6 @@ $(document).ready(function(){
     }).addTo(mymap);
 });
 
-function addMarker(e){
-    var newMarker = new L.marker(e.latlng).addTo(mymap);
-}
 
 
 
@@ -21,6 +18,7 @@ $(document).ready(function(){
     var search_long = $('#search_long').val();
     var search_lat = $('#search_lat').val();
     var search_radius = $('#search_radius').val();
+    console.log(search_radius)
     var l = $('.PassedLats').length;
     var resultLats = [];
     var resultLongs = [];
@@ -29,13 +27,17 @@ $(document).ready(function(){
         resultLongs.push($('.PassedLongs').eq(i).val());
     }
 
-    L.circle([search_lat, search_long], {radius: search_radius*1000, weight: 1, color: '#3388ff'}).addTo(mymap);
+    var circle = L.circle([search_lat, search_long], {radius: search_radius*1000, weight: 1, color: '#3388ff'}).addTo(mymap);
     //print the array or use it for your further logic
     for (i = 0; i < l; i++) {
         marker = L.marker([resultLats[i], resultLongs[i]], {
             draggable: false
           }).addTo(mymap);
     }
+    if(typeof search_radius !== "undefined")
+    {
+        mymap.fitBounds(circle.getBounds());
+    } 
 
 
 });
