@@ -14,7 +14,7 @@ for line in obj:
     if line['model'] == "mainApp.property":
         numBedrooms.append(line["fields"]["bedrooms_num"])
     if line['model'] == "mainApp.listing":
-        maxCapacity.append(line["fields"]["max_capacity"])
+        maxCapacity.append(line["fields"]["max_occupancy"])
         listingType.append(line["fields"]["listing_type"])
 
 print("-= Tipo de alojamento =-")

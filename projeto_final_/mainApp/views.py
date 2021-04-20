@@ -142,7 +142,7 @@ def save_property(request):
         cleaning_services = prop_content.get('cleaning_services'),
         smoke = prop_content.get('smoke'),
         bedrooms_num = prop_content.get('bedrooms_num'),
-        listing_type = request.session["l_type"]
+        listing_type = request.session["l_type"],
     )
     prop_obj.save()
 
@@ -308,7 +308,6 @@ def introduce_property_view (request):
 
                     if f == prop_form:
                         if f.is_valid():
-
                             bed_formset = BedroomFormSet(queryset=Bedroom.objects.none())
                             bed_formset.extra = int(f.cleaned_data.get('bedrooms_num'))
                             
@@ -337,125 +336,128 @@ def introduce_property_view (request):
                                 context)
 
                     elif f == bath_form:
-                        print(f)
+                        #print(f)
                         bath_serial_list = []
-                        for sub_form in f:
-                            bath_serial_list.append(sub_form.cleaned_data)
+                        if f.is_valid():
+                            for sub_form in f:
+                                bath_serial_list.append(sub_form.cleaned_data)
 
-                        bathroom_serial = json.dumps(bath_serial_list)
-                        request.session['bathroom_serial'] = bathroom_serial
-                        kitchen_formset = KitchenFormSet(queryset=Kitchen.objects.none())
+                            bathroom_serial = json.dumps(bath_serial_list)
+                            request.session['bathroom_serial'] = bathroom_serial
+                            kitchen_formset = KitchenFormSet(queryset=Kitchen.objects.none())
 
-                        kitchen_formset.extra = int(request.session['kitchens_num'])
-                        del request.session['bathrooms_num']
+                            kitchen_formset.extra = int(request.session['kitchens_num'])
+                            del request.session['bathrooms_num']
 
-                        context = {
-                            'kitchen_formset': kitchen_formset}
+                            context = {
+                                'kitchen_formset': kitchen_formset}
 
-                        return render(
-                            request,
-                            'mainApp/addKitchen.html',
-                            context)
+                            return render(
+                                request,
+                                'mainApp/addKitchen.html',
+                                context)
 
 
                     elif f == kitchen_form:
-                        print(f)
-                        print(request.POST)
+                        #print(f)
                         kit_serial_list = []
-                        for sub_form in f:
-                            kit_serial_list.append(sub_form.cleaned_data)
+                        if f.is_valid():
+                            for sub_form in f:
+                                kit_serial_list.append(sub_form.cleaned_data)
 
-                        kitchen_serial = json.dumps(kit_serial_list)
-                        request.session['kitchen_serial'] = kitchen_serial
+                            kitchen_serial = json.dumps(kit_serial_list)
+                            request.session['kitchen_serial'] = kitchen_serial
 
-                        if request.session['livingrooms_num'] > 0:
-                            live_formset = LivingroomFormSet(queryset=Livingroom.objects.none())
+                            if request.session['livingrooms_num'] > 0:
+                                live_formset = LivingroomFormSet(queryset=Livingroom.objects.none())
 
-                            live_formset.extra = int(request.session['livingrooms_num'])
-                            del request.session['kitchens_num']
+                                live_formset.extra = int(request.session['livingrooms_num'])
+                                del request.session['kitchens_num']
 
-                            context = {'live_formset': live_formset}
-                            return render(request, 'mainApp/addLivingroom.html', context)
+                                context = {'live_formset': live_formset}
+                                return render(request, 'mainApp/addLivingroom.html', context)
 
-                        elif 'save' in request.POST:
-                            save_property(request)
+                            elif 'save' in request.POST:
+                                save_property(request)
 
-                            del request.session['l_type']
-                            del request.session['prop_id']
-                            del request.session['kitchens_num']
-                            del request.session['livingrooms_num']
-                            if 'multiple_bedrooms' in request.session:
-                                del request.session['multiple_bedrooms']
-                            if 'no_living' in request.session:
-                                del request.session['no_living']
-                            del request.session['prop_serial']
+                                del request.session['l_type']
+                                del request.session['prop_id']
+                                del request.session['kitchens_num']
+                                del request.session['livingrooms_num']
+                                if 'multiple_bedrooms' in request.session:
+                                    del request.session['multiple_bedrooms']
+                                if 'no_living' in request.session:
+                                    del request.session['no_living']
+                                del request.session['prop_serial']
 
-                            request.session['addPropPopUp'] =  True
-                            return redirect('profile')  #sair
-                        else:
-                            del request.session['kitchens_num']
-                            #del request.session['livingrooms_num']
+                                request.session['addPropPopUp'] =  True
+                                return redirect('profile')  #sair
+                            else:
+                                del request.session['kitchens_num']
+                                #del request.session['livingrooms_num']
 
-                            listing_form = ListingForm()
-                            request.session['listing'] =  True
-                            save_property(request)
-                            imgformset = ImgFormSet(queryset=Image.objects.none())
-                            context = {'listing_form': listing_form, 'imgformset' : imgformset, "start": current_date}
+                                listing_form = ListingForm()
+                                request.session['listing'] =  True
+                                save_property(request)
+                                imgformset = ImgFormSet(queryset=Image.objects.none())
+                                context = {'listing_form': listing_form, 'imgformset' : imgformset, "start": current_date}
 
-                            return render(request, 'mainApp/addListing.html', context)
+                                return render(request, 'mainApp/addListing.html', context)
 
 
                     elif f == live_form:
-                        print(f)
+                        #print(f)
                         liv_serial_list = []
-                        for sub_form in f:
-                            liv_serial_list.append(sub_form.cleaned_data)
+                        if f.is_valid():
+                            for sub_form in f:
+                                liv_serial_list.append(sub_form.cleaned_data)
 
-                        livingroom_serial = json.dumps(liv_serial_list)
-                        request.session['livingroom_serial'] = livingroom_serial
+                            livingroom_serial = json.dumps(liv_serial_list)
+                            request.session['livingroom_serial'] = livingroom_serial
 
-                        if 'save' in request.POST:
-                            save_property(request)
+                            if 'save' in request.POST:
+                                save_property(request)
 
-                            del request.session['l_type']
-                            del request.session['prop_id']
-                            del request.session['livingrooms_num']
-                            if 'multiple_bedrooms' in request.session:
-                                del request.session['multiple_bedrooms']
-                            if 'no_living' in request.session:
-                                del request.session['no_living']
-                            del request.session['prop_serial']
+                                del request.session['l_type']
+                                del request.session['prop_id']
+                                del request.session['livingrooms_num']
+                                if 'multiple_bedrooms' in request.session:
+                                    del request.session['multiple_bedrooms']
+                                if 'no_living' in request.session:
+                                    del request.session['no_living']
+                                del request.session['prop_serial']
 
-                            request.session['addPropPopUp'] =  True
-                            return redirect('profile') #sair
+                                request.session['addPropPopUp'] =  True
+                                return redirect('profile') #sair
 
-                        else:
-                            listing_form = ListingForm()
-                            save_property(request)
-                            request.session['listing'] =  True
-                            #del request.session['livingrooms_num']
+                            else:
+                                listing_form = ListingForm()
+                                save_property(request)
+                                request.session['listing'] =  True
+                                #del request.session['livingrooms_num']
 
-                            imgformset = ImgFormSet(queryset=Image.objects.none())
-                            context = {'listing_form': listing_form, 'imgformset' : imgformset, "start": current_date}
+                                imgformset = ImgFormSet(queryset=Image.objects.none())
+                                context = {'listing_form': listing_form, 'imgformset' : imgformset, "start": current_date}
 
-                            return render(request, 'mainApp/addListing.html', context)
+                                return render(request, 'mainApp/addListing.html', context)
                         
                     
                     elif f == bed_form:
-                        print(f)
+                        #print(f)
                         bed_serial_list = []
-                        for sub_form in f:
-                            bed_serial_list.append(sub_form.cleaned_data)
+                        if f.is_valid():
+                            for sub_form in f:
+                                bed_serial_list.append(sub_form.cleaned_data)
 
-                        bedroom_serial = json.dumps(bed_serial_list)
-                        request.session['bedroom_serial'] = bedroom_serial
-                        bath_formset = BathroomFormSet(queryset=Bathroom.objects.none())
-                        
-                        bath_formset.extra = int(request.session['bathrooms_num'])
-                        del request.session['bedrooms_num']
+                            bedroom_serial = json.dumps(bed_serial_list)
+                            request.session['bedroom_serial'] = bedroom_serial
+                            bath_formset = BathroomFormSet(queryset=Bathroom.objects.none())
+                            
+                            bath_formset.extra = int(request.session['bathrooms_num'])
+                            del request.session['bedrooms_num']
 
-                        context = {'bath_formset': bath_formset}
-                        return render(request,'mainApp/addBathroom.html',context)
+                            context = {'bath_formset': bath_formset}
+                            return render(request,'mainApp/addBathroom.html',context)
                         
                     elif 'multiple_listing' in request.POST:
                         del request.session['listing']
@@ -464,11 +466,9 @@ def introduce_property_view (request):
                         return redirect('propertiesManagement')
 
                     elif f == listing_form:
-                        print(f)
+                        #print(f)
                         if f.is_valid():
-                            
                             separate= f.cleaned_data.get('separate')
-                            print(separate)
 
                             assoc_prop = Property.objects.get(id=request.session['prop_id'])
                             
@@ -491,7 +491,7 @@ def introduce_property_view (request):
                                 title =  f.cleaned_data.get('title'),
                                 description =  f.cleaned_data.get('description'),
                                 security_deposit =  f.cleaned_data.get('security_deposit'),
-                                max_capacity =  f.cleaned_data.get('max_capacity'),
+                                max_occupancy =  f.cleaned_data.get('max_occupancy'),
                                 is_active = True,
                                 album = prop_album
                             )
@@ -587,7 +587,6 @@ def accept_request(request, request_id):
 
     current_user = request.user
     a_user = App_user.objects.get(user_id=current_user)
-    #print('pls_get_in')
     try:
         lord = Landlord.objects.get(lord_user=a_user)
     except:
@@ -674,7 +673,7 @@ def deny_request(request, request_id):
     for e in Agreement_Request.objects.all():
         if e.landlord_id == lord.id:
             listOfAgreements_.append(e)
-    print("LISTA DOS AGREEMENTS DESTE LANDLORD: ", listOfAgreements_)
+    #print("LISTA DOS AGREEMENTS DESTE LANDLORD: ", listOfAgreements_)
     fullList_ = []
     for a in listOfAgreements_:
         id_req = a.id
@@ -772,7 +771,7 @@ def create_request(request):
             start_date = ag_form.cleaned_data.get('startsDate')
             end_date = ag_form.cleaned_data.get('endDate')
             message = ag_form.cleaned_data.get('message')
-            print(message)
+            #print(message)
             dateNow = timezone.now()
 
             if 'room_listing' in request.session:
@@ -853,7 +852,7 @@ def profile(request):
     if request.method == 'POST':
         
         user_form = UpdateUserForm(data=request.POST)
-        print(user_form.errors)
+        
         if user_form.is_valid():
             current_user.first_name = user_form.cleaned_data.get('first_name')
             current_user.last_name = user_form.cleaned_data.get('last_name')
@@ -880,7 +879,7 @@ def profile(request):
         temp = False
         if request.session['typeUser'] == "Tenant":
             for i in Agreement.objects.all():
-                if Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id:
+                if Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id and i.status == True:
 
                     #check dates
                     agreement = i
@@ -955,7 +954,6 @@ def property_editing_view(request, property_id=None):
 
     if request.method == 'POST':
         f = UpdatePropertyForm(request.POST, instance=property_object)
-        print(f.errors)
         if f.is_valid():
             f.save() 
            
@@ -1032,20 +1030,11 @@ def bathrooms_editing_view(request, property_id):
     context = {'bath_formset':bath_formset, 'property_id':property_id, 'bathrooms_num': len(list(bathrooms_queryset))}
     return render(request, "mainApp/editBathrooms.html", context)
 
-""" def bathroom_delete_view(request, property_id, bathroom_id=None):
-    try:
-        bathroom_object = Bathroom.objects.get(id=bathroom_id)
-    except:
-        return redirect("/mainApp/profile/propertiesManagement/bathroomsEditing/{}".format(property_id))
-    bathroom_object.delete()
-    
-    return redirect("/mainApp/profile/propertiesManagement/bathroomsEditing/{}".format(property_id)) """
-
 def kitchens_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
     kitchens_queryset = Kitchen.objects.filter(associated_property=property_object)
     livingrooms_num = len(list(Livingroom.objects.filter(associated_property=property_object)))
-    print(property_object)
+
     if request.method == 'POST':
         kitchen_formset = KitchenFormSet(request.POST, queryset=kitchens_queryset)
         if kitchen_formset.is_valid():
@@ -1092,27 +1081,15 @@ def livingrooms_editing_view(request, property_id):
     context = {'live_formset':livingroom_formset, 'property_id':property_id}
     return render(request, "mainApp/editLivingrooms.html", context)
 
-
-""" def livingroom_delete_view(request, property_id, livingroom_id=None):
-    try:
-        livingroom_object = Livingroom.objects.get(id=livingroom_id)
-    except:
-        return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_id))
-    livingroom_object.delete()
-    
-    return redirect("/mainApp/profile/propertiesManagement/livingroomsEditing/{}".format(property_id)) """
-
 def listings_management_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
     bedrooms = list(Bedroom.objects.filter(associated_property=property_object))
     
     property_listing = None
     main_listing  = []
-    #rooms_listing = []
 
     if request.method == 'POST':
         listing_id = request.POST.get('name')
-        #print(request.POST.get("isActive"))
         is_active = 1
         if request.POST.get("isActive") == None:
             is_active = 0
@@ -1220,7 +1197,7 @@ def create_listing_view(request, property_id):
             title =  request.POST.get('title'),
             description =  request.POST.get('description'),
             security_deposit =  request.POST.get('security_deposit'),
-            max_capacity =  request.POST.get('max_capacity'),
+            max_occupancy =  request.POST.get('max_occupancy'),
             is_active = True,
             album = prop_album
         )
@@ -1242,6 +1219,7 @@ def create_listing_view(request, property_id):
         imgformset = ImgFormSet(request.POST, request.FILES)
         imgs = imgformset.cleaned_data
         
+        #add images to database
         for d in imgs:
             cover = False
             if d == imgs[0]:
@@ -1300,7 +1278,7 @@ def delete_listing_view(request, property_id, main_listing_id):
             elif os.path.isdir(file_path):
                 shutil.rmtree(file_path)
         except Exception as e:
-            print('Failed to delete')
+            pass
     
     os.rmdir(folder)
 
@@ -1443,6 +1421,9 @@ def search(request):
     pageNumbers = []
 
     searched_values = []
+
+    form = SearchForm()
+
     if request.method == 'POST':
         form = SearchForm(data=request.POST)
         if form.is_valid():
@@ -1470,9 +1451,9 @@ def search(request):
 
             #Number of tenants is filled
             if any(form.cleaned_data.get('num_tenants') == x for x in ('1','2','3','4')):
-                queryWhere += " AND l.max_capacity = '" + form.cleaned_data.get('num_tenants') + "'"
+                queryWhere += " AND l.max_occupancy = '" + form.cleaned_data.get('num_tenants') + "'"
             elif(form.cleaned_data.get('num_tenants') == '5'):
-                queryWhere += " AND l.max_capacity >= 5"
+                queryWhere += " AND l.max_occupancy >= 5"
 
             #Date in is filled
             if form.cleaned_data.get('date_in') is not None:
@@ -1483,7 +1464,6 @@ def search(request):
                 queryWhere += " AND '" + str(form.cleaned_data.get('date_out')) + "' <= l.availability_ending"
 
             #Number of bedrooms is filled
-            print(form.cleaned_data.get('num_bedrooms'))
             if any(form.cleaned_data.get('num_bedrooms') == x for x in ('1','2','3','4')):
                 queryWhere += " AND p.bedrooms_num = '" + form.cleaned_data.get('num_bedrooms') + "'"
             elif(form.cleaned_data.get('num_bedrooms') == '5'):
@@ -1531,7 +1511,6 @@ def search(request):
         if (i % previewPerPage == 0):
             pageNumbers.append(int(i/previewPerPage)+1)
 
-    
     context = {
         'searched_values' : searched_values,  #list with 3 elements containing the coordinates of the searched address and radius of the search 
         'num_results' : len(row), 
@@ -1540,6 +1519,7 @@ def search(request):
         'pageNumbers':  pageNumbers,
         'previewPerPage': previewPerPage,
         'zipPreviews': zip(row, rangeList),
+        'searchForm':form,
     }
     return render(request, "mainApp/search.html", context)
 
@@ -1592,7 +1572,7 @@ def listing(request, listing_id):
 
     if request.user.is_authenticated:
         app_user = App_user.objects.get(user=request.user)
-        print(app_user)
+
         is_tenant = True
         try:
             tenant = Tenant.objects.get(ten_user=app_user)
@@ -1687,9 +1667,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://d0835c0251b1.ngrok.io/paymentStatus/",
-            "return_url": "http://d0835c0251b1.ngrok.io/mainApp/search",
-            "cancel_return": "http://d0835c0251b1.ngrok.io/mainApp/profile",
+            "notify_url": "http://1ff8c3b22ca7.ngrok.io/paymentStatus/",
+            "return_url": "http://1ff8c3b22ca7.ngrok.io/mainApp/search",
+            "cancel_return": "http://1ff8c3b22ca7.ngrok.io/mainApp/profile",
 
             }
 
@@ -1972,6 +1952,6 @@ def deleteAgreement(request):
 
     for i in Agreement.objects.all():
         if i.tenant_id == tenant.id:
-            i.delete()
+            Agreement.objects.filter(id=i.id).update(status=False)
 
     return redirect('profile')
