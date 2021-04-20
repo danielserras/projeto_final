@@ -164,7 +164,18 @@ class Property(APIView):
             newProperty = serializer.save()
             responseData = serializer.data
             responseData["id"] = newProperty.id
-            return response_maker("success", 200, serializer.data, "New Property created w/ id %d"%newProperty.id)
+            return response_maker("success", 201, serializer.data, "New Property created w/ id %d"%newProperty.id)
+
+    def get(self, request, pk):
+        Property = Property.objects.filter(key=pk)
+        
+        if not Property:
+            return response_maker("error", 404, None, "No property matching id %d"%pk)
+        else:
+            responseData = model_to_dict(Property)[0]
+            return response_maker("success", 200, responseData, None)
+        
+
 
 
 
