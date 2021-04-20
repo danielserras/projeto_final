@@ -136,8 +136,6 @@ class Property(APIView):
         else:
             try:
                 data = request.data
-                print(data, "HERE")
-                print(landLord[0])
                 location = self.geolocator.geocode(data["address"])
                 dictToSerialize = {
                     "landlord": landLord[0].pk,
@@ -161,7 +159,6 @@ class Property(APIView):
                 }
             except:
                 return response_maker("error", 409, None, "Missing necessary fields")
-                print("u suck nigga")
             serializer = PropertySerializer(data=dictToSerialize)
             serializer.is_valid(raise_exception=True)
             newProperty = serializer.save()
