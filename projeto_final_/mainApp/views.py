@@ -1360,7 +1360,10 @@ def notificationsTenant(request):
         endDate = a.endDate.strftime("%d-%m-%Y")
         accepted = a.accepted #para ver se esta null, aceite ou recusada
         dateOfRequest_ = a.dateOfRequest
-        propertyAddress = ((a.associated_property_listing).associated_property).address
+        if a.associated_property_listing != None:
+            propertyAddress = a.associated_property_listing.associated_property.address
+        else:
+            propertyAddress = a.associated_room_listing.associated_room.associated_property.address
         try:
             invoice_id = Invoice.objects.get(agreement_request_id=a.id).id
         except:
@@ -1392,10 +1395,33 @@ def notificationsTenant(request):
                 listing_name = main_listing.title
 
                 invoiceList.append([nameLand, invoiceMonth, invoiceDate, paymentLimit, address, listing_name, i.id])
+    
+    paymentWarningList = []
+    for w in Payment_Warning.objects.all():
+        a = Agreement.objects.get(id=w.agreement_id)
+        if a.tenant_id == tenant_.id:
+            nameLand = a.landlord.lord_user.user.username
 
-    sizeList = len(fullList)
+            if a.associated_property_listing == None:
+                room_listing = a.associated_room_listing
+                assoc_room = room_listing.associated_room
+                assoc_prop = assoc_room.associated_property
+                main_listing = room_listing.main_listing
+
+            else:
+                prop_listing = a.associated_property_listing
+                assoc_prop = prop_listing.associated_property
+                main_listing = prop_listing.main_listing
+
+            address = assoc_prop.address
+            listing_name = main_listing.title
+            timestamp = w.timestamp
+
+            paymentWarningList.append([timestamp, nameLand, address, listing_name])
+
     reverseList = list(reversed(fullList))
-    context = {"fullList" : reverseList, "sizeList": sizeList, "invoiceList": invoiceList}
+    context = {"fullList" : reverseList, "sizeFull": len(fullList), "invoiceList": invoiceList, "sizeInvoice":len(invoiceList), "paymentWarningList": paymentWarningList, "sizeWarning":len(paymentWarningList)}
+    print(context)
     return render(request, "mainApp/notificationsTenant.html", context)
 
 def notificationsLandlord(request):
@@ -1907,7 +1933,10 @@ def manage_agreements_view(request):
     listAgreementAndPaid = []
     for a in agreement:
         send_invoice = True
-        payment_warning = False
+        month = a.last_invoice_date.replace(day=1) + relativedelta(months=1)
+        payment_warning = None
+        invoices_warning = []
+
         if (a.associated_room_listing == None):
             listing = a.associated_property_listing.main_listing.title
         else:
@@ -1917,12 +1946,27 @@ def manage_agreements_view(request):
         
         invoices = Invoice.objects.filter(agreement_id = a.id)
 
+        #Adds late payments to the invoices_warning list
         for i in invoices:
                 if i.paid == 0:
                     if (timezone.now().date() - i.timestamp).days >= 10:
                         payment_warning = True
-        
-        listAgreementAndPaid.append([a, send_invoice, payment_warning])
+                        invoices_warning.append(i.id)
+
+        #Removes from invoices_warning list any late payments already warned
+        for w in Payment_Warning.objects.all():
+            if w.invoice_id in invoices_warning:
+                invoices_warning.remove(w.invoice_id)
+                payment_warning = False
+
+        #If there are any not warned late payments
+        if len(invoices_warning) > 0:
+            payment_warning = True
+        #If there are late payments but already warned
+        elif len(invoices_warning) == 0 and payment_warning == True:
+            payment_warning = False      
+
+        listAgreementAndPaid.append([a, send_invoice, _(month.strftime("%B")), payment_warning])
 
     context = {
         "listAgreementAndPaid":listAgreementAndPaid,
@@ -1971,15 +2015,22 @@ def invoicesLandlord(request):
 
         fullList = []
         for i in list_invoices:
+            payment_warning = None
             if i.paid == 0:
                 if (timezone.now().date() - i.timestamp).days >= 10:
-                    fullList.append([i, _('Pagamento atrasado')])
-                else:
-                    fullList.append([i, _('A aguardar pagamento')])
+                    payment_warning = True
+            
+            for w in Payment_Warning.objects.all():
+                if w.invoice_id == i.id:
+                    payment_warning = False
+            
+            fullList.append([i, payment_warning])
+        print(agreement)
         context={
-            'fullList': fullList
+            'fullList': fullList,
+            'agreement': agreement,
         }
-
+ 
     return render(request, "mainApp/invoicesLandlord.html", context)
 
 def send_invoice(request):
@@ -1989,9 +2040,7 @@ def send_invoice(request):
         agreement = Agreement.objects.get(id=agreement_id)
 
         #INVOICE CREATION
-        if (agreement.last_invoice_date.strftime("%B") == timezone.now().strftime("%B")):
-            print('Já emitiu a fatura deste mês')
-        else:
+        if (agreement.last_invoice_date.strftime("%B") != timezone.now().strftime("%B")):
             new_date = agreement.last_invoice_date
             new_date = new_date.replace(day=1) + relativedelta(months=1)
             agreement.last_invoice_date = new_date
@@ -2016,6 +2065,7 @@ def send_invoice(request):
                 agreement = agreement,
                 timestamp = timestamp,
                 month = new_date,
+                paid = False,
             )
             invoice.save()
 
@@ -2026,6 +2076,23 @@ def send_invoice(request):
             )
             invoice_line_rent.save()
   
+    return redirect('manage_agreements_view')
+
+def send_payment_warning(request):
+    if request.method == 'POST':
+        agreement_id=request.POST['agreement_id']
+        invoice_id=request.POST['invoice_id']
+
+        agreement = Agreement.objects.get(id=agreement_id)
+        invoice = Invoice.objects.get(id=invoice_id)
+
+        warning = Payment_Warning(
+            agreement_id = agreement.id,
+            timestamp = timezone.now(),
+            invoice_id = invoice.id
+        )
+        warning.save()
+
     return redirect('manage_agreements_view')
 
 def tenant(request):

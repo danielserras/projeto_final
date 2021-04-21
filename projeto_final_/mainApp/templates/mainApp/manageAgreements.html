@@ -37,7 +37,7 @@
         </thead>
         <tbody>
             {% load app_extras %}
-            {% for a, send_invoice, payment_warning in listAgreementAndPaid%}
+            {% for a, send_invoice, month, payment_warning in listAgreementAndPaid%}
                     <tr>
                         <th scope="row">{{forloop.counter}}</th>
                         <td class="text-center pt-3">{{listing}}</td>
@@ -49,21 +49,19 @@
                                 <form action="{% url 'send_invoice' %}" method="POST">
                                     {% csrf_token %}
                                     <input name="agreement_id" type='hidden' value="{{a.id}}">
-                                    <button type="submit" class="btn bg-secondary text-white font-weight-bold">{% trans 'Fatura de' %} {{a.last_invoice_date.month|month_name}}</button>
+                                    <button type="submit" class="btn bg-secondary text-white font-weight-bold">{% trans 'Fatura de' %} {{month}}</button>
                                 </form>
                             {% else %}
                                 {% trans 'Fatura emitida' %} <i class="fa fa-check text-green font-weight-bold" aria-hidden="yes"></i>
                             {% endif %}
                         </td>
-                        <td class="text-center {% if not payment_warning %} pt-3 {% endif %}">
+                        <td class="text-center {% if payment_warning != None %} font-weight-bold pt-3 {% endif %}">
                             {% if payment_warning %}
-                                <form action="" method="POST">
-                                    {% csrf_token %}
-                                    <input name="agreement_id" type='hidden' value="{{a.id}}">
-                                    <button type="submit" class="btn bg-secondary text-white font-weight-bold">{% trans 'Enviar aviso' %}</button>
-                                </form>
-                            {% else %}
+                                {% trans 'Existem atrasos!' %}
+                            {% elif payment_warning == None %}
                                 {% trans 'Não existem atrasos' %}
+                            {% else %}
+                                {% trans 'Aviso já enviado' %} <i class="fa fa-check text-green font-weight-bold" aria-hidden="yes"></i>
                             {% endif %}</td>
                         <td class="text-center">
                             <form action="{% url 'invoicesLandlord' %}" method="POST">
