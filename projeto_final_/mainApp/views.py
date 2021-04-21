@@ -479,8 +479,10 @@ def introduce_property_view (request):
                                     del request.session['listing']
                                     del request.session['prop_serial']
                                     return redirect('propertiesManagement') """
-
-                            prop_album = ImageAlbum(name=f.cleaned_data.get('title')+"_"+str(Listing.objects.all().order_by("-id")[0].id+1))
+                            try:
+                                prop_album = ImageAlbum(name=f.cleaned_data.get('title')+"_"+str(Listing.objects.all().order_by("-id")[0].id+1))
+                            except:
+                                prop_album = ImageAlbum(name=f.cleaned_data.get('title')+"_0")
                             prop_album.save()
                             
                             listing_obj = Listing(
@@ -546,7 +548,11 @@ def introduce_property_view (request):
                                 
 
                             request.session['addPropPopUp'] =  True
-                            return redirect('profile') #sair 
+                            user_birth = a_user.birthDate.strftime('%Y-%m-%d')
+                            user_phone = a_user.phoneNumber
+                            context = {"birth": user_birth, "phone": user_phone}
+                            
+                            return render(request, 'mainApp/profile.html', context=context) #sair 
 
 
             return redirect('index')     #PLACEHOLDER
@@ -636,27 +642,43 @@ def accept_request(request, request_id):
     for e in Agreement_Request.objects.all():
         if e.landlord_id == lord.id:
             listOfAgreements_.append(e)
-    
-    fullList_ = []
-    for a in listOfAgreements_:
-        id_req = a.id
-        user_ = a.tenant #objeto tenant
-        _user_ = user_.ten_user
-        userTen = _user_.user
-        nomeTen = userTen.username
-        message_ = a.message 
-        startsDate_ = a.startsDate
-        endDate_ = a.endDate
-        accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
-        dateOfRequest_ = a.dateOfRequest
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_])
-    sizeList = len(fullList_)
-    reverseList = list(reversed(fullList_))
-    #ola = Agreement_Request.objects.get(landlord_id=1)
-    #print(ola.tenant_id)
-    context = {"fullList_": reverseList, 'range': range(sizeList)}
+            
+    for i in listOfAgreements_:
+        tempList_prop = Agreement_Request.objects.filter(associated_property_listing = i.associated_property_listing, accepted = None)
+        tempList_room = Agreement_Request.objects.filter(associated_room_listing = i.associated_room_listing, accepted = None)
+        print(len(tempList_prop))
+        if (len(tempList_prop) > 1 and i.accepted == True):
+            for j in tempList_prop:
+                j.accepted = False  # change field
+                j.save() # save update
+                
+        elif (len(tempList_room) > 1 and i.accepted == True):
+            for j in tempList_room:
+                j.accepted = False #change field
+                j.save() #save update
 
-    return render(request, "mainApp/notificationsLandlord.html", context)
+    
+    # fullList_ = []
+    # for a in listOfAgreements_:
+    #     id_req = a.id
+    #     user_ = a.tenant #objeto tenant
+    #     _user_ = user_.ten_user
+    #     userTen = _user_.user
+    #     nomeTen = userTen.username
+    #     message_ = a.message 
+    #     startsDate_ = a.startsDate
+    #     endDate_ = a.endDate
+    #     accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
+    #     dateOfRequest_ = a.dateOfRequest
+    #     propertyAddress = ((a.associated_property_listing).associated_property).address
+    #     fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_,propertyAddress])
+    # sizeList = len(fullList_)
+    # reverseList = list(reversed(fullList_))
+    
+    # context = {"fullList_": reverseList, 'range': range(sizeList)}
+
+    # return render(request, "mainApp/notificationsLandlord.html", context)
+    return redirect('notificationsLandlord')
 
 @login_required(login_url='login_view')
 def deny_request(request, request_id):
@@ -690,7 +712,8 @@ def deny_request(request, request_id):
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
         dateOfRequest_ = a.dateOfRequest
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_])
+        propertyAddress = ((a.associated_property_listing).associated_property).address
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_,propertyAddress])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
     #ola = Agreement_Request.objects.get(landlord_id=1)
@@ -777,6 +800,7 @@ def create_request(request):
             message = ag_form.cleaned_data.get('message')
             #print(message)
             dateNow = timezone.now()
+            checkRead = False
 
             if 'room_listing' in request.session:
                 del request.session['room_listing']
@@ -800,7 +824,8 @@ def create_request(request):
                     startsDate=start_date,
                     endDate=end_date,
                     message=message,
-                    dateOfRequest = dateNow
+                    dateOfRequest = dateNow,
+                    checkRead = checkRead
                 )
                 ag_request.save()
 
@@ -818,17 +843,25 @@ def create_request(request):
                     startsDate=start_date,
                     endDate=end_date,
                     message=message,
-                    dateOfRequest = dateNow
+                    dateOfRequest = dateNow,
+                    checkRead = checkRead
                 )
                 ag_request.save()
 
                 return redirect('index')
     else:
 
+
         room_id = request.session.get('room_listing')
         prop_id = request.session.get('property_listing')
 
         if room_id:
+
+            checkRequests = len(Agreement_Request.objects.filter(tenant=ten))
+            if checkRequests > 0 :
+                request.session['onlyOneRequest'] = True
+                listing_url = (Room_listing.objects.get(id=room_id)).main_listing_id
+                return redirect('listing',listing_url)
 
             assoc_listing = Room_listing.objects.get(id=room_id)
             main_listing = assoc_listing.main_listing
@@ -839,13 +872,20 @@ def create_request(request):
         
         else:
 
+            checkRequests = len(Agreement_Request.objects.filter(tenant=ten))
+            if checkRequests > 0 :
+                request.session['onlyOneRequest'] = True
+                listing_url = (Property_listing.objects.get(id=prop_id)).main_listing_id
+                return redirect('listing',listing_url)
+
             assoc_listing = Property_listing.objects.get(id=prop_id)
             main_listing = assoc_listing.main_listing
             start = main_listing.availability_starts.strftime('%Y-%m-%d')
             end = main_listing.availability_ending.strftime('%Y-%m-%d')
 
             context = {"start": start, "end": end}
-
+        
+        
         return render(request, 'mainApp/intent.html', context)
 
 @login_required(login_url='login_view')
@@ -923,7 +963,7 @@ def profile(request):
             if temp == False:
                 context = {}
         else:
-
+            print('caralho')
             user_birth = a_user.birthDate.strftime('%Y-%m-%d')
             user_phone = a_user.phoneNumber
             user_type = _('Senhorio')
@@ -1128,7 +1168,6 @@ def listing_editing_view(request, property_id, main_listing_id):
 
     if request.method == 'POST':
         f = ListingForm(request.POST, instance=main_listing)
-        #f.cleaned_data()
         if f.is_valid():
             f.save()
 
@@ -1170,7 +1209,10 @@ def listing_editing_view(request, property_id, main_listing_id):
 
     imagesZip = zip(imagesPaths, imagesId)
     imagesNum = len(imagesPaths)
-    context = {'main_listing':main_listing, 'img_formset':img_formset, "imagesZip":imagesZip, 'editListing':True, "imagesNum": imagesNum}
+
+    current_date = datetime.today().strftime('%Y-%m-%d')
+
+    context = {'main_listing':main_listing, 'img_formset':img_formset, "imagesZip":imagesZip, 'editListing':True, "imagesNum": imagesNum, "current_date":current_date}
     return render(request, "mainApp/editListing.html", context)
 
 def remove_image_view(request, property_id, main_listing_id, image_id):
@@ -1246,7 +1288,10 @@ def create_listing_view(request, property_id):
     
     img_formset = ImgFormSet(queryset=Image.objects.none())
     img_formset.extra = 1
-    context = {'img_formset':img_formset, 'editListing':False}
+
+    current_date = datetime.today().strftime('%Y-%m-%d')
+
+    context = {'img_formset':img_formset, 'editListing':False, "current_date":current_date}
     return render(request, "mainApp/editListing.html", context)
 
 def delete_listing_view(request, property_id, main_listing_id):
@@ -1315,11 +1360,12 @@ def notificationsTenant(request):
         endDate = a.endDate.strftime("%d-%m-%Y")
         accepted = a.accepted #para ver se esta null, aceite ou recusada
         dateOfRequest_ = a.dateOfRequest
+        propertyAddress = ((a.associated_property_listing).associated_property).address
         try:
             invoice_id = Invoice.objects.get(agreement_request_id=a.id).id
         except:
             pass
-        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted, dateOfRequest_, invoice_id])
+        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted, dateOfRequest_, invoice_id, propertyAddress])
 
     invoiceList = []
     for i in Invoice.objects.all():
@@ -1365,8 +1411,8 @@ def notificationsLandlord(request):
     for e in Agreement_Request.objects.all():
         if e.landlord_id == landlord_.id:
             listOfAgreements_.append(e)
-            
-
+    
+   
     fullList_ = []
     for a in listOfAgreements_:
         id_req = a.id
@@ -1377,9 +1423,10 @@ def notificationsLandlord(request):
         message_ = a.message 
         startsDate_ = a.startsDate.strftime("%d-%m-%Y")
         endDate_ = a.endDate.strftime("%d-%m-%Y")
-        accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
+        accepted_ = a.accepted 
         dateOfRequest_ = a.dateOfRequest
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_])
+        propertyAddress = ((a.associated_property_listing).associated_property).address
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
     context = {"fullList_": reverseList, 'range': range(sizeList)}
@@ -1616,6 +1663,8 @@ def listing(request, listing_id):
         "range": range[:-1],
         "zipPaths": zip(imagesPaths, range[:-1]),
     }
+            
+
     return render(request, "mainApp/listingPage.html", context)
 
 def countRoomDetails(rooms):
@@ -1731,7 +1780,7 @@ def deletePopUp(request):
 
 def deletePopUpProp(request):
     request.session['addPropPopUp'] =  False
-    return render(request, "mainApp/profile.html", {})
+    return redirect('profile')
 
 def renewAgreement(request):
     #FALTA POR A OPÇAO DE RENOVAR A APARECER POR EXEMPLO 1 MES ANTES DO FINAL EM VEZ DE ESTAR SEMPRE VISIVEL
@@ -1996,3 +2045,15 @@ def deleteAgreement(request):
             Agreement.objects.filter(id=i.id).update(status=False)
 
     return redirect('profile')
+
+def requestPop(request):
+    request.session['onlyOneRequest'] = False
+    room_id = request.session.get('room_listing')
+    prop_id = request.session.get('property_listing')
+
+    if room_id:
+        listing_url = (Room_listing.objects.get(id=room_id)).main_listing_id
+    else:
+        listing_url = (Property_listing.objects.get(id=prop_id)).main_listing_id
+
+    return redirect('listing',listing_url)

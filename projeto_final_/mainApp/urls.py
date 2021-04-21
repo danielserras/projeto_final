@@ -47,5 +47,6 @@ urlpatterns = [
     path('invoicesLandlord', views.invoicesLandlord, name='invoicesLandlord'),
     path('profile/agreementDeleted', views.deleteAgreement, name='deleteAgreement'),
     path('profile/accountDeleted', views.delete_account, name='delete_account'),
+    path('listing/requestPop', views.requestPop, name='requestPop'),
 ]
 

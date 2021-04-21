@@ -156,7 +156,7 @@
             <div class="row justify-content-center"><button type="button" class="btn btn-secondary multiple_form_next" >{% trans 'Seguinte' %}</button>
             </div>
         </form>
-    {% else %}
+    <!-- {% else %}
 
         <form class="form-group col-sm-4 multiple_form mx-auto justify-content-center" hidden>
             {% csrf_token %}
@@ -168,7 +168,7 @@
                 <input type="radio" name="multiple_listing" class="separate" value="separate"> {% trans 'Anunciar quartos separadamente' %}
             </div>
             <button type="button" class="btn btn-secondary multiple_form_next" >{% trans 'Seguinte' %}</button>
-        </form>
+        </form> -->
     {% endif %}
 </div>  
 {% endblock %}
