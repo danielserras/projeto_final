@@ -49,7 +49,7 @@
                                     <button type="submit" class="btn bg-secondary text-white font-weight-bold">{% trans 'Enviar aviso' %}</button>
                                 </form>
                             {% elif payment_warning == None %}
-                                {% trans 'Não existem atrasos' %}
+                                {% trans 'A aguardar pagamento' %}
                             {% else %}
                                 {% trans 'Aviso já enviado' %} <i class="fa fa-check text-green font-weight-bold" aria-hidden="yes"></i>
                             {% endif %}</td>
@@ -57,7 +57,7 @@
                             <form action="{% url 'get_invoice_pdf' %}" method="POST" target="_blank">
                                 {% csrf_token %}
                                 <input name="invoice_id" type='hidden' value="{{i.id}}">
-                                <button type="submit" class="btn bg-primary text-white">Ver</button>
+                                <button type="submit" class="btn bg-transparent border-secondary border-3 text-white font-weight-bold"><i class="fa fa-eye" style="color: #2a9d8f; font-size:22px" aria-hidden="true"></i></button>
                             </form>
                         </td>
                     </tr>

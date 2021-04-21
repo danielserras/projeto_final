@@ -337,7 +337,6 @@ def introduce_property_view (request):
                                 context)
 
                     elif f == bath_form:
-                        #print(f)
                         bath_serial_list = []
                         if f.is_valid():
                             for sub_form in f:
@@ -360,7 +359,6 @@ def introduce_property_view (request):
 
 
                     elif f == kitchen_form:
-                        #print(f)
                         kit_serial_list = []
                         if f.is_valid():
                             for sub_form in f:
@@ -407,7 +405,6 @@ def introduce_property_view (request):
 
 
                     elif f == live_form:
-                        #print(f)
                         liv_serial_list = []
                         if f.is_valid():
                             for sub_form in f:
@@ -444,7 +441,6 @@ def introduce_property_view (request):
                         
                     
                     elif f == bed_form:
-                        #print(f)
                         bed_serial_list = []
                         if f.is_valid():
                             for sub_form in f:
@@ -467,7 +463,6 @@ def introduce_property_view (request):
                         return redirect('propertiesManagement')
 
                     elif f == listing_form:
-                        #print(f)
                         if f.is_valid():
                             separate= f.cleaned_data.get('separate')
 
@@ -646,7 +641,6 @@ def accept_request(request, request_id):
     for i in listOfAgreements_:
         tempList_prop = Agreement_Request.objects.filter(associated_property_listing = i.associated_property_listing, accepted = None)
         tempList_room = Agreement_Request.objects.filter(associated_room_listing = i.associated_room_listing, accepted = None)
-        print(len(tempList_prop))
         if (len(tempList_prop) > 1 and i.accepted == True):
             for j in tempList_prop:
                 j.accepted = False  # change field
@@ -685,7 +679,6 @@ def deny_request(request, request_id):
 
     current_user = request.user
     a_user = App_user.objects.get(user_id=current_user)
-    #print('pls_DONT_get_in')
     try:
         lord = Landlord.objects.get(lord_user=a_user)
     except:
@@ -699,7 +692,6 @@ def deny_request(request, request_id):
     for e in Agreement_Request.objects.all():
         if e.landlord_id == lord.id:
             listOfAgreements_.append(e)
-    #print("LISTA DOS AGREEMENTS DESTE LANDLORD: ", listOfAgreements_)
     fullList_ = []
     for a in listOfAgreements_:
         id_req = a.id
@@ -716,8 +708,6 @@ def deny_request(request, request_id):
         fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_,propertyAddress])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
-    #ola = Agreement_Request.objects.get(landlord_id=1)
-    #print(ola.tenant_id)
     context = {"fullList_": reverseList, 'range': range(sizeList)}
 
     return render(request, "mainApp/notificationsLandlord.html", context)
@@ -798,7 +788,6 @@ def create_request(request):
             start_date = ag_form.cleaned_data.get('startsDate')
             end_date = ag_form.cleaned_data.get('endDate')
             message = ag_form.cleaned_data.get('message')
-            #print(message)
             dateNow = timezone.now()
             checkRead = False
 
@@ -963,7 +952,6 @@ def profile(request):
             if temp == False:
                 context = {}
         else:
-            print('caralho')
             user_birth = a_user.birthDate.strftime('%Y-%m-%d')
             user_phone = a_user.phoneNumber
             user_type = _('Senhorio')
@@ -1421,7 +1409,6 @@ def notificationsTenant(request):
 
     reverseList = list(reversed(fullList))
     context = {"fullList" : reverseList, "sizeFull": len(fullList), "invoiceList": invoiceList, "sizeInvoice":len(invoiceList), "paymentWarningList": paymentWarningList, "sizeWarning":len(paymentWarningList)}
-    print(context)
     return render(request, "mainApp/notificationsTenant.html", context)
 
 def notificationsLandlord(request):
@@ -1488,7 +1475,6 @@ def get_distance(lat_1, lng_1, lat_2, lng_2):
     return 6373.0 * (2 * math.atan2(math.sqrt(temp), math.sqrt(1 - temp)))
 
 def search(request):
-    form = CreateUserForm()
     geolocator = MapBox(config('MAPBOX_KEY'), scheme=None, user_agent=None, domain='api.mapbox.com')
     location = ''
     row = ''
@@ -1499,7 +1485,14 @@ def search(request):
 
     searched_values = []
 
-    form = SearchForm()
+    current_user = request.user
+    app_user = App_user.objects.get(user=request.user)
+    try:
+        tenant = Tenant.objects.get(ten_user_id=app_user.id)
+        location = tenant.university + ", Portugal"
+        form = SearchForm(initial = {"location":location, "radius":10, "minPrice":tenant.min_search, "maxPrice":tenant.max_search})
+    except:
+        form = SearchForm()
 
     if request.method == 'POST':
         form = SearchForm(data=request.POST)
@@ -1551,7 +1544,6 @@ def search(request):
                 queryFrom += ', mainApp_room_listing AS rl'
                 queryWhere += " AND l.listing_type = '" + form.cleaned_data.get('type') + "'\
                                 AND rl.associated_room_id = p.id AND rl.main_listing_id = l.id"
-                #print(querySelect + queryFrom + queryWhere)
                 cursor.execute(querySelect + queryFrom + queryWhere)
                 row = cursor.fetchall()
 
@@ -1560,7 +1552,6 @@ def search(request):
                 queryFrom += ', mainApp_property_listing AS pl'
                 queryWhere += " AND l.listing_type = '" + form.cleaned_data.get('type') + "'\
                                 AND pl.associated_property_id = p.id AND pl.main_listing_id = l.id"
-                #print(querySelect + queryFrom + queryWhere)
                 cursor.execute(querySelect + queryFrom + queryWhere)
                 row = cursor.fetchall()
             
@@ -1665,7 +1656,6 @@ def listing(request, listing_id):
         request.session['tenant'] = None
         request.session['landlord'] = None
 
-    #print(list(images)[0].image)
     imagesPaths = []
     range = [0,]
     for i in list(images):
@@ -1817,7 +1807,6 @@ def renewAgreement(request):
     for i in Agreement.objects.all():
         if Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id:
             agreement = i
-    #print("room " + str(agreement.associated_room_listing_id), "property " +  str(agreement.associated_property_listing_id))
     request.session['room_listing'] = agreement.associated_room_listing_id
     request.session['property_listing'] = agreement.associated_property_listing_id
     request.session["landlord"] = agreement.landlord_id
@@ -1838,7 +1827,6 @@ def renewAgreement(request):
         propAddress_firststep = Property_listing.objects.get(id = prop_test) 
         propAddress_secndstep = Property.objects.get(id = propAddress_firststep.associated_property_id)
         propAddress = propAddress_secndstep.address
-        #print(propAddress)
         context = {"startDate":startDate,"endDate":endDate,"propAddress":propAddress,"landlordName":landlordName,"startDate_v2":startDate_v3}
     else:
         roomAddress_firststep = Room_listing.objects.get(id =room_test)
@@ -1998,7 +1986,7 @@ def get_invoice_pdf(request):
                 'customer_name': str(tenant_user.first_name) + " " + str(tenant_user.last_name),
                 'order_id': invoice.id,
                 'phone_number': tenant_app.phoneNumber,
-                'adress': 'Adress',
+                'adress': tenant_app.address,
                 'list_lines': list_invoice_line,
                 'total_amount': total,
             }
@@ -2025,7 +2013,6 @@ def invoicesLandlord(request):
                     payment_warning = False
             
             fullList.append([i, payment_warning])
-        print(agreement)
         context={
             'fullList': fullList,
             'agreement': agreement,
@@ -2093,7 +2080,7 @@ def send_payment_warning(request):
         )
         warning.save()
 
-    return redirect('manage_agreements_view')
+    return redirect('invoicesLandlord')
 
 def tenant(request):
     return render(request, "mainApp/tenant.html", {})

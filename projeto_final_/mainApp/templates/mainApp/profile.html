@@ -215,17 +215,17 @@
             {% else %}
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Universidade' %}:</p>
-                        <input type="text" class="inputType1 ml-4" value="{{ university }}" name="university">
+                        <input type="text" class="inputType1 ml-4" value="{% if university != 'None' %} {{university}} {% endif %}" name="university">
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Valor mínimo da pesquisa' %}:</p>
-                        <input type="number" class="inputType1 ml-4" id="minProfile" value="{{ min }}" min="0" max="2000" name="min_search">
+                        <input type="number" class="inputType1 ml-4" id="minProfile" value="{{ min }}" min="0" max="{{ max }}" name="min_search">
                     </div>
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Valor máximo da pesquisa' %}:</p>
-                        <input type="number" class="inputType1 ml-4" id="maxProfile" value="{{ max }}" min="0" max="2000" name="max_search">
+                        <input type="number" class="inputType1 ml-4" id="maxProfile" value="{{ max }}" min="{{ min }}" max="2000" name="max_search">
                     </div>
                 </div>
                 <div class="row justify-content-center">
