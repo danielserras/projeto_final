@@ -6,6 +6,7 @@ from rest_framework.response import Response
 
 from decouple import config
 
+import mainApp
 
 from rest_framework import viewsets, status, generics, permissions
 
@@ -17,7 +18,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from .serializers import *
 
-from mainApp.models import * 
+from mainApp.models import *
 
 from django.contrib.auth import login
 
@@ -124,8 +125,8 @@ class agreementRequestAPI(generics.GenericAPIView):
 class Property(APIView):
     geolocator = MapBox(config('MAPBOX_KEY'), scheme=None, user_agent=None, domain='api.mapbox.com')
 
-    permission_classes = (IsAuthenticated,)
     def post(self, request, format=None):
+        permission_classes = (IsAuthenticated,)
         token = (request.META["HTTP_AUTHORIZATION"].split("Token ")[1])
         user = Token.objects.get(key=token).user
         appUser = App_user.objects.get(user = user)
@@ -167,12 +168,12 @@ class Property(APIView):
             return response_maker("success", 201, serializer.data, "New Property created w/ id %d"%newProperty.id)
 
     def get(self, request, pk):
-        Property = Property.objects.filter(key=pk)
+        property_matching_id = mainApp.models.Property.objects.filter(pk=pk)
         
-        if not Property:
+        if not property_matching_id:
             return response_maker("error", 404, None, "No property matching id %d"%pk)
         else:
-            responseData = model_to_dict(Property)[0]
+            responseData = model_to_dict(property_matching_id[0])
             return response_maker("success", 200, responseData, None)
         
 
