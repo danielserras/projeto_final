@@ -25,17 +25,22 @@
         <thead class="thead bg-info">
             <tr>
             <th class="text-white" scope="col">#</th>
-            <th class="text-white text-center" width="30%" scope="col">{% trans 'Número da Fatura' %}</th>
-            <th class="text-white text-center" width="50%" scope="col">{% trans 'Data de Emissão' %}</th>
+            <th class="text-white text-center" width="20%" scope="col">{% trans 'Número da Fatura' %}</th>
+            <th class="text-white text-center" width="20%" scope="col">{% trans 'Data de Emissão' %}</th>
+            <th class="text-white text-center" width="20%" scope="col">{% trans 'Mês' %}</th>
+            <th class="text-white text-center" width="20%" scope="col">{% trans 'Estado' %}</th>
             <th class="text-white text-center" width="20%" scope="col">{% trans 'Ver Fatura' %}</th>
             </tr>
         </thead>
         <tbody>
-            {% for i in invoices%}
+            {% for i, status in fullList%}
                     <tr>
+                        {% load app_extras %}
                         <th scope="row">{{forloop.counter}}</th>
                         <td class="text-center font-weight-bold">#{{i.id}}</td>
                         <td class="text-center">{{i.timestamp}}</td>
+                        <td class="text-center">{{i.month.month|month_name}}</td>
+                        <td class="text-center font-weight-bold">{{status}}</td>
                         <td class="text-center">
                             <form action="{% url 'get_invoice_pdf' %}" method="POST" target="_blank">
                                 {% csrf_token %}

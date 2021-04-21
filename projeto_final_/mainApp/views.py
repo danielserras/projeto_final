@@ -25,6 +25,7 @@ from django.utils import translation
 from django.utils.translation import gettext as _
 from datetime import datetime, timedelta, date
 from django.views.generic import View
+from dateutil.relativedelta import relativedelta
 import PIL
 import time
 import json
@@ -599,7 +600,10 @@ def accept_request(request, request_id):
     #INVOICE CREATION
     invoice = Invoice(
         agreement_request = ag_request,
-        timestamp = timezone.now())
+        timestamp = timezone.now(),
+        month = timezone.now(),
+        paid = False,
+        )
     invoice.save()
 
     if ag_request.associated_property_listing == None:
@@ -622,7 +626,7 @@ def accept_request(request, request_id):
     total_amount = int((duration_days/30) * main_listing.monthly_payment)
 
     invoice_line_rent = Invoice_Line(
-        description = _("Renda do mês de ") + ag_request.startsDate.strftime("%B"),
+        description = _("Renda do mês de ") + _(ag_request.startsDate.strftime("%B")),
         amount = total_amount,
         invoice_id = invoice.id,
     )
@@ -1325,7 +1329,7 @@ def notificationsTenant(request):
                 nameLand = a.landlord.lord_user.user.username
                 invoiceDate = i.timestamp
                 paymentLimit = invoiceDate + timedelta(days=10)
-                invoiceMonth = _(i.timestamp.strftime("%B"))
+                invoiceMonth = _(i.month.strftime("%B"))
 
                 if a.associated_property_listing == None:
                     room_listing = a.associated_room_listing
@@ -1848,16 +1852,31 @@ def manage_agreements_view(request):
     app_user = App_user.objects.get(user_id = current_user)
     a_user = Landlord.objects.get(lord_user_id=app_user)
     agreement = Agreement.objects.filter(landlord = a_user)
+
     listing = ""
-    
+
+    listAgreementAndPaid = []
     for a in agreement:
+        send_invoice = True
+        payment_warning = False
         if (a.associated_room_listing == None):
             listing = a.associated_property_listing.main_listing.title
         else:
             listing = a.associated_room_listing.main_listing.title
+        if (a.last_invoice_date.strftime("%B") == timezone.now().strftime("%B")):
+            send_invoice = False
+        
+        invoices = Invoice.objects.filter(agreement_id = a.id)
+
+        for i in invoices:
+                if i.paid == 0:
+                    if (timezone.now().date() - i.timestamp).days >= 10:
+                        payment_warning = True
+        
+        listAgreementAndPaid.append([a, send_invoice, payment_warning])
 
     context = {
-        "agreement":agreement,
+        "listAgreementAndPaid":listAgreementAndPaid,
         "listing": listing,
     }
     return render(request, "mainApp/manageAgreements.html", context)
@@ -1901,8 +1920,15 @@ def invoicesLandlord(request):
 
         list_invoices = Invoice.objects.filter(agreement_id = agreement)
 
+        fullList = []
+        for i in list_invoices:
+            if i.paid == 0:
+                if (timezone.now().date() - i.timestamp).days >= 10:
+                    fullList.append([i, _('Pagamento atrasado')])
+                else:
+                    fullList.append([i, _('A aguardar pagamento')])
         context={
-            'invoices': list_invoices
+            'fullList': fullList
         }
 
     return render(request, "mainApp/invoicesLandlord.html", context)
@@ -1914,29 +1940,44 @@ def send_invoice(request):
         agreement = Agreement.objects.get(id=agreement_id)
 
         #INVOICE CREATION
-
-        timestamp = timezone.now()
-
-        invoice = Invoice(
-            agreement = agreement,
-            timestamp = timestamp)
-        invoice.save()
-
-        if agreement.associated_property_listing == None:
-            room_listing = agreement.associated_room_listing
-            main_listing = room_listing.main_listing
+        if (agreement.last_invoice_date.strftime("%B") == timezone.now().strftime("%B")):
+            print('Já emitiu a fatura deste mês')
         else:
-            prop_listing = agreement.associated_property_listing
-            main_listing = prop_listing.main_listing
+            new_date = agreement.last_invoice_date
+            new_date = new_date.replace(day=1) + relativedelta(months=1)
+            agreement.last_invoice_date = new_date
+            agreement.save()
 
-        invoice_line_rent = Invoice_Line(
-            description = _("Renda do mês de ") + timestamp.strftime("%B"),
-            amount = main_listing.monthly_payment,
-            invoice_id = invoice.id,
-        )
-        invoice_line_rent.save()
+            if agreement.associated_property_listing == None:
+                room_listing = agreement.associated_room_listing
+                main_listing = room_listing.main_listing
+            else:
+                prop_listing = agreement.associated_property_listing
+                main_listing = prop_listing.main_listing
 
-    return redirect('index')
+            if agreement.last_invoice_date.strftime("%B") == agreement.endDate.strftime("%B"):
+                duration_days = (agreement.endDate - agreement.last_invoice_date).days
+                total_amount = int((duration_days/30) * main_listing.monthly_payment)
+            else:
+                total_amount = main_listing.monthly_payment
+
+            timestamp = timezone.now()
+
+            invoice = Invoice(
+                agreement = agreement,
+                timestamp = timestamp,
+                month = new_date,
+            )
+            invoice.save()
+
+            invoice_line_rent = Invoice_Line(
+                description = _("Renda do mês de ") + _(new_date.strftime("%B")),
+                amount = total_amount,
+                invoice_id = invoice.id,
+            )
+            invoice_line_rent.save()
+  
+    return redirect('manage_agreements_view')
 
 def tenant(request):
     return render(request, "mainApp/tenant.html", {})

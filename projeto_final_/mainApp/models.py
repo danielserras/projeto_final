@@ -173,6 +173,8 @@ class Invoice(models.Model):
     agreement_request = models.ForeignKey(Agreement_Request, null=True, on_delete=models.CASCADE)
     agreement = models.ForeignKey(Agreement, null=True, on_delete=models.CASCADE)
     timestamp = models.DateField()
+    month = models.DateField(null=True)
+    paid = models.BooleanField()
 
 class Invoice_Line(models.Model):
     description = models.CharField(max_length=280)

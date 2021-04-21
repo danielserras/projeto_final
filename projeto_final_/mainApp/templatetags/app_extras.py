@@ -1,3 +1,4 @@
+import calendar
 from django import template
 from django.utils.html import format_html
 from django.template import Variable, VariableDoesNotExist
@@ -50,4 +51,6 @@ def cross(feature_name):
             <i class="fa fa-times text-primary" aria-hidden="no"></i> {}\
             </div>', feature_name)   
 
-
+@register.filter
+def month_name(month_number):
+    return _(calendar.month_name[month_number])
