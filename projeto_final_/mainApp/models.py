@@ -168,6 +168,7 @@ class Agreement_Request(models.Model):
     message = models.TextField(null=True, blank=True)
     accepted = models.BooleanField(null=True, blank=True)
     dateOfRequest = models.DateTimeField()
+    checkRead = models.BooleanField()
 
 class Invoice(models.Model):
     agreement_request = models.ForeignKey(Agreement_Request, null=True, on_delete=models.CASCADE)
