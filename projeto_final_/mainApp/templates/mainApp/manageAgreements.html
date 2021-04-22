@@ -4,6 +4,16 @@
 {% block styles %}
 {% endblock %}
 {% block content %}
+{% if request.session.popUp %}
+    <script>
+        $(document).ready(function(){
+            $('#modalPopUp').modal('show');
+            $(".deletePOP").click(function() {
+                $('#modalPopUp').modal('hide');
+            });
+        })
+    </script>
+{% endif %}
 <div class="container my-5 p-3 shadow-lg">
     <div class="row text-center">
         <div class="col-sm-12">
@@ -25,12 +35,18 @@
         <thead class="thead bg-info">
             <tr>
             <th class="text-white" scope="col">#</th>
+            <th class="text-white text-center" scope="col">{% trans 'Estado' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Anúncio' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Início' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Fim' %}</th>
-            <th class="text-white text-center" scope="col">{% trans 'Inquilino' %}</th>
-            <th class="text-white text-center" scope="col">{% trans 'Emitir Fatura' %}</th>
-            <th class="text-white text-center" scope="col">{% trans 'Pagamento em atraso' %}</th>
+            {% if type == 'landlord' %}
+                <th class="text-white text-center" scope="col">{% trans 'Inquilino' %}</th>
+                <th class="text-white text-center" scope="col">{% trans 'Emitir Fatura' %}</th>
+                <th class="text-white text-center" scope="col">{% trans 'Pagamento em atraso' %}</th>
+            {% else %}
+                <th class="text-white text-center" scope="col">{% trans 'Senhorio' %}</th>
+                <th class="text-white text-center" scope="col">{% trans 'Pagamento' %}</th>
+            {% endif %}
             <th class="text-white text-center" scope="col">{% trans 'Faturas' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Recibo' %}</th>
             </tr>
@@ -40,44 +56,94 @@
             {% for a, send_invoice, month, payment_warning in listAgreementAndPaid%}
                     <tr>
                         <th scope="row">{{forloop.counter}}</th>
+                        <td class="text-center pt-3">
+                            {% if a.status %}
+                                {% trans 'Ativo' %}
+                            {% else %}
+                                {% trans 'Inativo' %}
+                                {% endif %}
+                        </td>
                         <td class="text-center pt-3">{{listing}}</td>
                         <td class="text-center pt-3">{{a.startsDate}}</td>
                         <td class="text-center pt-3">{{a.endDate}}</td>
-                        <td class="text-center pt-3">{{a.tenant.ten_user.user}}</td>
-                        <td class="text-center font-weight-bold {% if not send_invoice %} pt-3 {% endif %}">
-                            {% if send_invoice %}
-                                <form action="{% url 'send_invoice' %}" method="POST">
+                        {% if type == 'landlord' %}
+                            <td class="text-center pt-3">{{a.tenant.ten_user.user}}</td>
+                            <td class="text-center font-weight-bold {% if not send_invoice %} pt-3 {% endif %}">
+                                {% if send_invoice %}
+                                    <form action="{% url 'send_invoice' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input name="agreement_id" type='hidden' value="{{a.id}}">
+                                        <button type="submit" class="btn bg-secondary text-white font-weight-bold">{% trans 'Fatura de' %} {{month}}</button>
+                                    </form>
+                                {% else %}
+                                    {% trans 'Fatura emitida' %} <i class="fa fa-check text-green font-weight-bold" aria-hidden="yes"></i>
+                                {% endif %}
+                            </td>
+                            <td class="text-center {% if payment_warning != None %} font-weight-bold pt-3 {% endif %}">
+                                {% if payment_warning == True %}
+                                    {% trans 'Existem atrasos!' %}
+                                {% elif payment_warning == None %}
+                                    {% trans 'Não existem atrasos' %}
+                                {% elif payment_warning == 'paid' %}
+                                    {% trans 'Pagamentos em dia' %} <i class="fa fa-check text-green font-weight-bold" aria-hidden="yes"></i>
+                                {% else %}
+                                    {% trans 'Aviso enviado' %}
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <form action="{% url 'invoicesLandlord' %}" method="POST">
                                     {% csrf_token %}
                                     <input name="agreement_id" type='hidden' value="{{a.id}}">
-                                    <button type="submit" class="btn bg-secondary text-white font-weight-bold">{% trans 'Fatura de' %} {{month}}</button>
+                                    <button type="submit" class="btn bg-transparent border-secondary border-3 text-white font-weight-bold"><i class="fa fa-eye" style="color: #2a9d8f; font-size:22px" aria-hidden="true"></i></button>
                                 </form>
-                            {% else %}
-                                {% trans 'Fatura emitida' %} <i class="fa fa-check text-green font-weight-bold" aria-hidden="yes"></i>
-                            {% endif %}
-                        </td>
-                        <td class="text-center {% if payment_warning != None %} font-weight-bold pt-3 {% endif %}">
-                            {% if payment_warning == True %}
-                                {% trans 'Existem atrasos!' %}
-                            {% elif payment_warning == None %}
-                                {% trans 'Não existem atrasos' %}
-                            {% elif payment_warning == 'paid' %}
-                                {% trans 'Pagamentos em dia' %} <i class="fa fa-check text-green font-weight-bold" aria-hidden="yes"></i>
-                            {% else %}
-                                {% trans 'Aviso enviado' %}
-                            {% endif %}</td>
-                        <td class="text-center">
-                            <form action="{% url 'invoicesLandlord' %}" method="POST">
-                                {% csrf_token %}
-                                <input name="agreement_id" type='hidden' value="{{a.id}}">
-                                <button type="submit" class="btn bg-transparent border-secondary border-3 text-white font-weight-bold"><i class="fa fa-eye" style="color: #2a9d8f; font-size:22px" aria-hidden="true"></i></button>
-                            </form>
-                        </td>
+                            </td>
+                        {% else %}
+                            <td class="text-center pt-3">{{a.landlord.lord_user.user}}</td>
+                            <td class="text-center font-weight-bold pt-3">
+                                {% if payment_warning %}
+                                    {% trans 'Existem atrasos!' %}
+                                {% elif payment_warning == None %}
+                                    {% trans 'Pagamentos em dia' %} <i class="fa fa-check text-green font-weight-bold" aria-hidden="yes"></i>
+                                {% else %}
+                                    {% trans 'A aguardar pagamento' %}
+                                {% endif %}</td>
+                            <td class="text-center">
+                                <form action="{% url 'invoicesTenant' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input name="agreement_id" type='hidden' value="{{a.id}}">
+                                    <button type="submit" class="btn bg-transparent border-secondary border-3 text-white font-weight-bold"><i class="fa fa-eye" style="color: #2a9d8f; font-size:22px" aria-hidden="true"></i></button>
+                                </form>
+                            </td>
+                        {% endif %}
                         <td class="text-center pt-3">hello</td>
                     </tr>
                 {% endfor %}
         </tbody>
     </table>
     </div>
-    
+</div>
+<div class="modal fade" id="modalPopUp" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Aviso de pagamento em atraso' %}</h5>
+        <form method="POST" action="{% url 'deletePopUpManage' %}">
+            {% csrf_token %}
+            <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        </div>
+        <div class="modal-body">
+            {% trans 'O aviso de pagamento em atraso foi enviado para o inquilino com sucesso' %}
+        </div>
+        <div class="modal-footer">
+            <form method="POST" action="{% url 'deletePopUpManage' %}">
+                {% csrf_token %}
+                <button type="submit" id="fecharRegister" class="btn btn-primary deletePOP">{% trans 'Fechar' %}</button>
+            </form>
+        </div>
+    </div>
+    </div>
 </div>
 {% endblock %}
