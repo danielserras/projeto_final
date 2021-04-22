@@ -1473,7 +1473,10 @@ def notificationsLandlord(request):
         endDate_ = a.endDate.strftime("%d-%m-%Y")
         accepted_ = a.accepted 
         dateOfRequest_ = a.dateOfRequest
-        propertyAddress = ((a.associated_property_listing).associated_property).address
+        if a.associated_property_listing != None:
+            propertyAddress = a.associated_property_listing.associated_property.address
+        else:
+            propertyAddress = a.associated_room_listing.associated_room.associated_property.address
         fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
@@ -1828,6 +1831,10 @@ def deletePopUp(request):
     request.session['popUp'] =  False
     return render(request, "mainApp/login.html", {})
 
+def deletePopUpManage(request):
+    request.session['popUp'] =  False
+    return redirect('manage_agreements_view')
+
 def deletePopUpProp(request):
     request.session['addPropPopUp'] =  False
     return redirect('profile')
@@ -2113,13 +2120,16 @@ def send_payment_warning(request):
         agreement = Agreement.objects.get(id=agreement_id)
         invoice = Invoice.objects.get(id=invoice_id)
 
-        warning = Payment_Warning(
-            agreement_id = agreement.id,
-            timestamp = timezone.now(),
-            invoice_id = invoice.id
-        )
-        warning.save()
-
+        try:
+            pw =  Payment_Warning.objects.get(invoice_id=invoice_id)
+        except:
+            warning = Payment_Warning(
+                agreement_id = agreement.id,
+                timestamp = timezone.now(),
+                invoice_id = invoice.id
+            )
+            warning.save()
+            request.session['popUp'] =  True
     return redirect('manage_agreements_view')
 
 def manageAgreementsTenant(request):

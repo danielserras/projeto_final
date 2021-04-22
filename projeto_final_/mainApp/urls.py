@@ -37,6 +37,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
     path('login/confirmed', views.deletePopUp, name='deletePopUp'),
+    path('profile/manageAgreements/sent', views.deletePopUpManage, name='deletePopUpManage'),
     path('profile/confirmed', views.deletePopUpProp, name='deletePopUpProp'),
     path('profile/renewAgreement', views.renewAgreement, name='renewAgreement'),
     path('landLord', views.landlord, name='landlord'),

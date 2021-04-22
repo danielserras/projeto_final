@@ -4,6 +4,16 @@
 {% block styles %}
 {% endblock %}
 {% block content %}
+{% if request.session.popUp %}
+    <script>
+        $(document).ready(function(){
+            $('#modalPopUp').modal('show');
+            $(".deletePOP").click(function() {
+                $('#modalPopUp').modal('hide');
+            });
+        })
+    </script>
+{% endif %}
 <div class="container my-5 p-3 shadow-lg">
     <div class="row text-center">
         <div class="col-sm-12">
@@ -111,6 +121,29 @@
         </tbody>
     </table>
     </div>
-    
+</div>
+<div class="modal fade" id="modalPopUp" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Aviso de pagamento em atraso' %}</h5>
+        <form method="POST" action="{% url 'deletePopUpManage' %}">
+            {% csrf_token %}
+            <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </form>
+        </div>
+        <div class="modal-body">
+            {% trans 'O aviso de pagamento em atraso foi enviado para o inquilino com sucesso' %}
+        </div>
+        <div class="modal-footer">
+            <form method="POST" action="{% url 'deletePopUpManage' %}">
+                {% csrf_token %}
+                <button type="submit" id="fecharRegister" class="btn btn-primary deletePOP">{% trans 'Fechar' %}</button>
+            </form>
+        </div>
+    </div>
+    </div>
 </div>
 {% endblock %}
