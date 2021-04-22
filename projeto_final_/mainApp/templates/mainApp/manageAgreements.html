@@ -56,12 +56,14 @@
                             {% endif %}
                         </td>
                         <td class="text-center {% if payment_warning != None %} font-weight-bold pt-3 {% endif %}">
-                            {% if payment_warning %}
+                            {% if payment_warning == True %}
                                 {% trans 'Existem atrasos!' %}
                             {% elif payment_warning == None %}
                                 {% trans 'Não existem atrasos' %}
+                            {% elif payment_warning == 'paid' %}
+                                {% trans 'Pagamentos em dia' %} <i class="fa fa-check text-green font-weight-bold" aria-hidden="yes"></i>
                             {% else %}
-                                {% trans 'Aviso já enviado' %} <i class="fa fa-check text-green font-weight-bold" aria-hidden="yes"></i>
+                                {% trans 'Aviso enviado' %}
                             {% endif %}</td>
                         <td class="text-center">
                             <form action="{% url 'invoicesLandlord' %}" method="POST">
