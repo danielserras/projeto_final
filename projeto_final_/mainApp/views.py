@@ -1995,6 +1995,7 @@ def manage_agreements_view(request):
     context = {
         "listAgreementAndPaid":listAgreementAndPaid,
         "listing": listing,
+        'type': 'landlord',
     }
     return render(request, "mainApp/manageAgreements.html", context)
 
@@ -2159,8 +2160,9 @@ def manageAgreementsTenant(request):
     context = {
         "listAgreementAndPaid":listAgreementAndPaid,
         "listing": listing,
+        'type': 'tenant',
     }
-    return render(request, "mainApp/manageAgreementsTenant.html", context)
+    return render(request, "mainApp/manageAgreements.html", context)
 
 def invoicesTenant(request):
     context={}

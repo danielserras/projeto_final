@@ -113,7 +113,7 @@
                 <form action="{% url 'get_invoice_pdf'%}" method="POST" target="_blank">
                   {% csrf_token %}
                   <input name="invoice_id" type='hidden' value="{{h}}">
-                  <button type="submit" class="btn btn-info font-weight-bold ml-3">Fatura</button>
+                  <button type="submit" class="btn btn-info font-weight-bold ml-3">{% trans 'Fatura' %}</button>
                 </form>
               {% else %}
                 <p class="text-info">{% trans 'Recusado' %}</p>
@@ -150,7 +150,7 @@
                 <form action="{% url 'get_invoice_pdf'%}" method="POST" target="_blank">
                   {% csrf_token %}
                   <input name="invoice_id" type='hidden' value="{{invoice_id}}">
-                  <button type="submit" class="btn btn-info font-weight-bold ml-3">Fatura</button>
+                  <button type="submit" class="btn btn-info font-weight-bold ml-3">{% trans 'Fatura' %}</button>
                 </form>
               </div>
             </div>
@@ -182,7 +182,7 @@
                 <form action="{% url 'get_invoice_pdf'%}" method="POST" target="_blank">
                   {% csrf_token %}
                   <input name="invoice_id" type='hidden' value="{{invoice_id}}">
-                  <button type="submit" class="btn btn-info font-weight-bold ml-3">Gerir Acordos</button>
+                  <button type="submit" class="btn btn-info font-weight-bold ml-3">{% trans 'Gerir Acordos' %}</button>
                 </form>
               </div>
             </div>
