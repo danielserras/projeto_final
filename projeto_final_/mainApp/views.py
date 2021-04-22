@@ -1143,15 +1143,17 @@ def listings_management_view(request, property_id):
             pass
 
     cannot_removed = False
-    if request.session["cannot_remove_agreement"]:
-        cannot_removed = True
+    try:
+        if request.session["cannot_remove_agreement"]:
+            cannot_removed = True
+            request.session["cannot_remove_agreement"] = False
+    except:
         request.session["cannot_remove_agreement"] = False
         
     context = {'property_listing':property_listing, 'main_listing':main_listing, 'property':property_object, "cannot_removed":cannot_removed}
     return render(request, "mainApp/listingsManagement.html", context)
 
 def listing_editing_view(request, property_id, main_listing_id):
-    
     main_listing = Listing.objects.get(id=main_listing_id)
     main_listing.availability_starts = main_listing.availability_starts.strftime('%Y-%m-%d')
     main_listing.availability_ending = main_listing.availability_ending.strftime('%Y-%m-%d')
