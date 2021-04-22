@@ -51,5 +51,7 @@ urlpatterns = [
     path('profile/agreementDeleted', views.deleteAgreement, name='deleteAgreement'),
     path('profile/accountDeleted', views.delete_account, name='delete_account'),
     path('listing/requestPop', views.requestPop, name='requestPop'),
+    path('notificationsLandlord/read/<int:id_req>', views.checkReadLandlord, name='checkReadLandlord'),
+    path('notificationsTenant/read/<int:id_req>', views.checkReadTenant, name='checkReadTenant'),
 ]
 

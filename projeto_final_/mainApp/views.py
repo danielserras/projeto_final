@@ -705,7 +705,8 @@ def deny_request(request, request_id):
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
         dateOfRequest_ = a.dateOfRequest
         propertyAddress = ((a.associated_property_listing).associated_property).address
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_,propertyAddress])
+        checkReadLandlord = a.checkReadLandlord
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_,propertyAddress, checkReadLandlord])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
     context = {"fullList_": reverseList, 'range': range(sizeList)}
@@ -789,7 +790,8 @@ def create_request(request):
             end_date = ag_form.cleaned_data.get('endDate')
             message = ag_form.cleaned_data.get('message')
             dateNow = timezone.now()
-            checkRead = False
+            checkReadLandlord = False
+            checkReadTenant = False
 
             if 'room_listing' in request.session:
                 del request.session['room_listing']
@@ -814,7 +816,8 @@ def create_request(request):
                     endDate=end_date,
                     message=message,
                     dateOfRequest = dateNow,
-                    checkRead = checkRead
+                    checkReadLandlord = checkReadLandlord ,
+                    checkReadTenant = checkReadTenant
                 )
                 ag_request.save()
 
@@ -833,7 +836,8 @@ def create_request(request):
                     endDate=end_date,
                     message=message,
                     dateOfRequest = dateNow,
-                    checkRead = checkRead
+                    checkReadLandlord = checkReadLandlord ,
+                    checkReadTenant = checkReadTenant
                 )
                 ag_request.save()
 
@@ -846,7 +850,7 @@ def create_request(request):
 
         if room_id:
 
-            checkRequests = len(Agreement_Request.objects.filter(tenant=ten))
+            checkRequests = len(Agreement_Request.objects.filter(tenant=ten,associated_room_listing_id=room_id))
             if checkRequests > 0 :
                 request.session['onlyOneRequest'] = True
                 listing_url = (Room_listing.objects.get(id=room_id)).main_listing_id
@@ -861,7 +865,7 @@ def create_request(request):
         
         else:
 
-            checkRequests = len(Agreement_Request.objects.filter(tenant=ten))
+            checkRequests = len(Agreement_Request.objects.filter(tenant=ten,associated_property_listing_id=prop_id))
             if checkRequests > 0 :
                 request.session['onlyOneRequest'] = True
                 listing_url = (Property_listing.objects.get(id=prop_id)).main_listing_id
@@ -948,6 +952,25 @@ def profile(request):
                     "max": user_max_search,
                     "university": user_university,
                     "rent_to_be_returned": rent_to_be_returned}
+                elif Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id and i.status != True:
+                    temp = True
+
+                    user_birth = a_user.birthDate.strftime('%Y-%m-%d')
+                    user_phone = a_user.phoneNumber
+                    user_type = _('Inquilino')
+
+                    ten_user = Tenant.objects.get(ten_user=a_user)
+                    user_min_search = ten_user.min_search
+                    user_max_search = ten_user.max_search
+                    user_university = ten_user.university
+
+
+                    context = {"birth": user_birth,
+                    "phone": user_phone,
+                    "type": user_type,
+                    "min": user_min_search,
+                    "max": user_max_search,
+                    "university": user_university}
 
             if temp == False:
                 context = {}
@@ -1383,6 +1406,7 @@ def notificationsTenant(request):
         endDate = a.endDate.strftime("%d-%m-%Y")
         accepted = a.accepted #para ver se esta null, aceite ou recusada
         dateOfRequest_ = a.dateOfRequest
+        checkReadTenant = a.checkReadTenant
         if a.associated_property_listing != None:
             propertyAddress = a.associated_property_listing.associated_property.address
         else:
@@ -1391,7 +1415,7 @@ def notificationsTenant(request):
             invoice_id = Invoice.objects.get(agreement_request_id=a.id).id
         except:
             pass
-        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted, dateOfRequest_, invoice_id, propertyAddress])
+        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted, dateOfRequest_, invoice_id, propertyAddress,checkReadTenant])
 
     invoiceList = []
     for i in Invoice.objects.all():
@@ -1474,7 +1498,8 @@ def notificationsLandlord(request):
         accepted_ = a.accepted 
         dateOfRequest_ = a.dateOfRequest
         propertyAddress = ((a.associated_property_listing).associated_property).address
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress])
+        checkReadLandlord = a.checkReadLandlord
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress, checkReadLandlord])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
     context = {"fullList_": reverseList, 'range': range(sizeList)}
@@ -2217,3 +2242,21 @@ def requestPop(request):
         listing_url = (Property_listing.objects.get(id=prop_id)).main_listing_id
 
     return redirect('listing',listing_url)
+
+def checkReadLandlord(request,id_req):
+
+    for e in Agreement_Request.objects.all():
+        if e.id == id_req:
+            e.checkReadLandlord = True
+            e.save()
+
+    return redirect('notificationsLandlord')
+
+def checkReadTenant(request,id_req):
+
+    for e in Agreement_Request.objects.all():
+        if e.id == id_req:
+            e.checkReadTenant = True
+            e.save()
+
+    return redirect('notificationsTenant')
