@@ -16,7 +16,7 @@
                         <line x1="5" y1="12" x2="11" y2="6" />
                     </svg>
                 </a>
-                <h3 class="mx-auto my-auto">{% trans 'Gerir Alugueres' %}</h3>
+                <h3 class="mx-auto my-auto">{% trans 'Gerir Acordos' %}</h3>
             </div>
         </div> 
     </div>
@@ -29,36 +29,48 @@
             <th class="text-white text-center" scope="col">{% trans 'Início' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Fim' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Inquilino' %}</th>
-            <th class="text-white text-center" scope="col">{% trans 'Pagamento' %}</th>
+            <th class="text-white text-center" scope="col">{% trans 'Emitir Fatura' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Pagamento em atraso' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Faturas' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Recibo' %}</th>
             </tr>
         </thead>
         <tbody>
-            {% for a in agreement%}
+            {% load app_extras %}
+            {% for a, send_invoice, month, payment_warning in listAgreementAndPaid%}
                     <tr>
                         <th scope="row">{{forloop.counter}}</th>
-                        <td class="text-center">{{listing}}</td>
-                        <td class="text-center">{{a.startsDate}}</td>
-                        <td class="text-center">{{a.endDate}}</td>
-                        <td class="text-center">{{a.tenant.ten_user.user}}</td>
-                        <td class="text-center">
-                            <form action="{% url 'send_invoice' %}" method="POST">
-                                {% csrf_token %}
-                                <input name="agreement_id" type='hidden' value="{{a.id}}">
-                                <button type="submit" class="btn bg-primary text-white">Emitir Fatura</button>
-                            </form>
+                        <td class="text-center pt-3">{{listing}}</td>
+                        <td class="text-center pt-3">{{a.startsDate}}</td>
+                        <td class="text-center pt-3">{{a.endDate}}</td>
+                        <td class="text-center pt-3">{{a.tenant.ten_user.user}}</td>
+                        <td class="text-center font-weight-bold {% if not send_invoice %} pt-3 {% endif %}">
+                            {% if send_invoice %}
+                                <form action="{% url 'send_invoice' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input name="agreement_id" type='hidden' value="{{a.id}}">
+                                    <button type="submit" class="btn bg-secondary text-white font-weight-bold">{% trans 'Fatura de' %} {{month}}</button>
+                                </form>
+                            {% else %}
+                                {% trans 'Fatura emitida' %} <i class="fa fa-check text-green font-weight-bold" aria-hidden="yes"></i>
+                            {% endif %}
                         </td>
-                        <td>hello</td>
+                        <td class="text-center {% if payment_warning != None %} font-weight-bold pt-3 {% endif %}">
+                            {% if payment_warning %}
+                                {% trans 'Existem atrasos!' %}
+                            {% elif payment_warning == None %}
+                                {% trans 'Não existem atrasos' %}
+                            {% else %}
+                                {% trans 'Aviso já enviado' %} <i class="fa fa-check text-green font-weight-bold" aria-hidden="yes"></i>
+                            {% endif %}</td>
                         <td class="text-center">
                             <form action="{% url 'invoicesLandlord' %}" method="POST">
                                 {% csrf_token %}
                                 <input name="agreement_id" type='hidden' value="{{a.id}}">
-                                <button type="submit" class="btn bg-primary text-white">Ver</button>
+                                <button type="submit" class="btn bg-transparent border-secondary border-3 text-white font-weight-bold"><i class="fa fa-eye" style="color: #2a9d8f; font-size:22px" aria-hidden="true"></i></button>
                             </form>
                         </td>
-                        <td>hello</td>
+                        <td class="text-center pt-3">hello</td>
                     </tr>
                 {% endfor %}
         </tbody>

@@ -21,7 +21,7 @@
 
         <div class="messages-box">
           <div id="leftStart" class="list-group rounded-0">
-            {% for a,b,c,d,e,f,g,h in fullList %}
+            {% for a,b,c,d,e,f,g,h,i in fullList %}
               {% if f is not None %}
                   <a href="#" id="notificationsTen_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
                     {% load static %}
@@ -37,15 +37,29 @@
               {% endif %}
             {% endfor %}
             <!-- FOR LOOP PELOS INVOICES COM SIZELIST + FORLOOP.COUNTER-->
-            {% for land, month, sentDate, paymentLimit, address, name, invoice_id in invoiceList %}
-              <a href="#" id="notificationsTen_{{forloop.counter|add:sizeList}}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
+            {% for land, timestamp, sentDate, paymentLimit, address, name, invoice_id in invoiceList %}
+              <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull}}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
                 {% load static %}
                 <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
                   <div class="media-body ml-4">
                     <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">{{ land }}</h6><small class="small font-weight-bold">{{ month }}</small>
+                      <h6 class="mb-0">{{ land }}</h6><small class="small font-weight-bold">{{ timestamp }}</small>
                     </div>
-                    <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Fatura do mês de '%}{{ month }}.</p>
+                    <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Fatura do mês de '%}{{ timestamp }}.</p>
+                  </div>
+                </div>
+              </a>
+            {% endfor %}
+            <!-- FOR LOOP PELOS WARNINGS COM SIZELIST + FORLOOP.COUNTER-->
+            {% for timestamp, land, address, name in paymentWarningList %}
+              <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull|add:sizeInvoice}}" class='notification list-group-item list-group-item-action list-group-item-danger rounded-0'>
+                {% load static %}
+                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                  <div class="media-body ml-4">
+                    <div class="d-flex align-items-center justify-content-between mb-1">
+                      <h6 class="mb-0">{{ land }}</h6><small class="small font-weight-bold">{{ timestamp }}</small>
+                    </div>
+                    <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Aviso de pagamento em atraso'%}</p>
                   </div>
                 </div>
               </a>
@@ -62,7 +76,7 @@
           {% load static %}
           <img src='{% static "mainApp/images/message.svg" %}' class='img' id="defaultImg" alt='Image representing a message' />
       </div>
-        {% for a,b,c,d,e,f,g,h in fullList %}
+        {% for a,b,c,d,e,f,g,h,i in fullList %}
           <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
             <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                 <h4 class="text-white mt-3 pl-3"> {% trans 'Assunto' %} </h4>
@@ -75,6 +89,10 @@
                 <p class= "text-info font-weight-bold">{% trans 'Data término' %}:&nbsp </p>
                 <p class= "text-info"> {{ e }}</p>
             </div>
+            <div class="row m-2">
+              <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
+              <p class= "text-info"> {{ i }}</p>
+          </div>
             <div class="row m-2">
               <div>
                 <p class="text-info font-weight-bold">{% trans 'Mensagem' %}:&nbsp</p>
@@ -104,7 +122,7 @@
           </div>
         {% endfor %}
         {% for land, month, sentDate, paymentLimit, address, name, invoice_id in invoiceList %}
-          <div id = "content_{{forloop.counter|add:sizeList}}"class='contentNotification' style="display:none">
+          <div id = "content_{{forloop.counter|add:sizeFull}}"class='contentNotification' style="display:none">
             <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                 <h4 class="text-white mt-3 pl-3"> {% trans 'Fatura' %} </h4>
             </div>
@@ -121,8 +139,8 @@
                 <p class="text-info font-weight-bold">{% trans 'Mensagem' %}:&nbsp</p>
               </div>
             </div>
-            <div class="big_text row m-2">
-                <p class= "text-info font-weight-bold">{% trans 'Envio-lhe a fatura do mês de' %}
+            <div class="row m-2">
+                <p class= "text-info">{% trans 'Envio-lhe a fatura do mês de' %}
                   {{ month }}{% trans ', relativa ao alojamento localizado em' %}
                   {{ address }} {% trans 'e com um anúncio intitulado' %}
                   "{{ name }}" &nbsp</p>
@@ -133,6 +151,38 @@
                   {% csrf_token %}
                   <input name="invoice_id" type='hidden' value="{{invoice_id}}">
                   <button type="submit" class="btn btn-info font-weight-bold ml-3">Fatura</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        {% for timestamp, land, address, name in paymentWarningList %}
+          <div id = "content_{{forloop.counter|add:sizeFull|add:sizeInvoice}}"class='contentNotification' style="display:none">
+            <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
+                <h4 class="text-white mt-3 pl-3"> {% trans 'Aviso de Pagamento em Atraso' %} </h4>
+            </div>
+            <div class="row m-2">
+              <div>
+                <p class="text-info font-weight-bold">{% trans 'Mensagem' %}:&nbsp</p>
+              </div>
+            </div>
+            <div class=" row m-2">
+                <p class= "text-info">{% trans 'Esta mensagem foi enviada pelo senhorio' %}
+                  {{ land }}{% trans ' a fim de informar que já ultrapassou a data limite de 10 dias para o pagamento da renda relativa ao alojamento localizado em' %}
+                  {{ address }} {% trans 'e com um anúncio intitulado' %}
+                  "{{ name }}". &nbsp</p>
+            </div>
+            <div class="row m-2">
+              <div>
+                <p class="text-info font-weight-bold">{% trans 'Para gerir acordos e visualizar as suas faturas, clique no botão a baixo' %}</p>
+              </div>
+            </div>
+            <div class="row m-2">
+              <div class="mx-auto">
+                <form action="{% url 'get_invoice_pdf'%}" method="POST" target="_blank">
+                  {% csrf_token %}
+                  <input name="invoice_id" type='hidden' value="{{invoice_id}}">
+                  <button type="submit" class="btn btn-info font-weight-bold ml-3">Gerir Acordos</button>
                 </form>
               </div>
             </div>

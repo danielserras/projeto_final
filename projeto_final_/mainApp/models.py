@@ -168,14 +168,21 @@ class Agreement_Request(models.Model):
     message = models.TextField(null=True, blank=True)
     accepted = models.BooleanField(null=True, blank=True)
     dateOfRequest = models.DateTimeField()
+    checkRead = models.BooleanField()
 
 class Invoice(models.Model):
     agreement_request = models.ForeignKey(Agreement_Request, null=True, on_delete=models.CASCADE)
     agreement = models.ForeignKey(Agreement, null=True, on_delete=models.CASCADE)
     timestamp = models.DateField()
+    month = models.DateField(null=True)
+    paid = models.BooleanField()
 
 class Invoice_Line(models.Model):
     description = models.CharField(max_length=280)
     amount = models.IntegerField()
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
-# Create your models here.
+
+class Payment_Warning(models.Model):
+    agreement = models.ForeignKey(Agreement, on_delete=models.CASCADE)
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField()

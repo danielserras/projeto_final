@@ -25,22 +25,39 @@
         <thead class="thead bg-info">
             <tr>
             <th class="text-white" scope="col">#</th>
-            <th class="text-white text-center" width="30%" scope="col">{% trans 'Número da Fatura' %}</th>
-            <th class="text-white text-center" width="50%" scope="col">{% trans 'Data de Emissão' %}</th>
+            <th class="text-white text-center" width="20%" scope="col">{% trans 'Número da Fatura' %}</th>
+            <th class="text-white text-center" width="20%" scope="col">{% trans 'Data de Emissão' %}</th>
+            <th class="text-white text-center" width="20%" scope="col">{% trans 'Mês' %}</th>
+            <th class="text-white text-center" width="20%" scope="col">{% trans 'Estado' %}</th>
             <th class="text-white text-center" width="20%" scope="col">{% trans 'Ver Fatura' %}</th>
             </tr>
         </thead>
         <tbody>
-            {% for i in invoices%}
+            {% for i, payment_warning in fullList%}
                     <tr>
+                        {% load app_extras %}
                         <th scope="row">{{forloop.counter}}</th>
                         <td class="text-center font-weight-bold">#{{i.id}}</td>
                         <td class="text-center">{{i.timestamp}}</td>
+                        <td class="text-center">{{i.month.month|month_name}}</td>
+                        <td class="text-center {% if payment_warning == False %} font-weight-bold pt-3 {% endif %}">
+                            {% if payment_warning %}
+                                <form action="{% url 'send_payment_warning' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input name="agreement_id" type="hidden" value="{{agreement}}">
+                                    <input name="invoice_id" type="hidden" value="{{i.id}}">
+                                    <button type="submit" class="btn bg-secondary text-white font-weight-bold">{% trans 'Enviar aviso' %}</button>
+                                </form>
+                            {% elif payment_warning == None %}
+                                {% trans 'A aguardar pagamento' %}
+                            {% else %}
+                                {% trans 'Aviso já enviado' %} <i class="fa fa-check text-green font-weight-bold" aria-hidden="yes"></i>
+                            {% endif %}</td>
                         <td class="text-center">
                             <form action="{% url 'get_invoice_pdf' %}" method="POST" target="_blank">
                                 {% csrf_token %}
                                 <input name="invoice_id" type='hidden' value="{{i.id}}">
-                                <button type="submit" class="btn bg-primary text-white">Ver</button>
+                                <button type="submit" class="btn bg-transparent border-secondary border-3 text-white font-weight-bold"><i class="fa fa-eye" style="color: #2a9d8f; font-size:22px" aria-hidden="true"></i></button>
                             </form>
                         </td>
                     </tr>

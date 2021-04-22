@@ -44,8 +44,10 @@ urlpatterns = [
     path('tenant', views.tenant, name='tenant'),
     path('invoice', views.get_invoice_pdf, name='get_invoice_pdf'),
     path('sendInvoice', views.send_invoice, name='send_invoice'),
+    path('sendPaymentWarning', views.send_payment_warning, name='send_payment_warning'),
     path('invoicesLandlord', views.invoicesLandlord, name='invoicesLandlord'),
     path('profile/agreementDeleted', views.deleteAgreement, name='deleteAgreement'),
     path('profile/accountDeleted', views.delete_account, name='delete_account'),
+    path('listing/requestPop', views.requestPop, name='requestPop'),
 ]
 

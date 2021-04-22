@@ -2,6 +2,46 @@
 {% load i18n %}
 {% block styles%} <link rel="stylesheet" href='{% static "mainApp/css/listingPage.css" %}'> {% endblock %}
 {% block scripts%} <script src='{% static "mainApp/js/listingPage.js" %}'></script> {% endblock %} {% block content %}
+
+
+{% if request.session.onlyOneRequest %}
+        <script>
+            $(document).ready(function(){
+                $('#modalInterest').modal('show');
+                $(".deletePOP").click(function() {
+                    $('#modalInterest').modal('hide');
+                });
+            })
+        </script>
+    {% endif %}
+
+<!--POP-UP in case the user already showed interest-->
+<div class="modal fade" id="modalInterest" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-3 border-danger">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Já mostrou interesse.' %}</h5>
+        {% csrf_token %}
+        <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+        {% trans 'Só pode enviar uma mensagem de interesse para cada propriedade' %}.
+        </div>
+        <div class="modal-footer"> 
+            <form action="{% url 'requestPop' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary deletePOP">{% trans 'Ok' %}</button>
+            </form>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-md-center m-5" id="a">
+        <div class="col-sm-7 h-75">
 <div class="container shadow-lg my-5 p-5">
     <div class="row mt-3">
         <a href="#" onclick="history.back();">
