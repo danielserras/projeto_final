@@ -9,6 +9,27 @@
 {% endblock %}
 {% block content %}
 <div class="container my-5 p-3 shadow-lg">
+    {% if cannot_removed %}
+        <script>
+            $(document).ready(function () {
+                $("#delete_agreement_modal").modal("show");
+                setTimeout(function() {$('#delete_agreement_modal').modal('hide');}, 4000);
+            });
+        </script>
+    {% endif %}
+        <div class="modal fade" id="delete_agreement_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{% trans 'Não pode remover um anúncio que esteja alugado'%}</h5>
+                <button type="button" id="close_delete_agreement_modal" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            </div>
+        </div>
+        </div>
+
         <div class="row text-center">
             <div class="col-sm-12">
                 <div class="row mt-3 mb-3">

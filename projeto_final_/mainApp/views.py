@@ -1111,7 +1111,13 @@ def listings_management_view(request, property_id):
                 main_listing.append(room_listing.main_listing)
         except:
             pass
-    context = {'property_listing':property_listing, 'main_listing':main_listing, 'property':property_object}
+
+    cannot_removed = False
+    if request.session["cannot_remove_agreement"]:
+        cannot_removed = True
+        request.session["cannot_remove_agreement"] = False
+        
+    context = {'property_listing':property_listing, 'main_listing':main_listing, 'property':property_object, "cannot_removed":cannot_removed}
     return render(request, "mainApp/listingsManagement.html", context)
 
 def listing_editing_view(request, property_id, main_listing_id):
@@ -1254,40 +1260,67 @@ def create_listing_view(request, property_id):
 
 def delete_listing_view(request, property_id, main_listing_id):
     main_listing_obj = Listing.objects.get(id=main_listing_id)
+
+    can_deleted = True
+    is_property_listing = True
+    is_room_listing = False
+
     if main_listing_obj.listing_type == "Apartment" or main_listing_obj.listing_type == "House":
-        property_listing_objs = Property_listing.objects.filter(main_listing=main_listing_obj)
-        for e in property_listing_objs:
-            e.delete()
+        #property_listing
+        is_room_listing = False
+        property_listing_obj = Property_listing.objects.filter(main_listing=main_listing_obj)[0]
+        agreements = Agreement.objects.filter(associated_property_listing=property_listing_obj)
+        for agreement in agreements:
+            if agreement.status:
+                can_deleted = False
+                break
     else:
-        room_listing_objs = Room_listing.objects.filter(main_listing=main_listing_obj)
-        for e in room_listing_objs:
-            e.delete()
-            
-    #delete albuns and photos
-    album_obj = main_listing_obj.album
-    
-    images = Image.objects.filter(album=album_obj)
-    for i in images:
-        i.delete()
+        #room_listing
+        is_property_listing = False
+        room_listing_obj = Room_listing.objects.filter(main_listing=main_listing_obj)[0]
+        agreements = Agreement.objects.filter(associated_room_listing=room_listing_obj)
+        for agreement in agreements:
+            if agreement.status:
+                can_deleted = False
+                break
+
+    if can_deleted:
+        if is_property_listing:
+            property_listing_obj.delete()
+        else:
+            room_listing_obj.delete()
+                
+        #delete albuns and photos
+        album_obj = main_listing_obj.album
         
-    album_obj.delete()
+        images = Image.objects.filter(album=album_obj)
+        for i in images:
+            i.delete()
+            
+        album_obj.delete()
 
-    #delete main_listing
-    main_listing_obj.delete()
+        #delete main_listing
+        main_listing_obj.delete()
 
-    #delete images and directory
-    folder = 'mainApp/static/mainApp/listings/'+ str(main_listing_id)
-    for filename in os.listdir(folder):
-        file_path = os.path.join(folder, filename)
-        try:
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-        except Exception as e:
-            pass
-    
-    os.rmdir(folder)
+        #delete images and directory
+        folder = 'mainApp/static/mainApp/listings/'+ str(main_listing_id)
+        for filename in os.listdir(folder):
+            file_path = os.path.join(folder, filename)
+            try:
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+            except Exception as e:
+                pass
+        
+        os.rmdir(folder)
+    else:
+        #cannot be removed
+        request.session['cannot_remove_agreement'] = True
+        print("N Ã O  P O D E  S E R  R E M O V I D O")
+
+        pass
 
     return redirect("/mainApp/profile/propertiesManagement/listingEditing/{}".format(property_id))
 
@@ -1704,7 +1737,6 @@ def make_payment(request, ag_request_id):
 @csrf_exempt
 def get_payment_status(sender, **kwargs):
     ipn_obj = sender.POST
-
     if ipn_obj['payment_status'] == ST_PP_COMPLETED:
 
         if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
