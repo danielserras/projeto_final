@@ -63,7 +63,7 @@
         <table style="width:100%; background-color: #E76F51;">
             <tr>
                 <td>
-                    <h1 class="left-align title">t</h1>
+                    <h1 class="left-align title">{% trans 'Fatura' %}</h1>
                 </td>
                 <td>
                     <h1 class="right-align title">UniHouses</h1>
@@ -74,25 +74,25 @@
             <table style="width:100%">
                 <tr>
                     <td>
-                        <p class="staticInfo">Cobrar A: </p>
+                        <p class="staticInfo">{% trans 'Cobrar A' %}: </p>
                         {{customer_name}}
                     </td>
                     <td class="right-align">
-                        Data de Emissão: {{today}}
+                        {% trans 'Data de Emissão' %}: {{today}}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p class="staticInfo">Número de Telefone: </p>
+                        <p class="staticInfo">{% trans 'Número de Telefone' %}: </p>
                         {{phone_number}}
                     </td>
                     <td class="right-align">
-                        Fatura # {{order_id}}
+                        {% trans 'Fatura' %} # {{order_id}}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p class="staticInfo">Morada: </p>
+                        <p class="staticInfo">{% trans 'Morada' %}: </p>
                         {{adress}}
                     </td>
                 </tr>
@@ -101,8 +101,8 @@
         <hr class='hrItem'/>
         <table style="width:100%; margin-top: 50px;">
             <tr>
-              <th width="80%">Descrição</th>
-              <th class="amount" width="20%">Valor (Euros)</th> 
+              <th width="80%">{% trans 'Descrição' %}</th>
+              <th class="amount" width="20%">{% trans 'Valor' %} (Euros)</th> 
             </tr>
             {% for line in list_lines %}
                 <tr>
