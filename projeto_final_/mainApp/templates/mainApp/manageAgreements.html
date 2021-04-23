@@ -127,7 +127,7 @@
     <div class="modal-content">
         <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Aviso de pagamento em atraso' %}</h5>
-        <form method="POST" action="{% url 'deletePopUpManage' %}">
+        <form method="POST" action="{% url 'deletePopUp' %}">
             {% csrf_token %}
             <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -138,7 +138,7 @@
             {% trans 'O aviso de pagamento em atraso foi enviado para o inquilino com sucesso' %}
         </div>
         <div class="modal-footer">
-            <form method="POST" action="{% url 'deletePopUpManage' %}">
+            <form method="POST" action="{% url 'deletePopUp' %}">
                 {% csrf_token %}
                 <button type="submit" id="fecharRegister" class="btn btn-primary deletePOP">{% trans 'Fechar' %}</button>
             </form>

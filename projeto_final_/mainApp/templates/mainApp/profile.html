@@ -9,7 +9,7 @@
     <script src='{% static "mainApp/js/profile.js" %}'></script>
 {% endblock %}
 {% block content %}
-    {% if request.session.addPropPopUp %}
+    {% if request.session.popUp %}
         <script>
             $(document).ready(function(){
                 $('#modalLoginAddProp').modal('show');
@@ -40,7 +40,7 @@
     <div class="modal-content">
         <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Adicionou uma nova propriedade!' %}</h5>
-        <form method="POST" action="{% url 'deletePopUpProp' %}">
+        <form method="POST" action="{% url 'deletePopUp' %}">
             {% csrf_token %}
             <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -51,7 +51,7 @@
         {% trans 'Parabéns, adicionou uma nova propriedade à sua conta!' %}
         </div>
         <div class="modal-footer">
-            <form method="POST" action="{% url 'deletePopUpProp' %}">
+            <form method="POST" action="{% url 'deletePopUp' %}">
                 {% csrf_token %}
                 <button type="submit" id="fecharRegister" class="btn btn-primary deletePOP">{% trans 'Fechar' %}</button>
             </form>

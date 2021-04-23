@@ -102,22 +102,11 @@ def register_view(request):
             #messages.success(request, _('Utilizador ') + user_nameStr + _(' criado!'))
             
             request.session['popUp'] =  True
+            request.session['redirectPage'] = "login_view"
             return redirect('login_view')  
 
     context = {'form':form, 'pform': pform, 'errors':form.errors} #, 'pform':pform
     return render(request, 'mainApp/register.html', context)
-
-""" def password_recovery_view(request):
-    
-    user_id = request.user.id
-    subject = "Pedido de mudança de password"
-    sender = "noreply.unihouses@gmail.com"
-    recipient = form.cleaned_data.get('recovery_email')
-    template = "mainApp/templates/mainApp/recovery.html"
-
-    msg = render_to_string(template, raise_exception=True), {"link": verification_url})
-
-    send_mail(subject, strip_tags(msg), from_email=sender, recipient_list=[recipient], html_message=msg) """
 
 def save_property(request):
 
@@ -389,7 +378,8 @@ def introduce_property_view (request):
                                     del request.session['no_living']
                                 del request.session['prop_serial']
 
-                                request.session['addPropPopUp'] =  True
+                                request.session['popUp'] =  True
+                                request.session['redirectPage'] = "profile"
                                 return redirect('profile')  #sair
                             else:
                                 del request.session['kitchens_num']
@@ -425,7 +415,8 @@ def introduce_property_view (request):
                                     del request.session['no_living']
                                 del request.session['prop_serial']
 
-                                request.session['addPropPopUp'] =  True
+                                request.session['popUp'] =  True
+                                request.session['redirectPage'] = "profile"
                                 return redirect('profile') #sair
 
                             else:
@@ -542,7 +533,8 @@ def introduce_property_view (request):
                                 room_obj.save()
                                 
 
-                            request.session['addPropPopUp'] =  True
+                            request.session['popUp'] =  True
+                            request.session['redirectPage'] = "profile"
                             user_birth = a_user.birthDate.strftime('%Y-%m-%d')
                             user_phone = a_user.phoneNumber
                             context = {"birth": user_birth, "phone": user_phone}
@@ -1855,15 +1847,7 @@ def changeLanguage(request):
 
 def deletePopUp(request):
     request.session['popUp'] =  False
-    return render(request, "mainApp/login.html", {})
-
-def deletePopUpManage(request):
-    request.session['popUp'] =  False
-    return redirect('manage_agreements_view')
-
-def deletePopUpProp(request):
-    request.session['addPropPopUp'] =  False
-    return redirect('profile')
+    return redirect(request.session['redirectPage'])
 
 def renewAgreement(request):
     #FALTA POR A OPÇAO DE RENOVAR A APARECER POR EXEMPLO 1 MES ANTES DO FINAL EM VEZ DE ESTAR SEMPRE VISIVEL
@@ -2156,6 +2140,7 @@ def send_payment_warning(request):
             )
             warning.save()
             request.session['popUp'] =  True
+            request.session['redirectPage'] = 'manage_agreements_view'
     return redirect('manage_agreements_view')
 
 def manageAgreementsTenant(request):
