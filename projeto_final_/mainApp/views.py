@@ -1746,9 +1746,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://1ff8c3b22ca7.ngrok.io/paymentStatus/",
-            "return_url": "http://1ff8c3b22ca7.ngrok.io/mainApp/search",
-            "cancel_return": "http://1ff8c3b22ca7.ngrok.io/mainApp/profile",
+            "notify_url": "http://770a695180c8.ngrok.io/paymentStatus/",
+            "return_url": "http://770a695180c8.ngrok.io/mainApp/search",
+            "cancel_return": "http://770a695180c8.ngrok.io/mainApp/profile",
 
             }
 
@@ -1776,7 +1776,7 @@ def make_payment(request, ag_request_id):
 @csrf_exempt
 def get_payment_status(sender, **kwargs):
     ipn_obj = sender.POST
-
+    print(ipn_obj)
     if ipn_obj['payment_status'] == ST_PP_COMPLETED:
 
         if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
