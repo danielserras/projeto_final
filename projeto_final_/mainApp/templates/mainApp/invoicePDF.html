@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+{% load static %}
+{% load i18n %}{% autoescape off %}
+<html>
+    <head>
+        <title>{% trans 'Fatura' %}</title>
+        <style type="text/css">
+            body {
+                font-weight: 200;
+                font-size: 18px;
+            }
+            .header {
+                padding: 10px;
+                background-color: #E76F51;
+            }
+            .title {
+                font-size: 30px;
+                font-weight: 600;
+                padding: 25px 20px 0px 20px;  
+                color: white;
+            }
+            .details {
+                padding: 10px 20px 0px 20px;
+                text-align: left !important;
+                margin-top: 50px;
+                margin-bottom: 50px;
+            }
+            .left-align{
+                text-align:left;
+            }
+            .right-align{
+                text-align:right;
+            }
+            .hrItem {
+                border: none;
+                height: 1px;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+            .amount{
+                text-align:center;
+                border-left: 1px solid black;
+            }
+            .description{
+                margin-left: 40px;
+            }
+            tr{
+                padding-top: 0px;
+                padding-bottom: 0px;
+            }
+            .staticInfo{
+                font-weight: bold;
+                display: inline;
+            }
+            .total{
+                margin-top: 80px;
+                font-size: 30px
+            }
+        </style>
+    </head>
+    <body>
+        <table style="width:100%; background-color: #E76F51;">
+            <tr>
+                <td>
+                    <h1 class="left-align title">{% trans 'Fatura' %}</h1>
+                </td>
+                <td>
+                    <h1 class="right-align title">UniHouses</h1>
+                </td>
+            </tr>
+        </table>
+        <div class='details'>
+            <table style="width:100%">
+                <tr>
+                    <td>
+                        <p class="staticInfo">{% trans 'Cobrar A' %}: </p>
+                        {{customer_name}}
+                    </td>
+                    <td class="right-align">
+                        {% trans 'Data de Emissão' %}: {{today}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="staticInfo">{% trans 'Número de Telefone' %}: </p>
+                        {{phone_number}}
+                    </td>
+                    <td class="right-align">
+                        {% trans 'Fatura' %} # {{order_id}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="staticInfo">{% trans 'Morada' %}: </p>
+                        {{adress}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <hr class='hrItem'/>
+        <table style="width:100%; margin-top: 50px;">
+            <tr>
+              <th width="80%">{% trans 'Descrição' %}</th>
+              <th class="amount" width="20%">{% trans 'Valor' %} (Euros)</th> 
+            </tr>
+            {% for line in list_lines %}
+                <tr>
+                    <td width="80%">{% trans line.description %}</td>
+                    <td class="amount" width="20%">{{line.amount}}&euro;</td> 
+                </tr>
+            {% endfor %}
+        </table>
+        <h2 class="right-align total">TOTAL: {{total_amount}}&euro;</h2>
+        {% endautoescape %}
+    </body>
+</html>

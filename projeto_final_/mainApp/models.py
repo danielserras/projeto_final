@@ -187,3 +187,6 @@ class Payment_Warning(models.Model):
     agreement = models.ForeignKey(Agreement, on_delete=models.CASCADE)
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
+
+class Receipt(models.Model):
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)

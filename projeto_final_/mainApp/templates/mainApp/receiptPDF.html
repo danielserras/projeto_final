@@ -1,8 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 {% load static %}
+{% load i18n %}{% autoescape off %}
 <html>
     <head>
-        <title>Fatura</title>
+        <title>{% trans 'Recibo' %}</title>
         <style type="text/css">
             body {
                 font-weight: 200;
@@ -59,11 +60,10 @@
         </style>
     </head>
     <body>
-        {% load i18n %}{% autoescape off %}
         <table style="width:100%; background-color: #E76F51;">
             <tr>
                 <td>
-                    <h1 class="left-align title">{% trans 'Fatura' %}</h1>
+                    <h1 class="left-align title">{% trans 'Recibo' %}</h1>
                 </td>
                 <td>
                     <h1 class="right-align title">UniHouses</h1>
@@ -74,26 +74,16 @@
             <table style="width:100%">
                 <tr>
                     <td>
-                        <p class="staticInfo">{% trans 'Cobrar A' %}: </p>
+                        <p class="staticInfo">{% trans 'Recibo' %} # {{order_id}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="staticInfo">{% trans 'Recebido por' %}: </p>
                         {{customer_name}}
                     </td>
                     <td class="right-align">
                         {% trans 'Data de Emissão' %}: {{today}}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p class="staticInfo">{% trans 'Número de Telefone' %}: </p>
-                        {{phone_number}}
-                    </td>
-                    <td class="right-align">
-                        {% trans 'Fatura' %} # {{order_id}}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p class="staticInfo">{% trans 'Morada' %}: </p>
-                        {{adress}}
                     </td>
                 </tr>
             </table>
@@ -106,7 +96,7 @@
             </tr>
             {% for line in list_lines %}
                 <tr>
-                    <td width="80%">{{line.description}}</td>
+                    <td width="80%">{% trans line.description %}</td>
                     <td class="amount" width="20%">{{line.amount}}&euro;</td> 
                 </tr>
             {% endfor %}
