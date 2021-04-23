@@ -753,6 +753,7 @@ def create_agreement(user_id, ag_request_id):
             landlord = lord,
             startsDate = ag_request.startsDate,
             endDate= ag_request.endDate,
+            last_invoice_date = last_invoice.timestamp,
             status = True,
         )
         new_ag.save()
@@ -1625,6 +1626,7 @@ def search(request):
                 row_property = cursor.fetchall()
                 
                 cursor.execute(querySelect + queryFromRoom+ queryWhereRoom)
+                print(querySelect + queryFromRoom+ queryWhereRoom)
                 row_room = cursor.fetchall()
 
                 row = row_property + row_room
@@ -1784,7 +1786,13 @@ def make_payment(request, ag_request_id):
 
             lord_receiver_email = lord.lord_user.user.email
             duration_days = (ag_request.endDate - ag_request.startsDate).days
-            total_amount = int((duration_days/30) * main_listing.monthly_payment)
+
+            if len(Invoice.objects.filter(agreement_request=ag_request)) <= 1:
+
+                total_amount = main_listing.monthly_payment + main_listing.security_deposit
+
+            else:
+                total_amount = main_listing.monthly_payment
 
             paypal_dict = {
             "business": settings.PAYPAL_RECEIVER_EMAIL,
@@ -1794,9 +1802,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://1ff8c3b22ca7.ngrok.io/paymentStatus/",
-            "return_url": "http://1ff8c3b22ca7.ngrok.io/mainApp/search",
-            "cancel_return": "http://1ff8c3b22ca7.ngrok.io/mainApp/profile",
+            "notify_url": "http://52ba27a78f52.ngrok.io/paymentStatus/",
+            "return_url": "http://52ba27a78f52.ngrok.io/mainApp/search",
+            "cancel_return": "http://52ba27a78f52.ngrok.io/mainApp/profile",
 
             }
 
@@ -1824,6 +1832,7 @@ def make_payment(request, ag_request_id):
 @csrf_exempt
 def get_payment_status(sender, **kwargs):
     ipn_obj = sender.POST
+    print(ipn_obj)
     if ipn_obj['payment_status'] == ST_PP_COMPLETED:
 
         if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
@@ -1831,6 +1840,15 @@ def get_payment_status(sender, **kwargs):
             ag_request_id = ipn_obj['item_number']
             user_id = ipn_obj['custom']
             create_agreement(user_id, ag_request_id)
+            invoice = Invoice.objects.filter(agreement_request=ag_request_id).order_by("-id")[0]
+            invoice.paid = True
+            invoice.save()
+
+            try:
+                warning = Payment_Warning.objects.get(invoice=invoice)
+                warning.delete()
+            except:
+                pass
 
     return redirect('index')
 
