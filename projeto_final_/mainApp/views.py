@@ -1877,6 +1877,10 @@ def delete_account(request):
                     messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'))
                     return redirect('index')
 
+        for ag_req in Agreement_Request.objects.all():
+            if Tenant.objects.get(id = (ag_req.tenant_id)).ten_user_id == tenant.ten_user_id:
+
+                ag_req.delete()
 
         logout(request)
         tenant.delete()
@@ -1894,7 +1898,11 @@ def delete_account(request):
                     messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'))
                     return redirect('index')
 
-        
+        for ag_req in Agreement_Request.objects.all():
+            if Landlord.objects.get(id = (ag_req.landlord_id)).lord_user_id == lord.lord_user_id:
+
+                ag_req.delete()
+
         for p_listing in Property_listing.objects.all():
             assoc_prop = Property.objects.get(id=p_listing.associated_property.id)
 
