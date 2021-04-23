@@ -736,7 +736,7 @@ def create_agreement(user_id, ag_request_id):
 
     request_id = ag_request_id
     ag_request = Agreement_Request.objects.get(id= request_id)
-    last_invoice = Invoice.objects.get(agreement_request = ag_request) 
+    last_invoice = Invoice.objects.get(agreement_request = ag_request)
     assoc_listing = ''
     new_ag = ''
 
