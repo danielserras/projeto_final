@@ -188,6 +188,17 @@ class Payment_Warning(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
 
+class Refund(models.Model):
+    value = models.FloatField()
+    tenant = models.ForeignKey(Tenant, models.SET_NULL, null=True)
+    landlord = models.ForeignKey(Landlord, models.SET_NULL, null=True)
+    agreement = models.ForeignKey(Agreement, models.SET_NULL, null=True)
+    status = models.BooleanField()
+    checkReadLandlord = models.BooleanField()
+    dateOfRequest = models.DateTimeField()
+    
+class Receipt(models.Model):
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
 class Chat(models.Model):
     user_1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_1")
     user_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_2")

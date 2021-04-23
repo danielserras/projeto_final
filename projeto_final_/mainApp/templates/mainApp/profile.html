@@ -9,12 +9,24 @@
     <script src='{% static "mainApp/js/profile.js" %}'></script>
 {% endblock %}
 {% block content %}
+
     {% if request.session.popUp %}
         <script>
             $(document).ready(function(){
                 $('#modalLoginAddProp').modal('show');
                 $(".deletePOP").click(function() {
                     $('#modalLoginAddProp').modal('hide');
+                });
+            })
+        </script>
+    {% endif %}
+
+    {% if request.session.duePayments %}
+        <script>
+            $(document).ready(function(){
+                $('#modalLogin3').modal('show');
+                $(".deletePOP").click(function() {
+                    $('#modalLogin3').modal('hide');
                 });
             })
         </script>
@@ -104,6 +116,30 @@
                     <button type="submit" class="btn btn-primary deletePOP" id="deleteYes">{% trans 'Sim' %}</button>
                 </form>
                 <button type="submit" class="btn btn-primary deletePOP">{% trans 'Não' %}</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!--POP-UP CANCEL AGREEMENT(TENANT) IN CASE THERE ARE PAYMENT WARNINGS(DUE)-->
+    <div class="modal fade" id="modalLogin3" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-3 border-danger">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Pagamentos em atraso' %}</h5>
+            {% csrf_token %}
+            <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            {% trans 'Não pode cancelar o seu acordo atual enquanto tiver pagamentos em atraso.' %}
+            </div>
+            <div class="modal-footer">
+                <form action="{% url 'deletePopUpDuePayment' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary deletePOP">{% trans 'Ok' %}</button>
+                </form>
             </div>
         </div>
         </div>
