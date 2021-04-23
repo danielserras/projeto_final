@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'myapi.apps.MyapiConfig',
     'knox',
     'rest_framework.authtoken',
+    'import_export',
 ]
 PAYPAL_TEST = True
 PAYPAL_RECEIVER_EMAIL = 'sb-st9me5441079@business.example.com'
@@ -145,6 +146,7 @@ LOCALE_PATHS = [     os.path.join(BASE_DIR, 'locale') ]
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = "/static/"
 
 from django.utils.translation import gettext_lazy as _
 

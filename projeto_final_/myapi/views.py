@@ -179,7 +179,10 @@ class Property(APIView):
 
 
 
-
+class SearchListing(APIView):
+    def post(self, request):
+        pass
+        
 
 class imageTest(generics.GenericAPIView):
     serializer_class = imageTestSerializer
