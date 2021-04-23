@@ -750,6 +750,7 @@ def create_agreement(user_id, ag_request_id):
             landlord = lord,
             startsDate = ag_request.startsDate,
             endDate= ag_request.endDate,
+            last_invoice_date = last_invoice.timestamp,
             status = True,
         )
         new_ag.save()
@@ -1490,12 +1491,12 @@ def notificationsLandlord(request):
         accepted_ = a.accepted 
         dateOfRequest_ = a.dateOfRequest
         checkReadLandlord = a.checkReadLandlord
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress, checkReadLandlord])
+
         if a.associated_property_listing != None:
             propertyAddress = a.associated_property_listing.associated_property.address
         else:
             propertyAddress = a.associated_room_listing.associated_room.associated_property.address
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress])
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress, checkReadLandlord])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
     context = {"fullList_": reverseList, 'range': range(sizeList)}
@@ -1623,6 +1624,7 @@ def search(request):
                 row_property = cursor.fetchall()
                 
                 cursor.execute(querySelect + queryFromRoom+ queryWhereRoom)
+                print(querySelect + queryFromRoom+ queryWhereRoom)
                 row_room = cursor.fetchall()
 
                 row = row_property + row_room
@@ -1798,9 +1800,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://1ff8c3b22ca7.ngrok.io/paymentStatus/",
-            "return_url": "http://1ff8c3b22ca7.ngrok.io/mainApp/search",
-            "cancel_return": "http://1ff8c3b22ca7.ngrok.io/mainApp/profile",
+            "notify_url": "http://52ba27a78f52.ngrok.io/paymentStatus/",
+            "return_url": "http://52ba27a78f52.ngrok.io/mainApp/search",
+            "cancel_return": "http://52ba27a78f52.ngrok.io/mainApp/profile",
 
             }
 
@@ -1828,6 +1830,7 @@ def make_payment(request, ag_request_id):
 @csrf_exempt
 def get_payment_status(sender, **kwargs):
     ipn_obj = sender.POST
+    print(ipn_obj)
     if ipn_obj['payment_status'] == ST_PP_COMPLETED:
 
         if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
@@ -1835,6 +1838,15 @@ def get_payment_status(sender, **kwargs):
             ag_request_id = ipn_obj['item_number']
             user_id = ipn_obj['custom']
             create_agreement(user_id, ag_request_id)
+            invoice = Invoice.objects.filter(agreement_request=ag_request_id).order_by("-id")[0]
+            invoice.paid = True
+            invoice.save()
+
+            try:
+                warning = Payment_Warning.objects.get(invoice=invoice)
+                warning.delete()
+            except:
+                pass
 
     return redirect('index')
 
