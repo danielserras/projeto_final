@@ -30,6 +30,16 @@
             </div>
         </div> 
     </div>
+    {% if listAgreementAndPaid|length == 0 %}
+    <div class="row my-5">
+        <div class="col-12">
+            <h2 class="text-center text-16 pl-5">{% trans 'Ainda não existem acordos' %}</h2>
+        </div>
+    </div>
+    <div class="row my-5">
+        <img src='{% static "mainApp/images/empty.svg" %}' class='mx-auto' width='270'>
+    </div>
+    {% else %}
     <div class="table-responsive">
         <table class="table">
         <thead class="thead bg-info">
@@ -97,6 +107,13 @@
                                     <button type="submit" class="btn bg-transparent border-secondary border-3 text-white font-weight-bold"><i class="fa fa-eye" style="color: #2a9d8f; font-size:22px" aria-hidden="true"></i></button>
                                 </form>
                             </td>
+                            <td class="text-center">
+                                <form action="{% url 'receipts' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input name="agreement_id" type='hidden' value="{{a.id}}">
+                                    <button type="submit" class="btn bg-transparent border-secondary border-3 text-white font-weight-bold"><i class="fa fa-eye" style="color: #2a9d8f; font-size:22px" aria-hidden="true"></i></button>
+                                </form>
+                            </td>
                         {% else %}
                             <td class="text-center pt-3">{{a.landlord.lord_user.user}}</td>
                             <td class="text-center font-weight-bold pt-3">
@@ -114,13 +131,20 @@
                                     <button type="submit" class="btn bg-transparent border-secondary border-3 text-white font-weight-bold"><i class="fa fa-eye" style="color: #2a9d8f; font-size:22px" aria-hidden="true"></i></button>
                                 </form>
                             </td>
+                            <td class="text-center">
+                                <form action="{% url 'receipts' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input name="agreement_id" type='hidden' value="{{a.id}}">
+                                    <button type="submit" class="btn bg-transparent border-secondary border-3 text-white font-weight-bold"><i class="fa fa-eye" style="color: #2a9d8f; font-size:22px" aria-hidden="true"></i></button>
+                                </form>
+                            </td>
                         {% endif %}
-                        <td class="text-center pt-3">hello</td>
                     </tr>
                 {% endfor %}
         </tbody>
     </table>
     </div>
+    {% endif %}
 </div>
 <div class="modal fade" id="modalPopUp" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

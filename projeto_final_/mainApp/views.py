@@ -616,7 +616,10 @@ def accept_request(request, request_id):
     invoice_line_deposit.save()
 
     duration_days = (ag_request.endDate - ag_request.startsDate).days
-    total_amount = int((duration_days/30) * main_listing.monthly_payment)
+    if duration_days >= 31:
+        total_amount = main_listing.monthly_payment
+    else:
+        total_amount = int((duration_days/30) * main_listing.monthly_payment)
 
     invoice_line_rent = Invoice_Line(
         description = _("Renda do mês de ") + _(ag_request.startsDate.strftime("%B")),
@@ -1523,7 +1526,6 @@ def notificationsLandlord(request):
         if e.landlord_id == landlord_.id:
             listOfAgreements_.append(e)
     
-   
     fullList_ = []
     for a in listOfAgreements_:
         id_req = a.id
@@ -1693,7 +1695,7 @@ def search(request):
                 row_property = cursor.fetchall()
                 
                 cursor.execute(querySelect + queryFromRoom+ queryWhereRoom)
-                print(querySelect + queryFromRoom+ queryWhereRoom)
+
                 row_room = cursor.fetchall()
 
                 row = row_property + row_room
@@ -1978,7 +1980,6 @@ def make_payment_refunds(request, ref_id):
 @csrf_exempt
 def get_payment_status(sender, **kwargs):
     ipn_obj = sender.POST
-    print(ipn_obj)
     if ipn_obj['payment_status'] == ST_PP_COMPLETED:
 
         if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
@@ -1989,6 +1990,11 @@ def get_payment_status(sender, **kwargs):
             invoice = Invoice.objects.filter(agreement_request=ag_request_id).order_by("-id")[0]
             invoice.paid = True
             invoice.save()
+            
+            receipt = Receipt(
+                invoice_id = invoice.id
+            )
+            receipt.save()
 
             try:
                 warning = Payment_Warning.objects.get(invoice=invoice)
@@ -2238,7 +2244,7 @@ def get_invoice_pdf(request):
                 'list_lines': list_invoice_line,
                 'total_amount': total,
             }
-            pdf = render_to_pdf('mainApp/invoice.html', data)
+            pdf = render_to_pdf('mainApp/invoicePDF.html', data)
             return HttpResponse(pdf, content_type='application/pdf')
 
 def invoicesLandlord(request):
@@ -2495,3 +2501,56 @@ def checkReadLandlordRef(request,id_ref):
 def deletePopUpDuePayment(request):
     request.session['duePayments'] =  False
     return redirect('profile')
+    
+def receipts(request):
+    context={}
+
+    if request.method == 'POST':
+        agreement=request.POST['agreement_id']
+
+        list_invoices = Invoice.objects.filter(agreement_id = agreement)
+
+        fullList = []
+        for i in list_invoices:
+            try:
+                receipt = Receipt.objects.get(invoice_id=i.id)
+                fullList.append([i, receipt])
+            except:
+                pass
+        context={
+            'fullList': fullList,
+        }
+ 
+    return render(request, "mainApp/receipts.html", context)
+
+def get_receipt_pdf(request):
+    if request.method == 'POST':
+
+        receipt_id=request.POST['receipt_id']
+
+        if receipt_id != None:
+            total = 0
+
+            receipt = Receipt.objects.get(id=receipt_id)
+            invoice = Invoice.objects.get(id=receipt.invoice_id)
+            if (invoice.agreement_id == None):
+                ag = Agreement_Request.objects.get(id=invoice.agreement_request_id)
+            else:
+                ag = Agreement.objects.get(id=invoice.agreement_id)
+            tenant = Tenant.objects.get(id=ag.tenant_id)
+            tenant_app = App_user.objects.get(user_id=tenant.ten_user_id)
+            tenant_user = User.objects.get(id=tenant_app.user_id)
+            list_invoice_line = Invoice_Line.objects.filter(invoice_id = invoice.id)
+
+            for line in list_invoice_line:
+                total += line.amount
+
+            data = {
+                'today': invoice.timestamp, 
+                'customer_name': str(tenant_user.first_name) + " " + str(tenant_user.last_name),
+                'order_id': receipt.id,
+                'list_lines': list_invoice_line,
+                'total_amount': total,
+            }
+            pdf = render_to_pdf('mainApp/receiptPDF.html', data)
+            return HttpResponse(pdf, content_type='application/pdf')

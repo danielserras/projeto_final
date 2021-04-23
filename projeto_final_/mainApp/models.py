@@ -196,3 +196,16 @@ class Refund(models.Model):
     status = models.BooleanField()
     checkReadLandlord = models.BooleanField()
     dateOfRequest = models.DateTimeField()
+    
+class Receipt(models.Model):
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+class Chat(models.Model):
+    user_1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_1")
+    user_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_2")
+
+class Message(models.Model):
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField(null=False, blank=False)
+    timestamp = models.DateTimeField()
+    is_read = models.BooleanField()

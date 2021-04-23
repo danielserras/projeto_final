@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-23 14:34+0100\n"
+"POT-Creation-Date: 2021-04-23 19:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,6 +51,7 @@ msgstr "Phone number"
 
 #: mainApp/forms.py:97 mainApp/templates/mainApp/addProperty.html:44
 #: mainApp/templates/mainApp/editProperty.html:49
+#: mainApp/templates/mainApp/invoice.html:95
 #: mainApp/templates/mainApp/propertiesManagement.html:30
 #: mainApp/templates/mainApp/register.html:84
 msgid "Morada"
@@ -412,6 +413,7 @@ msgstr "Title"
 
 #: mainApp/templates/mainApp/addListing.html:54
 #: mainApp/templates/mainApp/editListing.html:37
+#: mainApp/templates/mainApp/invoice.html:104
 msgid "Descrição"
 msgstr "Description"
 
@@ -771,12 +773,33 @@ msgstr "Message to landlord"
 msgid "Introduza uma mensagem a enviar ao senhorio..."
 msgstr "Write your message to the landlord here"
 
+#: mainApp/templates/mainApp/invoice.html:6
 #: mainApp/templates/mainApp/invoice.html:66
+#: mainApp/templates/mainApp/invoice.html:90
 #: mainApp/templates/mainApp/notificationsTenant.html:133
 #: mainApp/templates/mainApp/notificationsTenant.html:144
 #: mainApp/templates/mainApp/notificationsTenant.html:170
 msgid "Fatura"
 msgstr "Invoice"
+
+#: mainApp/templates/mainApp/invoice.html:77
+msgid "Cobrar A"
+msgstr ""
+
+#: mainApp/templates/mainApp/invoice.html:81
+#: mainApp/templates/mainApp/invoices.html:29
+msgid "Data de Emissão"
+msgstr "Issue date"
+
+#: mainApp/templates/mainApp/invoice.html:86
+#, fuzzy
+#| msgid "Número de telefone"
+msgid "Número de Telefone"
+msgstr "Phone number"
+
+#: mainApp/templates/mainApp/invoice.html:105
+msgid "Valor"
+msgstr ""
 
 #: mainApp/templates/mainApp/invoices.html:19
 #: mainApp/templates/mainApp/manageAgreements.html:50
@@ -787,10 +810,6 @@ msgstr "Invoices"
 #: mainApp/templates/mainApp/invoices.html:28
 msgid "Número da Fatura"
 msgstr "Invoice number"
-
-#: mainApp/templates/mainApp/invoices.html:29
-msgid "Data de Emissão"
-msgstr "Issue date"
 
 #: mainApp/templates/mainApp/invoices.html:30
 msgid "Mês"
@@ -991,8 +1010,8 @@ msgid "Fim"
 msgstr "Ending Date"
 
 #: mainApp/templates/mainApp/manageAgreements.html:43
-#: mainApp/templates/mainApp/register.html:105 mainApp/views.py:923
-#: mainApp/views.py:952
+#: mainApp/templates/mainApp/register.html:105 mainApp/views.py:924
+#: mainApp/views.py:953
 msgid "Inquilino"
 msgstr "Tenant"
 
@@ -1007,7 +1026,7 @@ msgstr "Payment late"
 #: mainApp/templates/mainApp/manageAgreements.html:47
 #: mainApp/templates/mainApp/manageAgreementsTenant.html:31
 #: mainApp/templates/mainApp/payment.html:21
-#: mainApp/templates/mainApp/register.html:108 mainApp/views.py:972
+#: mainApp/templates/mainApp/register.html:108 mainApp/views.py:973
 msgid "Senhorio"
 msgstr "Landlord"
 
@@ -1017,7 +1036,6 @@ msgid "Pagamento"
 msgstr "Payment"
 
 #: mainApp/templates/mainApp/manageAgreements.html:51
-#: mainApp/templates/mainApp/manageAgreementsTenant.html:34
 msgid "Recibo"
 msgstr "Receipt"
 
@@ -1057,6 +1075,10 @@ msgstr "Warning of late payment"
 #: mainApp/templates/mainApp/manageAgreements.html:138
 msgid "O aviso de pagamento em atraso foi enviado para o inquilino com sucesso"
 msgstr ""
+
+#: mainApp/templates/mainApp/manageAgreementsTenant.html:34
+msgid "Recibos"
+msgstr "Receipts"
 
 #: mainApp/templates/mainApp/notificationsLandlord.html:45
 #: mainApp/templates/mainApp/notificationsTenant.html:19
@@ -1494,15 +1516,15 @@ msgstr ""
 msgid "Depósito de Entrada"
 msgstr "Deposit"
 
-#: mainApp/views.py:622 mainApp/views.py:2117
+#: mainApp/views.py:622 mainApp/views.py:2135
 msgid "Renda do mês de "
 msgstr "Rent of "
 
-#: mainApp/views.py:1707
+#: mainApp/views.py:1709
 msgid "Opção reservada a inquilinos."
 msgstr "Option available only to tenants"
 
-#: mainApp/views.py:1916 mainApp/views.py:1933
+#: mainApp/views.py:1934 mainApp/views.py:1951
 msgid ""
 "Ainda possui contratos ativos. Terá de terminar os contratos antes de "
 "eliminar os seus dados."
