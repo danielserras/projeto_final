@@ -699,9 +699,12 @@ def deny_request(request, request_id):
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
         dateOfRequest_ = a.dateOfRequest
-        propertyAddress = ((a.associated_property_listing).associated_property).address
         checkReadLandlord = a.checkReadLandlord
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_,propertyAddress, checkReadLandlord])
+        if a.associated_property_listing != None:
+            propertyAddress = a.associated_property_listing.associated_property.address
+        else:
+            propertyAddress = a.associated_room_listing.associated_room.associated_property.address
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress,checkReadLandlord])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
     context = {"fullList_": reverseList, 'range': range(sizeList)}
@@ -912,64 +915,82 @@ def profile(request):
         temp = False
         if request.session['typeUser'] == "Tenant":
             for i in Agreement.objects.all():
-                if Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id and i.status == True:
+                try:
+                    if (Tenant.objects.get(id = i.tenant_id)).ten_user_id == a_user.id and i.status == True:
 
-                    #check dates
-                    agreement = i
-                    endDate = agreement.endDate
-                    presentTime = datetime.today().strftime('%d-%m-%Y')
-                    now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
-                    diffDates = (endDate - now_date).days
-                    temp = True
+                        #check dates
+                        agreement = i
+                        endDate = agreement.endDate
+                        presentTime = datetime.today().strftime('%d-%m-%Y')
+                        now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
+                        diffDates = (endDate - now_date).days
+                        temp = True
 
-                    user_birth = a_user.birthDate.strftime('%Y-%m-%d')
-                    user_phone = a_user.phoneNumber
-                    user_type = _('Inquilino')
+                        user_birth = a_user.birthDate.strftime('%Y-%m-%d')
+                        user_phone = a_user.phoneNumber
+                        user_type = _('Inquilino')
 
-                    ten_user = Tenant.objects.get(ten_user=a_user)
-                    user_min_search = ten_user.min_search
-                    user_max_search = ten_user.max_search
-                    user_university = ten_user.university
+                        ten_user = Tenant.objects.get(ten_user=a_user)
+                        user_min_search = ten_user.min_search
+                        user_max_search = ten_user.max_search
+                        user_university = ten_user.university
 
-                    #in case of a cancelled agreement shows the money which the tenant will get back
-                    if i.associated_property_listing_id == None:
-                        listingRent = Listing.objects.get(id = Room_listing.objects.get(id=i.associated_room_listing_id).main_listing_id).monthly_payment
-                        rent_to_be_returned = (listingRent / 30) * diffDates
-                    else:
-                        listingRent = Listing.objects.get(id = Property_listing.objects.get(id=i.associated_property_listing_id).main_listing_id).monthly_payment
-                        rent_to_be_returned = round((listingRent / 30) * diffDates,2)
-
-
-                    context = {"diffDates": diffDates,
-                    "birth": user_birth,
-                    "phone": user_phone,
-                    "type": user_type,
-                    "min": user_min_search,
-                    "max": user_max_search,
-                    "university": user_university,
-                    "rent_to_be_returned": rent_to_be_returned}
-                elif Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id and i.status != True:
-                    temp = True
-
-                    user_birth = a_user.birthDate.strftime('%Y-%m-%d')
-                    user_phone = a_user.phoneNumber
-                    user_type = _('Inquilino')
-
-                    ten_user = Tenant.objects.get(ten_user=a_user)
-                    user_min_search = ten_user.min_search
-                    user_max_search = ten_user.max_search
-                    user_university = ten_user.university
+                        #in case of a cancelled agreement shows the money which the tenant will get back
+                        if i.associated_property_listing_id == None:
+                            listingRent = Listing.objects.get(id = Room_listing.objects.get(id=i.associated_room_listing_id).main_listing_id).monthly_payment
+                            rent_to_be_returned = (listingRent / 30) * diffDates
+                        else:
+                            listingRent = Listing.objects.get(id = Property_listing.objects.get(id=i.associated_property_listing_id).main_listing_id).monthly_payment
+                            rent_to_be_returned = round((listingRent / 30) * diffDates,2)
 
 
-                    context = {"birth": user_birth,
-                    "phone": user_phone,
-                    "type": user_type,
-                    "min": user_min_search,
-                    "max": user_max_search,
-                    "university": user_university}
+                        context = {"diffDates": diffDates,
+                        "birth": user_birth,
+                        "phone": user_phone,
+                        "type": user_type,
+                        "min": user_min_search,
+                        "max": user_max_search,
+                        "university": user_university,
+                        "rent_to_be_returned": rent_to_be_returned}
+                    elif (Tenant.objects.get(id = i.tenant_id)).ten_user_id == a_user.id and i.status != True:
+                        temp = True
+
+                        user_birth = a_user.birthDate.strftime('%Y-%m-%d')
+                        user_phone = a_user.phoneNumber
+                        user_type = _('Inquilino')
+
+                        ten_user = Tenant.objects.get(ten_user=a_user)
+                        user_min_search = ten_user.min_search
+                        user_max_search = ten_user.max_search
+                        user_university = ten_user.university
+
+
+                        context = {"birth": user_birth,
+                        "phone": user_phone,
+                        "type": user_type,
+                        "min": user_min_search,
+                        "max": user_max_search,
+                        "university": user_university}
+                except:
+                    pass
 
             if temp == False:
-                context = {}
+                user_birth = a_user.birthDate.strftime('%Y-%m-%d')
+                user_phone = a_user.phoneNumber
+                user_type = _('Inquilino')
+
+                ten_user = Tenant.objects.get(ten_user=a_user)
+                user_min_search = ten_user.min_search
+                user_max_search = ten_user.max_search
+                user_university = ten_user.university
+
+
+                context = {"birth": user_birth,
+                "phone": user_phone,
+                "type": user_type,
+                "min": user_min_search,
+                "max": user_max_search,
+                "university": user_university}
         else:
             user_birth = a_user.birthDate.strftime('%Y-%m-%d')
             user_phone = a_user.phoneNumber
@@ -1493,12 +1514,11 @@ def notificationsLandlord(request):
         accepted_ = a.accepted 
         dateOfRequest_ = a.dateOfRequest
         checkReadLandlord = a.checkReadLandlord
-
         if a.associated_property_listing != None:
             propertyAddress = a.associated_property_listing.associated_property.address
         else:
             propertyAddress = a.associated_room_listing.associated_room.associated_property.address
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress, checkReadLandlord])
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress,checkReadLandlord])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
     context = {"fullList_": reverseList, 'range': range(sizeList)}
