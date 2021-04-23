@@ -168,7 +168,8 @@ class Agreement_Request(models.Model):
     message = models.TextField(null=True, blank=True)
     accepted = models.BooleanField(null=True, blank=True)
     dateOfRequest = models.DateTimeField()
-    checkRead = models.BooleanField()
+    checkReadLandlord = models.BooleanField()
+    checkReadTenant = models.BooleanField()
 
 class Invoice(models.Model):
     agreement_request = models.ForeignKey(Agreement_Request, null=True, on_delete=models.CASCADE)
@@ -181,4 +182,30 @@ class Invoice_Line(models.Model):
     description = models.CharField(max_length=280)
     amount = models.IntegerField()
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
-# Create your models here.
+
+class Payment_Warning(models.Model):
+    agreement = models.ForeignKey(Agreement, on_delete=models.CASCADE)
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField()
+
+class Refund(models.Model):
+    value = models.FloatField()
+    tenant = models.ForeignKey(Tenant, models.SET_NULL, null=True)
+    landlord = models.ForeignKey(Landlord, models.SET_NULL, null=True)
+    agreement = models.ForeignKey(Agreement, models.SET_NULL, null=True)
+    status = models.BooleanField()
+    checkReadLandlord = models.BooleanField()
+    dateOfRequest = models.DateTimeField()
+    
+class Receipt(models.Model):
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+class Chat(models.Model):
+    user_1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_1")
+    user_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_2")
+
+class Message(models.Model):
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField(null=False, blank=False)
+    timestamp = models.DateTimeField()
+    is_read = models.BooleanField()

@@ -4,6 +4,7 @@ from django.conf.urls.i18n import i18n_patterns
 from . import views
 
 urlpatterns = [
+    path('profile/chats/<int:user_id>', views.chat_list_view, name='chatsList'),
     path('profile/propertiesManagement/listingEditing/<int:property_id>/<int:main_listing_id>/removeImage/<int:image_id>', views.remove_image_view, name='removeImage'),
     path('profile/propertiesManagement/listingEditing/deleteListing/<int:property_id>/<int:main_listing_id>', views.delete_listing_view, name='deleteListing'),
     path('profile/propertiesManagement/listingEditing/createListing/<int:property_id>', views.create_listing_view, name='createListing'),
@@ -21,7 +22,6 @@ urlpatterns = [
     path('addProperty/kitchen/', views.introduce_property_view, name='addKitchen'),
     path('addProperty/livingroom/', views.introduce_property_view, name='addLivingroom'),
     path('addProperty/listing/', views.introduce_property_view, name='addListing'),
-    path('profile/manageAgreements', views.manage_agreements_view, name='manage_agreements_view'),
     #path('login', views.login_view, name='login_view'),
     #path('logout', views.logout_view, name='logout_view'),
     #path('register', views.register_view, name='register_view'),
@@ -38,15 +38,24 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('i18n/', include('django.conf.urls.i18n')),
     path('login/confirmed', views.deletePopUp, name='deletePopUp'),
-    path('profile/confirmed', views.deletePopUpProp, name='deletePopUpProp'),
     path('profile/renewAgreement', views.renewAgreement, name='renewAgreement'),
     path('landLord', views.landlord, name='landlord'),
     path('tenant', views.tenant, name='tenant'),
+    path('profile/manageAgreements', views.manage_agreements_view, name='manage_agreements_view'),
+    path('profile/manageAgreementsTenant', views.manageAgreementsTenant, name='manageAgreementsTenant'),
     path('invoice', views.get_invoice_pdf, name='get_invoice_pdf'),
     path('sendInvoice', views.send_invoice, name='send_invoice'),
+    path('sendPaymentWarning', views.send_payment_warning, name='send_payment_warning'),
     path('invoicesLandlord', views.invoicesLandlord, name='invoicesLandlord'),
+    path('invoicesTenant', views.invoicesTenant, name='invoicesTenant'),
     path('profile/agreementDeleted', views.deleteAgreement, name='deleteAgreement'),
     path('profile/accountDeleted', views.delete_account, name='delete_account'),
     path('listing/requestPop', views.requestPop, name='requestPop'),
+    path('notificationsLandlord/read/<int:id_req>', views.checkReadLandlord, name='checkReadLandlord'),
+    path('notificationsTenant/read/<int:id_req>', views.checkReadTenant, name='checkReadTenant'),
+    path('notificationsLandlord/readRef/<int:id_ref>', views.checkReadLandlordRef, name='checkReadLandlordRef'),
+    path('profile/delPopUpDuePayment', views.deletePopUpDuePayment, name='deletePopUpDuePayment'),
+    path('receipts', views.receipts, name='receipts'),
+    path('receipt', views.get_receipt_pdf, name='get_receipt_pdf'),
 ]
 

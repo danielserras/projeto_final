@@ -1,0 +1,49 @@
+{% extends 'mainApp/base.html' %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/payment.css" %}'>
+{% endblock %}
+{% block content %}
+<!-- writes out the form tag automatically -->
+{% load i18n %}
+<div class="row">
+   <div class= "col-6 mt-5 mx-auto justify-content-center">
+        <div class="row fadeInDown mx-auto">
+            <div class="formContent mx-auto bg-secondary">
+                <div class="fadeIn first">
+                    <h5 class="font-weight-bold mt-3 mb-3 text-white"> {% trans 'VALOR A PAGAR' %}</h6>
+                    <div class = "row">
+                        <div class = "col-6 mx-auto">
+                            <div class = "display-4 text-white font-weight-bold">{{amount}}€</div>
+                        </div>     
+                    </div>                     
+                    <div class = "row mt-4">
+                        <h5 class = "text-white font-weight-bold ml-5">{% trans 'Inquilino' %}:</h5>
+                        <h5 class = "text-white-50 font-weight-bold ml-2">{{ten_name}}</h5>
+                    </div>
+
+                    <div class = "row mt-2">
+                        <h5 class = "text-white font-weight-bold ml-5">{% trans 'Anúncio' %}:</h5>
+                        <h5 class = "text-white-50 font-weight-bold ml-2">{{listing_name}}</h5>
+                    </div>
+                    <div class = "row mt-2">
+                        <h5 class = "text-white font-weight-bold ml-5">{% trans 'Data de entrada' %}:</h5>
+                        <h5 class = "text-white-50 font-weight-bold ml-2">{{start}}</h5>
+                    </div>
+                    <div class = "row mt-2">
+                        <h5 class = "text-white font-weight-bold ml-5">{% trans 'Data de saída' %}:</h5>
+                        <h5 class = "text-white-50 font-weight-bold ml-2">{{end}}</h5>
+                    </div>
+                    <div class = "row justify-content-center mx-auto p-4 mt-5 bg-white bottom-rounded">
+                        {{ pp_form.render }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+{% endblock %}
+

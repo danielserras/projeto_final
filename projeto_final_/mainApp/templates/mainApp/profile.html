@@ -9,12 +9,24 @@
     <script src='{% static "mainApp/js/profile.js" %}'></script>
 {% endblock %}
 {% block content %}
-    {% if request.session.addPropPopUp %}
+
+    {% if request.session.popUp %}
         <script>
             $(document).ready(function(){
                 $('#modalLoginAddProp').modal('show');
                 $(".deletePOP").click(function() {
                     $('#modalLoginAddProp').modal('hide');
+                });
+            })
+        </script>
+    {% endif %}
+
+    {% if request.session.duePayments %}
+        <script>
+            $(document).ready(function(){
+                $('#modalLogin3').modal('show');
+                $(".deletePOP").click(function() {
+                    $('#modalLogin3').modal('hide');
                 });
             })
         </script>
@@ -40,7 +52,7 @@
     <div class="modal-content">
         <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Adicionou uma nova propriedade!' %}</h5>
-        <form method="POST" action="{% url 'deletePopUpProp' %}">
+        <form method="POST" action="{% url 'deletePopUp' %}">
             {% csrf_token %}
             <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -51,7 +63,7 @@
         {% trans 'Parabéns, adicionou uma nova propriedade à sua conta!' %}
         </div>
         <div class="modal-footer">
-            <form method="POST" action="{% url 'deletePopUpProp' %}">
+            <form method="POST" action="{% url 'deletePopUp' %}">
                 {% csrf_token %}
                 <button type="submit" id="fecharRegister" class="btn btn-primary deletePOP">{% trans 'Fechar' %}</button>
             </form>
@@ -109,6 +121,30 @@
         </div>
     </div>
 
+    <!--POP-UP CANCEL AGREEMENT(TENANT) IN CASE THERE ARE PAYMENT WARNINGS(DUE)-->
+    <div class="modal fade" id="modalLogin3" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-3 border-danger">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Pagamentos em atraso' %}</h5>
+            {% csrf_token %}
+            <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            {% trans 'Não pode cancelar o seu acordo atual enquanto tiver pagamentos em atraso.' %}
+            </div>
+            <div class="modal-footer">
+                <form action="{% url 'deletePopUpDuePayment' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary deletePOP">{% trans 'Ok' %}</button>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
 
     <div class="container my-5 border border-info border-5 rounded shadow-lg">
         <div class="row bg-info p-2"><h1 class="mx-auto my-auto text-white text-24">{% trans 'Perfil' %}</h1></div>
@@ -143,7 +179,7 @@
                     {% else %}
                         <!--If tenant-->
                         <div class="col-sm-12 p-3">
-                            <a class="text-white" href="#"><button type="button" class="btn btn-info w-100">{% trans 'Ver Acordos' %}</button></a>
+                            <a class="text-white" href="/mainApp/profile/manageAgreementsTenant"><button type="button" class="btn btn-info w-100">{% trans 'Ver Acordos' %}</button></a>
                         </div>
                         {% if diffDates %}
                             <div class="col-sm-12 p-3">
@@ -215,17 +251,17 @@
             {% else %}
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Universidade' %}:</p>
-                        <input type="text" class="inputType1 ml-4" value="{{ university }}" name="university">
+                        <input type="text" class="inputType1 ml-4" value="{% if university != 'None' %} {{university}} {% endif %}" name="university">
                     </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Valor mínimo da pesquisa' %}:</p>
-                        <input type="number" class="inputType1 ml-4" id="minProfile" value="{{ min }}" min="0" max="2000" name="min_search">
+                        <input type="number" class="inputType1 ml-4" id="minProfile" value="{{ min }}" min="0" max="{{ max }}" name="min_search">
                     </div>
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Valor máximo da pesquisa' %}:</p>
-                        <input type="number" class="inputType1 ml-4" id="maxProfile" value="{{ max }}" min="0" max="2000" name="max_search">
+                        <input type="number" class="inputType1 ml-4" id="maxProfile" value="{{ max }}" min="{{ min }}" max="2000" name="max_search">
                     </div>
                 </div>
                 <div class="row justify-content-center">

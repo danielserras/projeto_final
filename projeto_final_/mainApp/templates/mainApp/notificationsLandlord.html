@@ -47,8 +47,23 @@
   
           <div class="messages-box">
             <div id="leftStart" class="list-group rounded-0">
-              {% for a,b,c,d,e,f,g,h in fullList_ %}
-                  <a href="#" id="notifications_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
+              {% for a,b,c,d,e,f,g,h,i in fullList_ %}
+                {% if i is True %}
+                    <a href="#" id="notifications_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
+                      {% load static %}
+                      <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                        <div class="media-body ml-4">
+                          <div class="d-flex align-items-center justify-content-between mb-1">
+                            <h6 class="mb-0">{{ b }}</h6><small class="small font-weight-bold">{{ g }}</small>
+                          </div>
+                          <p class="messageText font-italic text-muted mb-0 text-small">{{ c }}</p>
+                        </div>
+                      </div>
+                    </a>
+                {% else %}
+                <form action="{% url 'checkReadLandlord' a %}" method="POST" id="myform">
+                  {% csrf_token %}
+                  <a href="javascript:{}" onclick="document.getElementById('myform').submit();" id="notifications_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
                     {% load static %}
                     <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
                       <div class="media-body ml-4">
@@ -59,8 +74,39 @@
                       </div>
                     </div>
                   </a>
+                </form>
+                {% endif %}
               {% endfor %}
-
+              {% for id_ref,nameTen,value,actualFinishDate,propertyAddress,startDate,plannedFinishDate,check,status in fullListRef %}  
+                  {% if check is True %}
+                      <a href="#" id="notifications_{{forloop.counter|add:sizeListRef}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
+                        {% load static %}
+                        <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                          <div class="media-body ml-4">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                              <h6 class="mb-0">{{ nameTen }}</h6><small class="small font-weight-bold">{{ actualFinishDate }}</small>
+                            </div>
+                            <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Reembolso' %}.</p>
+                          </div>
+                        </div>
+                      </a>
+                  {% else %}
+                  <form action="{% url 'checkReadLandlordRef' id_ref %}" method="POST" id="myformR">
+                    {% csrf_token %}
+                    <a href="javascript:{}" onclick="document.getElementById('myformR').submit();" id="notifications_{{forloop.counter|add:sizeListRef}}" class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
+                      {% load static %}
+                      <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                        <div class="media-body ml-4">
+                          <div class="d-flex align-items-center justify-content-between mb-1">
+                            <h6 class="mb-0">{{ nameTen }}</h6><small class="small font-weight-bold">{{ actualFinishDate }}</small>
+                          </div>
+                          <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Reembolso' %}.</p>
+                        </div>
+                      </div>
+                    </a>
+                  </form>
+                  {% endif %}
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -74,7 +120,7 @@
             {% load static %}
             <img src='{% static "mainApp/images/message.svg" %}' class='img' id="defaultImg" alt='Image representing a message' />
         </div>
-          {% for a,b,c,d,e,f,g,h in fullList_ %}
+          {% for a,b,c,d,e,f,g,h,i in fullList_ %}
             <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
               <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                   <h4 class="text-white mt-3 pl-3"> {% trans 'Assunto' %} </h4>
@@ -120,6 +166,60 @@
                   {% else %}
                     <p class="text-info">{% trans 'Recusado' %}</p>
                   {% endif %}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+          {% for id_ref,nameTen,value,actualFinishDate,propertyAddress,startDate,plannedFinishDate,check,status in fullListRef %}
+            <div id = "content_{{forloop.counter|add:sizeListRef}}" class='contentNotification' style="display:none">
+              <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
+                  <h4 class="text-white mt-3 pl-3"> {% trans 'Assunto' %} </h4>
+              </div>
+              <div class="row m-2">
+                  <p class= "text-info font-weight-bold">{% trans 'Data Início' %}:&nbsp </p>
+                  <p class= "text-info"> {{ startDate }}</p>
+              </div>
+              <div class="row m-2">
+                  <p class= "text-info font-weight-bold">{% trans 'Data de término planeada' %}:&nbsp </p>
+                  <p class= "text-info"> {{ plannedFinishDate }}</p>
+              </div>
+              <div class="row m-2">
+                <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
+                <p class= "text-info"> {{ propertyAddress }}</p>
+              </div>
+              <div class="row m-2">
+                <p class= "text-info font-weight-bold">{% trans 'Nome do inquilino' %}:&nbsp </p>
+                <p class= "text-info"> {{ nameTen }}</p>
+              </div>
+              <div class="row m-2">
+                <p class= "text-info font-weight-bold">{% trans 'Valor do reembolso' %}:&nbsp </p>
+                <p class= "text-info"> {{ value }}</p>
+              </div>
+              <div class="row m-2">
+                <p class= "text-info font-weight-bold">{% trans 'Data de cancelamento do acordo' %}:&nbsp </p>
+                <p class= "text-info"> {{ actualFinishDate }}</p>
+              </div>
+              <div class="row m-2">
+                <div>
+                  <p class="text-info font-weight-bold">{% trans 'Mensagem' %}:&nbsp</p>
+                  <p class="text-info">O utilizador <strong>{{ nameTen }}</strong> decidiu terminar o acordo planeado inicialmente. <br> 
+                    Você fica então responsabilizado de pagar o reembolso relativo aos dias que faltavam para terminar o acordo inicial.
+                  </p>
+                </div>
+              </div>
+              {% if status is True %}
+                <div class="row m-2">
+                  <p class="text-info font-weight-bold">{% trans 'Estado do pedido' %}:&nbsp</p>
+                    <p class="text-info">{% trans 'Pago' %}</p>
+                </div>
+              {% else %}
+                <div class="row d-flex justify-content-center">
+                  <form method="POST" action="{% url 'make_payment_refunds' id_ref %}">
+                    {% csrf_token %}
+                    <div class="col-sm-6 mt-2">
+                      <button type="submit" class="btn btn-info font-weight-bold mx-auto" >{% trans 'Pagar' %}</button>
+                    </div>
+                  </form>
                 </div>
               {% endif %}
             </div>
