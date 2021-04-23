@@ -51,4 +51,6 @@ urlpatterns += i18n_patterns (
     path('paymentStatus/', mainApp.views.get_payment_status , name='payment_status'),
     #path('accounts/password_reset/done/', )
     path('accounts/', include('django.contrib.auth.urls')),
+    path('payment/refunds/<int:ref_id>', mainApp.views.make_payment_refunds , name='make_payment_refunds'),
+    path('paymentStatusRef/', mainApp.views.get_payment_status_refunds , name='payment_status_refunds'),
 )

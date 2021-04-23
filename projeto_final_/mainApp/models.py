@@ -187,3 +187,12 @@ class Payment_Warning(models.Model):
     agreement = models.ForeignKey(Agreement, on_delete=models.CASCADE)
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
+
+class Refund(models.Model):
+    value = models.FloatField()
+    tenant = models.ForeignKey(Tenant, models.SET_NULL, null=True)
+    landlord = models.ForeignKey(Landlord, models.SET_NULL, null=True)
+    agreement = models.ForeignKey(Agreement, models.SET_NULL, null=True)
+    status = models.BooleanField()
+    checkReadLandlord = models.BooleanField()
+    dateOfRequest = models.DateTimeField()

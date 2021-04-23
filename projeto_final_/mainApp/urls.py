@@ -52,5 +52,7 @@ urlpatterns = [
     path('listing/requestPop', views.requestPop, name='requestPop'),
     path('notificationsLandlord/read/<int:id_req>', views.checkReadLandlord, name='checkReadLandlord'),
     path('notificationsTenant/read/<int:id_req>', views.checkReadTenant, name='checkReadTenant'),
+    path('notificationsLandlord/readRef/<int:id_ref>', views.checkReadLandlordRef, name='checkReadLandlordRef'),
+    path('profile/delPopUpDuePayment', views.deletePopUpDuePayment, name='deletePopUpDuePayment'),
 ]
 

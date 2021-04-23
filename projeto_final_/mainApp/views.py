@@ -704,7 +704,31 @@ def deny_request(request, request_id):
         fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress,checkReadLandlord])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
-    context = {"fullList_": reverseList, 'range': range(sizeList)}
+
+    listOfRefunds = []
+    for r in Refund.objects.all():
+        if r.landlord == landlord_:
+            listOfRefunds.append(r)
+    
+    fullListRef = []
+    for rb in listOfRefunds:
+        id_ref = rb.id
+        nameOfTen = (((rb.tenant).ten_user).user).username
+        value = rb.value
+        startDate = (rb.agreement).startsDate
+        plannedFinishDate = (rb.agreement).endDate
+        actualFinishDate = rb.dateOfRequest
+        check = rb.checkReadLandlord
+        status = rb.status
+        if (rb.agreement).associated_property_listing != None:
+            propertyAddressR = (rb.agreement).associated_property_listing.associated_property.address
+        else:
+            propertyAddressR = (rb.agreement).associated_room_listing.associated_room.associated_property.address
+        fullListRef.append([id_ref,nameOfTen,value,actualFinishDate,propertyAddressR,startDate,plannedFinishDate,check,status])
+    reverseListRef = list(reversed(fullListRef))
+    sizeListRef = len(fullListRef)
+
+    context = {"fullList_": reverseList, 'range': range(sizeList), "fullListRef": reverseListRef,"sizeListRef": sizeListRef}
 
     return render(request, "mainApp/notificationsLandlord.html", context)
 
@@ -935,7 +959,7 @@ def profile(request):
                         #in case of a cancelled agreement shows the money which the tenant will get back
                         if i.associated_property_listing_id == None:
                             listingRent = Listing.objects.get(id = Room_listing.objects.get(id=i.associated_room_listing_id).main_listing_id).monthly_payment
-                            rent_to_be_returned = (listingRent / 30) * diffDates
+                            rent_to_be_returned = round((listingRent / 30) * diffDates,2)
                         else:
                             listingRent = Listing.objects.get(id = Property_listing.objects.get(id=i.associated_property_listing_id).main_listing_id).monthly_payment
                             rent_to_be_returned = round((listingRent / 30) * diffDates,2)
@@ -997,6 +1021,7 @@ def profile(request):
 
         user_form = UpdateUserForm()
         context['user_form'] = user_form
+
         return render(request, "mainApp/profile.html", context)
 
 def properties_management_view(request):
@@ -1519,7 +1544,31 @@ def notificationsLandlord(request):
         fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress,checkReadLandlord])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
-    context = {"fullList_": reverseList, 'range': range(sizeList)}
+
+    listOfRefunds = []
+    for r in Refund.objects.all():
+        if r.landlord == landlord_:
+            listOfRefunds.append(r)
+    
+    fullListRef = []
+    for rb in listOfRefunds:
+        id_ref = rb.id
+        nameOfTen = (((rb.tenant).ten_user).user).username
+        value = rb.value
+        startDate = (rb.agreement).startsDate
+        plannedFinishDate = (rb.agreement).endDate
+        actualFinishDate = rb.dateOfRequest
+        check = rb.checkReadLandlord
+        status = rb.status
+        if (rb.agreement).associated_property_listing != None:
+            propertyAddressR = (rb.agreement).associated_property_listing.associated_property.address
+        else:
+            propertyAddressR = (rb.agreement).associated_room_listing.associated_room.associated_property.address
+        fullListRef.append([id_ref,nameOfTen,value,actualFinishDate,propertyAddressR,startDate,plannedFinishDate,check,status])
+    reverseListRef = list(reversed(fullListRef))
+    sizeListRef = len(fullListRef)
+
+    context = {"fullList_": reverseList, 'range': range(sizeList), "fullListRef": reverseListRef, "sizeListRef": sizeListRef}
     return render(request, "mainApp/notificationsLandlord.html", context)
 
 """ def accReq(request, id_Req):
@@ -1820,9 +1869,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://52ba27a78f52.ngrok.io/paymentStatus/",
-            "return_url": "http://52ba27a78f52.ngrok.io/mainApp/search",
-            "cancel_return": "http://52ba27a78f52.ngrok.io/mainApp/profile",
+            "notify_url": "http://7523997b61b8.ngrok.io/paymentStatus/",
+            "return_url": "http://7523997b61b8.ngrok.io/mainApp/search",
+            "cancel_return": "http://7523997b61b8.ngrok.io/mainApp/profile",
 
             }
 
@@ -1846,6 +1895,85 @@ def make_payment(request, ag_request_id):
         
         else:
             return redirect('search')
+
+@login_required(login_url='login_view')
+#NESTE MOMENTO ESTAMOS A PAGAR AO SITE EM VEZ DE PAGAR O INQUILINO O VALOR DO REFUND
+def make_payment_refunds(request, ref_id):
+
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+
+    try:
+        landlord = Landlord.objects.get(lord_user=a_user)
+    except:
+        return redirect('search')
+
+    if request.method == 'POST':
+
+        ref = Refund.objects.get(id=ref_id)
+        if ref.landlord == landlord:
+
+            if (ref.agreement).associated_property_listing == None:
+                room_listing = (ref.agreement).associated_room_listing
+                assoc_room = room_listing.associated_room
+                assoc_prop = assoc_room.associated_property
+                lord = assoc_prop.landlord
+                main_listing = room_listing.main_listing
+                listing_name = main_listing.title
+
+            else:
+                prop_listing = (ref.agreement).associated_property_listing
+                assoc_prop = prop_listing.associated_property
+                lord = assoc_prop.landlord
+                main_listing = prop_listing.main_listing
+                listing_name = main_listing.title
+
+            ten_receiver_email = (((ref.tenant).ten_user).user).email
+            duration_days = (ref.dateOfRequest.date() - ref.agreement.startsDate).days
+
+            # if len(Invoice.objects.filter(agreement_request=ag_request)) <= 1:
+
+            #     total_amount = main_listing.monthly_payment + main_listing.security_deposit
+
+            # else:
+            #     total_amount = main_listing.monthly_payment
+            total_amount = ref.value
+
+            paypal_dict = {
+            "business": settings.PAYPAL_RECEIVER_EMAIL,
+            "amount": total_amount,
+            "currency_code": "EUR",
+            "no_note": "1",
+            "item_name": main_listing.title,
+            "item_number": ref.id,
+            "custom": current_user.id,
+            "notify_url": "http://7523997b61b8.ngrok.io/paymentStatusRef/",
+            "return_url": "http://7523997b61b8.ngrok.io/mainApp/search",
+            "cancel_return": "http://7523997b61b8.ngrok.io/mainApp/profile",
+
+            }
+
+            start_date = (ref.agreement).startsDate
+            end_date = ref.dateOfRequest
+            ref_id = ref.id
+            ten_name = (((ref.tenant).ten_user).user).username
+
+            payment_form = PayPalPaymentsForm(initial=paypal_dict)
+            context = {
+                'pp_form':payment_form,
+                'start': start_date,
+                'end': end_date,
+                'id': ref_id,
+                'ten_name': ten_name,
+                'amount': total_amount,
+                'listing_name': listing_name,
+                }
+
+            return render(request, template_name='mainApp/paymentRefunds.html', context=context)
+        
+        else:
+            return redirect('search')
+
 
 @csrf_exempt
 def get_payment_status(sender, **kwargs):
@@ -1872,6 +2000,34 @@ def get_payment_status(sender, **kwargs):
 
 valid_ipn_received.connect(get_payment_status)
 invalid_ipn_received.connect(get_payment_status)
+
+@csrf_exempt
+def get_payment_status_refunds(sender, **kwargs):
+    ipn_obj = sender.POST
+    print(ipn_obj)
+    if ipn_obj['payment_status'] == ST_PP_COMPLETED:
+
+        if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
+
+            ref_id = ipn_obj['item_number']
+            user_id = ipn_obj['custom']
+            Refund.objects.filter(id=ref_id).update(status=True)
+            print("Refund status changed")
+            # invoice = Invoice.objects.filter(agreement_request=ag_request_id).order_by("-id")[0]
+            # invoice.paid = True
+            # invoice.save()
+
+            # try:
+            #     warning = Payment_Warning.objects.get(invoice=invoice)
+            #     warning.delete()
+            # except:
+            #     pass
+
+    return redirect('index')
+
+valid_ipn_received.connect(get_payment_status_refunds)
+invalid_ipn_received.connect(get_payment_status_refunds)
+
 
 def emailBody(request):
     return render(request, "mainApp/emailBody.html", {})
@@ -2263,7 +2419,37 @@ def deleteAgreement(request):
 
     for i in Agreement.objects.all():
         if i.tenant_id == tenant.id:
+            #check if there are payments due
+            if len(Payment_Warning.objects.filter(agreement=i)) > 0 :
+                request.session['duePayments'] = True
+                return redirect('profile')
+
+            #check dates
+            agreement = i
+            endDate = agreement.endDate
+            presentTime = datetime.today().strftime('%d-%m-%Y')
+            now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
+            diffDates = (endDate - now_date).days
+
+            if i.associated_property_listing_id == None:
+                listingRent = Listing.objects.get(id = Room_listing.objects.get(id=i.associated_room_listing_id).main_listing_id).monthly_payment
+                rent_to_be_returned = round((listingRent / 30) * diffDates,2)
+            else:
+                listingRent = Listing.objects.get(id = Property_listing.objects.get(id=i.associated_property_listing_id).main_listing_id).monthly_payment
+                rent_to_be_returned = round((listingRent / 30) * diffDates,2)
+            
             Agreement.objects.filter(id=i.id).update(status=False)
+            dateNow = timezone.now()
+            refund_obj = Refund(
+            value = rent_to_be_returned,
+            tenant = tenant,
+            landlord = i.landlord,
+            agreement = i,
+            status = False, #hasnt been paid yet
+            checkReadLandlord = False, #hasnt been read yet
+            dateOfRequest = dateNow 
+            )
+            refund_obj.save()        
 
     return redirect('profile')
 
@@ -2296,3 +2482,16 @@ def checkReadTenant(request,id_req):
             e.save()
 
     return redirect('notificationsTenant')
+
+def checkReadLandlordRef(request,id_ref):
+
+    for r in Refund.objects.all():
+        if r.id == id_ref:
+            r.checkReadLandlord = True
+            r.save()
+
+    return redirect('notificationsLandlord')
+
+def deletePopUpDuePayment(request):
+    request.session['duePayments'] =  False
+    return redirect('profile')
