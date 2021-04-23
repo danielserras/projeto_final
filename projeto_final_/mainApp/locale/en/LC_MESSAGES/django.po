@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-22 21:13+0100\n"
+"POT-Creation-Date: 2021-04-23 14:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -398,7 +398,7 @@ msgid "Prentendo listar"
 msgstr "I want to list it"
 
 #: mainApp/templates/mainApp/addListing.html:41
-#: mainApp/templates/mainApp/manageAgreements.html:29
+#: mainApp/templates/mainApp/manageAgreements.html:39
 #: mainApp/templates/mainApp/manageAgreementsTenant.html:28
 #: mainApp/templates/mainApp/payment.html:26
 msgid "Anúncio"
@@ -771,8 +771,15 @@ msgstr "Message to landlord"
 msgid "Introduza uma mensagem a enviar ao senhorio..."
 msgstr "Write your message to the landlord here"
 
+#: mainApp/templates/mainApp/invoice.html:66
+#: mainApp/templates/mainApp/notificationsTenant.html:133
+#: mainApp/templates/mainApp/notificationsTenant.html:144
+#: mainApp/templates/mainApp/notificationsTenant.html:170
+msgid "Fatura"
+msgstr "Invoice"
+
 #: mainApp/templates/mainApp/invoices.html:19
-#: mainApp/templates/mainApp/manageAgreements.html:40
+#: mainApp/templates/mainApp/manageAgreements.html:50
 #: mainApp/templates/mainApp/manageAgreementsTenant.html:33
 msgid "Faturas"
 msgstr "Invoices"
@@ -790,7 +797,7 @@ msgid "Mês"
 msgstr "Month"
 
 #: mainApp/templates/mainApp/invoices.html:31
-#: mainApp/templates/mainApp/manageAgreements.html:28
+#: mainApp/templates/mainApp/manageAgreements.html:38
 msgid "Estado"
 msgstr "Status"
 
@@ -804,7 +811,7 @@ msgstr "Send warning"
 
 #: mainApp/templates/mainApp/invoices.html:53
 #: mainApp/templates/mainApp/invoices.html:63
-#: mainApp/templates/mainApp/manageAgreements.html:98
+#: mainApp/templates/mainApp/manageAgreements.html:108
 #: mainApp/templates/mainApp/manageAgreementsTenant.html:52
 msgid "A aguardar pagamento"
 msgstr "Awaiting payment"
@@ -814,7 +821,7 @@ msgid "Pagamento recebido"
 msgstr "Paid"
 
 #: mainApp/templates/mainApp/invoices.html:57
-#: mainApp/templates/mainApp/manageAgreements.html:80
+#: mainApp/templates/mainApp/manageAgreements.html:90
 msgid "Aviso enviado"
 msgstr "Warning sent"
 
@@ -902,7 +909,7 @@ msgid "Tipo"
 msgstr "Type"
 
 #: mainApp/templates/mainApp/listingsManagement.html:56
-#: mainApp/templates/mainApp/manageAgreements.html:51
+#: mainApp/templates/mainApp/manageAgreements.html:61
 msgid "Ativo"
 msgstr "Active"
 
@@ -927,6 +934,7 @@ msgstr "We just sent you an email to confirm your account, please check it out"
 #: mainApp/templates/mainApp/login.html:44
 #: mainApp/templates/mainApp/login.html:64
 #: mainApp/templates/mainApp/login.html:83
+#: mainApp/templates/mainApp/manageAgreements.html:143
 #: mainApp/templates/mainApp/profile.html:56
 #: mainApp/templates/mainApp/pw_reset.html:25
 msgid "Fechar"
@@ -965,187 +973,189 @@ msgstr "Login"
 msgid "Registe-se agora"
 msgstr "Register now"
 
-#: mainApp/templates/mainApp/manageAgreements.html:19
+#: mainApp/templates/mainApp/manageAgreements.html:29
 #: mainApp/templates/mainApp/manageAgreementsTenant.html:19
-#: mainApp/templates/mainApp/notificationsTenant.html:185
+#: mainApp/templates/mainApp/notificationsTenant.html:202
 #: mainApp/templates/mainApp/profile.html:139
 msgid "Gerir Acordos"
 msgstr "Manage agreements"
 
-#: mainApp/templates/mainApp/manageAgreements.html:30
+#: mainApp/templates/mainApp/manageAgreements.html:40
 #: mainApp/templates/mainApp/manageAgreementsTenant.html:29
 msgid "Início"
 msgstr "Starting date"
 
-#: mainApp/templates/mainApp/manageAgreements.html:31
+#: mainApp/templates/mainApp/manageAgreements.html:41
 #: mainApp/templates/mainApp/manageAgreementsTenant.html:30
 msgid "Fim"
 msgstr "Ending Date"
 
-#: mainApp/templates/mainApp/manageAgreements.html:33
-#: mainApp/templates/mainApp/register.html:105 mainApp/views.py:927
+#: mainApp/templates/mainApp/manageAgreements.html:43
+#: mainApp/templates/mainApp/register.html:105 mainApp/views.py:923
+#: mainApp/views.py:952
 msgid "Inquilino"
 msgstr "Tenant"
 
-#: mainApp/templates/mainApp/manageAgreements.html:34
+#: mainApp/templates/mainApp/manageAgreements.html:44
 msgid "Emitir Fatura"
 msgstr "Issue invoice"
 
-#: mainApp/templates/mainApp/manageAgreements.html:35
+#: mainApp/templates/mainApp/manageAgreements.html:45
 msgid "Pagamento em atraso"
 msgstr "Payment late"
 
-#: mainApp/templates/mainApp/manageAgreements.html:37
+#: mainApp/templates/mainApp/manageAgreements.html:47
 #: mainApp/templates/mainApp/manageAgreementsTenant.html:31
 #: mainApp/templates/mainApp/payment.html:21
-#: mainApp/templates/mainApp/register.html:108 mainApp/views.py:957
+#: mainApp/templates/mainApp/register.html:108 mainApp/views.py:972
 msgid "Senhorio"
 msgstr "Landlord"
 
-#: mainApp/templates/mainApp/manageAgreements.html:38
+#: mainApp/templates/mainApp/manageAgreements.html:48
 #: mainApp/templates/mainApp/manageAgreementsTenant.html:32
 msgid "Pagamento"
 msgstr "Payment"
 
-#: mainApp/templates/mainApp/manageAgreements.html:41
+#: mainApp/templates/mainApp/manageAgreements.html:51
 #: mainApp/templates/mainApp/manageAgreementsTenant.html:34
 msgid "Recibo"
 msgstr "Receipt"
 
-#: mainApp/templates/mainApp/manageAgreements.html:53
+#: mainApp/templates/mainApp/manageAgreements.html:63
 msgid "Inativo"
 msgstr "Inactive"
 
-#: mainApp/templates/mainApp/manageAgreements.html:66
+#: mainApp/templates/mainApp/manageAgreements.html:76
 msgid "Fatura de"
 msgstr "Invoice of"
 
-#: mainApp/templates/mainApp/manageAgreements.html:69
+#: mainApp/templates/mainApp/manageAgreements.html:79
 msgid "Fatura emitida"
 msgstr "Invoice sent"
 
-#: mainApp/templates/mainApp/manageAgreements.html:74
-#: mainApp/templates/mainApp/manageAgreements.html:94
+#: mainApp/templates/mainApp/manageAgreements.html:84
+#: mainApp/templates/mainApp/manageAgreements.html:104
 #: mainApp/templates/mainApp/manageAgreementsTenant.html:48
 msgid "Existem atrasos!"
 msgstr "Payment is late"
 
-#: mainApp/templates/mainApp/manageAgreements.html:76
+#: mainApp/templates/mainApp/manageAgreements.html:86
 msgid "Não existem atrasos"
 msgstr "Payment is up to date"
 
-#: mainApp/templates/mainApp/manageAgreements.html:78
-#: mainApp/templates/mainApp/manageAgreements.html:96
+#: mainApp/templates/mainApp/manageAgreements.html:88
+#: mainApp/templates/mainApp/manageAgreements.html:106
 #: mainApp/templates/mainApp/manageAgreementsTenant.html:50
 msgid "Pagamentos em dia"
 msgstr "Payments up to date"
+
+#: mainApp/templates/mainApp/manageAgreements.html:129
+#: mainApp/templates/mainApp/notificationsTenant.html:79
+msgid "Aviso de pagamento em atraso"
+msgstr "Warning of late payment"
+
+#: mainApp/templates/mainApp/manageAgreements.html:138
+msgid "O aviso de pagamento em atraso foi enviado para o inquilino com sucesso"
+msgstr ""
 
 #: mainApp/templates/mainApp/notificationsLandlord.html:45
 #: mainApp/templates/mainApp/notificationsTenant.html:19
 msgid "Recentemente"
 msgstr "Recently"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:80
-#: mainApp/templates/mainApp/notificationsTenant.html:82
+#: mainApp/templates/mainApp/notificationsLandlord.html:97
+#: mainApp/templates/mainApp/notificationsTenant.html:99
 msgid "Assunto"
 msgstr "Subject"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:83
-#: mainApp/templates/mainApp/notificationsTenant.html:85
+#: mainApp/templates/mainApp/notificationsLandlord.html:100
+#: mainApp/templates/mainApp/notificationsTenant.html:102
 msgid "Data Início"
 msgstr "Starting date"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:87
-#: mainApp/templates/mainApp/notificationsTenant.html:89
+#: mainApp/templates/mainApp/notificationsLandlord.html:104
+#: mainApp/templates/mainApp/notificationsTenant.html:106
 msgid "Data término"
 msgstr "Ending date"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:91
-#: mainApp/templates/mainApp/notificationsTenant.html:93
+#: mainApp/templates/mainApp/notificationsLandlord.html:108
+#: mainApp/templates/mainApp/notificationsTenant.html:110
 msgid "Propriedade"
 msgstr "Property"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:96
-#: mainApp/templates/mainApp/notificationsTenant.html:98
-#: mainApp/templates/mainApp/notificationsTenant.html:139
-#: mainApp/templates/mainApp/notificationsTenant.html:166
+#: mainApp/templates/mainApp/notificationsLandlord.html:113
+#: mainApp/templates/mainApp/notificationsTenant.html:115
+#: mainApp/templates/mainApp/notificationsTenant.html:156
+#: mainApp/templates/mainApp/notificationsTenant.html:183
 msgid "Mensagem"
 msgstr "Message"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:105
+#: mainApp/templates/mainApp/notificationsLandlord.html:122
 msgid "Recusar"
 msgstr "Refuse"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:111
+#: mainApp/templates/mainApp/notificationsLandlord.html:128
 msgid "Aceitar"
 msgstr "Accept"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:117
+#: mainApp/templates/mainApp/notificationsLandlord.html:134
 msgid "Estado do pedido"
 msgstr "State of the request"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:119
-#: mainApp/templates/mainApp/notificationsTenant.html:105
+#: mainApp/templates/mainApp/notificationsLandlord.html:136
+#: mainApp/templates/mainApp/notificationsTenant.html:122
 msgid "Aceite"
 msgstr "Accepted"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:121
-#: mainApp/templates/mainApp/notificationsTenant.html:119
+#: mainApp/templates/mainApp/notificationsLandlord.html:138
+#: mainApp/templates/mainApp/notificationsTenant.html:136
 msgid "Recusado"
 msgstr "Refused"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:33
-#: mainApp/templates/mainApp/notificationsTenant.html:103
+#: mainApp/templates/mainApp/notificationsTenant.html:34
+#: mainApp/templates/mainApp/notificationsTenant.html:48
+#: mainApp/templates/mainApp/notificationsTenant.html:120
 msgid "Resposta ao seu pedido de alojamento"
 msgstr "Answer to your agreement proposal"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:48
+#: mainApp/templates/mainApp/notificationsTenant.html:65
 msgid "Fatura do mês de "
 msgstr "Invoice of "
 
-#: mainApp/templates/mainApp/notificationsTenant.html:62
-msgid "Aviso de pagamento em atraso"
-msgstr "Warning of late payment"
-
-#: mainApp/templates/mainApp/notificationsTenant.html:110
+#: mainApp/templates/mainApp/notificationsTenant.html:127
 msgid "Realizar Pagamento"
 msgstr "Make payment"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:116
-#: mainApp/templates/mainApp/notificationsTenant.html:127
-msgid "Fatura"
-msgstr "Invoice"
-
-#: mainApp/templates/mainApp/notificationsTenant.html:130
+#: mainApp/templates/mainApp/notificationsTenant.html:147
 msgid "Data de envio"
 msgstr "Issued at"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:134
+#: mainApp/templates/mainApp/notificationsTenant.html:151
 msgid "Data limite de pagamento"
 msgstr "Payment deadline"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:143
+#: mainApp/templates/mainApp/notificationsTenant.html:160
 msgid "Envio-lhe a fatura do mês de"
 msgstr "I am sending you the invoice of "
 
-#: mainApp/templates/mainApp/notificationsTenant.html:144
+#: mainApp/templates/mainApp/notificationsTenant.html:161
 msgid ", relativa ao alojamento localizado em"
 msgstr ", regarding the house located at"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:145
-#: mainApp/templates/mainApp/notificationsTenant.html:172
+#: mainApp/templates/mainApp/notificationsTenant.html:162
+#: mainApp/templates/mainApp/notificationsTenant.html:189
 msgid "e com um anúncio intitulado"
 msgstr "with a listing called"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:162
+#: mainApp/templates/mainApp/notificationsTenant.html:179
 msgid "Aviso de Pagamento em Atraso"
 msgstr "Warning of Late Payment"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:170
+#: mainApp/templates/mainApp/notificationsTenant.html:187
 msgid "Esta mensagem foi enviada pelo senhorio"
 msgstr "This message was sent by landlord"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:171
+#: mainApp/templates/mainApp/notificationsTenant.html:188
 msgid ""
 " a fim de informar que já ultrapassou a data limite de 10 dias para o "
 "pagamento da renda relativa ao alojamento localizado em"
@@ -1153,7 +1163,7 @@ msgstr ""
 " with the purpose of informing that the 10 days, given to make the rent "
 "payment, are up. This warning regards the house located at"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:177
+#: mainApp/templates/mainApp/notificationsTenant.html:194
 msgid ""
 "Para gerir acordos e visualizar as suas faturas, clique no botão a baixo"
 msgstr ""
@@ -1480,19 +1490,19 @@ msgstr ""
 "The landlord will be notified and the agreement will be stored in both your "
 "personal areas"
 
-#: mainApp/views.py:620
+#: mainApp/views.py:612
 msgid "Depósito de Entrada"
 msgstr "Deposit"
 
-#: mainApp/views.py:630 mainApp/views.py:2100
+#: mainApp/views.py:622 mainApp/views.py:2117
 msgid "Renda do mês de "
 msgstr "Rent of "
 
-#: mainApp/views.py:1686
+#: mainApp/views.py:1707
 msgid "Opção reservada a inquilinos."
 msgstr "Option available only to tenants"
 
-#: mainApp/views.py:1899 mainApp/views.py:1916
+#: mainApp/views.py:1916 mainApp/views.py:1933
 msgid ""
 "Ainda possui contratos ativos. Terá de terminar os contratos antes de "
 "eliminar os seus dados."
