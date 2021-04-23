@@ -696,9 +696,12 @@ def deny_request(request, request_id):
         endDate_ = a.endDate
         accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
         dateOfRequest_ = a.dateOfRequest
-        propertyAddress = ((a.associated_property_listing).associated_property).address
         checkReadLandlord = a.checkReadLandlord
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_,propertyAddress, checkReadLandlord])
+        if a.associated_property_listing != None:
+            propertyAddress = a.associated_property_listing.associated_property.address
+        else:
+            propertyAddress = a.associated_room_listing.associated_room.associated_property.address
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress,checkReadLandlord])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
     context = {"fullList_": reverseList, 'range': range(sizeList)}
@@ -1490,12 +1493,11 @@ def notificationsLandlord(request):
         accepted_ = a.accepted 
         dateOfRequest_ = a.dateOfRequest
         checkReadLandlord = a.checkReadLandlord
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress, checkReadLandlord])
         if a.associated_property_listing != None:
             propertyAddress = a.associated_property_listing.associated_property.address
         else:
             propertyAddress = a.associated_room_listing.associated_room.associated_property.address
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress])
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress,checkReadLandlord])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
     context = {"fullList_": reverseList, 'range': range(sizeList)}
