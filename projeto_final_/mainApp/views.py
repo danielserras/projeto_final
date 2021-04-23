@@ -1064,21 +1064,6 @@ def bedrooms_editing_view(request, property_id):
     context = {'bed_formset':bed_formset, 'property_id':property_id, 'bedrooms_info_zip':bedrooms_info_zip, 'bedrooms_num':len(bedrooms_list)}
     return render(request, "mainApp/editBedrooms.html", context)
 
-""" def bedroom_delete_view(request, property_id, bedroom_id=None ):
-    try:
-        bedroom_object = Bedroom.objects.get(id=bedroom_id)
-    except:
-        return redirect("/mainApp/profile/propertiesManagement/bedroomsEditing/{}".format(property_id))
-    try:
-        room_listing = Room_listing.objects.get(associated_room=bedroom_object)
-    except:
-        room_listing = None
-
-    if room_listing == None:
-        bedroom_object.delete()
-    
-    return redirect("/mainApp/profile/propertiesManagement/bedroomsEditing/{}".format(property_id)) """
-
 def bathrooms_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
     bathrooms_queryset = Bathroom.objects.filter(associated_property=property_object)
@@ -1124,15 +1109,6 @@ def kitchens_editing_view(request, property_id):
     
     context = {'kitchen_formset':kitchen_formset, 'property_id':property_id, 'kitchens_num': len(list(kitchens_queryset)), 'livingrooms_num':livingrooms_num}
     return render(request, "mainApp/editKitchens.html", context)
-
-""" def kitchen_delete_view(request, property_id, kitchen_id=None):
-    try:
-        kitchen_object = Kitchen.objects.get(id=kitchen_id)
-    except:
-        return redirect("/mainApp/profile/propertiesManagement/kitchensEditing/{}".format(property_id))
-    kitchen_object.delete()
-    
-    return redirect("/mainApp/profile/propertiesManagement/kitchensEditing/{}".format(property_id)) """
 
 def livingrooms_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
@@ -1387,9 +1363,6 @@ def delete_listing_view(request, property_id, main_listing_id):
     else:
         #cannot be removed
         request.session['cannot_remove_agreement'] = True
-        print("N Ã O  P O D E  S E R  R E M O V I D O")
-
-        pass
 
     return redirect("/mainApp/profile/propertiesManagement/listingEditing/{}".format(property_id))
 
@@ -2296,3 +2269,13 @@ def checkReadTenant(request,id_req):
             e.save()
 
     return redirect('notificationsTenant')
+
+def chat_list_view(request, user_id):
+
+    chats_1 = list(Chat.objects.filter(user_1=user_id))
+    chats_2 = list(Chat.objects.filter(user_2=user_id))
+
+    chats = chats_1 + chats_2
+
+    context = {"chats":chats}
+    return render(request, "mainApp/chatsList.html", context)
