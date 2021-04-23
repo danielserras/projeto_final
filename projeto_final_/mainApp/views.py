@@ -1736,7 +1736,13 @@ def make_payment(request, ag_request_id):
 
             lord_receiver_email = lord.lord_user.user.email
             duration_days = (ag_request.endDate - ag_request.startsDate).days
-            total_amount = int((duration_days/30) * main_listing.monthly_payment)
+
+            if len(Invoice.objects.filter(agreement_request=ag_request)) <= 1:
+
+                total_amount = main_listing.monthly_payment + main_listing.security_deposit
+
+            else:
+                total_amount = main_listing.monthly_payment
 
             paypal_dict = {
             "business": settings.PAYPAL_RECEIVER_EMAIL,
