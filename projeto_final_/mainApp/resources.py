@@ -75,3 +75,11 @@ class InvoiceResource(resources.ModelResource):
 class Invoice_LineResource(resources.ModelResource):
     class Meta:
         model = Invoice_Line
+
+class ChatResource(resources.ModelResource):
+    class Meta:
+        model = Chat
+
+class MessageResource(resources.ModelResource):
+    class Meta:
+        model = Message

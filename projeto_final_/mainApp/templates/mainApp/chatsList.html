@@ -1,6 +1,7 @@
 {% extends 'mainApp/base.html' %} 
 {% load i18n %}
 {% load static %}
+{% load app_extras %}
 {% block styles %}
 {% endblock %}
 {% block scripts%}
@@ -9,7 +10,6 @@
 <div class="container p-0 my-5 p-3 shadow-lg">
     <div class="row">
         <div class="col-sm-3 p-3">
-            1
         </div>
         <div class="col-sm-9 p-3 bg-primary">
             2
@@ -17,11 +17,9 @@
     </div>
     <div class="row">
         <div class="col-sm-3 bg-info ">
-            <div class="row p-2 border border-top border-white text-white">a</div>
-            <div class="row p-2 border border-top border-white text-white">b</div>
-            <div class="row p-2 border border-top border-white text-white">c</div>
-            <div class="row p-2 border border-top border-white text-white">d</div>
-            <div class="row p-2 border border-top border-white text-white">e</div>
+            {% for chat in chats_sorted %}
+                <div class="row px-2 py-3 border-top border-bottom border-white text-white">{{chats_dict|get_item:chat}}</div>
+            {% endfor %}
         </div>
         <div class="col-sm-9">
             <div class="row p-4">

@@ -66,6 +66,12 @@ class InvoiceAdmin(ImportExportModelAdmin):
 class Invoice_LineAdmin(ImportExportModelAdmin):
     resource_class = Invoice_LineResource
 
+class ChatAdmin(ImportExportModelAdmin):
+    resource_class = ChatResource
+
+class MessageAdmin(ImportExportModelAdmin):
+    resource_class = MessageResource
+
 admin.site.unregister(User)
 
 admin.site.register(User, UserAdmin)
@@ -85,6 +91,8 @@ admin.site.register(Agreement, AgreementAdmin)
 admin.site.register(Agreement_Request, Agreement_RequestAdmin)
 admin.site.register(Invoice, InvoiceAdmin)
 admin.site.register(Invoice_Line, Invoice_LineAdmin)
+admin.site.register(Chat, ChatAdmin)
+admin.site.register(Message, MessageAdmin)
 
 
 

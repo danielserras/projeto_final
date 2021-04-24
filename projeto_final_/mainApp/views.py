@@ -2467,10 +2467,19 @@ def chat_list_view(request, user_id):
     chats_1 = list(Chat.objects.filter(user_1=user_id))
     chats_2 = list(Chat.objects.filter(user_2=user_id))
 
-    chats = chats_1 + chats_2
+    chats_dict = {}
 
-    context = {"chats":chats}
+    for c in chats_1:
+        chats_dict[c] = c.user_2
+
+    for c in chats_2:
+        chats_dict[c] = c.user_1
+
+    chats_sorted = sorted(chats_dict.keys(), key=lambda x: x.last_message, reverse=True)
+
+    context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict}
     return render(request, "mainApp/chatsList.html", context)
+
 def checkReadLandlordRef(request,id_ref):
 
     for r in Refund.objects.all():

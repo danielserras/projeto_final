@@ -54,3 +54,7 @@ def cross(feature_name):
 @register.filter
 def month_name(month_number):
     return _(calendar.month_name[month_number])
+
+@register.filter
+def get_item(dictionaty, key):
+    return dictionaty.get(key)

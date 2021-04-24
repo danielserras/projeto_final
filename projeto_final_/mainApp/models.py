@@ -202,7 +202,7 @@ class Receipt(models.Model):
 class Chat(models.Model):
     user_1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_1")
     user_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_2")
-
+    last_message = models.DateTimeField()
 class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
