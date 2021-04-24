@@ -28,4 +28,5 @@ urlpatterns = [
     path('api/property/', views.Property.as_view(), name="property"),
     path('api/property/<int:pk>/', views.Property.as_view(), name="property"),
     path('api/User/<int:pk>/', views.UserAPI.as_view(), name="User"),
+    path('api/User/<int:pk>/', views.UserAPI.as_view(), name="User"),
 ]
