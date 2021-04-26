@@ -596,6 +596,7 @@ def accept_request(request, request_id):
         timestamp = timezone.now(),
         month = timezone.now(),
         paid = False,
+        checkReadTenant = False
         )
     invoice.save()
 
@@ -710,7 +711,7 @@ def deny_request(request, request_id):
 
     listOfRefunds = []
     for r in Refund.objects.all():
-        if r.landlord == landlord_:
+        if r.landlord == lord:
             listOfRefunds.append(r)
     
     fullListRef = []
@@ -1441,6 +1442,7 @@ def notificationsTenant(request):
                 invoiceDate = i.timestamp
                 paymentLimit = invoiceDate + timedelta(days=10)
                 invoiceMonth = _(i.month.strftime("%B"))
+                checkReadTenInv = i.checkReadTenant
 
                 if a.associated_property_listing == None:
                     room_listing = a.associated_room_listing
@@ -1456,14 +1458,14 @@ def notificationsTenant(request):
                 address = assoc_prop.address
                 listing_name = main_listing.title
 
-                invoiceList.append([nameLand, invoiceMonth, invoiceDate, paymentLimit, address, listing_name, i.id])
+                invoiceList.append([nameLand, invoiceMonth, invoiceDate, paymentLimit, address, listing_name, i.id,checkReadTenInv])
     
     paymentWarningList = []
     for w in Payment_Warning.objects.all():
         a = Agreement.objects.get(id=w.agreement_id)
         if a.tenant_id == tenant_.id:
             nameLand = a.landlord.lord_user.user.username
-
+            checkReadTenWarn = w.checkReadTenant
             if a.associated_property_listing == None:
                 room_listing = a.associated_room_listing
                 assoc_room = room_listing.associated_room
@@ -1479,7 +1481,7 @@ def notificationsTenant(request):
             listing_name = main_listing.title
             timestamp = w.timestamp
 
-            paymentWarningList.append([timestamp, nameLand, address, listing_name])
+            paymentWarningList.append([timestamp, nameLand, address, listing_name,checkReadTenWarn,w.id])
 
     reverseList = list(reversed(fullList))
     context = {"fullList" : reverseList, "sizeFull": len(fullList), "invoiceList": invoiceList, "sizeInvoice":len(invoiceList), "paymentWarningList": paymentWarningList, "sizeWarning":len(paymentWarningList)}
@@ -2283,6 +2285,7 @@ def send_invoice(request):
                 timestamp = timestamp,
                 month = new_date,
                 paid = False,
+                checkReadTenant = False
             )
             invoice.save()
 
@@ -2309,7 +2312,8 @@ def send_payment_warning(request):
             warning = Payment_Warning(
                 agreement_id = agreement.id,
                 timestamp = timezone.now(),
-                invoice_id = invoice.id
+                invoice_id = invoice.id,
+                checkReadTenant = False
             )
             warning.save()
             request.session['popUp'] =  True
@@ -2445,13 +2449,16 @@ def requestPop(request):
     return redirect('listing',listing_url)
 
 def checkReadLandlord(request,id_req):
+    if request.method == 'POST':
+        for e in Agreement_Request.objects.all():
+            if e.id == id_req:
+                e.checkReadLandlord = True
+                e.save()
 
-    for e in Agreement_Request.objects.all():
-        if e.id == id_req:
-            e.checkReadLandlord = True
-            e.save()
+        response_data = {}
+        response_data['result'] = 'View successful!'
 
-    return redirect('notificationsLandlord')
+        return HttpResponse(response_data)
 
 def checkReadTenant(request,id_req):
 
@@ -2481,13 +2488,37 @@ def chat_list_view(request, user_id):
     return render(request, "mainApp/chatsList.html", context)
 
 def checkReadLandlordRef(request,id_ref):
+    if request.method == 'POST':
+        for r in Refund.objects.all():
+            if r.id == id_ref:
+                r.checkReadLandlord = True
+                r.save()
+        response_data = {}
+        response_data['result'] = 'View successful!'
 
-    for r in Refund.objects.all():
-        if r.id == id_ref:
-            r.checkReadLandlord = True
-            r.save()
+        return HttpResponse(response_data)
 
-    return redirect('notificationsLandlord')
+def checkReadTenantInvoice(request,id_inv):
+    if request.method == 'POST':
+        for i in Invoice.objects.all():
+            if i.id == id_inv:
+                i.checkReadTenant = True
+                i.save()
+        response_data = {}
+        response_data['result'] = 'View successful!'
+
+        return HttpResponse(response_data)
+
+def checkReadTenantWarning(request,id_warn):
+    if request.method == 'POST':
+        for p in Payment_Warning.objects.all():
+            if p.id == id_warn:
+                p.checkReadTenant = True
+                p.save()
+        response_data = {}
+        response_data['result'] = 'View successful!'
+
+        return HttpResponse(response_data)
 
 def deletePopUpDuePayment(request):
     request.session['duePayments'] =  False

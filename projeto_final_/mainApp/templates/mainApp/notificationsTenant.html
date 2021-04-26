@@ -36,9 +36,9 @@
                     </div>
                   </a>
                 {% else %}
-                  <form action="{% url 'checkReadTenant' a %}" method="POST" id="myformt">
+                  <form action="{% url 'checkReadTenant' a %}" method="POST" id="myform_{{forloop.counter}}_{{ a }}" class="myformTen">
                     {% csrf_token %}
-                    <a href="javascript:{}" onclick="document.getElementById('myformt').submit();" id="notificationsTen_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
+                    <a href="#" id="notificationsTen_{{forloop.counter}}_{{ a }}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
                       {% load static %}
                       <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
                         <div class="media-body ml-4">
@@ -54,32 +54,64 @@
               {% endif %}
             {% endfor %}
             <!-- FOR LOOP PELOS INVOICES COM SIZELIST + FORLOOP.COUNTER-->
-            {% for land, timestamp, sentDate, paymentLimit, address, name, invoice_id in invoiceList %}
-              <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull}}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
-                {% load static %}
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">{{ land }}</h6><small class="small font-weight-bold">{{ timestamp }}</small>
+            {% for land, timestamp, sentDate, paymentLimit, address, name, invoice_id,checkReadInv in invoiceList %}
+              {% if checkReadInv is True %}
+                <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
+                  {% load static %}
+                  <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                    <div class="media-body ml-4">
+                      <div class="d-flex align-items-center justify-content-between mb-1">
+                        <h6 class="mb-0">{{ land }}</h6><small class="small font-weight-bold">{{ timestamp }}</small>
+                      </div>
+                      <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Fatura do mês de '%}{{ timestamp }}.</p>
                     </div>
-                    <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Fatura do mês de '%}{{ timestamp }}.</p>
                   </div>
-                </div>
-              </a>
+                </a>
+              {% else %}
+                <form action="{% url 'checkReadTenantInvoice' invoice_id %}" method="POST" id="myform_{{forloop.counter|add:sizeFull}}_{{ invoice_id }}" class="myformInv">
+                  <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull}}_{{ invoice_id }}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
+                    {% load static %}
+                    <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                      <div class="media-body ml-4">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                          <h6 class="mb-0">{{ land }}</h6><small class="small font-weight-bold">{{ timestamp }}</small>
+                        </div>
+                        <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Fatura do mês de '%}{{ timestamp }}.</p>
+                      </div>
+                    </div>
+                  </a>
+                </form>
+              {% endif %}
             {% endfor %}
             <!-- FOR LOOP PELOS WARNINGS COM SIZELIST + FORLOOP.COUNTER-->
-            {% for timestamp, land, address, name in paymentWarningList %}
-              <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull|add:sizeInvoice}}" class='notification list-group-item list-group-item-action list-group-item-danger rounded-0'>
-                {% load static %}
-                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                  <div class="media-body ml-4">
-                    <div class="d-flex align-items-center justify-content-between mb-1">
-                      <h6 class="mb-0">{{ land }}</h6><small class="small font-weight-bold">{{ timestamp }}</small>
+            {% for timestamp, land, address, name,checkReadWarn,warnId in paymentWarningList %}
+              {% if checkReadWarn is True %}
+                <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull|add:sizeInvoice}}" class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
+                  {% load static %}
+                  <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                    <div class="media-body ml-4">
+                      <div class="d-flex align-items-center justify-content-between mb-1">
+                        <h6 class="mb-0">{{ land }}</h6><small class="small font-weight-bold">{{ timestamp }}</small>
+                      </div>
+                      <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Aviso de pagamento em atraso'%}</p>
                     </div>
-                    <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Aviso de pagamento em atraso'%}</p>
                   </div>
-                </div>
-              </a>
+                </a>
+              {% else %}
+                <form action="{% url 'checkReadTenantWarning' warnId %}" method="POST" id="myform_{{forloop.counter|add:sizeFull|add:sizeInvoice}}_{{ warnId }}" class="myformWarn">
+                  <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull|add:sizeInvoice}}_{{ warnId }}" class='notification list-group-item list-group-item-action list-group-item-danger rounded-0'>
+                    {% load static %}
+                    <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                      <div class="media-body ml-4">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                          <h6 class="mb-0">{{ land }}</h6><small class="small font-weight-bold">{{ timestamp }}</small>
+                        </div>
+                        <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Aviso de pagamento em atraso'%}</p>
+                      </div>
+                    </div>
+                  </a>
+                </form>
+              {% endif %}
             {% endfor %}
           </div>
         </div>
@@ -138,7 +170,7 @@
             </div>
           </div>
         {% endfor %}
-        {% for land, month, sentDate, paymentLimit, address, name, invoice_id in invoiceList %}
+        {% for land, month, sentDate, paymentLimit, address, name, invoice_id,checkReadInv in invoiceList %}
           <div id = "content_{{forloop.counter|add:sizeFull}}"class='contentNotification' style="display:none">
             <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                 <h4 class="text-white mt-3 pl-3"> {% trans 'Fatura' %} </h4>
@@ -173,7 +205,7 @@
             </div>
           </div>
         {% endfor %}
-        {% for timestamp, land, address, name in paymentWarningList %}
+        {% for timestamp, land, address, name,checkReadWarn,warnId in paymentWarningList %}
           <div id = "content_{{forloop.counter|add:sizeFull|add:sizeInvoice}}"class='contentNotification' style="display:none">
             <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                 <h4 class="text-white mt-3 pl-3"> {% trans 'Aviso de Pagamento em Atraso' %} </h4>
