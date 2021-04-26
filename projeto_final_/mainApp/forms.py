@@ -521,7 +521,6 @@ class UpdatePropertyForm(forms.ModelForm):
             'floor_area']
 
 class UpdateUserForm(forms.Form):
-
     first_name = forms.CharField(required=True, max_length=50)
     last_name = forms.CharField(required=True, max_length=50)
     email = forms.EmailField(required=True, max_length=75)
@@ -530,6 +529,16 @@ class UpdateUserForm(forms.Form):
     university = forms.CharField(required=False, max_length=100)
     min_search = forms.IntegerField(required=False, max_value= 1000)
     max_search = forms.IntegerField(required=False, max_value= 2000)
+
+class GetChat(forms.Form):
+    chat_id = forms.IntegerField(required=True)
+
+class SendMessage(forms.Form):
+    chat_id = forms.IntegerField(required=True)
+    content =  forms.CharField(required=True, max_length=200)
+
+
+
 
 
 BedroomFormSet = modelformset_factory(model = Bedroom, form = BedroomForm, extra=1)

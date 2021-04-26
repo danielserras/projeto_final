@@ -2463,6 +2463,52 @@ def checkReadTenant(request,id_req):
     return redirect('notificationsTenant')
 
 def chat_list_view(request, user_id):
+    user = User.objects.get(id=user_id)
+    username = user.username
+    if request.is_ajax and request.method == 'GET':
+        form = GetChat(request.GET)
+        
+        if form.is_valid():
+            chat_id = form.cleaned_data.get("chat_id")
+            chat_obj = Chat.objects.get(id=chat_id)
+
+            messages = sorted(list(Message.objects.filter(chat=chat_obj)), key=lambda x: x.timestamp, reverse=True)
+            result = {}
+            result["messages"] = {}
+            result["username"] = username
+            result["receiver"] = chat_obj.user_1.username if chat_obj.user_2.id == user_id else chat_obj.user_2.username
+            messages_sorted = []
+            for m in messages:
+                message_dict = m.as_json()
+                messages_sorted.append(m.id)
+                result["messages"][m.id] = message_dict
+            return HttpResponse(json.dumps(result))
+
+    if request.is_ajax and request.method == 'POST':
+        form = SendMessage(request.POST)
+        print(form.errors)
+        if form.is_valid():
+            chat = Chat.objects.get(id=form.cleaned_data.get("chat_id"))
+            message = Message(
+                    chat = chat, 
+                    sender = user, 
+                    timestamp = timezone.now(),
+                    content = form.cleaned_data.get("content"),
+                    is_read = False)
+            message.save()
+            print("???")
+            messages = sorted(list(Message.objects.filter(chat=chat)), key=lambda x: x.timestamp, reverse=True)
+            result = {}
+            result["messages"] = {}
+            result["username"] = username
+            result["receiver"] = chat.user_1.username if chat.user_2.id == user_id else chat.user_2.username
+            messages_sorted = []
+            for m in messages:
+                message_dict = m.as_json()
+                messages_sorted.append(m.id)
+                result["messages"][m.id] = message_dict
+            print(result)
+            return HttpResponse(json.dumps(result))
 
     chats_1 = list(Chat.objects.filter(user_1=user_id))
     chats_2 = list(Chat.objects.filter(user_2=user_id))

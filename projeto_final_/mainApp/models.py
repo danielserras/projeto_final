@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import time
 
 def get_upload_path(instance, filename):
     path = instance.album.ListingAlbum.id
@@ -199,13 +200,25 @@ class Refund(models.Model):
     
 class Receipt(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+
 class Chat(models.Model):
     user_1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_1")
     user_2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_2")
     last_message = models.DateTimeField()
+
 class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField(null=False, blank=False)
     timestamp = models.DateTimeField()
     is_read = models.BooleanField()
+
+    def as_json(self):
+        return dict(
+            message_id = self.id,
+            chat = self.chat.id,
+            sender = self.sender.username,
+            content = self.content,
+            timestamp = self.timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
+            is_read = self.is_read
+        )

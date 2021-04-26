@@ -5,28 +5,41 @@
 {% block styles %}
 {% endblock %}
 {% block scripts%}
+<script src='{% static "mainApp/js/chat.js" %}'></script> 
 {% endblock %}
 {% block content %}
 <div class="container p-0 my-5 p-3 shadow-lg">
     <div class="row">
         <div class="col-sm-3 p-3">
         </div>
-        <div class="col-sm-9 p-3 bg-primary">
-            2
+        <div class="col-sm-9 p-3 bg-primary text-white" id="receiver">
         </div>
     </div>
     <div class="row">
         <div class="col-sm-3 bg-info ">
             {% for chat in chats_sorted %}
-                <div class="row px-2 py-3 border-top border-bottom border-white text-white">{{chats_dict|get_item:chat}}</div>
+                <form class="selectChat" action="" method="get">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{chat.id}}">
+                    <div class="row px-2 py-3 border-top border-bottom border-white"><button class="btn text-white" type="submit">{{chats_dict|get_item:chat}}</button></div>
+                </form>
             {% endfor %}
         </div>
-        <div class="col-sm-9">
-            <div class="row p-4">
-                <div class="col-sm-6 bg-secondary mb-3 p-3 text-white rounded">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id gravida orci, pretium commodo odio. Pellentesque orci lacus, maximus nec ligula at, mollis bibendum turpis. </div>
+        <div class="col-sm-9 p-4">
+            <div class="row">
+                <div class="col-sm-12" id="messagesBox"></div>
             </div>
-            <div class="row p-4">
-                <div class="col-sm-6 bg-primary ml-auto mt-3 p-3 text-white rounded">Quisque dolor diam, viverra et ipsum a, scelerisque viverra nulla. Vivamus ullamcorper vehicula arcu ac ultrices. Nam sit amet risus urna. Suspendisse suscipit dignissim facilisis. Aliquam laoreet pulvinar mi, quis tempus sem rhoncus fringilla. Nulla lobortis, libero at vehicula accumsan, risus neque posuere neque, varius iaculis tortor tortor pellentesque enim</div>
+            <div class="row">
+                <form class="sendMessage" action="" method="post" id="sendMessage">
+                    {% csrf_token %}
+                    <div class="col-sm-9">
+                        <textarea name="content" id="message" cols="30" rows="3"></textarea>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="hidden" name="chat" id="chat" value="">
+                        <button type="submit">Enviar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
