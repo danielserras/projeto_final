@@ -56,6 +56,7 @@ urlpatterns = [
     path('notificationsLandlord/readRef/<int:id_ref>', views.checkReadLandlordRef, name='checkReadLandlordRef'),
     path('profile/delPopUpDuePayment', views.deletePopUpDuePayment, name='deletePopUpDuePayment'),
     path('receipts', views.receipts, name='receipts'),
+    path('reasons', views.reasons, name='reasons'),
     path('receipt', views.get_receipt_pdf, name='get_receipt_pdf'),
 ]
 

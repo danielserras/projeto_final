@@ -2492,6 +2492,9 @@ def checkReadLandlordRef(request,id_ref):
 def deletePopUpDuePayment(request):
     request.session['duePayments'] =  False
     return redirect('profile')
+
+def reasons(request):
+    return render(request, "mainApp/reasons.html", {})
     
 def receipts(request):
     context={}
