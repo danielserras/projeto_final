@@ -2523,6 +2523,9 @@ def checkReadTenantWarning(request,id_warn):
 def deletePopUpDuePayment(request):
     request.session['duePayments'] =  False
     return redirect('profile')
+
+def reasons(request):
+    return render(request, "mainApp/reasons.html", {})
     
 def receipts(request):
     context={}
