@@ -61,9 +61,10 @@
                       </div>
                     </a>
                 {% else %}
-                <form action="{% url 'checkReadLandlord' a %}" method="POST" id="myform">
+                <form action="{% url 'checkReadLandlord' a %}" method="POST" id="myform_{{forloop.counter}}_{{ a }}" class="myform">
                   {% csrf_token %}
-                  <a href="javascript:{}" onclick="document.getElementById('myform').submit();" id="notifications_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
+                  <!-- <button type="submit">submit</button> -->
+                  <a href="#" id="notifications_{{forloop.counter}}_{{ a }}" class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
                     {% load static %}
                     <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
                       <div class="media-body ml-4">
@@ -91,9 +92,9 @@
                         </div>
                       </a>
                   {% else %}
-                  <form action="{% url 'checkReadLandlordRef' id_ref %}" method="POST" id="myformR">
+                  <form action="{% url 'checkReadLandlordRef' id_ref %}" method="POST" id="myform_{{forloop.counter|add:sizeListRef}}_{{ id_ref }}" class="myformR">
                     {% csrf_token %}
-                    <a href="javascript:{}" onclick="document.getElementById('myformR').submit();" id="notifications_{{forloop.counter|add:sizeListRef}}" class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
+                    <a href="#" id="notifications_{{forloop.counter|add:sizeListRef}}_{{ id_ref }}" class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
                       {% load static %}
                       <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
                         <div class="media-body ml-4">
@@ -228,6 +229,55 @@
   </div>
 </div>
 
+<!-- <script>
+  $('#myform_1').submit(function(event){
+    event.preventDefault();
+    create_post();
+  });
+
+  function create_post() {
+    console.log("create post is working!") // sanity check
+    $.ajaxSetup({ 
+     beforeSend: function(xhr, settings) {
+         function getCookie(name) {
+             var cookieValue = null;
+             if (document.cookie && document.cookie != '') {
+                 var cookies = document.cookie.split(';');
+                 for (var i = 0; i < cookies.length; i++) {
+                     var cookie = jQuery.trim(cookies[i]);
+                     // Does this cookie string begin with the name we want?
+                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                         break;
+                     }
+                 }
+             }
+             return cookieValue;
+         }
+         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+             // Only send the token to relative URLs i.e. locally.
+             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+         }
+     } 
+    });
+    $.ajax({
+        url : 'notificationsLandlord/read/2', // the endpoint
+        type : "POST", // http method
+        data : {}, // data sent with the post request
+
+        // handle a successful response
+        success : function(json) {
+            $("#myform_1").children().attr('class', 'notification list-group-item list-group-item-action list-group-item-info rounded-0');
+            console.log("success"); // another sanity check
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+  };
+</script> -->
 
 
 {% endblock %}

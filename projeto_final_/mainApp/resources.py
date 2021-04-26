@@ -83,3 +83,7 @@ class ChatResource(resources.ModelResource):
 class MessageResource(resources.ModelResource):
     class Meta:
         model = Message
+
+class Payment_WarningResource(resources.ModelResource):
+    class Meta:
+        model = Payment_Warning

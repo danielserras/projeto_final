@@ -72,6 +72,9 @@ class ChatAdmin(ImportExportModelAdmin):
 class MessageAdmin(ImportExportModelAdmin):
     resource_class = MessageResource
 
+class Payment_WarningAdmin(ImportExportModelAdmin):
+    resource_class = Payment_WarningResource
+
 admin.site.unregister(User)
 
 admin.site.register(User, UserAdmin)
@@ -93,7 +96,7 @@ admin.site.register(Invoice, InvoiceAdmin)
 admin.site.register(Invoice_Line, Invoice_LineAdmin)
 admin.site.register(Chat, ChatAdmin)
 admin.site.register(Message, MessageAdmin)
-
+admin.site.register(Payment_Warning, Payment_WarningAdmin)
 
 
 """ for model in models:

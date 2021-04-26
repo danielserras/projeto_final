@@ -178,6 +178,7 @@ class Invoice(models.Model):
     timestamp = models.DateField()
     month = models.DateField(null=True)
     paid = models.BooleanField()
+    checkReadTenant = models.BooleanField()
 
 class Invoice_Line(models.Model):
     description = models.CharField(max_length=280)
@@ -188,6 +189,7 @@ class Payment_Warning(models.Model):
     agreement = models.ForeignKey(Agreement, on_delete=models.CASCADE)
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
     timestamp = models.DateTimeField()
+    checkReadTenant = models.BooleanField()
 
 class Refund(models.Model):
     value = models.FloatField()
