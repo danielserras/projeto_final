@@ -2474,7 +2474,6 @@ def chat_list_view(request, user_id):
     username = user.username
     if request.is_ajax and request.method == 'GET':
         form = GetChat(request.GET)
-        
         if form.is_valid():
             chat_id = form.cleaned_data.get("chat_id")
             chat_obj = Chat.objects.get(id=chat_id)
@@ -2483,7 +2482,7 @@ def chat_list_view(request, user_id):
             result = {}
             result["messages"] = {}
             result["username"] = username
-            result["receiver"] = chat_obj.user_1.username if chat_obj.user_2.id == user_id else chat_obj.user_2.username
+            result["receiver"] = chat_obj.user_1.first_name +" "+ chat_obj.user_1.last_name if chat_obj.user_2.id == user_id else chat_obj.user_2.first_name +" "+ chat_obj.user_2.last_nameme
             messages_sorted = []
             for m in messages:
                 message_dict = m.as_json()
@@ -2493,8 +2492,8 @@ def chat_list_view(request, user_id):
 
     if request.is_ajax and request.method == 'POST':
         form = SendMessage(request.POST)
-        print(form.errors)
         if form.is_valid():
+            print(timezone.now())
             chat = Chat.objects.get(id=form.cleaned_data.get("chat_id"))
             message = Message(
                     chat = chat, 
@@ -2503,18 +2502,16 @@ def chat_list_view(request, user_id):
                     content = form.cleaned_data.get("content"),
                     is_read = False)
             message.save()
-            print("???")
             messages = sorted(list(Message.objects.filter(chat=chat)), key=lambda x: x.timestamp, reverse=True)
             result = {}
             result["messages"] = {}
             result["username"] = username
-            result["receiver"] = chat.user_1.username if chat.user_2.id == user_id else chat.user_2.username
+            result["receiver"] = chat.user_1.first_name +" "+ chat.user_1.last_name if chat.user_2.id == user_id else chat.user_2.first_name +" "+ chat.user_2.last_name
             messages_sorted = []
             for m in messages:
                 message_dict = m.as_json()
                 messages_sorted.append(m.id)
-                result["messages"][m.id] = message_dict
-            print(result)
+                result["messages"][m.id] = message_dict 
             return HttpResponse(json.dumps(result))
 
     chats_1 = list(Chat.objects.filter(user_1=user_id))
@@ -2523,10 +2520,10 @@ def chat_list_view(request, user_id):
     chats_dict = {}
 
     for c in chats_1:
-        chats_dict[c] = c.user_2
+        chats_dict[c] = c.user_2.first_name + " " + c.user_2.last_name
 
     for c in chats_2:
-        chats_dict[c] = c.user_1
+        chats_dict[c] = c.user_1.first_name + " " + c.user_1.last_name
 
     chats_sorted = sorted(chats_dict.keys(), key=lambda x: x.last_message, reverse=True)
 
