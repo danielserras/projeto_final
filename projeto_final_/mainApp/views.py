@@ -2585,24 +2585,34 @@ def reasons(request, agreement_id):
 
 
     if request.method == 'POST':
+        cause_objList = []
+
         data = request.POST
         print(data)
         causes_list = data.getlist('cause')
         new_incidence = Incidence()
         new_incidence.agreement = agreement
         new_incidence.filing_time = (date.today())
-        for cause in causes_list:
-            cause_obj = Cause.objects.get(pk = int(cause))
-            new_incidence.causes = cause_obj
-        new_incidence.description = data.get("description")
 
+        new_incidence.description = data.get("description")
+        #print(new_incidence.causes)
         if data.get("buttonPressed") == 'onlyIncidence':
             new_incidence.grouds_for_termination = 0
         
         else:
             new_incidence.grouds_for_termination = 1
             agreement.status = 0
+            agreement.save()
         new_incidence.save()
+
+        for cause in causes_list:
+            cause_obj = Cause.objects.get(pk = int(cause))
+            cause_objList.append(cause_obj)
+
+        #new_incidence.causes.add(*cause_objList)
+        new_incidence.causes.add(*cause_objList)
+        new_incidence.save()    
+
 
         return render(request, "mainApp/reasons.html", context)
 

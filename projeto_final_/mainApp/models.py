@@ -232,6 +232,6 @@ class Cause(models.Model):
 class Incidence(models.Model):
     agreement = models.ForeignKey(Agreement, on_delete=models.CASCADE)
     filing_time = models.DateField()
-    causes = models.ForeignKey(Cause, on_delete = models.PROTECT)
+    causes = models.ManyToManyField(Cause)
     description = models.CharField(max_length=280)
     grouds_for_termination = models.BooleanField(null=True)
