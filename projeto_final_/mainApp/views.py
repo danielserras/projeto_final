@@ -2475,7 +2475,6 @@ def chat_list_view(request, user_id):
     username = user.username
     if request.is_ajax and request.method == 'GET':
         form = GetChat(request.GET)
-        
         if form.is_valid():
             chat_id = form.cleaned_data.get("chat_id")
             chat_obj = Chat.objects.get(id=chat_id)
@@ -2484,7 +2483,7 @@ def chat_list_view(request, user_id):
             result = {}
             result["messages"] = {}
             result["username"] = username
-            result["receiver"] = chat_obj.user_1.username if chat_obj.user_2.id == user_id else chat_obj.user_2.username
+            result["receiver"] = chat_obj.user_1.first_name +" "+ chat_obj.user_1.last_name if chat_obj.user_2.id == user_id else chat_obj.user_2.first_name +" "+ chat_obj.user_2.last_nameme
             messages_sorted = []
             for m in messages:
                 message_dict = m.as_json()
@@ -2494,8 +2493,8 @@ def chat_list_view(request, user_id):
 
     if request.is_ajax and request.method == 'POST':
         form = SendMessage(request.POST)
-        print(form.errors)
         if form.is_valid():
+            print(timezone.now())
             chat = Chat.objects.get(id=form.cleaned_data.get("chat_id"))
             message = Message(
                     chat = chat, 
@@ -2504,18 +2503,16 @@ def chat_list_view(request, user_id):
                     content = form.cleaned_data.get("content"),
                     is_read = False)
             message.save()
-            print("???")
             messages = sorted(list(Message.objects.filter(chat=chat)), key=lambda x: x.timestamp, reverse=True)
             result = {}
             result["messages"] = {}
             result["username"] = username
-            result["receiver"] = chat.user_1.username if chat.user_2.id == user_id else chat.user_2.username
+            result["receiver"] = chat.user_1.first_name +" "+ chat.user_1.last_name if chat.user_2.id == user_id else chat.user_2.first_name +" "+ chat.user_2.last_name
             messages_sorted = []
             for m in messages:
                 message_dict = m.as_json()
                 messages_sorted.append(m.id)
-                result["messages"][m.id] = message_dict
-            print(result)
+                result["messages"][m.id] = message_dict 
             return HttpResponse(json.dumps(result))
 
     chats_1 = list(Chat.objects.filter(user_1=user_id))
@@ -2524,10 +2521,10 @@ def chat_list_view(request, user_id):
     chats_dict = {}
 
     for c in chats_1:
-        chats_dict[c] = c.user_2
+        chats_dict[c] = c.user_2.first_name + " " + c.user_2.last_name
 
     for c in chats_2:
-        chats_dict[c] = c.user_1
+        chats_dict[c] = c.user_1.first_name + " " + c.user_1.last_name
 
     chats_sorted = sorted(chats_dict.keys(), key=lambda x: x.last_message, reverse=True)
 
@@ -2571,8 +2568,46 @@ def deletePopUpDuePayment(request):
     request.session['duePayments'] =  False
     return redirect('profile')
 
-def reasons(request):
-    return render(request, "mainApp/reasons.html", {})
+@login_required(login_url='login_view')
+def reasons(request, agreement_id):
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+    try:
+        lord = Landlord.objects.get(lord_user=a_user)
+        agreement = Agreement.objects.get(pk = agreement_id)
+    except:
+        return redirect('index')
+    if agreement.landlord != lord:
+        return redirect('index')
+    
+    context  = {
+        "agreement": agreement,
+    }
+
+
+    if request.method == 'POST':
+        data = request.POST
+        print(data)
+        causes_list = data.getlist('cause')
+        new_incidence = Incidence()
+        new_incidence.agreement = agreement
+        new_incidence.filing_time = (date.today())
+        for cause in causes_list:
+            cause_obj = Cause.objects.get(pk = int(cause))
+            new_incidence.causes = cause_obj
+        new_incidence.description = data.get("description")
+
+        if data.get("buttonPressed") == 'onlyIncidence':
+            new_incidence.grouds_for_termination = 0
+        
+        else:
+            new_incidence.grouds_for_termination = 1
+            agreement.status = 0
+        new_incidence.save()
+
+        return render(request, "mainApp/reasons.html", context)
+
+    return render(request, "mainApp/reasons.html", context)
     
 def receipts(request):
     context={}

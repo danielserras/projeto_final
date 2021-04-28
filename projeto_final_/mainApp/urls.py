@@ -58,7 +58,7 @@ urlpatterns = [
     path('notificationsLandlord/readWarn/<int:id_warn>', views.checkReadTenantWarning, name='checkReadTenantWarning'),
     path('profile/delPopUpDuePayment', views.deletePopUpDuePayment, name='deletePopUpDuePayment'),
     path('receipts', views.receipts, name='receipts'),
-    path('reasons', views.reasons, name='reasons'),
+    path('reasons/<int:agreement_id>', views.reasons, name='reasons'),
     path('receipt', views.get_receipt_pdf, name='get_receipt_pdf'),
     path('acceptDenyRequest/<int:request_id>', views.accept_deny_request, name='accept_deny_request'),
 ]

@@ -1,7 +1,9 @@
 $(document).ready(function () {
+    $("#sendMessageRow").hide();
     $(".selectChat").submit(function (e) { 
         e.preventDefault();
         select_chat(this);
+        $("#sendMessageRow").show();
     });
 
     $("#sendMessage").submit(function (e) { 
@@ -56,10 +58,10 @@ function show_messages(json, chat_id){
     $("#chat").val(chat_id);
     for(const [key, value] of Object.entries(response["messages"])){
         if(value["sender"] == username){
-            messages_box.append('<div class="col-sm-6 shadow-lg ml-auto mt-3 p-3 rounded"><p>'+value["content"]+'</p><p class="m-0 p-0 font-weight-light text-muted">'+value["timestamp"]+'</p></div>');
+            messages_box.append('<div class="col-sm-6 shadow-lg ml-auto mt-3 p-3 rounded border border-primary"><p>'+value["content"]+'</p><p class="m-0 p-0 font-weight-light text-muted">'+value["timestamp"]+'</p></div>');
         }
         else{
-            messages_box.append('<div class="col-sm-6 shadow-lg mb-3 p-3 rounded"><p>'+value["content"]+'</p><p class="m-0 p-0 font-weight-light text-muted">'+value["timestamp"]+'</p></div>');
+            messages_box.append('<div class="col-sm-6 shadow-lg mb-3 p-3 rounded border border-secondary"><p>'+value["content"]+'</p><p class="m-0 p-0 font-weight-light text-muted">'+value["timestamp"]+'</p></div>');
         }
     }
 }

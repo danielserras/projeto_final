@@ -87,3 +87,11 @@ class MessageResource(resources.ModelResource):
 class Payment_WarningResource(resources.ModelResource):
     class Meta:
         model = Payment_Warning
+
+class IncidenceResource(resources.ModelResource):
+    class Meta:
+        model = Payment_Warning
+
+class CauseResource(resources.ModelResource):
+    class Meta:
+        model = Cause
