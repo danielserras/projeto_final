@@ -51,6 +51,10 @@ def login_view(request):
             for i in Landlord.objects.all():
                 if i.lord_user_id == id_user:
                     request.session['typeUser'] = "Landlord"
+                    properties_created = Property.objects.filter(landlord=i)
+                    print(properties_created)
+                    if len(properties_created) == 0:
+                        return redirect('landlord')
                     return redirect('index') #placeholder, alterem depois
             for i in Tenant.objects.all():
                 if i.ten_user_id == id_user:
