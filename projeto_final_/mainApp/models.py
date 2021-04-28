@@ -224,3 +224,14 @@ class Message(models.Model):
             timestamp = self.timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
             is_read = self.is_read
         )
+
+class Cause(models.Model):
+    description = models.CharField(max_length=100)
+
+
+class Incidence(models.Model):
+    agreement = models.ForeignKey(Agreement, on_delete=models.CASCADE)
+    filing_time = models.DateField()
+    causes = models.ForeignKey(Cause, on_delete = models.PROTECT)
+    description = models.CharField(max_length=280)
+    grouds_for_termination = models.BooleanField(null=True)

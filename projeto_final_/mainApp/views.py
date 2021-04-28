@@ -2570,8 +2570,46 @@ def deletePopUpDuePayment(request):
     request.session['duePayments'] =  False
     return redirect('profile')
 
-def reasons(request):
-    return render(request, "mainApp/reasons.html", {})
+@login_required(login_url='login_view')
+def reasons(request, agreement_id):
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+    try:
+        lord = Landlord.objects.get(lord_user=a_user)
+        agreement = Agreement.objects.get(pk = agreement_id)
+    except:
+        return redirect('index')
+    if agreement.landlord != lord:
+        return redirect('index')
+    
+    context  = {
+        "agreement": agreement,
+    }
+
+
+    if request.method == 'POST':
+        data = request.POST
+        print(data)
+        causes_list = data.getlist('cause')
+        new_incidence = Incidence()
+        new_incidence.agreement = agreement
+        new_incidence.filing_time = (date.today())
+        for cause in causes_list:
+            cause_obj = Cause.objects.get(pk = int(cause))
+            new_incidence.causes = cause_obj
+        new_incidence.description = data.get("description")
+
+        if data.get("buttonPressed") == 'onlyIncidence':
+            new_incidence.grouds_for_termination = 0
+        
+        else:
+            new_incidence.grouds_for_termination = 1
+            agreement.status = 0
+        new_incidence.save()
+
+        return render(request, "mainApp/reasons.html", context)
+
+    return render(request, "mainApp/reasons.html", context)
     
 def receipts(request):
     context={}
