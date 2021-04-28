@@ -47,7 +47,7 @@
   
           <div class="messages-box">
             <div id="leftStart" class="list-group rounded-0">
-              {% for a,b,c,d,e,f,g,h,i in fullList_ %}
+              {% for a,b,c,d,e,f,g,h,i,j in fullList_ %}
                 {% if i is True %}
                     <a href="#" id="notifications_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
                       {% load static %}
@@ -121,7 +121,7 @@
             {% load static %}
             <img src='{% static "mainApp/images/message.svg" %}' class='img' id="defaultImg" alt='Image representing a message' />
         </div>
-          {% for a,b,c,d,e,f,g,h,i in fullList_ %}
+          {% for a,b,c,d,e,f,g,h,i,j in fullList_ %}
             <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
               <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                   <h4 class="text-white mt-3 pl-3"> {% trans 'Assunto' %} </h4>
@@ -139,27 +139,32 @@
                 <p class= "text-info"> {{ h }}</p>
             </div>
               <div class="row m-2">
-                <div>
-                  <p class="text-info font-weight-bold">{% trans 'Mensagem' %}:&nbsp</p>
+                  <p class="text-info font-weight-bold">{% trans 'Mensagem do Interessado' %}:&nbsp</p>
                   <p class="text-info">{{ c }}</p>
-                </div>
               </div>
+              
               {% if f is None %}
-                <div class="row d-flex justify-content-center">
-                  <form method="POST" action="{% url 'deny_request' a %}">
+              <div class="row m-2">
+                <p class="text-info font-weight-bold">{% trans 'Mensagem de resposta (opcional)' %}:&nbsp</p>
+              </div>
+                <div class="row d-flex justify-content-center mb-5">
+                  <form method="POST" action="{% url 'accept_deny_request' a %}">
                     {% csrf_token %}
-                    <div class="col-sm-6 mt-5">
-                      <button type="submit" class="btn btn-info font-weight-bold mx-auto">{% trans 'Recusar' %}</button>
-                    </div>
-                  </form>
-                  <form method="POST" action="{% url 'accept_request' a %}">
-                    {% csrf_token %}
-                    <div class="col-sm-6 mt-5">
-                      <button type="submit" class="btn btn-info font-weight-bold mx-auto" >{% trans 'Aceitar' %}</button>
+                    <p hidden>{{form}}</p>
+                    {{form.media}}
+                    <div class="col-5 mx-auto">
+                      <input type="submit" class="btn btn-info font-weight-bold" name="deny" value="{% trans 'Recusar' %}">
+                      <input type="submit" class="btn btn-info font-weight-bold float-right" name="accept" value="{% trans 'Aceitar' %}">
                     </div>
                   </form>
                 </div>
               {% else %}
+                {% if j != '' %}
+                  <div class="row m-2">
+                    <p class="text-info font-weight-bold">{% trans 'A sua mensagem' %}:&nbsp</p>
+                    {{j|safe}}
+                  </div>
+                {% endif %}
                 <div class="row m-2">
                   <p class="text-info font-weight-bold">{% trans 'Estado do pedido' %}:&nbsp</p>
                   {% if f is True %}

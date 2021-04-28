@@ -537,7 +537,10 @@ class SendMessage(forms.Form):
     chat_id = forms.IntegerField(required=True)
     content =  forms.CharField(required=True, max_length=200)
 
-
+class RichTextForm(ModelForm):
+    class Meta:
+        model = Rich_Text_Message
+        fields = ['message']
 
 
 
