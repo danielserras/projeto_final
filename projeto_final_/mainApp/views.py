@@ -2068,7 +2068,14 @@ def renewAgreement(request):
         context = {"startDate":startDate,"endDate":endDate,"propAddress":roomAddress,"landlordName":landlordName,"startDate_v2":startDate_v3}
     return render(request, "mainApp/renewAgreement.html", context)
 
+@login_required(login_url='login_view')
 def landlord(request):
+    current_user = request.user
+    a_user = App_user.objects.get(user_id=current_user)
+    try:
+        lord = Landlord.objects.get(lord_user=a_user)
+    except:
+        return redirect('index')
     return render(request, "mainApp/landLord.html", {})
 
 def delete_account(request):
