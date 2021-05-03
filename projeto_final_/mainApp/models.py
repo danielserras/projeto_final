@@ -171,7 +171,7 @@ class Agreement_Request(models.Model):
     landlord = models.ForeignKey(Landlord, models.SET_NULL, null=True)
     startsDate = models.DateField()
     endDate = models.DateField()
-    message = models.TextField(null=True, blank=True)
+    message = RichTextField(null=True, blank=True)
     messageLandlord =  models.ForeignKey(Rich_Text_Message, models.SET_NULL, null=True)
     accepted = models.BooleanField(null=True, blank=True)
     dateOfRequest = models.DateTimeField()

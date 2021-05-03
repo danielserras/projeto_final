@@ -71,7 +71,7 @@ CKEDITOR_CONFIGS = {
             ['Font', 'FontSize'],
             ['Bold', 'Italic', 'Underline'],
             ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyBlock'],
-            ['Table'],
+            ['Table', 'Smiley'],
         ]
     }
 }

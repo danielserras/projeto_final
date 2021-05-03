@@ -56,7 +56,7 @@
                           <div class="d-flex align-items-center justify-content-between mb-1">
                             <h6 class="mb-0">{{ b }}</h6><small class="small font-weight-bold">{{ g }}</small>
                           </div>
-                          <p class="messageText font-italic text-muted mb-0 text-small">{{ c }}</p>
+                          <p class="messageText font-italic text-muted mb-0 text-small">{{ c|safe }}</p>
                         </div>
                       </div>
                     </a>
@@ -71,7 +71,7 @@
                         <div class="d-flex align-items-center justify-content-between mb-1">
                           <h6 class="mb-0">{{ b }}</h6><small class="small font-weight-bold">{{ g }}</small>
                         </div>
-                        <p class="messageText font-italic text-muted mb-0 text-small">{{ c }}</p>
+                        <p class="messageText font-italic text-muted mb-0 text-small">{{ c|safe }}</p>
                       </div>
                     </div>
                   </a>
@@ -140,7 +140,7 @@
             </div>
               <div class="row m-2">
                   <p class="text-info font-weight-bold">{% trans 'Mensagem do Interessado' %}:&nbsp</p>
-                  <p class="text-info">{{ c }}</p>
+                  <p class="text-info">{{ c|safe }}</p>
               </div>
               
               {% if f is None %}
@@ -233,56 +233,5 @@
       </div>
   </div>
 </div>
-
-<!-- <script>
-  $('#myform_1').submit(function(event){
-    event.preventDefault();
-    create_post();
-  });
-
-  function create_post() {
-    console.log("create post is working!") // sanity check
-    $.ajaxSetup({ 
-     beforeSend: function(xhr, settings) {
-         function getCookie(name) {
-             var cookieValue = null;
-             if (document.cookie && document.cookie != '') {
-                 var cookies = document.cookie.split(';');
-                 for (var i = 0; i < cookies.length; i++) {
-                     var cookie = jQuery.trim(cookies[i]);
-                     // Does this cookie string begin with the name we want?
-                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                         break;
-                     }
-                 }
-             }
-             return cookieValue;
-         }
-         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-             // Only send the token to relative URLs i.e. locally.
-             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-         }
-     } 
-    });
-    $.ajax({
-        url : 'notificationsLandlord/read/2', // the endpoint
-        type : "POST", // http method
-        data : {}, // data sent with the post request
-
-        // handle a successful response
-        success : function(json) {
-            $("#myform_1").children().attr('class', 'notification list-group-item list-group-item-action list-group-item-info rounded-0');
-            console.log("success"); // another sanity check
-        },
-
-        // handle a non-successful response
-        error : function(xhr,errmsg,err) {
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-        }
-    });
-  };
-</script> -->
-
 
 {% endblock %}

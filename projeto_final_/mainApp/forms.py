@@ -342,7 +342,7 @@ class Agreement_Request_Form(forms.ModelForm):
 
     startsDate = forms.DateField()
     endDate = forms.DateField()
-    message = forms.CharField(widget=forms.Textarea, required=False)
+    message = RichTextField(null=True, blank=True)
 
 
     class Meta:

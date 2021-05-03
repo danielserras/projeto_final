@@ -890,7 +890,9 @@ def create_request(request):
             start = main_listing.availability_starts.strftime('%Y-%m-%d')
             end = main_listing.availability_ending.strftime('%Y-%m-%d')
 
-            context = {"start": start, "end": end}
+            form = RichTextForm()
+
+            context = {"start": start, "end": end, "form": form}
         
         else:
 
@@ -905,7 +907,9 @@ def create_request(request):
             start = main_listing.availability_starts.strftime('%Y-%m-%d')
             end = main_listing.availability_ending.strftime('%Y-%m-%d')
 
-            context = {"start": start, "end": end}
+            form = RichTextForm()
+
+            context = {"start": start, "end": end, "form": form}
         
         
         return render(request, 'mainApp/intent.html', context)
