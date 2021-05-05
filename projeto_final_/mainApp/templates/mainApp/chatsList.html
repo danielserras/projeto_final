@@ -9,31 +9,32 @@
 <script src='{% static "mainApp/js/chat.js" %}'></script> 
 {% endblock %}
 {% block content %}
-<div class="container p-0 my-5 p-3 shadow-lg">
+<div class="container rounded p-0 my-5 shadow-lg">
     <div class="row m-0">
-        <div class="col-sm-3 p-3">
+        <div class="col-sm-3 p-3  border-bottom border-info">
+            <h5>Chats</h5>
         </div>
-        <div class="col-sm-9 p-3 bg-primary text-white" id="receiver">
+        <div class="col-sm-9 p-3 bg-primary text-white rounded-chat" id="receiver">
         </div>
     </div>
     <div class="row m-0">
-        <div class="col-sm-3 bg-info height-75">
+        <div class="col-sm-3 height-75">
             {% for chat in chats_sorted %}
                 <form class="selectChat" action="" method="get">
                     {% csrf_token %}
                     <input type="hidden" value="{{chat.id}}">
-                    <div class="row px-2 py-3 border-top border-bottom border-white"><button class="btn text-white" type="submit">{{chats_dict|get_item:chat}}</button></div>
+                    <div class="row px-2 py-3 border-bottom border-info"><button id="chat_{{chat.id}}" class="btn text-info" type="submit">{{chats_dict|get_item:chat}}</button></div>
                 </form>
             {% endfor %}
         </div>
-        <div class="col-sm-9 p-4">
-            <div class="row height-65">
+        <div class="col-sm-9">
+            <div class="row height-65 p-4">
                 <div class="col-sm-12" id="messagesBox"></div>
             </div>
-            <div class="row border-top mt-4" id="sendMessageRow">
-                <form class="sendMessage col-sm-12 mt-4 mb-0" action="" method="post" id="sendMessage">
+            <div class="row border-top mt-4 px-3" id="sendMessageRow">
+                <form class="sendMessage col-sm-12 mt-3 mb-0" action="" method="post" id="sendMessage">
                     {% csrf_token %}
-                    <div class="row p-0">
+                    <div class="row">
                         <div class="col-sm-9">
                             <textarea name="content" class="form-control" id="message"></textarea>
                         </div>
@@ -53,4 +54,12 @@
         </div>
     </div>
 </div>
+{% if request.session.chat_is_new %}
+    <script>
+        $(document).ready(function () {
+            $("{{chat_id}}").click();
+        })
+    </script>
+{% endif %}
+
 {% endblock %}

@@ -2469,8 +2469,11 @@ def checkReadTenant(request,id_req):
 
     return redirect('notificationsTenant')
 
-def chat_list_view(request, user_id):
-    user = User.objects.get(id=user_id)
+@login_required(login_url='login_view')
+def chat_list_view(request):
+    request.session["chat_is_new"] = False
+    user = request.user
+    user_id = user.id
     username = user.username
     if request.is_ajax and request.method == 'GET':
         form = GetChat(request.GET)
@@ -2482,7 +2485,7 @@ def chat_list_view(request, user_id):
             result = {}
             result["messages"] = {}
             result["username"] = username
-            result["receiver"] = chat_obj.user_1.first_name +" "+ chat_obj.user_1.last_name if chat_obj.user_2.id == user_id else chat_obj.user_2.first_name +" "+ chat_obj.user_2.last_nameme
+            result["receiver"] = chat_obj.user_1.first_name +" "+ chat_obj.user_1.last_name if chat_obj.user_2.id == user_id else chat_obj.user_2.first_name +" "+ chat_obj.user_2.last_name
             messages_sorted = []
             for m in messages:
                 message_dict = m.as_json()
@@ -2493,7 +2496,6 @@ def chat_list_view(request, user_id):
     if request.is_ajax and request.method == 'POST':
         form = SendMessage(request.POST)
         if form.is_valid():
-            print(timezone.now())
             chat = Chat.objects.get(id=form.cleaned_data.get("chat_id"))
             message = Message(
                     chat = chat, 
@@ -2514,6 +2516,51 @@ def chat_list_view(request, user_id):
                 result["messages"][m.id] = message_dict 
             return HttpResponse(json.dumps(result))
 
+    if request.method == 'POST':
+        form = CreateChat(request.POST)
+        chat_id = None
+
+        if form.is_valid():
+            receiver_id = form.cleaned_data.get("receiver")
+            receiver = User.objects.get(id=receiver_id)
+            chats_1 = Chat.objects.filter(user_1=receiver, user_2=request.user)
+            chats_2 = Chat.objects.filter(user_1=request.user, user_2=receiver)
+            if len(chats_1) == 0 and len(chats_2) == 0:
+                chat = Chat(
+                    user_1=request.user,
+                    user_2=receiver,
+                    last_message=timezone.now()
+                )
+                chat.save()
+                request.session['chat_is_new'] = True
+                chat_id = "#chat_" + str(chat.id)
+            else:
+                request.session['chat_is_new'] = True
+                if len(chats_1) != 0:
+                    chat_id = "#chat_" + str(chats_1[0].id)
+                else:
+                    chat_id = "#chat_" + str(chats_2[0].id)
+            
+        chats_1 = list(Chat.objects.filter(user_1=user_id))
+        chats_2 = list(Chat.objects.filter(user_2=user_id))
+
+        chats_dict = {}
+
+        for c in chats_1:
+            chats_dict[c] = c.user_2.first_name + " " + c.user_2.last_name
+
+        for c in chats_2:
+            chats_dict[c] = c.user_1.first_name + " " + c.user_1.last_name
+
+        chats_sorted = sorted(chats_dict.keys(), key=lambda x: x.last_message, reverse=True)
+        
+        if chat_id == None:
+            context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict}
+        else:
+            context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict, "chat_id":chat_id}
+
+        return render(request, "mainApp/chatsList.html", context)
+
     chats_1 = list(Chat.objects.filter(user_1=user_id))
     chats_2 = list(Chat.objects.filter(user_2=user_id))
 
@@ -2526,8 +2573,8 @@ def chat_list_view(request, user_id):
         chats_dict[c] = c.user_1.first_name + " " + c.user_1.last_name
 
     chats_sorted = sorted(chats_dict.keys(), key=lambda x: x.last_message, reverse=True)
-
     context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict}
+
     return render(request, "mainApp/chatsList.html", context)
 
 def checkReadLandlordRef(request,id_ref):
