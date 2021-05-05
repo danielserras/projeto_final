@@ -75,6 +75,12 @@ class MessageAdmin(ImportExportModelAdmin):
 class Payment_WarningAdmin(ImportExportModelAdmin):
     resource_class = Payment_WarningResource
 
+class IncidenceAdmin(ImportExportModelAdmin):
+    resource_class = IncidenceResource
+
+class CauseAdmin(ImportExportModelAdmin):
+    resource_class = CauseResource
+
 admin.site.unregister(User)
 
 admin.site.register(User, UserAdmin)
@@ -97,6 +103,8 @@ admin.site.register(Invoice_Line, Invoice_LineAdmin)
 admin.site.register(Chat, ChatAdmin)
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Payment_Warning, Payment_WarningAdmin)
+admin.site.register(Cause, CauseAdmin)
+admin.site.register(Incidence, IncidenceAdmin)
 
 
 """ for model in models:

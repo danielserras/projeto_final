@@ -21,13 +21,13 @@
             <div class="form-group row mt-4 mb-2">
                 <label for="example-date-input" class="col-sm-3 col-form-label">{% trans 'Data de Início' %}:</label>
                 <div class="col-sm-5">
-                    <input class="form-control" type="date" name="startsDate" min="{{ start }}" max="{{ end }}" value="">
+                    <input class="form-control" type="date" name="startsDate" min="{{ start }}" max="{{ end }}" value="" required>
                 </div>
             </div>
             <div class="form-group row mt-4 mb-2">
                 <label for="example-date-input" class="col-sm-3 col-form-label">{% trans 'Data de Fim' %}:</label>
                 <div class="col-sm-5">
-                    <input class="form-control" type="date" name="endDate" min="{{ start }}" max="{{ end }}" value="">
+                    <input class="form-control" type="date" name="endDate" min="{{ start }}" max="{{ end }}" value="" required>
                 </div>
             </div>
             <div class="row">
@@ -35,7 +35,8 @@
                     <h6 class="text-info font-weight-bold mb-3 mt-3">{% trans 'Mensagem a enviar ao senhorio' %}:</h6>
                 </div>
             </div>
-            <textarea class="border border-info border-3 mx-auto w-100 h-50" placeholder='{% trans "Introduza uma mensagem a enviar ao senhorio..." %}' style="text-indent: 0px;" name="message"></textarea>
+            <p hidden>{{form}}</p>
+            {{form.media}}
             <div class="row mt-4">
                 <div class="col-sm-12">
                     <button type="submit" class="btn btn-secondary btn-lg w-25">Enviar</button>

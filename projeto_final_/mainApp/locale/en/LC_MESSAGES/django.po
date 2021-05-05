@@ -854,7 +854,7 @@ msgstr "Paid"
 
 #: mainApp/templates/mainApp/listingPage.html:23
 msgid "Já mostrou interesse."
-msgstr "You have already showed interest"
+msgstr "You have already shown interest"
 
 #: mainApp/templates/mainApp/listingPage.html:30
 msgid "Só pode enviar uma mensagem de interesse para cada propriedade"

@@ -21,7 +21,7 @@
 
         <div class="messages-box">
           <div id="leftStart" class="list-group rounded-0">
-            {% for a,b,c,d,e,f,g,h,i,j in fullList %}
+            {% for a,b,c,d,e,f,g,h,i,j,k in fullList %}
               {% if f is not None %}
                 {% if j is True %}
                   <a href="#" id="notificationsTen_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
@@ -125,7 +125,7 @@
           {% load static %}
           <img src='{% static "mainApp/images/message.svg" %}' class='img' id="defaultImg" alt='Image representing a message' />
       </div>
-        {% for a,b,c,d,e,f,g,h,i,j in fullList %}
+        {% for a,b,c,d,e,f,g,h,i,j,k in fullList %}
           <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
             <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                 <h4 class="text-white mt-3 pl-3"> {% trans 'Assunto' %} </h4>
@@ -144,29 +144,41 @@
           </div>
             <div class="row m-2">
               <div>
-                <p class="text-info font-weight-bold">{% trans 'Mensagem' %}:&nbsp</p>
-                <p class="text-info">{{ c }}</p>
+                <p class="text-info font-weight-bold">{% trans 'A sua mensagem' %}:&nbsp</p>
+                <p class="text-info">{{ c|safe }}</p>
               </div>
             </div>
-            <div class="big_text row m-2">
-              <p class="text-info font-weight-bold">{% trans 'Resposta ao seu pedido de alojamento' %}:&nbsp</p>
+            <div class="row m-2">
+              <p class="text-info font-weight-bold big_text">{% trans 'Resposta ao seu pedido de alojamento' %}:&nbsp</p>
               {% if f is True %}
-                <p class="text-info">{% trans 'Aceite' %}</p>
+                <p class="text-info big_text">{% trans 'Aceite' %}</p>
                 <br>
-                <!-- PAGAMENTO -->
-                <form method="POST" action="{% url 'make_payment' a %}">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-info font-weight-bold mx-auto">{% trans 'Realizar Pagamento' %}</button>
-                </form>
-                <!-- FATURA -->
-                <form action="{% url 'get_invoice_pdf'%}" method="POST" target="_blank">
-                  {% csrf_token %}
-                  <input name="invoice_id" type='hidden' value="{{h}}">
-                  <button type="submit" class="btn btn-info font-weight-bold ml-3">{% trans 'Fatura' %}</button>
-                </form>
               {% else %}
                 <p class="text-info">{% trans 'Recusado' %}</p>
               {% endif %}
+                {% if k != '' %}
+                  <p class="text-info font-weight-bold">{% trans 'Mensagem do senhorio' %}:&nbsp</p>
+                  {{k|safe}}            
+                {% endif %}
+            </div>
+            <div class="row m-2 mt-3 justify-content-center">
+              <div class="col-6">              
+                {% if f is True %}
+                  <!-- PAGAMENTO -->
+                  <form method="POST" action="{% url 'make_payment' a %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-info font-weight-bold float-right">{% trans 'Realizar Pagamento' %}</button>
+                  </form>
+              </div>
+              <div class="col-6">  
+                  <!-- FATURA -->
+                  <form action="{% url 'get_invoice_pdf'%}" method="POST" target="_blank">
+                    {% csrf_token %}
+                    <input name="invoice_id" type='hidden' value="{{h}}">
+                    <button type="submit" class="btn btn-info font-weight-bold">{% trans 'Fatura' %}</button>
+                  </form>
+                {% endif %}
+              </div>
             </div>
           </div>
         {% endfor %}

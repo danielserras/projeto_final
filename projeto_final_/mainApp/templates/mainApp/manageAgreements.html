@@ -59,6 +59,9 @@
             {% endif %}
             <th class="text-white text-center" scope="col">{% trans 'Faturas' %}</th>
             <th class="text-white text-center" scope="col">{% trans 'Recibo' %}</th>
+            {% if type == 'landlord' %}
+                <th class="text-white text-center" scope="col">{% trans 'Incidencias e término' %}</th>
+            {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -139,6 +142,9 @@
                                 </form>
                             </td>
                         {% endif %}
+                        <td class="text-center">
+                            <a class="btn btn-danger btn-sm" role="button" href="{% url 'reasons' a.id%}">Relatar Incidencias</a>
+                        </td>
                     </tr>
                 {% endfor %}
         </tbody>

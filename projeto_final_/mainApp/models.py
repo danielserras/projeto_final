@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from ckeditor.fields import RichTextField
 import time
 
 def get_upload_path(instance, filename):
@@ -159,6 +160,10 @@ class Agreement(models.Model):
     last_invoice_date = models.DateField()
     status = models.BooleanField()
 
+
+class Rich_Text_Message(models.Model):
+    message = RichTextField(null=True, blank=True)
+
 class Agreement_Request(models.Model):
     associated_room_listing = models.ForeignKey(Room_listing, models.SET_NULL, null=True)
     associated_property_listing = models.ForeignKey(Property_listing, models.SET_NULL, null=True)
@@ -166,7 +171,8 @@ class Agreement_Request(models.Model):
     landlord = models.ForeignKey(Landlord, models.SET_NULL, null=True)
     startsDate = models.DateField()
     endDate = models.DateField()
-    message = models.TextField(null=True, blank=True)
+    message = RichTextField(null=True, blank=True)
+    messageLandlord =  models.ForeignKey(Rich_Text_Message, models.SET_NULL, null=True)
     accepted = models.BooleanField(null=True, blank=True)
     dateOfRequest = models.DateTimeField()
     checkReadLandlord = models.BooleanField()
@@ -224,3 +230,14 @@ class Message(models.Model):
             timestamp = self.timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
             is_read = self.is_read
         )
+
+class Cause(models.Model):
+    description = models.CharField(max_length=100)
+
+
+class Incidence(models.Model):
+    agreement = models.ForeignKey(Agreement, on_delete=models.CASCADE)
+    filing_time = models.DateField()
+    causes = models.ManyToManyField(Cause)
+    description = models.CharField(max_length=280)
+    grouds_for_termination = models.BooleanField(null=True)

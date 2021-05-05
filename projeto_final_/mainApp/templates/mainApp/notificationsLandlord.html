@@ -47,7 +47,7 @@
   
           <div class="messages-box">
             <div id="leftStart" class="list-group rounded-0">
-              {% for a,b,c,d,e,f,g,h,i in fullList_ %}
+              {% for a,b,c,d,e,f,g,h,i,j in fullList_ %}
                 {% if i is True %}
                     <a href="#" id="notifications_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
                       {% load static %}
@@ -56,7 +56,7 @@
                           <div class="d-flex align-items-center justify-content-between mb-1">
                             <h6 class="mb-0">{{ b }}</h6><small class="small font-weight-bold">{{ g }}</small>
                           </div>
-                          <p class="messageText font-italic text-muted mb-0 text-small">{{ c }}</p>
+                          <p class="messageText font-italic text-muted mb-0 text-small">{{ c|safe }}</p>
                         </div>
                       </div>
                     </a>
@@ -71,7 +71,7 @@
                         <div class="d-flex align-items-center justify-content-between mb-1">
                           <h6 class="mb-0">{{ b }}</h6><small class="small font-weight-bold">{{ g }}</small>
                         </div>
-                        <p class="messageText font-italic text-muted mb-0 text-small">{{ c }}</p>
+                        <p class="messageText font-italic text-muted mb-0 text-small">{{ c|safe }}</p>
                       </div>
                     </div>
                   </a>
@@ -121,7 +121,7 @@
             {% load static %}
             <img src='{% static "mainApp/images/message.svg" %}' class='img' id="defaultImg" alt='Image representing a message' />
         </div>
-          {% for a,b,c,d,e,f,g,h,i in fullList_ %}
+          {% for a,b,c,d,e,f,g,h,i,j in fullList_ %}
             <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
               <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                   <h4 class="text-white mt-3 pl-3"> {% trans 'Assunto' %} </h4>
@@ -139,27 +139,32 @@
                 <p class= "text-info"> {{ h }}</p>
             </div>
               <div class="row m-2">
-                <div>
-                  <p class="text-info font-weight-bold">{% trans 'Mensagem' %}:&nbsp</p>
-                  <p class="text-info">{{ c }}</p>
-                </div>
+                  <p class="text-info font-weight-bold">{% trans 'Mensagem do Interessado' %}:&nbsp</p>
+                  <p class="text-info">{{ c|safe }}</p>
               </div>
+              
               {% if f is None %}
-                <div class="row d-flex justify-content-center">
-                  <form method="POST" action="{% url 'deny_request' a %}">
+              <div class="row m-2">
+                <p class="text-info font-weight-bold">{% trans 'Mensagem de resposta (opcional)' %}:&nbsp</p>
+              </div>
+                <div class="row d-flex justify-content-center mb-5">
+                  <form method="POST" action="{% url 'accept_deny_request' a %}">
                     {% csrf_token %}
-                    <div class="col-sm-6 mt-5">
-                      <button type="submit" class="btn btn-info font-weight-bold mx-auto">{% trans 'Recusar' %}</button>
-                    </div>
-                  </form>
-                  <form method="POST" action="{% url 'accept_request' a %}">
-                    {% csrf_token %}
-                    <div class="col-sm-6 mt-5">
-                      <button type="submit" class="btn btn-info font-weight-bold mx-auto" >{% trans 'Aceitar' %}</button>
+                    <p hidden>{{form}}</p>
+                    {{form.media}}
+                    <div class="col-5 mx-auto">
+                      <input type="submit" class="btn btn-info font-weight-bold" name="deny" value="{% trans 'Recusar' %}">
+                      <input type="submit" class="btn btn-info font-weight-bold float-right" name="accept" value="{% trans 'Aceitar' %}">
                     </div>
                   </form>
                 </div>
               {% else %}
+                {% if j != '' %}
+                  <div class="row m-2">
+                    <p class="text-info font-weight-bold">{% trans 'A sua mensagem' %}:&nbsp</p>
+                    {{j|safe}}
+                  </div>
+                {% endif %}
                 <div class="row m-2">
                   <p class="text-info font-weight-bold">{% trans 'Estado do pedido' %}:&nbsp</p>
                   {% if f is True %}
@@ -228,56 +233,5 @@
       </div>
   </div>
 </div>
-
-<!-- <script>
-  $('#myform_1').submit(function(event){
-    event.preventDefault();
-    create_post();
-  });
-
-  function create_post() {
-    console.log("create post is working!") // sanity check
-    $.ajaxSetup({ 
-     beforeSend: function(xhr, settings) {
-         function getCookie(name) {
-             var cookieValue = null;
-             if (document.cookie && document.cookie != '') {
-                 var cookies = document.cookie.split(';');
-                 for (var i = 0; i < cookies.length; i++) {
-                     var cookie = jQuery.trim(cookies[i]);
-                     // Does this cookie string begin with the name we want?
-                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                         break;
-                     }
-                 }
-             }
-             return cookieValue;
-         }
-         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-             // Only send the token to relative URLs i.e. locally.
-             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-         }
-     } 
-    });
-    $.ajax({
-        url : 'notificationsLandlord/read/2', // the endpoint
-        type : "POST", // http method
-        data : {}, // data sent with the post request
-
-        // handle a successful response
-        success : function(json) {
-            $("#myform_1").children().attr('class', 'notification list-group-item list-group-item-action list-group-item-info rounded-0');
-            console.log("success"); // another sanity check
-        },
-
-        // handle a non-successful response
-        error : function(xhr,errmsg,err) {
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-        }
-    });
-  };
-</script> -->
-
 
 {% endblock %}

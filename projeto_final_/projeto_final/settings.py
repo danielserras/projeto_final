@@ -56,9 +56,25 @@ INSTALLED_APPS = [
     'knox',
     'rest_framework.authtoken',
     'import_export',
+    'ckeditor',
 ]
+
 PAYPAL_TEST = True
 PAYPAL_RECEIVER_EMAIL = 'sb-st9me5441079@business.example.com'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'height': '30%',
+        'width': '100%',
+        'toolbar_Custom': [
+            ['Font', 'FontSize'],
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyBlock'],
+            ['Table', 'Smiley'],
+        ]
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
