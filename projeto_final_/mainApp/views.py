@@ -2733,3 +2733,6 @@ def get_receipt_pdf(request):
             }
             pdf = render_to_pdf('mainApp/receiptPDF.html', data)
             return HttpResponse(pdf, content_type='application/pdf')
+
+def review(request):
+    return render(request,'mainApp/reviewProperty.html', {})
