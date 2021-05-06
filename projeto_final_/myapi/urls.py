@@ -5,7 +5,7 @@ from django.urls import include, path
 from rest_framework import routers
 from . import views 
 from knox import views as knox_views
-
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 # router = routers.DefaultRouter()
 # router.register(r'testes', views.registerViewSet)
 
@@ -29,4 +29,6 @@ urlpatterns = [
     path('api/property/<int:pk>/', views.Property.as_view(), name="property"),
     path('api/User/<int:pk>/', views.UserAPI.as_view(), name="User"),
     path('api/User/<int:pk>/', views.UserAPI.as_view(), name="User"),
+    path('api/token/', TokenObtainPairView.as_view()),
+    path('api/token/refresh/', TokenRefreshView.as_view()),
 ]
