@@ -8,3 +8,7 @@
     height: 60vh !important;
     overflow-y: scroll;
 }
+
+#message{
+    resize: none;
+}

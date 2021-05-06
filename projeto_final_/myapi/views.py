@@ -4,6 +4,8 @@ from django.forms.models import model_to_dict
 
 from rest_framework.response import Response
 
+from rest_framework.decorators import permission_classes
+
 from decouple import config
 
 import mainApp
@@ -14,7 +16,7 @@ from rest_framework.response import Response
 
 from rest_framework.decorators import api_view
 
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from .serializers import *
 
@@ -124,11 +126,12 @@ class agreementRequestAPI(generics.GenericAPIView):
 #um URI para adicionar propriedade, outro URI para listar Propriedade, outro URI por divisao (quarto, sala, sala de estar, casa de banho cozinha)
 class Property(APIView):
     geolocator = MapBox(config('MAPBOX_KEY'), scheme=None, user_agent=None, domain='api.mapbox.com')
-
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     def post(self, request, format=None):
-        permission_classes = (IsAuthenticated,)
-        token = (request.META["HTTP_AUTHORIZATION"].split("Token ")[1])
-        user = Token.objects.get(key=token).user
+        user = request.user
+        print(user)
+        #token = (request.META["HTTP_AUTHORIZATION"].split("Token ")[1])
+        #user = Token.objects.get(key=token).user
         appUser = App_user.objects.get(user = user)
         landLord = Landlord.objects.filter(lord_user = appUser)
         if not landLord:

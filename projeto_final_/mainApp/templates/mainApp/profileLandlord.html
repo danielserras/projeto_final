@@ -1,0 +1,117 @@
+{% extends 'mainApp/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/login.css" %}'>
+{% endblock %}
+{% block scripts %}
+    <script src='{% static "mainApp/js/profileTenant.js" %}'></script>
+{% endblock %}
+{% block content %}
+    
+    <div class="container my-5 border border-info border-5 rounded shadow-lg">
+        <div class="row bg-info p-2">
+            <a href="#" onclick="history.back();">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="52" height="52" viewBox="0 0 24 24" stroke-width="2" stroke="white" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <line x1="5" y1="12" x2="11" y2="18" />
+                    <line x1="5" y1="12" x2="11" y2="6" />
+                </svg>
+            </a>
+            <h1 id="startingTitle" class="mx-auto my-auto text-white text-24">{% trans 'Dados Pessoais' %}</h1>
+        </div>
+        <div class="row">
+            
+
+            <!--User Details-->
+            <div class="col-sm-9 mx-auto">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-6 pt-3 mx-auto">
+                                <img src='{% static "mainApp/images/user.svg" %}' alt="" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4 mx-auto">
+                                <h2 class="mb-0 text-primary" style="font-size: 28px;">{{landlord_user.username}}</h2>
+                            </div>
+                        </div>
+                    </div>
+                
+
+                    <div class="col-sm-6">
+                        <div class="row justify-content-center pt-3">
+                            <h3 class="mb-0 text-info text-right">{% trans 'Avaliação' %}:</h3> 
+                        </div>
+                        <div class="row justify-content-center pt-3">
+                            <p class="mb-0 text-info text-right" style="font-size: 28px;">3.5/5</p> 
+                        </div>
+                        <div class="row justify-content-center pb-4">
+                            <p class="mb-0 text-info text-right">45 avaliações</p>
+                        </div>
+                        <div class="row justify-content-center pt-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-star" width="45" height="45" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="#264653" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-star" width="45" height="45" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="#264653" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-star" width="45" height="45" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="#264653" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-star" width="45" height="45" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-star" width="45" height="45" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                
+                    <div id="starting_div">
+                        <div class="row justify-content-center">
+                            <div class="col-6 p-3">
+                                <p class="text-info pl-5 mb-0 font-weight-bold mx-auto">{% trans 'Nome' %}:</p>
+                                <input type="text" class="inputType1 ml-4" value="{{landlord_user.first_name}} {{landlord_user.last_name}}" name="first_name" readonly>
+                            </div>
+                            <div class="col-6 p-3">
+                                <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Tipo de Senhorio' %}:</p>
+                                <input type="text" class="inputType1 ml-4" value="" name="type" readonly>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-6 p-3">
+                                <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Email' %}:</p>
+                                <input type="text" class="inputType1 ml-4" value="{{landlord_user.email}}" name="email" readonly>
+                            </div>
+                            <div class="col-6 p-3">
+                                <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Número de telefone' %}:</p>
+                                <input type="number" class="inputType1 ml-4" value="{{ landlord_app_user.phoneNumber }}" name="phoneNumber" readonly>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-3">
+                            <h3 class="mb-0 text-info text-right">{% trans 'Histórico de Incidências' %}:</h3>
+                        </div>
+                        <div class="row justify-content-center pt-2 pb-4">
+                            <p class="mb-0">Incidência 1</p>
+                        </div>
+                        <div class="row justify-content-center pt-2 pb-4">
+                            <p class="mb-0">Incidência 2</p>
+                        </div>
+                        <div class="row justify-content-center pt-2 pb-4">
+                            <p class="mb-0">Incidência 3</p>
+                        </div>
+                    </div>                
+            </div>
+        </div>
+    </div>
+{% endblock %}
