@@ -2733,3 +2733,11 @@ def get_receipt_pdf(request):
             }
             pdf = render_to_pdf('mainApp/receiptPDF.html', data)
             return HttpResponse(pdf, content_type='application/pdf')
+
+def profileTenant(request):
+    context={}
+    return render(request, "mainApp/profileTenant.html", context)
+
+def profileLandlord(request):
+    context={}
+    return render(request, "mainApp/profileLandlord.html", context)

@@ -18,21 +18,21 @@
         </div>
     </div>
     <div class="row m-0">
-        <div class="col-sm-3 height-75">
+        <div class="col-sm-3 height-75 ">
             {% for chat in chats_sorted %}
                 <form class="selectChat" action="" method="get">
                     {% csrf_token %}
                     <input type="hidden" value="{{chat.id}}">
-                    <div class="row px-2 py-3 border-bottom border-info"><button id="chat_{{chat.id}}" class="btn text-info" type="submit">{{chats_dict|get_item:chat}}</button></div>
+                    <div class="row px-2 py-3 border-bottom border-info chat-select" id="chat_div_{{chat.id}}"><button id="chat_{{chat.id}}" class="btn text-info" type="submit">{{chats_dict|get_item:chat}}</button></div>
                 </form>
             {% endfor %}
         </div>
         <div class="col-sm-9">
-            <div class="row height-65 p-4">
-                <div class="col-sm-12" id="messagesBox"></div>
+            <div class="row p-4">
+                <div class="col-sm-12 height-65" id="messagesBox"></div>
             </div>
-            <div class="row border-top mt-4 px-3" id="sendMessageRow">
-                <form class="sendMessage col-sm-12 mt-3 mb-0" action="" method="post" id="sendMessage">
+            <div class="row align-content-center px-3" id="sendMessageRow">
+                <form class="sendMessage col-12" action="" method="post" id="sendMessage">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-sm-9">
