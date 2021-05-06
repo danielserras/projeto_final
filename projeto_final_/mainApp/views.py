@@ -1498,7 +1498,10 @@ def notificationsTenant(request):
             paymentWarningList.append([timestamp, nameLand, address, listing_name,checkReadTenWarn,w.id])
 
     reverseList = list(reversed(fullList))
-    context = {"fullList" : reverseList, "sizeFull": len(fullList), "invoiceList": invoiceList, "sizeInvoice":len(invoiceList), "paymentWarningList": paymentWarningList, "sizeWarning":len(paymentWarningList)}
+
+    user_incidences = Incidence.objects.filter(agreement__in=Agreement.objects.filter(tenant = tenant_))
+    
+    context = {"fullList" : reverseList, "sizeFull": len(fullList), "invoiceList": invoiceList, "sizeInvoice":len(invoiceList), "paymentWarningList": paymentWarningList, "sizeWarning":len(paymentWarningList), "incidences":user_incidences}
     return render(request, "mainApp/notificationsTenant.html", context)
 
 def notificationsLandlord(request):

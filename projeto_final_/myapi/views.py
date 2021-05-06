@@ -180,8 +180,6 @@ class Property(APIView):
             return response_maker("success", 200, responseData, None)
         
 
-
-
 class SearchListing(APIView):
     def post(self, request):
         pass
