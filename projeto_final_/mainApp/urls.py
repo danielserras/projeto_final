@@ -61,7 +61,7 @@ urlpatterns = [
     path('reasons/<int:agreement_id>', views.reasons, name='reasons'),
     path('receipt', views.get_receipt_pdf, name='get_receipt_pdf'),
     path('acceptDenyRequest/<int:request_id>', views.accept_deny_request, name='accept_deny_request'),
-    path('profileTenant', views.profileTenant, name='profileTenant'),
-    path('profileLandlord', views.profileLandlord, name='profileLandlord'),
+    path('profileTenant/<int:ten_id>', views.profileTenant, name='profileTenant'),
+    path('profileLandlord/<int:lan_id>', views.profileLandlord, name='profileLandlord'),
 ]
 

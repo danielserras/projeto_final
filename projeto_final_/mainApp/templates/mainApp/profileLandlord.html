@@ -5,271 +5,113 @@
     <link rel="stylesheet" href='{% static "mainApp/css/login.css" %}'>
 {% endblock %}
 {% block scripts %}
-    <script src='{% static "mainApp/js/profile.js" %}'></script>
+    <script src='{% static "mainApp/js/profileTenant.js" %}'></script>
 {% endblock %}
 {% block content %}
-
-    {% if request.session.popUp %}
-        <script>
-            $(document).ready(function(){
-                $('#modalLoginAddProp').modal('show');
-                $(".deletePOP").click(function() {
-                    $('#modalLoginAddProp').modal('hide');
-                });
-            })
-        </script>
-    {% endif %}
-
-    {% if request.session.duePayments %}
-        <script>
-            $(document).ready(function(){
-                $('#modalLogin3').modal('show');
-                $(".deletePOP").click(function() {
-                    $('#modalLogin3').modal('hide');
-                });
-            })
-        </script>
-    {% endif %}
-
-
-    <script>
-    $(document).ready(function(){
-        $("#cancelAgreement").click(function() {
-            $('#modalLogin2').modal('show');
-
-        });  
-        $(".deletePOP").click(function() {
-            $('#modalLogin2').modal('hide');
-        });
-    })
-    </script>
-
-
-    <!--POP-UP NEW PROPERTY-->
-    <div class="modal fade" id="modalLoginAddProp" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Adicionou uma nova propriedade!' %}</h5>
-        <form method="POST" action="{% url 'deletePopUp' %}">
-            {% csrf_token %}
-            <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </form>
-        </div>
-        <div class="modal-body">
-        {% trans 'Parabéns, adicionou uma nova propriedade à sua conta!' %}
-        </div>
-        <div class="modal-footer">
-            <form method="POST" action="{% url 'deletePopUp' %}">
-                {% csrf_token %}
-                <button type="submit" id="fecharRegister" class="btn btn-primary deletePOP">{% trans 'Fechar' %}</button>
-            </form>
-        </div>
-    </div>
-    </div>
-    </div>
-
-    <!--POP-UP DELETE ACCOUNT-->
-    <div class="modal fade" id="modalDeleteAccount" tabindex="-1" role="dialog" aria-labelledby="modalDeleteAccount" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content border-3 border-danger">
-        <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Eliminar conta' %}</h5>
-            <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-        {% trans 'Tem a certeza que pretede apagar a sua conta? Todos os seus dados serão eliminados e não poderam ser recuperados.' %}
-        </div>
-        <form action="{% url 'delete_account' %}" class="modal-footer" method="POST">
-            {% csrf_token %}
-            <button type="submit" id="modalButtonDeleteAccount" class="btn btn-danger deletePOP">{% trans 'Sim, pretendo eliminar a minha conta' %}</button>
-        </form>
-    </div>
-    </div>
-    </div>
-
-    <!--POP-UP CANCEL AGREEMENT(TENANT)-->
-    <div class="modal fade" id="modalLogin2" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content border-3 border-danger">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Eliminar acordo' %}</h5>
-            {% csrf_token %}
-            <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-            {% trans 'Tem a certeza que deseja eliminar o seu acordo atual?' %}
-            <br>
-            <br>
-            {% trans 'Receberá um reembolso de' %} {{ rent_to_be_returned }} €.
-            </div>
-            <div class="modal-footer">
-                <form action="{% url 'deleteAgreement' %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary deletePOP" id="deleteYes">{% trans 'Sim' %}</button>
-                </form>
-                <button type="submit" class="btn btn-primary deletePOP">{% trans 'Não' %}</button>
-            </div>
-        </div>
-        </div>
-    </div>
-
-    <!--POP-UP CANCEL AGREEMENT(TENANT) IN CASE THERE ARE PAYMENT WARNINGS(DUE)-->
-    <div class="modal fade" id="modalLogin3" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content border-3 border-danger">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Pagamentos em atraso' %}</h5>
-            {% csrf_token %}
-            <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-            {% trans 'Não pode cancelar o seu acordo atual enquanto tiver pagamentos em atraso.' %}
-            </div>
-            <div class="modal-footer">
-                <form action="{% url 'deletePopUpDuePayment' %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary deletePOP">{% trans 'Ok' %}</button>
-                </form>
-            </div>
-        </div>
-        </div>
-    </div>
-
-
+    
     <div class="container my-5 border border-info border-5 rounded shadow-lg">
-        <div class="row bg-info p-2"><h1 class="mx-auto my-auto text-white text-24">{% trans 'Perfil' %}</h1></div>
+        <div class="row bg-info p-2">
+            <a href="#" onclick="history.back();">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="52" height="52" viewBox="0 0 24 24" stroke-width="2" stroke="white" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <line x1="5" y1="12" x2="11" y2="18" />
+                    <line x1="5" y1="12" x2="11" y2="6" />
+                </svg>
+            </a>
+            <h1 id="startingTitle" class="mx-auto my-auto text-white text-24">{% trans 'Dados Pessoais' %}</h1>
+        </div>
         <div class="row">
-            <!-- List of options-->
-            <div class="col-sm-3 bg-secondary border-right border-info">
-
-                    <!-- Options   
-                    <div class="col-sm-12 p-3 text-center border-bottom">
-                        <a href="profile" id="profile"><img src='{% static "mainApp/images/user.svg" %}' alt="" class="img-fluid">
-                            <h3 class="mb-0 text-white">{{user.first_name}} {{user.last_name}}</h3>
-                        </a>
-                    </div>--> 
-                    {% if request.session.typeUser == "Landlord" %}
-                        <!--If landlord-->
-                        <div class="row">
-                            <div class="col-12 p-3">
-                                <a class="text-white" href="/mainApp/profile/propertiesManagement"><button type="button" class="btn btn-info w-100">{% trans 'Gerir Alojamentos/Anuncios' %}</button></a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 p-3">
-                                <a class="text-white" href="/mainApp/addProperty"><button type="button" class="btn btn-info w-100">{% trans 'Adicionar Alojamento' %}</button></a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 p-3">
-                                <a class="text-white" href="/mainApp/profile/manageAgreements"><button type="button" class="btn btn-info w-100">{% trans 'Gerir Acordos' %}</button></a>
-                            </div>
-                        </div>
-                        
-                    {% else %}
-                        <!--If tenant-->
-                        <div class="col-sm-12 p-3">
-                            <a class="text-white" href="/mainApp/profile/manageAgreementsTenant"><button type="button" class="btn btn-info w-100">{% trans 'Ver Acordos' %}</button></a>
-                        </div>
-                        {% if diffDates %}
-                            <div class="col-sm-12 p-3">
-                                <a class="text-white" href="#"><button type="button" class="btn btn-info w-100" id="cancelAgreement">{% trans 'Cancelar Acordo' %}</button></a>
-                            </div>
-                        {% endif %}
-                        {% if diffDates <= 30 and diffDates >= 1 %}
-                            <div class="col-sm-12 p-3">
-                                <a class="text-white" href="profile/renewAgreement"><button type="button" class="btn btn-info w-100">{% trans 'Renovar Acordo' %}</button></a>
-                            </div>
-                        {% endif %}
-                    {% endif %}
-                    <div class="row w-100" style="position: absolute; bottom:0px;">
-                        <div class="col-sm-12 p-3">
-                            <button type="button" class="btn btn-info w-100 text-white font-weight-bold border border-danger bg-danger" onclick="showDeleteAccountPopUp()">{% trans 'Eliminar conta' %}</button>
-                        </div>
-                    </div>
-            </div>
+            
 
             <!--User Details-->
-            <form class="col-sm-9" action="{% url 'profile' %}" method="POST">
-                {% csrf_token %}
-                <div class="row justify-content-center">
-                    <div class="col-2 pt-3">
-                        <img src='{% static "mainApp/images/user.svg" %}' alt="" class="img-fluid">
-                    </div>
-                </div>
-                <div class="row justify-content-center pt-2 pb-4">
-                    <div class="col-4 px-2">
-                        <h2 class="mb-0 text-info text-right" style="font-size: 28px;">{{user.username}}</h2>
-                    </div>
-                    <div class="col-4 px-2">
-                        <h2 class="mb-0 text-primary text-left" style="font-size: 28px;">{{ type }}</h2>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold mx-auto">{% trans 'Primeiro Nome' %}:</p>
-                        <input type="text" class="inputType1 ml-4" value="{{user.first_name}}" name="first_name">
-                    </div>
-                    <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Último Nome' %}:</p>
-                        <input type="text" class="inputType1 ml-4" value="{{user.last_name}}" name="last_name">
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Email' %}:</p>
-                        <input type="text" class="inputType1 ml-4" value="{{user.email}}" name="email">
-                    </div>
-                    <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Número de telefone' %}:</p>
-                        <input type="number" class="inputType1 ml-4" value="{{ phone }}" name="phoneNumber">
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Data de Nascimento' %}:</p>
-                        <input type="date" class="inputType1 ml-4" value="{{ birth }}" name="birthDate">
-                    </div>
-            {% if request.session.typeUser == "Landlord" %}
-                    <div class="col-6 p-3 mt-3">
-                        <div class="row mt-4">
-                            <div class="col-6 mx-auto">
-                                <button type="submit" class="btn btn-info font-weight-bold">{% trans 'Guardar Alterações' %}</button>
+            <div class="col-sm-9 mx-auto">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-6 pt-3 mx-auto">
+                                <img src='{% static "mainApp/images/user.svg" %}' alt="" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4 mx-auto">
+                                <h2 class="mb-0 text-primary" style="font-size: 28px;">{{landlord_user.username}}</h2>
                             </div>
                         </div>
                     </div>
-            {% else %}
-                    <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Universidade' %}:</p>
-                        <input type="text" class="inputType1 ml-4" value="{% if university != 'None' %} {{university}} {% endif %}" name="university">
+                
+
+                    <div class="col-sm-6">
+                        <div class="row justify-content-center pt-3">
+                            <h3 class="mb-0 text-info text-right">{% trans 'Avaliação' %}:</h3> 
+                        </div>
+                        <div class="row justify-content-center pt-3">
+                            <p class="mb-0 text-info text-right" style="font-size: 28px;">3.5/5</p> 
+                        </div>
+                        <div class="row justify-content-center pb-4">
+                            <p class="mb-0 text-info text-right">45 avaliações</p>
+                        </div>
+                        <div class="row justify-content-center pt-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-star" width="45" height="45" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="#264653" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-star" width="45" height="45" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="#264653" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-star" width="45" height="45" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="#264653" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-star" width="45" height="45" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-star" width="45" height="45" viewBox="0 0 24 24" stroke-width="1.5" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Valor mínimo da pesquisa' %}:</p>
-                        <input type="number" class="inputType1 ml-4" id="minProfile" value="{{ min }}" min="0" max="{{ max }}" name="min_search">
-                    </div>
-                    <div class="col-6 p-3">
-                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Valor máximo da pesquisa' %}:</p>
-                        <input type="number" class="inputType1 ml-4" id="maxProfile" value="{{ max }}" min="{{ min }}" max="2000" name="max_search">
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-3 p-3">
-                        <button type="submit" class="btn btn-info font-weight-bold">{% trans 'Guardar Alterações' %}</button>
-                    </div>
-                </div>
-            {% endif %}
-            </form>
+
+                
+                    <div id="starting_div">
+                        <div class="row justify-content-center">
+                            <div class="col-6 p-3">
+                                <p class="text-info pl-5 mb-0 font-weight-bold mx-auto">{% trans 'Nome' %}:</p>
+                                <input type="text" class="inputType1 ml-4" value="{{landlord_user.first_name}} {{landlord_user.last_name}}" name="first_name" readonly>
+                            </div>
+                            <div class="col-6 p-3">
+                                <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Tipo de Senhorio' %}:</p>
+                                <input type="text" class="inputType1 ml-4" value="" name="type" readonly>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-6 p-3">
+                                <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Email' %}:</p>
+                                <input type="text" class="inputType1 ml-4" value="{{landlord_user.email}}" name="email" readonly>
+                            </div>
+                            <div class="col-6 p-3">
+                                <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Número de telefone' %}:</p>
+                                <input type="number" class="inputType1 ml-4" value="{{ landlord_app_user.phoneNumber }}" name="phoneNumber" readonly>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-3">
+                            <h3 class="mb-0 text-info text-right">{% trans 'Histórico de Incidências' %}:</h3>
+                        </div>
+                        <div class="row justify-content-center pt-2 pb-4">
+                            <p class="mb-0">Incidência 1</p>
+                        </div>
+                        <div class="row justify-content-center pt-2 pb-4">
+                            <p class="mb-0">Incidência 2</p>
+                        </div>
+                        <div class="row justify-content-center pt-2 pb-4">
+                            <p class="mb-0">Incidência 3</p>
+                        </div>
+                    </div>                
+            </div>
         </div>
     </div>
 {% endblock %}
