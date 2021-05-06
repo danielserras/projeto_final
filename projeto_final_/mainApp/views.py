@@ -587,9 +587,8 @@ def accept_deny_request(request, request_id):
         formRich = RichTextForm(request.POST)
         if formRich.is_valid():
             if 'accept' in request.POST:
-                accept_request(request, request_id, formRich)
+                ret = accept_request(request, request_id, formRich)
             elif 'deny' in request.POST:
-                print('hello')
                 ret = deny_request(request, request_id, formRich)
     return ret
 
@@ -710,7 +709,7 @@ def deny_request(request, request_id, formRich):
             propertyAddress = a.associated_property_listing.associated_property.address
         else:
             propertyAddress = a.associated_room_listing.associated_room.associated_property.address
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress, checkReadLandlord, messageLand])
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress, checkReadLandlord, messageLand,userTen.id])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
 
@@ -723,6 +722,7 @@ def deny_request(request, request_id, formRich):
     for rb in listOfRefunds:
         id_ref = rb.id
         nameOfTen = (((rb.tenant).ten_user).user).username
+        id_ten_ref = (((rb.tenant).ten_user).user).id
         value = rb.value
         startDate = (rb.agreement).startsDate
         plannedFinishDate = (rb.agreement).endDate
@@ -733,7 +733,7 @@ def deny_request(request, request_id, formRich):
             propertyAddressR = (rb.agreement).associated_property_listing.associated_property.address
         else:
             propertyAddressR = (rb.agreement).associated_room_listing.associated_room.associated_property.address
-        fullListRef.append([id_ref,nameOfTen,value,actualFinishDate,propertyAddressR,startDate,plannedFinishDate,check,status])
+        fullListRef.append([id_ref,nameOfTen,value,actualFinishDate,propertyAddressR,startDate,plannedFinishDate,check,status,id_ten_ref])
     reverseListRef = list(reversed(fullListRef))
     sizeListRef = len(fullListRef)
 
@@ -1445,7 +1445,7 @@ def notificationsTenant(request):
             invoice_id = Invoice.objects.get(agreement_request_id=a.id).id
         except:
             pass
-        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted, dateOfRequest_, invoice_id, propertyAddress,checkReadTenant, messageLand])
+        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted, dateOfRequest_, invoice_id, propertyAddress,checkReadTenant, messageLand,userLand.id])
 
     invoiceList = []
     for i in Invoice.objects.all():
@@ -1453,6 +1453,7 @@ def notificationsTenant(request):
             a = Agreement.objects.get(id=i.agreement_id)
             if a.tenant_id == tenant_.id:
                 nameLand = a.landlord.lord_user.user.username
+                land_id=a.landlord.lord_user.user.id
                 invoiceDate = i.timestamp
                 paymentLimit = invoiceDate + timedelta(days=10)
                 invoiceMonth = _(i.month.strftime("%B"))
@@ -1472,13 +1473,14 @@ def notificationsTenant(request):
                 address = assoc_prop.address
                 listing_name = main_listing.title
 
-                invoiceList.append([nameLand, invoiceMonth, invoiceDate, paymentLimit, address, listing_name, i.id,checkReadTenInv])
+                invoiceList.append([nameLand, invoiceMonth, invoiceDate, paymentLimit, address, listing_name, i.id,checkReadTenInv,land_id])
     
     paymentWarningList = []
     for w in Payment_Warning.objects.all():
         a = Agreement.objects.get(id=w.agreement_id)
         if a.tenant_id == tenant_.id:
             nameLand = a.landlord.lord_user.user.username
+            idLand_warn = a.landlord.lord_user.user.id
             checkReadTenWarn = w.checkReadTenant
             if a.associated_property_listing == None:
                 room_listing = a.associated_room_listing
@@ -1495,7 +1497,7 @@ def notificationsTenant(request):
             listing_name = main_listing.title
             timestamp = w.timestamp
 
-            paymentWarningList.append([timestamp, nameLand, address, listing_name,checkReadTenWarn,w.id])
+            paymentWarningList.append([timestamp, nameLand, address, listing_name,checkReadTenWarn,w.id,idLand_warn])
 
     reverseList = list(reversed(fullList))
 
@@ -1540,7 +1542,7 @@ def notificationsLandlord(request):
             propertyAddress = a.associated_property_listing.associated_property.address
         else:
             propertyAddress = a.associated_room_listing.associated_room.associated_property.address
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress,checkReadLandlord, messageLand])
+        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress,checkReadLandlord, messageLand, userTen.id])
     sizeList = len(fullList_)
     reverseList = list(reversed(fullList_))
 
@@ -1553,6 +1555,7 @@ def notificationsLandlord(request):
     for rb in listOfRefunds:
         id_ref = rb.id
         nameOfTen = (((rb.tenant).ten_user).user).username
+        id_ten_ref = (((rb.tenant).ten_user).user).id
         value = rb.value
         startDate = (rb.agreement).startsDate
         plannedFinishDate = (rb.agreement).endDate
@@ -1563,7 +1566,7 @@ def notificationsLandlord(request):
             propertyAddressR = (rb.agreement).associated_property_listing.associated_property.address
         else:
             propertyAddressR = (rb.agreement).associated_room_listing.associated_room.associated_property.address
-        fullListRef.append([id_ref,nameOfTen,value,actualFinishDate,propertyAddressR,startDate,plannedFinishDate,check,status])
+        fullListRef.append([id_ref,nameOfTen,value,actualFinishDate,propertyAddressR,startDate,plannedFinishDate,check,status,id_ten_ref])
     reverseListRef = list(reversed(fullListRef))
     sizeListRef = len(fullListRef)
 
@@ -1794,6 +1797,7 @@ def listing(request, listing_id):
         "imagesPaths": imagesPaths,
         "range": range[:-1],
         "zipPaths": zip(imagesPaths, range[:-1]),
+        "land_id": landlord_user.id,
     }
             
 
@@ -2737,10 +2741,18 @@ def get_receipt_pdf(request):
             pdf = render_to_pdf('mainApp/receiptPDF.html', data)
             return HttpResponse(pdf, content_type='application/pdf')
 
-def profileTenant(request):
-    context={}
+def review(request):
+    return render(request,'mainApp/reviewProperty.html', {})
+def profileTenant(request,ten_id):
+    tenant_user = User.objects.get(id=ten_id)
+    tenant_app_user = App_user.objects.get(id=ten_id)
+
+    context={"tenant_user":tenant_user, "tenant_app_user":tenant_app_user}
     return render(request, "mainApp/profileTenant.html", context)
 
-def profileLandlord(request):
-    context={}
+def profileLandlord(request,lan_id):
+    landlord_user = User.objects.get(id=lan_id)
+    landlord_app_user = App_user.objects.get(id=lan_id)
+
+    context={"landlord_user":landlord_user, "landlord_app_user":landlord_app_user}
     return render(request, "mainApp/profileLandlord.html", context)
