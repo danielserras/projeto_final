@@ -1501,7 +1501,8 @@ def notificationsTenant(request):
 
     reverseList = list(reversed(fullList))
 
-    user_incidences = Incidence.objects.filter(agreement__in=Agreement.objects.filter(tenant = tenant_))
+    user_incidences = Incidence.objects.filter(agreement__in=Agreement.objects.filter(tenant = tenant_)).filter(is_read = False)
+    print(user_incidences)
     
     context = {"fullList" : reverseList, "sizeFull": len(fullList), "invoiceList": invoiceList, "sizeInvoice":len(invoiceList), "paymentWarningList": paymentWarningList, "sizeWarning":len(paymentWarningList), "incidences":user_incidences}
     return render(request, "mainApp/notificationsTenant.html", context)

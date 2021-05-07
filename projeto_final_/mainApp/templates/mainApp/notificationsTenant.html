@@ -8,7 +8,6 @@
     <script src='{% static "mainApp/js/notifications.js" %}'></script>
 {% endblock %}
 {% block content %}
-
 <div class="container py-5 px-4 mt-5">
   <div class="row rounded-lg overflow-hidden shadow border border-warning border-5">
     <!-- Users box-->
@@ -112,6 +111,19 @@
                   </a>
                 </form>
               {% endif %}
+            {% endfor %}
+            {% for incidence in incidences %}
+            <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull|add:sizeInvoice}}" class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
+              {% load static %}
+              <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                <div class="media-body ml-4">
+                  <div class="d-flex align-items-center justify-content-between mb-1">
+                    <h6 class="mb-0 font-weight-bold">{{ land }}</h6><small class="small font-weight-bold">{{ timestamp }}</small>
+                  </div>
+                  <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Aviso de Relato de Incidencia em Aluguer'%}</p>
+                </div>
+              </div>
+            </a>
             {% endfor %}
           </div>
         </div>

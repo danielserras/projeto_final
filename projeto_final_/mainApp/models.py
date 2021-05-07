@@ -241,3 +241,4 @@ class Incidence(models.Model):
     causes = models.ManyToManyField(Cause)
     description = models.CharField(max_length=280)
     grouds_for_termination = models.BooleanField(null=True)
+    is_read = models.BooleanField(default=False)
