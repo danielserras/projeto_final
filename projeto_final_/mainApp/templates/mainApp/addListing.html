@@ -156,6 +156,18 @@
             <div class="row justify-content-center"><button type="button" class="btn btn-secondary multiple_form_next" >{% trans 'Seguinte' %}</button>
             </div>
         </form>
+        <!--{% else %}
+            <form class="form-group col-sm-4 multiple_form mx-auto justify-content-center" hidden>
+                {% csrf_token %}
+                <h4 class="text-center">{% trans 'Como pretende anunciar' %}?</h4><br>
+                <div class="form-group">
+                    <label for="" class="radio-inline">
+                    <input type="radio" name="multiple_listing" class="whole" value="whole"> {% trans 'Anunciar toda a propriedade' %}
+                    <label for="" class="radio-inline">
+                    <input type="radio" name="multiple_listing" class="separate" value="separate"> {% trans 'Anunciar quartos separadamente' %}
+                </div>
+                <button type="button" class="btn btn-secondary multiple_form_next" >{% trans 'Seguinte' %}</button>
+            </form> -->
     {% endif %}
 </div>  
 {% endblock %}

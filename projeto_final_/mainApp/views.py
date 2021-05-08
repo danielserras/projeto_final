@@ -52,7 +52,6 @@ def login_view(request):
                 if i.lord_user_id == id_user:
                     request.session['typeUser'] = "Landlord"
                     properties_created = Property.objects.filter(landlord=i)
-                    print(properties_created)
                     if len(properties_created) == 0:
                         return redirect('landlord')
                     return redirect('index') #placeholder, alterem depois
@@ -1502,7 +1501,6 @@ def notificationsTenant(request):
     reverseList = list(reversed(fullList))
 
     user_incidences = Incidence.objects.filter(agreement__in=Agreement.objects.filter(tenant = tenant_)).filter(is_read = False)
-    print(user_incidences)
     
     context = {"fullList" : reverseList, "sizeFull": len(fullList), "invoiceList": invoiceList, "sizeInvoice":len(invoiceList), "paymentWarningList": paymentWarningList, "sizeWarning":len(paymentWarningList), "incidences":user_incidences}
     return render(request, "mainApp/notificationsTenant.html", context)
@@ -1602,7 +1600,6 @@ def search(request):
     
     if request.user.is_authenticated:
         current_user = request.user
-        print(current_user)
         app_user = App_user.objects.get(user=request.user)
         try:
             tenant = Tenant.objects.get(ten_user_id=app_user.id)
@@ -2002,7 +1999,6 @@ invalid_ipn_received.connect(get_payment_status)
 @csrf_exempt
 def get_payment_status_refunds(sender, **kwargs):
     ipn_obj = sender.POST
-    print(ipn_obj)
     if ipn_obj['payment_status'] == ST_PP_COMPLETED:
 
         if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
@@ -2010,7 +2006,6 @@ def get_payment_status_refunds(sender, **kwargs):
             ref_id = ipn_obj['item_number']
             user_id = ipn_obj['custom']
             Refund.objects.filter(id=ref_id).update(status=True)
-            print("Refund status changed")
             # invoice = Invoice.objects.filter(agreement_request=ag_request_id).order_by("-id")[0]
             # invoice.paid = True
             # invoice.save()
@@ -2659,14 +2654,12 @@ def reasons(request, agreement_id):
         cause_objList = []
 
         data = request.POST
-        print(data)
         causes_list = data.getlist('cause')
         new_incidence = Incidence()
         new_incidence.agreement = agreement
         new_incidence.filing_time = (date.today())
 
         new_incidence.description = data.get("description")
-        #print(new_incidence.causes)
         if data.get("buttonPressed") == 'onlyIncidence':
             new_incidence.grouds_for_termination = 0
         
@@ -2743,7 +2736,48 @@ def get_receipt_pdf(request):
             return HttpResponse(pdf, content_type='application/pdf')
 
 def review(request):
+    if request.method == 'POST':
+
+        property_id = 1
+        lord_id = 1
+
+        conservation=request.POST['starsInput-1']
+        landlord=request.POST['starsInput-2']
+        services=request.POST['starsInput-3']
+        access=request.POST['starsInput-4']
+        neighbours=request.POST['starsInput-5']
+        tenants=request.POST['starsInput-6']
+        
+        try:
+            review = PropertyReview.objects.get(property_id = property_id)
+        except:
+            review = PropertyReview(
+                property = Property.objects.get(id= property_id),
+                num_reviews = 1,
+                conservation = conservation,
+                services = services,
+                access = access, 
+                neighbours = neighbours,
+                tenants = tenants,
+            )
+            review.save()
+            return render(request,'mainApp/profile.html', {})
+        
+        review.conservation = (review.conservation*review.num_reviews + int(conservation)) / (review.num_reviews + 1)
+        review.services = (review.services*review.num_reviews + int(services)) / (review.num_reviews + 1)
+        review.access = (review.access*review.num_reviews + int(access)) / (review.num_reviews + 1)
+        review.neighbours = (review.neighbours*review.num_reviews + int(neighbours)) / (review.num_reviews + 1)
+        review.tenants = (review.tenants*review.num_reviews + int(tenants)) / (review.num_reviews + 1)
+        review.num_reviews = review.num_reviews + 1
+        review.save()
+        
+        lord = Landlord.objects.get(id = lord_id)
+        lord.lord_review = (lord.lord_review*lord.lord_review_num + int(landlord)) / (lord.lord_review_num + 1)
+        lord.lord_review_num = lord.lord_review_num + 1
+        lord.save()
+
     return render(request,'mainApp/reviewProperty.html', {})
+
 def profileTenant(request,ten_id):
     tenant_user = User.objects.get(id=ten_id)
     tenant_app_user = App_user.objects.get(id=ten_id)
