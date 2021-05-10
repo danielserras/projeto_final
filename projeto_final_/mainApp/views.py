@@ -891,7 +891,20 @@ def create_request(request):
 
             form = RichTextForm()
 
-            context = {"start": start, "end": end, "form": form}
+            images = Image.objects.filter(album_id=main_listing.album_id)
+            cardImg = str(images[0].image).split('mainApp/static/')[1]
+            address = assoc_listing.associated_room.associated_property.address
+            landlord = assoc_listing.associated_room.associated_property.landlord.lord_user.user.username
+
+            context = {
+                "start": start,
+                "end": end,
+                "form": form,
+                "listing": main_listing,
+                "cardImg": cardImg,
+                "landlord": landlord,
+                "address":address
+            }
         
         else:
 
@@ -908,7 +921,20 @@ def create_request(request):
 
             form = RichTextForm()
 
-            context = {"start": start, "end": end, "form": form}
+            images = Image.objects.filter(album_id=main_listing.album_id)
+            cardImg = str(images[0].image).split('mainApp/static/')[1]
+            address = assoc_listing.associated_property.address
+            landlord = assoc_listing.associated_property.landlord.lord_user.user.username
+
+            context = {
+                "start": start,
+                "end": end,
+                "form": form,
+                "listing": main_listing,
+                "cardImg": cardImg,
+                "landlord": landlord,
+                "address":address
+            }
         
         
         return render(request, 'mainApp/intent.html', context)
@@ -1603,8 +1629,12 @@ def search(request):
         app_user = App_user.objects.get(user=request.user)
         try:
             tenant = Tenant.objects.get(ten_user_id=app_user.id)
-            location = tenant.university + ", Portugal"
-            form = SearchForm(initial = {"location":location, "radius":10, "minPrice":tenant.min_search, "maxPrice":tenant.max_search})
+            print(tenant.university)
+            if tenant.university != '':
+                location = tenant.university + ", Portugal"
+                form = SearchForm(initial = {"location":location, "radius":10, "minPrice":tenant.min_search, "maxPrice":tenant.max_search})
+            else:
+                form = SearchForm()
         except:
             form = SearchForm()
     else:

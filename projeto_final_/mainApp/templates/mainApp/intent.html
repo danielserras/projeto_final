@@ -8,15 +8,54 @@
 {% endblock %}
 {% block content %}
 
-<div class="container">
+<div class="container my-5 p-3 shadow-lg">
+    <div class="row col-sm-12 mb-0 mt-2 p-0 pl-0 ml-0">
+        <a href="#" onclick="history.back();">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="52" height="52" viewBox="0 0 24 24" stroke-width="2" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <line x1="5" y1="12" x2="11" y2="18" />
+                <line x1="5" y1="12" x2="11" y2="6" />
+            </svg>
+        </a>
+        <h3 class="mx-auto my-auto">{% trans 'Estou interessado!' %}</h3>
+    </div>
     <div class="row p-3" id="datesIntent">
-        <div class="row col-sm-12 mb-0 mt-2 p-0 pl-0 ml-0 bg-warning">
-            <a href="#" onclick="history.back();">
-                <img src='{% static "mainApp/images/arrow.jpg" %}' class="rounded housesMsg mt-0" alt="arrow" width="45" height="50">
-            </a>
-            <h4 class="text-right text-info my-auto ml-3 font-weight-bold"> {% trans 'Estou interessado!' %} </h4>
+        <div class="col-1"></div>
+        <div class="col-sm-4 pl-0 pr-0 mt-4">
+            <div class="card border-4 border-info py-4">
+                <div class="row justify-content-center mb-4">
+                    <div class="col-8">
+                        <img class="card-img" src='{% static cardImg %}'>
+                    </div>
+                </div>
+                <div class="car-body">
+                    <h1 class="card-title text-info mb-2 text-30 text-center font-weight-bold">{{listing.title}}</h1>
+                    <div class="row ml-5 pl-4">
+                        <p class="text-info mb-0 text-20 font-weight-bold">Morada: &nbsp </p>
+                        <p class="text-info mb-0 text-20">{{address}}</p>
+                    </div>
+                    <div class="row ml-5 pl-4">
+                        <p class="text-info mb-0 text-20 font-weight-bold">Senhorio: &nbsp </p>
+                        <p class="text-info mb-0 text-20">{{landlord}}</p>
+                    </div>
+                    <div class="row ml-5 pl-4">
+                        <p class="text-info mb-0 text-20 font-weight-bold">Renda: &nbsp </p>
+                        <p class="text-info mb-0 text-20">{{listing.monthly_payment}}€</p>
+                    </div>
+                    <div class="row ml-5 pl-4">
+                        <p class="text-info mb-0 text-20 font-weight-bold">Entrada: &nbsp </p>
+                        <p class="text-info mb-0 text-20">{{listing.availability_starts}}</p>
+                    </div>
+                    <div class="row ml-5 pl-4">
+                        <p class="text-info mb-0 text-20 font-weight-bold">Saída: &nbsp </p>
+                        <p class="text-info mb-0 text-20">{{listing.availability_ending}}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <form method="POST" action="{% url 'create_request' %}" class="col" style="background-color:white;">
+        <div class="col-1"></div>
+        <form method="POST" action="{% url 'create_request' %}" class="col-6" style="background-color:white;">
             {% csrf_token %}
             <div class="form-group row mt-4 mb-2">
                 <label for="example-date-input" class="col-sm-3 col-form-label">{% trans 'Data de Início' %}:</label>
@@ -37,15 +76,12 @@
             </div>
             <p hidden>{{form}}</p>
             {{form.media}}
-            <div class="row mt-4">
-                <div class="col-sm-12">
-                    <button type="submit" class="btn btn-secondary btn-lg w-25">Enviar</button>
+            <div class="row justify-content-center mt-4">
+                <div class="col-sm-4">
+                    <button type="submit" class="btn btn-info btn-lg w-100">Enviar</button>
                 </div>
             </div>
         </form>
-        <div class="col-sm-4 pl-0 pr-0" style="background-color:white;">
-            <img src='{% static "mainApp/images/houses.jpg" %}' class="img-fluid mt-5 pl-5 mx-auto" alt="houses"> 
-        </div>
     </div>
 
 </div>

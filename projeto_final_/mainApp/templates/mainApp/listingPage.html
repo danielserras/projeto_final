@@ -92,7 +92,7 @@
             <i class="fa fa-chevron-down col_image_btn" id='col_image_btn_down' aria-hidden="down" onclick="nextInColumn()" title="Scroll Down"></i>
         </div> 
     </div>
-    <div class="row">
+    <div class="row mt-5">
         <div class="col-sm-8">
             <div class="row p-1">
                 <h2 class="text-secondary font-weight-bold">{{listing.title}}</h2>
@@ -135,7 +135,7 @@
                 <p class="text-white my-auto h-100">/{% trans 'mês' %}</p>
             </div>
             <div class="row justify-content-center mt-2">
-                <p class="text-white text-size-24 font-weight-bold m-0">Disponibilidade</p>
+                <p class="text-white text-size-24 font-weight-bold m-0">{% trans 'Disponibilidade' %}</p>
             </div>
             <div class="row justify-content-center">
                 <p class="text-white my-auto">{{listing.availability_starts}} {% trans 'até' %} {{listing.availability_ending}}</p>

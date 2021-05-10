@@ -97,7 +97,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content border-3 border-danger">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Eliminar acordo' %}</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Terminar acordo' %}</h5>
             {% csrf_token %}
             <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -182,7 +182,7 @@
                         </div>
                         {% if diffDates %}
                             <div class="col-sm-12 p-3">
-                                <a class="text-white" href="#"><button type="button" class="btn btn-info w-100" id="cancelAgreement">{% trans 'Cancelar Acordo' %}</button></a>
+                                <a class="text-white" href="#"><button type="button" class="btn btn-info w-100" id="cancelAgreement">{% trans 'Terminar Acordo' %}</button></a>
                             </div>
                         {% endif %}
                         {% if diffDates <= 30 and diffDates >= 1 %}
@@ -250,7 +250,7 @@
             {% else %}
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Universidade' %}:</p>
-                        <input type="text" class="inputType1 ml-4" value="{% if university != 'None' %} {{university}} {% endif %}" name="university">
+                        <input type="text" class="inputType1 ml-4" value="{% if university != None %} {{university}} {% else %} {% endif %}" name="university">
                     </div>
                 </div>
                 <div class="row justify-content-center">
