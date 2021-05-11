@@ -2067,7 +2067,6 @@ def deletePopUp(request):
     return redirect(request.session['redirectPage'])
 
 def renewAgreement(request):
-    #FALTA POR A OPÇAO DE RENOVAR A APARECER POR EXEMPLO 1 MES ANTES DO FINAL EM VEZ DE ESTAR SEMPRE VISIVEL
 
     current_user = request.user
     a_user = App_user.objects.get(user_id=current_user)
@@ -2231,7 +2230,21 @@ def manage_agreements_view(request):
         elif len(invoices_warning) == 0 and payment_warning == True:
             payment_warning = False      
 
-        listAgreementAndPaid.append([a, send_invoice, _(month.strftime("%B")), payment_warning])
+        #Checks if the agreement is ending in less then 30 days
+        endDate = a.endDate
+        presentTime = datetime.today().strftime('%d-%m-%Y')
+        now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
+        diffDates = (endDate - now_date).days
+
+        #Rent to be returned
+        if a.associated_property_listing_id == None:
+            listingRent = Listing.objects.get(id = Room_listing.objects.get(id=a.associated_room_listing_id).main_listing_id).monthly_payment
+            rent_to_be_returned = round((listingRent / 30) * diffDates,2)
+        else:
+            listingRent = Listing.objects.get(id = Property_listing.objects.get(id=a.associated_property_listing_id).main_listing_id).monthly_payment
+            rent_to_be_returned = round((listingRent / 30) * diffDates,2)
+
+        listAgreementAndPaid.append([a, send_invoice, _(month.strftime("%B")), payment_warning, diffDates, rent_to_be_returned])
 
     context = {
         "listAgreementAndPaid":listAgreementAndPaid,
@@ -2401,8 +2414,22 @@ def manageAgreementsTenant(request):
             for w in Payment_Warning.objects.all():
                 if w.invoice_id == i.id:
                     payment_warning = True 
+        
+        #Checks if the agreement is ending in less then 30 days
+        endDate = a.endDate
+        presentTime = datetime.today().strftime('%d-%m-%Y')
+        now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
+        diffDates = (endDate - now_date).days
 
-        listAgreementAndPaid.append([a, send_invoice, _(month.strftime("%B")), payment_warning])
+        #Rent to be returned
+        if a.associated_property_listing_id == None:
+            listingRent = Listing.objects.get(id = Room_listing.objects.get(id=a.associated_room_listing_id).main_listing_id).monthly_payment
+            rent_to_be_returned = round((listingRent / 30) * diffDates,2)
+        else:
+            listingRent = Listing.objects.get(id = Property_listing.objects.get(id=a.associated_property_listing_id).main_listing_id).monthly_payment
+            rent_to_be_returned = round((listingRent / 30) * diffDates,2)
+
+        listAgreementAndPaid.append([a, send_invoice, _(month.strftime("%B")), payment_warning, diffDates, rent_to_be_returned])
 
     context = {
         "listAgreementAndPaid":listAgreementAndPaid,

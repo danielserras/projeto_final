@@ -14,6 +14,17 @@
         })
     </script>
 {% endif %}
+<script>
+    $(document).ready(function(){
+        $("#cancelAgreement").click(function() {
+            $('#modalLogin2').modal('show');
+
+        });  
+        $(".deletePOP").click(function() {
+            $('#modalLogin2').modal('hide');
+        });
+    })
+</script>
 <div class="container my-5 p-3 shadow-lg">
     <div class="row text-center">
         <div class="col-sm-12">
@@ -61,12 +72,14 @@
             <th class="text-white text-center" scope="col">{% trans 'Recibo' %}</th>
             {% if type == 'landlord' %}
                 <th class="text-white text-center" scope="col">{% trans 'Incidencias e término' %}</th>
+            {% else %}
+                <th class="text-white text-center" scope="col">{% trans 'Opções para o acordo' %}</th>
             {% endif %}
             </tr>
         </thead>
         <tbody>
             {% load app_extras %}
-            {% for a, send_invoice, month, payment_warning in listAgreementAndPaid%}
+            {% for a, send_invoice, month, payment_warning, diffDates, rent_to_be_returned in listAgreementAndPaid%}
                     <tr>
                         <th scope="row">{{forloop.counter}}</th>
                         <td class="text-center pt-3">
@@ -117,6 +130,9 @@
                                     <button type="submit" class="btn bg-transparent border-secondary border-3 text-white font-weight-bold"><i class="fa fa-eye" style="color: #2a9d8f; font-size:22px" aria-hidden="true"></i></button>
                                 </form>
                             </td>
+                            <td class="text-center">
+                                <a class="btn btn-danger btn-sm" role="button" href="{% url 'reasons' a.id%}">Relatar Incidencias</a>
+                            </td>
                         {% else %}
                             <td class="text-center pt-3">{{a.landlord.lord_user.user}}</td>
                             <td class="text-center font-weight-bold pt-3">
@@ -141,17 +157,84 @@
                                     <button type="submit" class="btn bg-transparent border-secondary border-3 text-white font-weight-bold"><i class="fa fa-eye" style="color: #2a9d8f; font-size:22px" aria-hidden="true"></i></button>
                                 </form>
                             </td>
+                            <td class="text-center">
+                                {% if diffDates <= 30 and diffDates >= 1 %}
+                                    <div class="dropdown">
+                                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Opções
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="renewAgreement">{% trans 'Renovar acordo' %}</a>
+                                            <a class="dropdown-item" href="#" id="cancelAgreement">{% trans 'Terminar acordo' %}</a>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <a class="text-white" href="#"><button type="button" class="btn btn-secondary w-100" id="cancelAgreement">{% trans 'Terminar Acordo' %}</button></a>
+                                {% endif %}
+                                
+                            </td>
                         {% endif %}
-                        <td class="text-center">
-                            <a class="btn btn-danger btn-sm" role="button" href="{% url 'reasons' a.id%}">Relatar Incidencias</a>
-                        </td>
                     </tr>
+
+                                        <!--POP-UP CANCEL AGREEMENT(TENANT)-->
+                    <div class="modal fade" id="modalLogin2" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content border-3 border-danger">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Terminar acordo' %}</h5>
+                            {% csrf_token %}
+                            <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                            {% trans 'Tem a certeza que deseja eliminar o seu acordo atual?' %}
+                            <br>
+                            <br>
+                            {% trans 'Receberá um reembolso de' %} {{ rent_to_be_returned }} €.
+                            </div>
+                            <div class="modal-footer">
+                                <form action="{% url 'deleteAgreement' %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary deletePOP" id="deleteYes">{% trans 'Sim' %}</button>
+                                </form>
+                                <button type="submit" class="btn btn-primary deletePOP">{% trans 'Não' %}</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <!--POP-UP CANCEL AGREEMENT(TENANT) IN CASE THERE ARE PAYMENT WARNINGS(DUE)-->
+                    <div class="modal fade" id="modalLogin3" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content border-3 border-danger">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Pagamentos em atraso' %}</h5>
+                            {% csrf_token %}
+                            <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                            {% trans 'Não pode cancelar o seu acordo atual enquanto tiver pagamentos em atraso.' %}
+                            </div>
+                            <div class="modal-footer">
+                                <form action="{% url 'deletePopUpDuePayment' %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary deletePOP">{% trans 'Ok' %}</button>
+                                </form>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
                 {% endfor %}
         </tbody>
     </table>
     </div>
     {% endif %}
 </div>
+
+<!--POP-UP LATE PAYMENT-->
 <div class="modal fade" id="modalPopUp" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
