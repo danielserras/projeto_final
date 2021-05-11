@@ -51,7 +51,7 @@ class Image(models.Model):
 
 class Property(models.Model):
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
-    address = models.CharField(max_length=100)
+    address = models.CharField(max_length=200)
     floor_area = models.IntegerField()              
     garden = models.BooleanField(default=False)
     garage = models.BooleanField(default=False)
