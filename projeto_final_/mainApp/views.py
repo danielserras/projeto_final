@@ -26,6 +26,7 @@ from django.utils.translation import gettext as _
 from datetime import datetime, timedelta, date
 from django.views.generic import View
 from dateutil.relativedelta import relativedelta
+from django.urls import reverse
 import PIL
 import time
 import json
@@ -1497,8 +1498,9 @@ def notificationsTenant(request):
 
                 address = assoc_prop.address
                 listing_name = main_listing.title
+                req_id = _id_req
 
-                invoiceList.append([nameLand, invoiceMonth, invoiceDate, paymentLimit, address, listing_name, i.id,checkReadTenInv,land_id])
+                invoiceList.append([nameLand, invoiceMonth, invoiceDate, paymentLimit, address, listing_name, i.id,checkReadTenInv,land_id,main_listing.id])
     
     paymentWarningList = []
     for w in Payment_Warning.objects.all():
@@ -1522,7 +1524,7 @@ def notificationsTenant(request):
             listing_name = main_listing.title
             timestamp = w.timestamp
 
-            paymentWarningList.append([timestamp, nameLand, address, listing_name,checkReadTenWarn,w.id,idLand_warn])
+            paymentWarningList.append([timestamp, nameLand, address, listing_name,checkReadTenWarn,w.id,idLand_warn,main_listing.id])
 
     reverseList = list(reversed(fullList))
 
@@ -1890,9 +1892,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://7523997b61b8.ngrok.io/paymentStatus/",
-            "return_url": "http://7523997b61b8.ngrok.io/mainApp/search",
-            "cancel_return": "http://7523997b61b8.ngrok.io/mainApp/profile",
+            "notify_url": "http://6ffbc6278513.ngrok.io/paymentStatus/",
+            "return_url": "http://6ffbc6278513.ngrok.io/mainApp/search",
+            "cancel_return": "http://6ffbc6278513.ngrok.io/mainApp/profile",
 
             }
 
@@ -1968,7 +1970,7 @@ def make_payment_refunds(request, ref_id):
             "item_name": main_listing.title,
             "item_number": ref.id,
             "custom": current_user.id,
-            "notify_url": "http://7523997b61b8.ngrok.io/paymentStatusRef/",
+            "notify_url": "http://7523997b61b8.ngrok.io/en/paymentStatusRef/",
             "return_url": "http://7523997b61b8.ngrok.io/mainApp/search",
             "cancel_return": "http://7523997b61b8.ngrok.io/mainApp/profile",
 
@@ -2021,7 +2023,9 @@ def get_payment_status(sender, **kwargs):
             except:
                 pass
 
-    return redirect('index')
+        return HttpResponse('')
+
+    return HttpResponseForbidden()
 
 valid_ipn_received.connect(get_payment_status)
 invalid_ipn_received.connect(get_payment_status)
@@ -2046,7 +2050,10 @@ def get_payment_status_refunds(sender, **kwargs):
             # except:
             #     pass
 
-    return redirect('index')
+        return HttpResponse('')
+
+    return HttpResponseForbidden()
+
 
 valid_ipn_received.connect(get_payment_status_refunds)
 invalid_ipn_received.connect(get_payment_status_refunds)
@@ -2133,13 +2140,11 @@ def delete_account(request):
 
         for ag in Agreement.objects.all():
             if Tenant.objects.get(id = (ag.tenant_id)).ten_user_id == tenant.ten_user_id:
-                
-                #falta verificar se o agreement esta ativo
 
                 if ag.status == True:
 
-                    messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'))
-                    return redirect('index')
+                    messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'), extra_tags='del_lock')
+                    return render(request, "mainApp/home.html", {})
 
 
         logout(request)
@@ -2155,8 +2160,8 @@ def delete_account(request):
 
                 if ag.status == True:
 
-                    messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'))
-                    return redirect('index')
+                    messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'), extra_tags='del_lock')
+                    return render(request, "mainApp/home.html", {"thisis":"isspartaaaa"})
 
         
         for p_listing in Property_listing.objects.all():
@@ -2164,8 +2169,22 @@ def delete_account(request):
 
             if assoc_prop.landlord.id == lord.id:
                 main_listing = p_listing.main_listing
+                main_listing_id = main_listing.id
                 listing_album = main_listing.album
                 listing_album.delete()
+
+                folder = 'mainApp/static/mainApp/listings/'+ str(main_listing_id)
+                for filename in os.listdir(folder):
+                    file_path = os.path.join(folder, filename)
+                    try:
+                        if os.path.isfile(file_path) or os.path.islink(file_path):
+                            os.unlink(file_path)
+                        elif os.path.isdir(file_path):
+                            shutil.rmtree(file_path)
+                    except Exception as e:
+                        pass
+                
+                os.rmdir(folder)
                 #main_listing will be auto deleted after this
 
         for r_listing in Room_listing.objects.all():
@@ -2174,8 +2193,22 @@ def delete_account(request):
 
             if assoc_prop.landlord.id == lord.id:
                 main_listing = r_listing.main_listing
+                main_listing_id = main_listing.id
                 listing_album = main_listing.album
                 listing_album.delete()
+
+                folder = 'mainApp/static/mainApp/listings/'+ str(main_listing_id)
+                for filename in os.listdir(folder):
+                    file_path = os.path.join(folder, filename)
+                    try:
+                        if os.path.isfile(file_path) or os.path.islink(file_path):
+                            os.unlink(file_path)
+                        elif os.path.isdir(file_path):
+                            shutil.rmtree(file_path)
+                    except Exception as e:
+                        pass
+                
+                os.rmdir(folder)
                 #main_listing will be auto deleted after this
 
         logout(request)
@@ -2776,11 +2809,13 @@ def receipts(request):
 
         fullList = []
         for i in list_invoices:
+
             try:
                 receipt = Receipt.objects.get(invoice_id=i.id)
                 fullList.append([i, receipt])
             except:
                 pass
+
         context={
             'fullList': fullList,
         }
@@ -2794,7 +2829,7 @@ def get_receipt_pdf(request):
 
         if receipt_id != None:
             total = 0
-
+            print(receipt_id)
             receipt = Receipt.objects.get(id=receipt_id)
             invoice = Invoice.objects.get(id=receipt.invoice_id)
             if (invoice.agreement_id == None):
@@ -2865,13 +2900,42 @@ def review(request):
 def profileTenant(request,ten_id):
     tenant_user = User.objects.get(id=ten_id)
     tenant_app_user = App_user.objects.get(id=ten_id)
+    tenant = Tenant.objects.get(ten_user_id=ten_id)
 
-    context={"tenant_user":tenant_user, "tenant_app_user":tenant_app_user}
+    context={"tenant_user":tenant_user, "tenant_app_user":tenant_app_user, "tenant": tenant}
     return render(request, "mainApp/profileTenant.html", context)
 
 def profileLandlord(request,lan_id):
     landlord_user = User.objects.get(id=lan_id)
     landlord_app_user = App_user.objects.get(id=lan_id)
+    landlord = Landlord.objects.get(lord_user_id=lan_id)
+    review_rounded = round(landlord.lord_review,1)
+    review_rounded_int = round(landlord.lord_review)
 
-    context={"landlord_user":landlord_user, "landlord_app_user":landlord_app_user}
+    context={"landlord_user":landlord_user, "landlord_app_user":landlord_app_user, "landlord": landlord, "review_rounded": review_rounded, "review_rounded_int": review_rounded_int}
     return render(request, "mainApp/profileLandlord.html", context)
+
+def propertyListingNotif(request,id_req):
+    current_req = Agreement_Request.objects.get(id=id_req)
+
+    if current_req.associated_property_listing != None:
+        listingId = current_req.associated_property_listing.main_listing_id
+    else:
+        listingId = current_req.associated_room_listing.main_listing_id
+
+    return redirect(reverse('listing', kwargs={"listing_id": listingId}))
+
+def  propertyListingRef(request,id_ref):
+    current_ref = Refund.objects.get(id=id_ref)
+    agreem = current_ref.agreement
+
+    if agreem.associated_property_listing != None:
+        listingId = agreem.associated_property_listing.main_listing_id
+    else:
+        listingId = agreem.associated_room_listing.main_listing_id
+
+    return redirect(reverse('listing', kwargs={"listing_id": listingId}))
+
+def  propertyListingInv(request,id_list):
+
+    return redirect(reverse('listing', kwargs={"listing_id": id_list}))

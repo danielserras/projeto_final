@@ -53,7 +53,7 @@
               {% endif %}
             {% endfor %}
             <!-- FOR LOOP PELOS INVOICES COM SIZELIST + FORLOOP.COUNTER-->
-            {% for land, timestamp, sentDate, paymentLimit, address, name, invoice_id,checkReadInv,land_id in invoiceList %}
+            {% for land, timestamp, sentDate, paymentLimit, address, name, invoice_id,checkReadInv,land_id,main_listing in invoiceList %}
               {% if checkReadInv is True %}
                 <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
                   {% load static %}
@@ -83,7 +83,7 @@
               {% endif %}
             {% endfor %}
             <!-- FOR LOOP PELOS WARNINGS COM SIZELIST + FORLOOP.COUNTER-->
-            {% for timestamp, land, address, name,checkReadWarn,warnId,id_land_warn in paymentWarningList %}
+            {% for timestamp, land, address, name,checkReadWarn,warnId,id_land_warn,main_listing in paymentWarningList %}
               {% if checkReadWarn is True %}
                 <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull|add:sizeInvoice}}" class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
                   {% load static %}
@@ -150,6 +150,13 @@
               </form>
             </div>
             <div class="row m-2">
+              <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
+              <form action="{% url 'propertyListingNotif' a %}" method="POST" id="propertyTen_form_{{ a }}">
+                {% csrf_token %}
+                <a href="javascript:{}" onclick="document.getElementById('propertyTen_form_{{ a }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ i }}</u></a>
+              </form>
+            </div>
+            <div class="row m-2">
                 <p class= "text-info font-weight-bold">{% trans 'Data Início' %}:&nbsp </p>
                 <p class= "text-info"> {{ d }}</p>
             </div>
@@ -157,10 +164,6 @@
                 <p class= "text-info font-weight-bold">{% trans 'Data término' %}:&nbsp </p>
                 <p class= "text-info"> {{ e }}</p>
             </div>
-            <div class="row m-2">
-              <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
-              <p class= "text-info"> {{ i }}</p>
-          </div>
             <div class="row m-2">
               <div>
                 <p class="text-info font-weight-bold">{% trans 'A sua mensagem' %}:&nbsp</p>
@@ -201,7 +204,7 @@
             </div>
           </div>
         {% endfor %}
-        {% for land, month, sentDate, paymentLimit, address, name, invoice_id,checkReadInv,land_id in invoiceList %}
+        {% for land, month, sentDate, paymentLimit, address, name, invoice_id,checkReadInv,land_id,main_listing in invoiceList %}
           <div id = "content_{{forloop.counter|add:sizeFull}}"class='contentNotification' style="display:none">
             <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                 <h4 class="text-white mt-3 pl-3"> {% trans 'Fatura' %} </h4>
@@ -211,6 +214,13 @@
               <form action="{% url 'profileLandlord' land_id %}" method="POST" id="landInv_form_{{ land_id }}">
                 {% csrf_token %}
                 <a href="javascript:{}" onclick="document.getElementById('landInv_form_{{ land_id }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ land }}</u></a>
+              </form>
+            </div>
+            <div class="row m-2">
+              <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
+              <form action="{% url 'propertyListingInv' main_listing %}" method="POST" id="propertyInv_form_{{ invoice_id }}">
+                {% csrf_token %}
+                <a href="javascript:{}" onclick="document.getElementById('propertyInv_form_{{ invoice_id }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ address }}</u></a>
               </form>
             </div>
             <div class="row m-2">
@@ -232,8 +242,14 @@
                   {{ address }} {% trans 'e com um anúncio intitulado' %}
                   "{{ name }}" &nbsp</p>
             </div>
-            <div class="row m-2">
-              <div class="mx-auto">
+            <div class="row m-2 mt-3 justify-content-center">
+              <div class="col-6">
+                <form method="POST" action="{% url 'make_payment' req_id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-info font-weight-bold float-right">{% trans 'Realizar Pagamento' %}</button>
+                </form>
+              </div>
+              <div class="col-6">
                 <form action="{% url 'get_invoice_pdf'%}" method="POST" target="_blank">
                   {% csrf_token %}
                   <input name="invoice_id" type='hidden' value="{{invoice_id}}">
@@ -243,7 +259,7 @@
             </div>
           </div>
         {% endfor %}
-        {% for timestamp, land, address, name,checkReadWarn,warnId,id_land_warn in paymentWarningList %}
+        {% for timestamp, land, address, name,checkReadWarn,warnId,id_land_warn,main_listing in paymentWarningList %}
           <div id = "content_{{forloop.counter|add:sizeFull|add:sizeInvoice}}"class='contentNotification' style="display:none">
             <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                 <h4 class="text-white mt-3 pl-3"> {% trans 'Aviso de Pagamento em Atraso' %} </h4>
@@ -253,6 +269,13 @@
               <form action="{% url 'profileLandlord' id_land_warn %}" method="POST" id="landWarn_form_{{ id_land_warn }}">
                 {% csrf_token %}
                 <a href="javascript:{}" onclick="document.getElementById('landWarn_form_{{ id_land_warn }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ land }}</u></a>
+              </form>
+            </div>
+            <div class="row m-2">
+              <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
+              <form action="{% url 'propertyListingInv' main_listing %}" method="POST" id="propertyWarn_form_{{ warnId }}">
+                {% csrf_token %}
+                <a href="javascript:{}" onclick="document.getElementById('propertyWarn_form_{{ warnId }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ address }}</u></a>
               </form>
             </div>
             <div class="row m-2">
