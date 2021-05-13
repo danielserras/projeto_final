@@ -12,7 +12,7 @@ $(document).ready(function(){
         addimgSlot(imgSlots);
     }) */
 
-    $('.num_divisions').hide();
+    /* $('.num_divisions').hide();
     $('.studio_type, .bedroom_type').click(function(){
         $('.num_divisions').hide();
         $('#bedroomsNum').attr('value', 1);
@@ -23,7 +23,7 @@ $(document).ready(function(){
 
     $('.apartment_type, .residency_type, .house_type').click(function(){
         $('.num_divisions').show();
-    })
+    }) */
 
     if (!$(".multiple_form").is(":hidden")){
 

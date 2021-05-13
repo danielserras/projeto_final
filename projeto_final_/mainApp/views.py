@@ -1893,9 +1893,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://8a87ee157da8.ngrok.io/paymentStatus/",
-            "return_url": "http://8a87ee157da8.ngrok.io/mainApp/search",
-            "cancel_return": "http://8a87ee157da8.ngrok.io/mainApp/profile",
+            "notify_url": "http://87f47ae192f3.ngrok.io/paymentStatus/",
+            "return_url": "http://87f47ae192f3.ngrok.io/mainApp/search",
+            "cancel_return": "http://87f47ae192f3.ngrok.io/mainApp/profile",
 
             }
 
@@ -2900,7 +2900,11 @@ def review(request):
         lord.lord_review_num = lord.lord_review_num + 1
         lord.save()
 
-    return redirect('index')
+        messages.success(request, _('Obrigado pela sua avaliação!'), extra_tags='review')
+        return render(request,'mainApp/profile.html', {})
+
+    return render(request,'mainApp/reviewProperty.html', {})
+    #return redirect('index')
 
 def profileTenant(request,ten_id):
     tenant_user = User.objects.get(id=ten_id)
