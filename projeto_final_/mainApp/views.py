@@ -26,6 +26,7 @@ from django.utils.translation import gettext as _
 from datetime import datetime, timedelta, date
 from django.views.generic import View
 from dateutil.relativedelta import relativedelta
+from django.urls import reverse
 import PIL
 import time
 import json
@@ -1498,7 +1499,7 @@ def notificationsTenant(request):
                 address = assoc_prop.address
                 listing_name = main_listing.title
 
-                invoiceList.append([nameLand, invoiceMonth, invoiceDate, paymentLimit, address, listing_name, i.id,checkReadTenInv,land_id])
+                invoiceList.append([nameLand, invoiceMonth, invoiceDate, paymentLimit, address, listing_name, i.id,checkReadTenInv,land_id,main_listing.id])
     
     paymentWarningList = []
     for w in Payment_Warning.objects.all():
@@ -1522,7 +1523,7 @@ def notificationsTenant(request):
             listing_name = main_listing.title
             timestamp = w.timestamp
 
-            paymentWarningList.append([timestamp, nameLand, address, listing_name,checkReadTenWarn,w.id,idLand_warn])
+            paymentWarningList.append([timestamp, nameLand, address, listing_name,checkReadTenWarn,w.id,idLand_warn,main_listing.id])
 
     reverseList = list(reversed(fullList))
 
@@ -2838,13 +2839,42 @@ def review(request):
 def profileTenant(request,ten_id):
     tenant_user = User.objects.get(id=ten_id)
     tenant_app_user = App_user.objects.get(id=ten_id)
+    tenant = Tenant.objects.get(ten_user_id=ten_id)
 
-    context={"tenant_user":tenant_user, "tenant_app_user":tenant_app_user}
+    context={"tenant_user":tenant_user, "tenant_app_user":tenant_app_user, "tenant": tenant}
     return render(request, "mainApp/profileTenant.html", context)
 
 def profileLandlord(request,lan_id):
     landlord_user = User.objects.get(id=lan_id)
     landlord_app_user = App_user.objects.get(id=lan_id)
+    landlord = Landlord.objects.get(lord_user_id=lan_id)
+    review_rounded = round(landlord.lord_review,1)
+    review_rounded_int = round(landlord.lord_review)
 
-    context={"landlord_user":landlord_user, "landlord_app_user":landlord_app_user}
+    context={"landlord_user":landlord_user, "landlord_app_user":landlord_app_user, "landlord": landlord, "review_rounded": review_rounded, "review_rounded_int": review_rounded_int}
     return render(request, "mainApp/profileLandlord.html", context)
+
+def propertyListingNotif(request,id_req):
+    current_req = Agreement_Request.objects.get(id=id_req)
+
+    if current_req.associated_property_listing != None:
+        listingId = current_req.associated_property_listing.main_listing_id
+    else:
+        listingId = current_req.associated_room_listing.main_listing_id
+
+    return redirect(reverse('listing', kwargs={"listing_id": listingId}))
+
+def  propertyListingRef(request,id_ref):
+    current_ref = Refund.objects.get(id=id_ref)
+    agreem = current_ref.agreement
+
+    if agreem.associated_property_listing != None:
+        listingId = agreem.associated_property_listing.main_listing_id
+    else:
+        listingId = agreem.associated_room_listing.main_listing_id
+
+    return redirect(reverse('listing', kwargs={"listing_id": listingId}))
+
+def  propertyListingInv(request,id_list):
+
+    return redirect(reverse('listing', kwargs={"listing_id": id_list}))

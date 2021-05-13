@@ -78,7 +78,7 @@
                 </form>
                 {% endif %}
               {% endfor %}
-              {% for id_ref,nameTen,value,actualFinishDate,propertyAddress,startDate,plannedFinishDate,check,status,id_ten in fullListRef %}  
+              {% for id_ref,nameTen,value,actualFinishDate,property,startDate,plannedFinishDate,check,status,id_ten in fullListRef %}  
                   {% if check is True %}
                       <a href="#" id="notifications_{{forloop.counter|add:sizeListRef}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
                         {% load static %}
@@ -124,13 +124,20 @@
           {% for a,b,c,d,e,f,g,h,i,j,k in fullList_ %}
             <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
               <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
-                  <h4 class="text-white mt-3 pl-3"> {% trans 'Assunto' %} </h4>
+                  <h4 class="text-white mt-3 pl-3"> {% trans 'Interessado' %} </h4>
               </div>
               <div class="row m-2">
                 <p class= "text-info font-weight-bold">{% trans 'Remetente' %}:&nbsp </p>
                 <form action="{% url 'profileTenant' k %}" method="POST" id="tenant_form_{{ k }}">
                   {% csrf_token %}
                   <a href="javascript:{}" onclick="document.getElementById('tenant_form_{{ k }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ b }}</u></a>
+                </form>
+              </div>
+              <div class="row m-2">
+                <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
+                <form action="{% url 'propertyListingNotif' a %}" method="POST" id="property_form_{{ a }}">
+                  {% csrf_token %}
+                  <a href="javascript:{}" onclick="document.getElementById('property_form_{{ a }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ h }}</u></a>
                 </form>
               </div>
               <div class="row m-2">
@@ -141,10 +148,6 @@
                   <p class= "text-info font-weight-bold">{% trans 'Data término' %}:&nbsp </p>
                   <p class= "text-info"> {{ e }}</p>
               </div>
-              <div class="row m-2">
-                <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
-                <p class= "text-info"> {{ h }}</p>
-            </div>
               <div class="row m-2">
                   <p class="text-info font-weight-bold">{% trans 'Mensagem do Interessado' %}:&nbsp</p>
                   <p class="text-info">{{ c|safe }}</p>
@@ -183,10 +186,10 @@
               {% endif %}
             </div>
           {% endfor %}
-          {% for id_ref,nameTen,value,actualFinishDate,propertyAddress,startDate,plannedFinishDate,check,status,id_ten in fullListRef %}
+          {% for id_ref,nameTen,value,actualFinishDate,property,startDate,plannedFinishDate,check,status,id_ten in fullListRef %}
             <div id = "content_{{forloop.counter|add:sizeListRef}}" class='contentNotification' style="display:none">
               <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
-                  <h4 class="text-white mt-3 pl-3"> {% trans 'Assunto' %} </h4>
+                  <h4 class="text-white mt-3 pl-3"> {% trans 'Reembolso' %} </h4>
               </div>
               <div class="row m-2">
                 <p class= "text-info font-weight-bold">{% trans 'Remetente' %}:&nbsp </p>
@@ -196,16 +199,19 @@
                 </form>
               </div>
               <div class="row m-2">
+                <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
+                <form action="{% url 'propertyListingRef' id_ref %}" method="POST" id="propertyRef_form_{{ id_ref }}">
+                  {% csrf_token %}
+                  <a href="javascript:{}" onclick="document.getElementById('propertyRef_form_{{ id_ref }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ property }}</u></a>
+                </form>
+              </div>
+              <div class="row m-2">
                   <p class= "text-info font-weight-bold">{% trans 'Data Início' %}:&nbsp </p>
                   <p class= "text-info"> {{ startDate }}</p>
               </div>
               <div class="row m-2">
                   <p class= "text-info font-weight-bold">{% trans 'Data de término planeada' %}:&nbsp </p>
                   <p class= "text-info"> {{ plannedFinishDate }}</p>
-              </div>
-              <div class="row m-2">
-                <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
-                <p class= "text-info"> {{ propertyAddress }}</p>
               </div>
               <div class="row m-2">
                 <p class= "text-info font-weight-bold">{% trans 'Nome do inquilino' %}:&nbsp </p>

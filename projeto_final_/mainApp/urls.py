@@ -64,5 +64,8 @@ urlpatterns = [
     path('review', views.review, name='review'),
     path('profileTenant/<int:ten_id>', views.profileTenant, name='profileTenant'),
     path('profileLandlord/<int:lan_id>', views.profileLandlord, name='profileLandlord'),
+    path('propertyListingNotif/<int:id_req>', views.propertyListingNotif, name='propertyListingNotif'),
+    path('propertyListingRef/<int:id_ref>', views.propertyListingRef, name='propertyListingRef'),
+    path('propertyListingInv/<int:id_list>', views.propertyListingInv, name='propertyListingInv'),
 ]
 
