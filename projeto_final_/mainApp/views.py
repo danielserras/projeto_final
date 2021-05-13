@@ -1892,9 +1892,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://6ffbc6278513.ngrok.io/paymentStatus/",
-            "return_url": "http://6ffbc6278513.ngrok.io/mainApp/search",
-            "cancel_return": "http://6ffbc6278513.ngrok.io/mainApp/profile",
+            "notify_url": "http://87f47ae192f3.ngrok.io/paymentStatus/",
+            "return_url": "http://87f47ae192f3.ngrok.io/mainApp/search",
+            "cancel_return": "http://87f47ae192f3.ngrok.io/mainApp/profile",
 
             }
 
@@ -2867,6 +2867,8 @@ def review(request):
         lord.lord_review = (lord.lord_review*lord.lord_review_num + int(landlord)) / (lord.lord_review_num + 1)
         lord.lord_review_num = lord.lord_review_num + 1
         lord.save()
+
+        messages.success(request, _('Obrigado pela sua avaliação!'), extra_tags='review')
 
     return render(request,'mainApp/reviewProperty.html', {})
 
