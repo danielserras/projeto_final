@@ -53,11 +53,7 @@
               {% endif %}
             {% endfor %}
             <!-- FOR LOOP PELOS INVOICES COM SIZELIST + FORLOOP.COUNTER-->
-<<<<<<< HEAD
-            {% for land, timestamp, sentDate, paymentLimit, address, name, invoice_id,checkReadInv,req_id in invoiceList %}
-=======
             {% for land, timestamp, sentDate, paymentLimit, address, name, invoice_id,checkReadInv,land_id,main_listing in invoiceList %}
->>>>>>> 24bf8be27c73e1ad70fd341c29d665f5bce3f013
               {% if checkReadInv is True %}
                 <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
                   {% load static %}

@@ -1892,9 +1892,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://7e34cd9612a4.ngrok.io/paymentStatus/",
-            "return_url": "http://7e34cd9612a4.ngrok.io/mainApp/search",
-            "cancel_return": "http://7e34cd9612a4.ngrok.io/mainApp/profile",
+            "notify_url": "http://6ffbc6278513.ngrok.io/paymentStatus/",
+            "return_url": "http://6ffbc6278513.ngrok.io/mainApp/search",
+            "cancel_return": "http://6ffbc6278513.ngrok.io/mainApp/profile",
 
             }
 
@@ -1970,7 +1970,7 @@ def make_payment_refunds(request, ref_id):
             "item_name": main_listing.title,
             "item_number": ref.id,
             "custom": current_user.id,
-            "notify_url": "http://7523997b61b8.ngrok.io/paymentStatusRef/",
+            "notify_url": "http://7523997b61b8.ngrok.io/en/paymentStatusRef/",
             "return_url": "http://7523997b61b8.ngrok.io/mainApp/search",
             "cancel_return": "http://7523997b61b8.ngrok.io/mainApp/profile",
 
@@ -2004,7 +2004,7 @@ def get_payment_status(sender, **kwargs):
     if ipn_obj['payment_status'] == ST_PP_COMPLETED:
 
         if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
-            print('entrei')
+
             ag_request_id = ipn_obj['item_number']
             user_id = ipn_obj['custom']
             create_agreement(user_id, ag_request_id)
@@ -2023,7 +2023,9 @@ def get_payment_status(sender, **kwargs):
             except:
                 pass
 
-    return redirect('index')
+        return HttpResponse('')
+
+    return HttpResponseForbidden()
 
 valid_ipn_received.connect(get_payment_status)
 invalid_ipn_received.connect(get_payment_status)
@@ -2048,7 +2050,10 @@ def get_payment_status_refunds(sender, **kwargs):
             # except:
             #     pass
 
-    return redirect('index')
+        return HttpResponse('')
+
+    return HttpResponseForbidden()
+
 
 valid_ipn_received.connect(get_payment_status_refunds)
 invalid_ipn_received.connect(get_payment_status_refunds)
@@ -2133,13 +2138,11 @@ def delete_account(request):
 
         for ag in Agreement.objects.all():
             if Tenant.objects.get(id = (ag.tenant_id)).ten_user_id == tenant.ten_user_id:
-                
-                #falta verificar se o agreement esta ativo
 
                 if ag.status == True:
 
                     messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'), extra_tags='del_lock')
-                    return redirect('index')
+                    return render(request, "mainApp/home.html", {})
 
 
         logout(request)
@@ -2155,8 +2158,8 @@ def delete_account(request):
 
                 if ag.status == True:
 
-                    messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'))
-                    return redirect('index')
+                    messages.info(request, _('Ainda possui contratos ativos. Terá de terminar os contratos antes de eliminar os seus dados.'), extra_tags='del_lock')
+                    return render(request, "mainApp/home.html", {"thisis":"isspartaaaa"})
 
         
         for p_listing in Property_listing.objects.all():
