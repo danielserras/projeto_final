@@ -32,6 +32,7 @@ import time
 import json
 import math
 import os
+import calendar
 #tirar debug_mode no fim do proj
 #tirar test_mode do paypal no fim
 
@@ -1892,9 +1893,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://6ffbc6278513.ngrok.io/paymentStatus/",
-            "return_url": "http://6ffbc6278513.ngrok.io/mainApp/search",
-            "cancel_return": "http://6ffbc6278513.ngrok.io/mainApp/profile",
+            "notify_url": "http://8a87ee157da8.ngrok.io/paymentStatus/",
+            "return_url": "http://8a87ee157da8.ngrok.io/mainApp/search",
+            "cancel_return": "http://8a87ee157da8.ngrok.io/mainApp/profile",
 
             }
 
@@ -1970,9 +1971,9 @@ def make_payment_refunds(request, ref_id):
             "item_name": main_listing.title,
             "item_number": ref.id,
             "custom": current_user.id,
-            "notify_url": "http://7523997b61b8.ngrok.io/en/paymentStatusRef/",
-            "return_url": "http://7523997b61b8.ngrok.io/mainApp/search",
-            "cancel_return": "http://7523997b61b8.ngrok.io/mainApp/profile",
+            "notify_url": "http://8a87ee157da8.ngrok.io/en/paymentStatusRef/",
+            "return_url": "http://8a87ee157da8.ngrok.io/mainApp/search",
+            "cancel_return": "http://8a87ee157da8.ngrok.io/mainApp/profile",
 
             }
 
@@ -2272,14 +2273,15 @@ def manage_agreements_view(request):
         presentTime = datetime.today().strftime('%d-%m-%Y')
         now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
         diffDates = (endDate - now_date).days
+        days_remaining = (30 - now_date).days
 
         #Rent to be returned
         if a.associated_property_listing_id == None:
             listingRent = Listing.objects.get(id = Room_listing.objects.get(id=a.associated_room_listing_id).main_listing_id).monthly_payment
-            rent_to_be_returned = round((listingRent / 30) * diffDates,2)
+            rent_to_be_returned = round((listingRent / 30) * days_remaining,2)
         else:
             listingRent = Listing.objects.get(id = Property_listing.objects.get(id=a.associated_property_listing_id).main_listing_id).monthly_payment
-            rent_to_be_returned = round((listingRent / 30) * diffDates,2)
+            rent_to_be_returned = round((listingRent / 30) * days_remaining,2)
 
         listAgreementAndPaid.append([a, send_invoice, _(month.strftime("%B")), payment_warning, diffDates, rent_to_be_returned])
 
@@ -2457,14 +2459,16 @@ def manageAgreementsTenant(request):
         presentTime = datetime.today().strftime('%d-%m-%Y')
         now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
         diffDates = (endDate - now_date).days
+        end_month = date(now_date.year, now_date.month, calendar.monthrange(now_date.year, now_date.month)[1])
+        days_remaining = (end_month- now_date).days
 
         #Rent to be returned
         if a.associated_property_listing_id == None:
             listingRent = Listing.objects.get(id = Room_listing.objects.get(id=a.associated_room_listing_id).main_listing_id).monthly_payment
-            rent_to_be_returned = round((listingRent / 30) * diffDates,2)
+            rent_to_be_returned = round((listingRent / 30) * days_remaining,2)
         else:
             listingRent = Listing.objects.get(id = Property_listing.objects.get(id=a.associated_property_listing_id).main_listing_id).monthly_payment
-            rent_to_be_returned = round((listingRent / 30) * diffDates,2)
+            rent_to_be_returned = round((listingRent / 30) * days_remaining,2)
 
         listAgreementAndPaid.append([a, send_invoice, _(month.strftime("%B")), payment_warning, diffDates, rent_to_be_returned, listing])
 
@@ -2527,13 +2531,14 @@ def deleteAgreement(request):
         presentTime = datetime.today().strftime('%d-%m-%Y')
         now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
         diffDates = (endDate - now_date).days
+        days_remaining = (30 - now_date).days
 
         if agreement.associated_property_listing_id == None:
             listingRent = Listing.objects.get(id = Room_listing.objects.get(id=agreement.associated_room_listing_id).main_listing_id).monthly_payment
-            rent_to_be_returned = round((listingRent / 30) * diffDates,2)
+            rent_to_be_returned = round((listingRent / 30) * days_remaining,2)
         else:
             listingRent = Listing.objects.get(id = Property_listing.objects.get(id=agreement.associated_property_listing_id).main_listing_id).monthly_payment
-            rent_to_be_returned = round((listingRent / 30) * diffDates,2)
+            rent_to_be_returned = round((listingRent / 30) * days_remaining,2)
         
         Agreement.objects.filter(id=agreement.id).update(status=False)
         dateNow = timezone.now()
@@ -2569,7 +2574,7 @@ def deleteAgreement(request):
             "landlord": landlord,
             "landlord_id": landlord_id
         }
-        print('hello')
+
         return render(request, "mainApp/reviewProperty.html", context)
 
 def requestPop(request):
