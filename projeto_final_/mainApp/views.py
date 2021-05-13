@@ -1463,8 +1463,9 @@ def notificationsTenant(request):
 
                 address = assoc_prop.address
                 listing_name = main_listing.title
+                req_id = _id_req
 
-                invoiceList.append([nameLand, invoiceMonth, invoiceDate, paymentLimit, address, listing_name, i.id,checkReadTenInv])
+                invoiceList.append([nameLand, invoiceMonth, invoiceDate, paymentLimit, address, listing_name, i.id,checkReadTenInv, req_id])
     
     paymentWarningList = []
     for w in Payment_Warning.objects.all():
@@ -1847,9 +1848,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://7523997b61b8.ngrok.io/paymentStatus/",
-            "return_url": "http://7523997b61b8.ngrok.io/mainApp/search",
-            "cancel_return": "http://7523997b61b8.ngrok.io/mainApp/profile",
+            "notify_url": "http://7e34cd9612a4.ngrok.io/paymentStatus/",
+            "return_url": "http://7e34cd9612a4.ngrok.io/mainApp/search",
+            "cancel_return": "http://7e34cd9612a4.ngrok.io/mainApp/profile",
 
             }
 
@@ -1959,7 +1960,7 @@ def get_payment_status(sender, **kwargs):
     if ipn_obj['payment_status'] == ST_PP_COMPLETED:
 
         if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
-
+            print('entrei')
             ag_request_id = ipn_obj['item_number']
             user_id = ipn_obj['custom']
             create_agreement(user_id, ag_request_id)
@@ -2629,11 +2630,13 @@ def receipts(request):
 
         fullList = []
         for i in list_invoices:
+
             try:
                 receipt = Receipt.objects.get(invoice_id=i.id)
                 fullList.append([i, receipt])
             except:
                 pass
+
         context={
             'fullList': fullList,
         }
@@ -2647,7 +2650,7 @@ def get_receipt_pdf(request):
 
         if receipt_id != None:
             total = 0
-
+            print(receipt_id)
             receipt = Receipt.objects.get(id=receipt_id)
             invoice = Invoice.objects.get(id=receipt.invoice_id)
             if (invoice.agreement_id == None):
