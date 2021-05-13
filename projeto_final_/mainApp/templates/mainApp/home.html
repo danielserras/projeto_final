@@ -1,6 +1,41 @@
 {% extends 'mainApp/base.html' %} 
 {% load i18n %}
 {% block content %}
+
+<script>
+    $(document).ready(function(){
+        $("#fecharMsg").click(function() {
+            $('#modalLoginAddProp').modal('hide');
+        });
+    })
+</script>
+{% for message in messages %}
+    {%if message.extra_tags == "tenant_lock"%}
+        <div class="modal fade" id="modalLoginAddProp" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Adicionou uma nova propriedade!' %}</h5>
+                <form method="POST" action="{% url 'deletePopUp' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </form>
+                </div>
+                <div class="modal-body">
+                {% trans message %}
+                </div>
+                <div class="modal-footer">
+                    <button id="fecharMsg" class="btn btn-primary deletePOP">{% trans 'Fechar' %}</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-sm-6 p-4">

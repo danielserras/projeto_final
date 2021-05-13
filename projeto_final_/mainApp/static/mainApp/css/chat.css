@@ -5,6 +5,10 @@
 }
 
 .height-65{
-    height: 55vh !important;
+    height: 60vh !important;
     overflow-y: scroll;
+}
+
+#message{
+    resize: none;
 }

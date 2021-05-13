@@ -4,7 +4,7 @@ from django.conf.urls.i18n import i18n_patterns
 from . import views
 
 urlpatterns = [
-    path('profile/chats/<int:user_id>', views.chat_list_view, name='chatsList'),
+    path('profile/chats', views.chat_list_view, name='chatsList'),
     path('profile/propertiesManagement/listingEditing/<int:property_id>/<int:main_listing_id>/removeImage/<int:image_id>', views.remove_image_view, name='removeImage'),
     path('profile/propertiesManagement/listingEditing/deleteListing/<int:property_id>/<int:main_listing_id>', views.delete_listing_view, name='deleteListing'),
     path('profile/propertiesManagement/listingEditing/createListing/<int:property_id>', views.create_listing_view, name='createListing'),
@@ -61,5 +61,11 @@ urlpatterns = [
     path('reasons/<int:agreement_id>', views.reasons, name='reasons'),
     path('receipt', views.get_receipt_pdf, name='get_receipt_pdf'),
     path('acceptDenyRequest/<int:request_id>', views.accept_deny_request, name='accept_deny_request'),
+    path('review', views.review, name='review'),
+    path('profileTenant/<int:ten_id>', views.profileTenant, name='profileTenant'),
+    path('profileLandlord/<int:lan_id>', views.profileLandlord, name='profileLandlord'),
+    path('propertyListingNotif/<int:id_req>', views.propertyListingNotif, name='propertyListingNotif'),
+    path('propertyListingRef/<int:id_ref>', views.propertyListingRef, name='propertyListingRef'),
+    path('propertyListingInv/<int:id_list>', views.propertyListingInv, name='propertyListingInv'),
 ]
 

@@ -27,7 +27,7 @@ $(document).ready(function(){
 
     if (!$(".multiple_form").is(":hidden")){
 
-        $(".listing_form").hide();
+        $(".listing_form").show();
         $(".multiple_form_next").click(function(){
             var whole = $('.whole');
             var separate = $('.separate');
@@ -36,7 +36,6 @@ $(document).ready(function(){
                 /* $(".multiple_form").attr("method", "POST");
                 $(".multiple_form_next").attr("type", "submit");
                 $(".multiple_form").submit(); */
-                console.log("caralho");
                 $('<input>').attr({type: 'hidden',name: 'separate', id: 'sep'}).appendTo('.listing_form');
                 $("#sep").val("1");
             }

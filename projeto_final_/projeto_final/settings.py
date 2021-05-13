@@ -71,7 +71,7 @@ CKEDITOR_CONFIGS = {
             ['Font', 'FontSize'],
             ['Bold', 'Italic', 'Underline'],
             ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyBlock'],
-            ['Table'],
+            ['Table', 'Smiley'],
         ]
     }
 }
@@ -182,5 +182,6 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         'knox.auth.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
 }

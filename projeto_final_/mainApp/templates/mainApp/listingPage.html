@@ -92,7 +92,7 @@
             <i class="fa fa-chevron-down col_image_btn" id='col_image_btn_down' aria-hidden="down" onclick="nextInColumn()" title="Scroll Down"></i>
         </div> 
     </div>
-    <div class="row">
+    <div class="row mt-5">
         <div class="col-sm-8">
             <div class="row p-1">
                 <h2 class="text-secondary font-weight-bold">{{listing.title}}</h2>
@@ -135,7 +135,7 @@
                 <p class="text-white my-auto h-100">/{% trans 'mês' %}</p>
             </div>
             <div class="row justify-content-center mt-2">
-                <p class="text-white text-size-24 font-weight-bold m-0">Disponibilidade</p>
+                <p class="text-white text-size-24 font-weight-bold m-0">{% trans 'Disponibilidade' %}</p>
             </div>
             <div class="row justify-content-center">
                 <p class="text-white my-auto">{{listing.availability_starts}} {% trans 'até' %} {{listing.availability_ending}}</p>
@@ -143,6 +143,30 @@
             <div class="row justify-content-center mt-4">
                 <p class="text-white my-auto mr-2">{{landlord_user.first_name}} {{landlord_user.last_name}}</p>
                 <img src='{% static "mainApp/images/user.svg" %}' width='13%'>
+            </div>
+            <div class="row justify-content-center mt-2">
+                <form action="{% url 'profileLandlord' land_id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn text-white">
+                        {% trans 'Ver Perfil' %}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="35" height="35" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <circle cx="12" cy="12" r="2" />
+                            <path d="M22 12c-2.667 4.667 -6 7 -10 7s-7.333 -2.333 -10 -7c2.667 -4.667 6 -7 10 -7s7.333 2.333 10 7" />
+                        </svg>
+                    </button>
+                </form>
+                <form action="{% url 'chatsList' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="receiver" value="{{landlord_user.id}}">
+                    <button type="submit" class="btn" onclick="location.href='{% url 'chatsList'%}'">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-messages" width="35" height="35" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
+                            <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
+                        </svg>
+                    </button>
+                </form>
             </div>
             <div class="row justify-content-center">
                 {% if is_tenant %}

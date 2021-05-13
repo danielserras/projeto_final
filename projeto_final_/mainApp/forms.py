@@ -342,7 +342,7 @@ class Agreement_Request_Form(forms.ModelForm):
 
     startsDate = forms.DateField()
     endDate = forms.DateField()
-    message = forms.CharField(widget=forms.Textarea, required=False)
+    message = RichTextField(null=True, blank=True)
 
 
     class Meta:
@@ -536,6 +536,10 @@ class GetChat(forms.Form):
 class SendMessage(forms.Form):
     chat_id = forms.IntegerField(required=True)
     content =  forms.CharField(required=True, max_length=200)
+
+class CreateChat(forms.Form):
+    receiver = forms.IntegerField(required=True)
+
 
 class RichTextForm(ModelForm):
     class Meta:

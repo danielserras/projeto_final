@@ -61,7 +61,7 @@
             <tbody>
                 {% if main_listing|length == 0%}
                     <tr>
-                        <td>Não tem nenhum anúncio para esta propriedade, pretende anunciar esta propriedade?<a href="/mainApp/profile/propertiesManagement/listingEditing/createListing/{{property.id}}"> Sim</a></td>
+                        <td>{% trans 'Não tem nenhum anúncio para esta propriedade, pretende anunciar esta propriedade?' %}<a href="/mainApp/profile/propertiesManagement/listingEditing/createListing/{{property.id}}"> Sim</a></td>
                     </tr>
                 {% else %}
                     {% for listing in main_listing%}
@@ -69,13 +69,13 @@
                             <td>{{forloop.counter}}</td>
                             <td>{{listing.title}}</td>
                             {% if listing.listing_type == 'Apartment'%}
-                                <td class="text-center">Apartamento</td> 
+                                <td class="text-center">{% trans 'Apartamento' %}</td> 
                             {% elif listing.listing_type == 'House'%}
-                                <td class="text-center">Casa</td>
+                                <td class="text-center">{% trans 'Casa' %}</td>
                             {% elif listing.listing_type == 'Studio'%}
-                                <td class="text-center">Estúdio</td>
+                                <td class="text-center">{% trans 'Estúdio' %}</td>
                             {% else %}
-                                <td class="text-center">Quarto</td>
+                                <td class="text-center">{% trans 'Quarto' %}</td>
                             {% endif %}
                             <td class="custom-control custom-switch text-center pl-5">
                                 <form action="" method="POST" class="text-center pl-2">

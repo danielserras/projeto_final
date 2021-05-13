@@ -47,16 +47,16 @@
   
           <div class="messages-box">
             <div id="leftStart" class="list-group rounded-0">
-              {% for a,b,c,d,e,f,g,h,i,j in fullList_ %}
+              {% for a,b,c,d,e,f,g,h,i,j,k in fullList_ %}
                 {% if i is True %}
                     <a href="#" id="notifications_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
                       {% load static %}
                       <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
                         <div class="media-body ml-4">
                           <div class="d-flex align-items-center justify-content-between mb-1">
-                            <h6 class="mb-0">{{ b }}</h6><small class="small font-weight-bold">{{ g }}</small>
+                            <h6 class="mb-0 font-weight-bold">{{ b }}</h6><small class="small font-weight-bold">{{ g }}</small>
                           </div>
-                          <p class="messageText font-italic text-muted mb-0 text-small">{{ c }}</p>
+                          <p class="messageText font-italic text-muted mb-0 text-small">{{ c|safe }}</p>
                         </div>
                       </div>
                     </a>
@@ -69,23 +69,23 @@
                     <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
                       <div class="media-body ml-4">
                         <div class="d-flex align-items-center justify-content-between mb-1">
-                          <h6 class="mb-0">{{ b }}</h6><small class="small font-weight-bold">{{ g }}</small>
+                          <h6 class="mb-0 font-weight-bold">{{ b }}</h6><small class="small font-weight-bold">{{ g }}</small>
                         </div>
-                        <p class="messageText font-italic text-muted mb-0 text-small">{{ c }}</p>
+                        <p class="messageText font-italic text-muted mb-0 text-small">{{ c|safe }}</p>
                       </div>
                     </div>
                   </a>
                 </form>
                 {% endif %}
               {% endfor %}
-              {% for id_ref,nameTen,value,actualFinishDate,propertyAddress,startDate,plannedFinishDate,check,status in fullListRef %}  
+              {% for id_ref,nameTen,value,actualFinishDate,property,startDate,plannedFinishDate,check,status,id_ten in fullListRef %}  
                   {% if check is True %}
                       <a href="#" id="notifications_{{forloop.counter|add:sizeListRef}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
                         {% load static %}
                         <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
                           <div class="media-body ml-4">
                             <div class="d-flex align-items-center justify-content-between mb-1">
-                              <h6 class="mb-0">{{ nameTen }}</h6><small class="small font-weight-bold">{{ actualFinishDate }}</small>
+                              <h6 class="mb-0 font-weight-bold">{{ nameTen }}</h6><small class="small font-weight-bold">{{ actualFinishDate }}</small>
                             </div>
                             <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Reembolso' %}.</p>
                           </div>
@@ -99,7 +99,7 @@
                       <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
                         <div class="media-body ml-4">
                           <div class="d-flex align-items-center justify-content-between mb-1">
-                            <h6 class="mb-0">{{ nameTen }}</h6><small class="small font-weight-bold">{{ actualFinishDate }}</small>
+                            <h6 class="mb-0 font-weight-bold">{{ nameTen }}</h6><small class="small font-weight-bold">{{ actualFinishDate }}</small>
                           </div>
                           <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Reembolso' %}.</p>
                         </div>
@@ -121,10 +121,24 @@
             {% load static %}
             <img src='{% static "mainApp/images/message.svg" %}' class='img' id="defaultImg" alt='Image representing a message' />
         </div>
-          {% for a,b,c,d,e,f,g,h,i,j in fullList_ %}
+          {% for a,b,c,d,e,f,g,h,i,j,k in fullList_ %}
             <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
               <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
-                  <h4 class="text-white mt-3 pl-3"> {% trans 'Assunto' %} </h4>
+                  <h4 class="text-white mt-3 pl-3"> {% trans 'Interessado' %} </h4>
+              </div>
+              <div class="row m-2">
+                <p class= "text-info font-weight-bold">{% trans 'Remetente' %}:&nbsp </p>
+                <form action="{% url 'profileTenant' k %}" method="POST" id="tenant_form_{{ k }}">
+                  {% csrf_token %}
+                  <a href="javascript:{}" onclick="document.getElementById('tenant_form_{{ k }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ b }}</u></a>
+                </form>
+              </div>
+              <div class="row m-2">
+                <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
+                <form action="{% url 'propertyListingNotif' a %}" method="POST" id="property_form_{{ a }}">
+                  {% csrf_token %}
+                  <a href="javascript:{}" onclick="document.getElementById('property_form_{{ a }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ h }}</u></a>
+                </form>
               </div>
               <div class="row m-2">
                   <p class= "text-info font-weight-bold">{% trans 'Data Início' %}:&nbsp </p>
@@ -135,12 +149,8 @@
                   <p class= "text-info"> {{ e }}</p>
               </div>
               <div class="row m-2">
-                <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
-                <p class= "text-info"> {{ h }}</p>
-            </div>
-              <div class="row m-2">
                   <p class="text-info font-weight-bold">{% trans 'Mensagem do Interessado' %}:&nbsp</p>
-                  <p class="text-info">{{ c }}</p>
+                  <p class="text-info">{{ c|safe }}</p>
               </div>
               
               {% if f is None %}
@@ -176,10 +186,24 @@
               {% endif %}
             </div>
           {% endfor %}
-          {% for id_ref,nameTen,value,actualFinishDate,propertyAddress,startDate,plannedFinishDate,check,status in fullListRef %}
+          {% for id_ref,nameTen,value,actualFinishDate,property,startDate,plannedFinishDate,check,status,id_ten in fullListRef %}
             <div id = "content_{{forloop.counter|add:sizeListRef}}" class='contentNotification' style="display:none">
               <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
-                  <h4 class="text-white mt-3 pl-3"> {% trans 'Assunto' %} </h4>
+                  <h4 class="text-white mt-3 pl-3"> {% trans 'Reembolso' %} </h4>
+              </div>
+              <div class="row m-2">
+                <p class= "text-info font-weight-bold">{% trans 'Remetente' %}:&nbsp </p>
+                <form action="{% url 'profileTenant' id_ten %}" method="POST" id="tenantRef_form_{{ id_ten }}">
+                  {% csrf_token %}
+                  <a href="javascript:{}" onclick="document.getElementById('tenantRef_form_{{ id_ten }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ nameTen }}</u></a>
+                </form>
+              </div>
+              <div class="row m-2">
+                <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
+                <form action="{% url 'propertyListingRef' id_ref %}" method="POST" id="propertyRef_form_{{ id_ref }}">
+                  {% csrf_token %}
+                  <a href="javascript:{}" onclick="document.getElementById('propertyRef_form_{{ id_ref }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ property }}</u></a>
+                </form>
               </div>
               <div class="row m-2">
                   <p class= "text-info font-weight-bold">{% trans 'Data Início' %}:&nbsp </p>
@@ -188,10 +212,6 @@
               <div class="row m-2">
                   <p class= "text-info font-weight-bold">{% trans 'Data de término planeada' %}:&nbsp </p>
                   <p class= "text-info"> {{ plannedFinishDate }}</p>
-              </div>
-              <div class="row m-2">
-                <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
-                <p class= "text-info"> {{ propertyAddress }}</p>
               </div>
               <div class="row m-2">
                 <p class= "text-info font-weight-bold">{% trans 'Nome do inquilino' %}:&nbsp </p>
@@ -222,7 +242,7 @@
                 <div class="row d-flex justify-content-center">
                   <form method="POST" action="{% url 'make_payment_refunds' id_ref %}">
                     {% csrf_token %}
-                    <div class="col-sm-6 mt-2">
+                    <div class="col-sm-6 mt-2 mb-2">
                       <button type="submit" class="btn btn-info font-weight-bold mx-auto" >{% trans 'Pagar' %}</button>
                     </div>
                   </form>
@@ -233,56 +253,5 @@
       </div>
   </div>
 </div>
-
-<!-- <script>
-  $('#myform_1').submit(function(event){
-    event.preventDefault();
-    create_post();
-  });
-
-  function create_post() {
-    console.log("create post is working!") // sanity check
-    $.ajaxSetup({ 
-     beforeSend: function(xhr, settings) {
-         function getCookie(name) {
-             var cookieValue = null;
-             if (document.cookie && document.cookie != '') {
-                 var cookies = document.cookie.split(';');
-                 for (var i = 0; i < cookies.length; i++) {
-                     var cookie = jQuery.trim(cookies[i]);
-                     // Does this cookie string begin with the name we want?
-                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                         break;
-                     }
-                 }
-             }
-             return cookieValue;
-         }
-         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-             // Only send the token to relative URLs i.e. locally.
-             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-         }
-     } 
-    });
-    $.ajax({
-        url : 'notificationsLandlord/read/2', // the endpoint
-        type : "POST", // http method
-        data : {}, // data sent with the post request
-
-        // handle a successful response
-        success : function(json) {
-            $("#myform_1").children().attr('class', 'notification list-group-item list-group-item-action list-group-item-info rounded-0');
-            console.log("success"); // another sanity check
-        },
-
-        // handle a non-successful response
-        error : function(xhr,errmsg,err) {
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-        }
-    });
-  };
-</script> -->
-
 
 {% endblock %}

@@ -1,0 +1,210 @@
+{% extends 'mainApp/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/reviewProperty.css" %}'>
+{% endblock %}
+{% block scripts%}
+    <script src='{% static "mainApp/js/reviewProperty.js" %}'></script>
+{% endblock %}
+{% block content %}
+<div class="container my-5 p-3 shadow-lg">
+    <div class="row text-center">
+        <div class="col-sm-12">
+            <div class="row mt-3 mb-3">
+                <a href="#" onclick="history.back();">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="52" height="52" viewBox="0 0 24 24" stroke-width="2" stroke="#264653" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <line x1="5" y1="12" x2="11" y2="18" />
+                        <line x1="5" y1="12" x2="11" y2="6" />
+                    </svg>
+                </a>
+                <h3 class="mx-auto">{% trans 'Avaliação da sua estadia' %}</h3>
+            </div>
+        </div> 
+    </div> 
+    <div class="row justify-content-center">
+        <div class="card bg-secondary" style="width:60%;">
+            <div class="row p-3">
+                <div class="col-3">
+                    <img class="card-img my-auto" src='{% static "mainApp/images/user.svg" %}'>
+                </div>
+                <div class="col-9">
+                    <div class="car-body">
+                        <h1 class="card-title text-white mb-1 text-30">Estudio em Lisboa</h1>
+                        <p class="card-text text-white mb-1">Rua Jorge Fonseca nº78, Lisboa, Portugal</p>
+                        <p class="card-text text-white mb-0">Senhorio: Rui Pereira</p>
+                        <p class="card-text text-white mb-0">Entrada: 20-01-2021</p>
+                        <p class="card-text text-white mb-0">Saída: 31-05-2021</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <form action="{% url 'review' %}" method="POST">
+        {% csrf_token %}
+        <div class="row mt-5">
+            <div class="col-sm-2 col-xs-12"></div>
+            <div class="col-sm-4 col-xs-12">
+                <p class="font-weight-bold text-center text-24">{% trans 'Estado do alojamento' %}</p>
+                <div class="row justify-content-center">
+                    <span class="stars border border-secondary p-2 mx-auto">
+                        <svg id="star-11" class="star m-0" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>  
+                        <svg id="star-12" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg> 
+                        <svg id="star-13" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>  
+                        <svg id="star-14" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg> 
+                        <svg id="star-15" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>        
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12">
+                <p class="font-weight-bold text-center text-24">{% trans 'Senhorio' %}</p>
+                <div class="row justify-content-center">
+                    <span class="stars border border-secondary p-2 mx-auto">
+                        <svg id="star-21" class="star m-0" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>  
+                        <svg id="star-22" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg> 
+                        <svg id="star-23" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>  
+                        <svg id="star-24" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg> 
+                        <svg id="star-25" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>        
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-12"></div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-2 col-xs-12"></div>
+            <div class="col-sm-4 col-xs-12">
+                <p class="font-weight-bold text-center text-24">{% trans 'Serviços nas proximidades' %}</p>
+                <div class="row justify-content-center">
+                    <span class="stars border border-secondary p-2 mx-auto">
+                        <svg id="star-31" class="star m-0" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>  
+                        <svg id="star-32" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg> 
+                        <svg id="star-33" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>  
+                        <svg id="star-34" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg> 
+                        <svg id="star-35" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>        
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12">
+                <p class="font-weight-bold text-center text-24">{% trans 'Facilidade de acesso' %}</p>
+                <div class="row justify-content-center">
+                    <span class="stars border border-secondary p-2 mx-auto">
+                        <svg id="star-41" class="star m-0" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>  
+                        <svg id="star-42" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg> 
+                        <svg id="star-43" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>  
+                        <svg id="star-44" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg> 
+                        <svg id="star-45" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>        
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-12"></div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-sm-2 col-xs-12"></div>
+            <div class="col-sm-4 col-xs-12">
+                <p class="font-weight-bold text-center text-24">{% trans 'Vizinhança' %}</p>
+                <div class="row justify-content-center">
+                    <span class="stars border border-secondary p-2 mx-auto">
+                        <svg id="star-51" class="star m-0" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>  
+                        <svg id="star-52" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg> 
+                        <svg id="star-53" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>  
+                        <svg id="star-54" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg> 
+                        <svg id="star-55" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>        
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12 mb-5">
+                <p class="font-weight-bold text-center text-24">{% trans 'Outros Inquilinos' %}</p>
+                <div class="row justify-content-center">
+                    <span class="border border-secondary p-2 mx-auto">
+                        <svg id="star-61" class="star m-0" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>  
+                        <svg id="star-62" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg> 
+                        <svg id="star-63" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>  
+                        <svg id="star-64" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg> 
+                        <svg id="star-65" class="star" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5 1L17.208 8.89905L25.5 10.1735L19.5 16.3186L20.916 25L13.5 20.8991L6.084 25L7.5 16.3186L1.5 10.1735L9.792 8.89905L13.5 1Z" fill="#2A9D8F" fill-opacity="0.3" stroke="#2A9D8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>        
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-12"></div>
+        </div>
+        <input type="number" id="starsInput-1" name="starsInput-1" required hidden>
+        <input type="number" id="starsInput-2" name="starsInput-2" required hidden>
+        <input type="number" id="starsInput-3" name="starsInput-3" required hidden>
+        <input type="number" id="starsInput-4" name="starsInput-4" required hidden>
+        <input type="number" id="starsInput-5" name="starsInput-5" required hidden>
+        <input type="number" id="starsInput-6" name="starsInput-6" required hidden>
+        <div class="row justify-content-center mt-2" id="reviewWarningRow" hidden>
+            <div class="col-12">
+                <p class="text-danger text-center">{% trans 'Por favor preencha todos os parâmetros de avaliação antes de submeter' %}</p>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-2">
+            <div class="col-sm-3 col-xs-12">
+                <button type="submit" class="btn btn-info font-weight-bold w-100" id="submit_review">{% trans 'Submeter Avaliação' %}</button>
+            </div>
+        </div>
+        
+    </form>
+</div> 
+{% endblock %}

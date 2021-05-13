@@ -25,6 +25,8 @@ class Tenant(models.Model):
 class Landlord(models.Model):
     lord_user = models.OneToOneField(App_user, on_delete=models.CASCADE)
     lord_type = models.CharField(max_length=30, default='Particular')
+    lord_review = models.DecimalField(max_digits=20, decimal_places=19, default=5)
+    lord_review_num = models.IntegerField(default=0)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -49,7 +51,7 @@ class Image(models.Model):
 
 class Property(models.Model):
     landlord = models.ForeignKey(Landlord, on_delete=models.CASCADE)
-    address = models.CharField(max_length=100)
+    address = models.CharField(max_length=200)
     floor_area = models.IntegerField()              
     garden = models.BooleanField(default=False)
     garage = models.BooleanField(default=False)
@@ -171,7 +173,7 @@ class Agreement_Request(models.Model):
     landlord = models.ForeignKey(Landlord, models.SET_NULL, null=True)
     startsDate = models.DateField()
     endDate = models.DateField()
-    message = models.TextField(null=True, blank=True)
+    message = RichTextField(null=True, blank=True)
     messageLandlord =  models.ForeignKey(Rich_Text_Message, models.SET_NULL, null=True)
     accepted = models.BooleanField(null=True, blank=True)
     dateOfRequest = models.DateTimeField()
@@ -241,3 +243,13 @@ class Incidence(models.Model):
     causes = models.ManyToManyField(Cause)
     description = models.CharField(max_length=280)
     grouds_for_termination = models.BooleanField(null=True)
+    is_read = models.BooleanField(default=False)
+
+class PropertyReview(models.Model):
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)
+    num_reviews = models.IntegerField()
+    conservation = models.DecimalField(max_digits=20, decimal_places=19)
+    services = models.DecimalField(max_digits=20, decimal_places=19)
+    access = models.DecimalField(max_digits=20, decimal_places=19)
+    neighbours = models.DecimalField(max_digits=20, decimal_places=19)
+    tenants = models.DecimalField(max_digits=20, decimal_places=19)

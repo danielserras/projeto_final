@@ -36,12 +36,20 @@ a:hover {
     border-width: 2px !important;
 }
 
+.border-4 {
+    border-width: 4px !important;
+}
+
 .border-5 {
     border-width: 5px !important;
 }
 
 .rounded-10 {
     border-radius: 10px !important;
+}
+
+.text-30 {
+    font-size: 30px;
 }
 
 .text-24 {
