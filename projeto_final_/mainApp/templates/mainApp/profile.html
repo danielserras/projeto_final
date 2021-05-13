@@ -6,6 +6,7 @@
 {% endblock %}
 {% block scripts %}
     <script src='{% static "mainApp/js/profile.js" %}'></script>
+    <script src='{% static "mainApp/js/register.js" %}'></script>
 {% endblock %}
 {% block content %}
 
@@ -44,6 +45,41 @@
     })
     </script>
 
+    {% for message in messages %}
+    {%if message.extra_tags == "review"%}
+
+        <script>
+            $(document).ready(function(){
+                $('#modalreview').modal('show');
+                $("#fecharMsg").click(function() {
+                    $('#modalreview').modal('hide');
+                });
+            })
+        </script>
+        
+        <div class="modal fade" id="modalreview" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Sucesso' %}</h5>
+                <form method="POST" action="{% url 'deletePopUp' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </form>
+                </div>
+                <div class="modal-body">
+                {{ message }}
+                </div>
+                <div class="modal-footer">
+                    <button id="fecharMsg" class="btn btn-primary deletePOP">{% trans 'Fechar' %}</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    {% endif %}
+    {% endfor %}
 
     <!--POP-UP NEW PROPERTY-->
     <div class="modal fade" id="modalLoginAddProp" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
@@ -174,7 +210,14 @@
                 <div class="row justify-content-center">
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Data de Nascimento' %}:</p>
-                        <input type="date" class="inputType1 ml-4" value="{{ birth }}" name="birthDate">
+                        <input type="date" class="inputType1 ml-4" id="datefield" value="{{ birth }}" name="birthDate">
+                        <script type="text/javascript">
+                            var today = new Date();
+                            var dd = today.getDate();
+                            var mm = today.getMonth()+1; //January is 0 so we gotta add 1
+                            var yyyy = today.getFullYear();
+                            max18yo(dd,mm,yyyy,today);
+                        </script>
                     </div>
             {% if request.session.typeUser == "Landlord" %}
                     <div class="col-6 p-3 mt-3">

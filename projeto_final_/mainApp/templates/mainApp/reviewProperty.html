@@ -9,42 +9,6 @@
 {% endblock %}
 {% block content %}
 
-{% for message in messages %}
-    {%if message.extra_tags == "review"%}
-
-        <script>
-            $(document).ready(function(){
-                $('#modalreview').modal('show');
-                $("#fecharMsg").click(function() {
-                    $('#modalreview').modal('hide');
-                });
-            })
-        </script>
-        
-        <div class="modal fade" id="modalreview" tabindex="-1" role="dialog" aria-labelledby="modalLoginTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">{% trans 'Sucesso' %}</h5>
-                <form method="POST" action="{% url 'deletePopUp' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="close deletePOP" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </form>
-                </div>
-                <div class="modal-body">
-                {{ message }}
-                </div>
-                <div class="modal-footer">
-                    <button id="fecharMsg" class="btn btn-primary deletePOP">{% trans 'Fechar' %}</button>
-                </div>
-            </div>
-            </div>
-        </div>
-    {% endif %}
-{% endfor %}
-
 <div class="container my-5 p-3 shadow-lg">
     <div class="row text-center">
         <div class="col-sm-12">
@@ -69,11 +33,11 @@
                 </div>
                 <div class="col-9">
                     <div class="car-body">
-                        <h1 class="card-title text-white mb-1 text-30">Estudio em Lisboa</h1>
-                        <p class="card-text text-white mb-1">Rua Jorge Fonseca nº78, Lisboa, Portugal</p>
-                        <p class="card-text text-white mb-0">Senhorio: Rui Pereira</p>
-                        <p class="card-text text-white mb-0">Entrada: 20-01-2021</p>
-                        <p class="card-text text-white mb-0">Saída: 31-05-2021</p>
+                        <h1 class="card-title text-white mb-1 text-30">{{listing.title}}</h1>
+                        <p class="card-text text-white mb-1">{{property.address}}</p>
+                        <p class="card-text text-white mb-0">{% trans 'Senhorio' %}: {{landlord}}</p>
+                        <p class="card-text text-white mb-0">{% trans 'Entrada' %}: {{a.startsDate}}</p>
+                        <p class="card-text text-white mb-0">{% trans 'Saída' %}: {{a.endDate}}</p>
                     </div>
                 </div>
             </div>
@@ -225,6 +189,8 @@
             </div>
             <div class="col-sm-2 col-xs-12"></div>
         </div>
+        <input type="number" name="property_id" value="{{property.id}}" required hidden>
+        <input type="number" name="lord_id" value="{{landlord_id}}" required hidden>
         <input type="number" id="starsInput-1" name="starsInput-1" required hidden>
         <input type="number" id="starsInput-2" name="starsInput-2" required hidden>
         <input type="number" id="starsInput-3" name="starsInput-3" required hidden>
