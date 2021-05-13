@@ -6,6 +6,7 @@
 {% endblock %}
 {% block scripts %}
     <script src='{% static "mainApp/js/profile.js" %}'></script>
+    <script src='{% static "mainApp/js/register.js" %}'></script>
 {% endblock %}
 {% block content %}
 
@@ -174,7 +175,14 @@
                 <div class="row justify-content-center">
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Data de Nascimento' %}:</p>
-                        <input type="date" class="inputType1 ml-4" value="{{ birth }}" name="birthDate">
+                        <input type="date" class="inputType1 ml-4" id="datefield" value="{{ birth }}" name="birthDate">
+                        <script type="text/javascript">
+                            var today = new Date();
+                            var dd = today.getDate();
+                            var mm = today.getMonth()+1; //January is 0 so we gotta add 1
+                            var yyyy = today.getFullYear();
+                            max18yo(dd,mm,yyyy,today);
+                        </script>
                     </div>
             {% if request.session.typeUser == "Landlord" %}
                     <div class="col-6 p-3 mt-3">

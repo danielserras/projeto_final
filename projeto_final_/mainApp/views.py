@@ -2068,41 +2068,43 @@ def deletePopUp(request):
 
 def renewAgreement(request):
 
-    current_user = request.user
-    a_user = App_user.objects.get(user_id=current_user)
-    
-    for i in Agreement.objects.all():
-        if Tenant.objects.get(id = (i.tenant_id)).ten_user_id == a_user.id:
-            agreement = i
-    request.session['room_listing'] = agreement.associated_room_listing_id
-    request.session['property_listing'] = agreement.associated_property_listing_id
-    request.session["landlord"] = agreement.landlord_id
-    request.session["tenant"] = agreement.tenant_id
+    if request.method == 'POST':
+        agreement_id=request.POST['agreement_id']
+        current_user = request.user
 
-    #Detalhes do agreement atual
-    startDate = agreement.startsDate.strftime('%d-%m-%Y')
-    endDate = agreement.endDate.strftime('%d-%m-%Y')
-    startDate_v2 = agreement.endDate
-    modified_date = startDate_v2 + timedelta(days=1)
-    startDate_v3 = modified_date.strftime('%Y-%m-%d')
-    prop_test = agreement.associated_property_listing_id
-    room_test = agreement.associated_room_listing_id
-    landlordName_firststep = Landlord.objects.get(id = agreement.landlord_id).lord_user_id
-    landlordName = User.objects.get(id = landlordName_firststep).username 
-    
-    if prop_test != None:
-        propAddress_firststep = Property_listing.objects.get(id = prop_test) 
-        propAddress_secndstep = Property.objects.get(id = propAddress_firststep.associated_property_id)
-        propAddress = propAddress_secndstep.address
-        context = {"startDate":startDate,"endDate":endDate,"propAddress":propAddress,"landlordName":landlordName,"startDate_v2":startDate_v3}
-    else:
-        roomAddress_firststep = Room_listing.objects.get(id =room_test)
-        roomAddress_secndstep = Bedroom.objects.get(id = roomAddress_firststep.associated_room_id)
-        roomAddress_thirdstep = Property.objects.get(id = roomAddress_secndstep.associated_property_id)
-        roomAddress = roomAddress_thirdstep.address
-        #roomAddress = "1 quarto em " + roomAddress 
-        context = {"startDate":startDate,"endDate":endDate,"propAddress":roomAddress,"landlordName":landlordName,"startDate_v2":startDate_v3}
-    return render(request, "mainApp/renewAgreement.html", context)
+        a_user = App_user.objects.get(user_id=current_user)
+        
+        agreement = Agreement.objects.get(id=agreement_id)
+
+        request.session['room_listing'] = agreement.associated_room_listing_id
+        request.session['property_listing'] = agreement.associated_property_listing_id
+        request.session["landlord"] = agreement.landlord_id
+        request.session["tenant"] = agreement.tenant_id
+
+        #Detalhes do agreement atual
+        startDate = agreement.startsDate.strftime('%d-%m-%Y')
+        endDate = agreement.endDate.strftime('%d-%m-%Y')
+        startDate_v2 = agreement.endDate
+        modified_date = startDate_v2 + timedelta(days=1)
+        startDate_v3 = modified_date.strftime('%Y-%m-%d')
+        prop_test = agreement.associated_property_listing_id
+        room_test = agreement.associated_room_listing_id
+        landlordName_firststep = Landlord.objects.get(id = agreement.landlord_id).lord_user_id
+        landlordName = User.objects.get(id = landlordName_firststep).username 
+        
+        if prop_test != None:
+            propAddress_firststep = Property_listing.objects.get(id = prop_test) 
+            propAddress_secndstep = Property.objects.get(id = propAddress_firststep.associated_property_id)
+            propAddress = propAddress_secndstep.address
+            context = {"startDate":startDate,"endDate":endDate,"propAddress":propAddress,"landlordName":landlordName,"startDate_v2":startDate_v3}
+        else:
+            roomAddress_firststep = Room_listing.objects.get(id =room_test)
+            roomAddress_secndstep = Bedroom.objects.get(id = roomAddress_firststep.associated_room_id)
+            roomAddress_thirdstep = Property.objects.get(id = roomAddress_secndstep.associated_property_id)
+            roomAddress = roomAddress_thirdstep.address
+            #roomAddress = "1 quarto em " + roomAddress 
+            context = {"startDate":startDate,"endDate":endDate,"propAddress":roomAddress,"landlordName":landlordName,"startDate_v2":startDate_v3}
+        return render(request, "mainApp/renewAgreement.html", context)
 
 @login_required(login_url='login_view')
 def landlord(request):
@@ -2229,6 +2231,8 @@ def manage_agreements_view(request):
         #If there are late payments but already warned
         elif len(invoices_warning) == 0 and payment_warning == True:
             payment_warning = False      
+
+        print(payment_warning)
 
         #Checks if the agreement is ending in less then 30 days
         endDate = a.endDate
@@ -2407,7 +2411,7 @@ def manageAgreementsTenant(request):
 
         #Checks for none paid
         for i in invoices:
-            if i.paid == 0:
+            if i.paid == 0 and payment_warning != True:
                  payment_warning = False
 
             #Checks if there are any warnings
@@ -2429,11 +2433,10 @@ def manageAgreementsTenant(request):
             listingRent = Listing.objects.get(id = Property_listing.objects.get(id=a.associated_property_listing_id).main_listing_id).monthly_payment
             rent_to_be_returned = round((listingRent / 30) * diffDates,2)
 
-        listAgreementAndPaid.append([a, send_invoice, _(month.strftime("%B")), payment_warning, diffDates, rent_to_be_returned])
+        listAgreementAndPaid.append([a, send_invoice, _(month.strftime("%B")), payment_warning, diffDates, rent_to_be_returned, listing])
 
     context = {
         "listAgreementAndPaid":listAgreementAndPaid,
-        "listing": listing,
         'type': 'tenant',
     }
     return render(request, "mainApp/manageAgreements.html", context)
@@ -2468,49 +2471,73 @@ def tenant(request):
     return render(request, "mainApp/tenant.html", {})
 
 def deleteAgreement(request):
-    current_user = request.user
-    a_user = App_user.objects.get(user_id=current_user)
+    if request.method == 'POST':
+        agreement_id = request.POST['agreement_id']
 
-    try:
-        tenant = Tenant.objects.get(ten_user=a_user)
-    except:
-        return redirect('index')
+        current_user = request.user
+        a_user = App_user.objects.get(user_id=current_user)
 
-    for i in Agreement.objects.all():
-        if i.tenant_id == tenant.id:
-            #check if there are payments due
-            if len(Payment_Warning.objects.filter(agreement=i)) > 0 :
-                request.session['duePayments'] = True
-                return redirect('profile')
+        try:
+            tenant = Tenant.objects.get(ten_user=a_user)
+        except:
+            return redirect('index')
 
-            #check dates
-            agreement = i
-            endDate = agreement.endDate
-            presentTime = datetime.today().strftime('%d-%m-%Y')
-            now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
-            diffDates = (endDate - now_date).days
+        agreement = Agreement.objects.get(id=agreement_id)
 
-            if i.associated_property_listing_id == None:
-                listingRent = Listing.objects.get(id = Room_listing.objects.get(id=i.associated_room_listing_id).main_listing_id).monthly_payment
-                rent_to_be_returned = round((listingRent / 30) * diffDates,2)
-            else:
-                listingRent = Listing.objects.get(id = Property_listing.objects.get(id=i.associated_property_listing_id).main_listing_id).monthly_payment
-                rent_to_be_returned = round((listingRent / 30) * diffDates,2)
-            
-            Agreement.objects.filter(id=i.id).update(status=False)
-            dateNow = timezone.now()
-            refund_obj = Refund(
-            value = rent_to_be_returned,
-            tenant = tenant,
-            landlord = i.landlord,
-            agreement = i,
-            status = False, #hasnt been paid yet
-            checkReadLandlord = False, #hasnt been read yet
-            dateOfRequest = dateNow 
-            )
-            refund_obj.save()        
+        #check if there are payments due
+        if len(Payment_Warning.objects.filter(agreement=agreement)) > 0 :
+            request.session['duePayments'] = True
+            return redirect('profile')
 
-    return redirect('profile')
+        #check dates
+        endDate = agreement.endDate
+        presentTime = datetime.today().strftime('%d-%m-%Y')
+        now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
+        diffDates = (endDate - now_date).days
+
+        if agreement.associated_property_listing_id == None:
+            listingRent = Listing.objects.get(id = Room_listing.objects.get(id=agreement.associated_room_listing_id).main_listing_id).monthly_payment
+            rent_to_be_returned = round((listingRent / 30) * diffDates,2)
+        else:
+            listingRent = Listing.objects.get(id = Property_listing.objects.get(id=agreement.associated_property_listing_id).main_listing_id).monthly_payment
+            rent_to_be_returned = round((listingRent / 30) * diffDates,2)
+        
+        Agreement.objects.filter(id=agreement.id).update(status=False)
+        dateNow = timezone.now()
+        refund_obj = Refund(
+        value = rent_to_be_returned,
+        tenant = tenant,
+        landlord = agreement.landlord,
+        agreement = agreement,
+        status = False, #hasnt been paid yet
+        checkReadLandlord = False, #hasnt been read yet
+        dateOfRequest = dateNow 
+        )
+        refund_obj.save()       
+        
+        #Getting property, listing and lanlord info
+        if agreement.associated_property_listing == None:
+            room_listing = agreement.associated_room_listing
+            main_listing = room_listing.main_listing
+            room = room_listing.associated_room
+            property = room.associated_property
+        else:
+            prop_listing = agreement.associated_property_listing
+            main_listing = prop_listing.main_listing
+            property = prop_listing.associated_property
+
+        landlord = property.landlord.lord_user.user.username
+        landlord_id = property.landlord.id
+
+        context = {
+            "a": agreement,
+            "listing": main_listing,
+            "property": property,
+            "landlord": landlord,
+            "landlord_id": landlord_id
+        }
+        print('hello')
+        return render(request, "mainApp/reviewProperty.html", context)
 
 def requestPop(request):
     request.session['onlyOneRequest'] = False
@@ -2795,8 +2822,8 @@ def get_receipt_pdf(request):
 def review(request):
     if request.method == 'POST':
 
-        property_id = 1
-        lord_id = 1
+        property_id = request.POST['property_id']
+        lord_id = request.POST['lord_id']
 
         conservation=request.POST['starsInput-1']
         landlord=request.POST['starsInput-2']
@@ -2833,7 +2860,7 @@ def review(request):
         lord.lord_review_num = lord.lord_review_num + 1
         lord.save()
 
-    return render(request,'mainApp/reviewProperty.html', {})
+    return redirect('index')
 
 def profileTenant(request,ten_id):
     tenant_user = User.objects.get(id=ten_id)
