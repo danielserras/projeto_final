@@ -53,7 +53,7 @@
               {% endif %}
             {% endfor %}
             <!-- FOR LOOP PELOS INVOICES COM SIZELIST + FORLOOP.COUNTER-->
-            {% for land, timestamp, sentDate, paymentLimit, address, name, invoice_id,checkReadInv,land_id,main_listing in invoiceList %}
+            {% for land, timestamp, sentDate, paymentLimit, address, name, invoice_id,checkReadInv,land_id,main_listing,req_id in invoiceList %}
               {% if checkReadInv is True %}
                 <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
                   {% load static %}
@@ -140,7 +140,7 @@
         {% for a,b,c,d,e,f,g,h,i,j,k,l in fullList %}
           <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
             <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
-                <h4 class="text-white mt-3 pl-3"> {% trans 'Assunto' %} </h4>
+                <h4 class="text-white mt-3 pl-3"> {% trans 'Resposta ao seu pedido de alojamento' %} </h4>
             </div>
             <div class="row m-2">
               <p class= "text-info font-weight-bold">{% trans 'Remetente' %}:&nbsp </p>
@@ -204,7 +204,7 @@
             </div>
           </div>
         {% endfor %}
-        {% for land, month, sentDate, paymentLimit, address, name, invoice_id,checkReadInv,land_id,main_listing in invoiceList %}
+        {% for land, month, sentDate, paymentLimit, address, name, invoice_id,checkReadInv,land_id,main_listing,req_id in invoiceList %}
           <div id = "content_{{forloop.counter|add:sizeFull}}"class='contentNotification' style="display:none">
             <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                 <h4 class="text-white mt-3 pl-3"> {% trans 'Fatura' %} </h4>
@@ -242,8 +242,14 @@
                   {{ address }} {% trans 'e com um anúncio intitulado' %}
                   "{{ name }}" &nbsp</p>
             </div>
-            <div class="row m-2">
-              <div class="mx-auto">
+            <div class="row m-2 mt-3 justify-content-center">
+              <div class="col-6">
+                <form method="POST" action="{% url 'make_payment' req_id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-info font-weight-bold float-right">{% trans 'Realizar Pagamento' %}</button>
+                </form>
+              </div>
+              <div class="col-6">
                 <form action="{% url 'get_invoice_pdf'%}" method="POST" target="_blank">
                   {% csrf_token %}
                   <input name="invoice_id" type='hidden' value="{{invoice_id}}">

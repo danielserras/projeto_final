@@ -47,19 +47,19 @@
                     <tr>
                         {% load app_extras %}
                         <th scope="row">{{forloop.counter}}</th>
-                        <td class="text-center font-weight-bold">#{{r.id}}</td>
+                        <td class="text-center font-weight-bold">#{{i.id}}</td>
                         <td class="text-center">{{r.month.month|month_name}}</td>
                         <td class="text-center">
                             <form action="{% url 'get_invoice_pdf' %}" method="POST" target="_blank">
                                 {% csrf_token %}
-                                <input name="invoice_id" type='hidden' value="{{r.id}}">
+                                <input name="invoice_id" type='hidden' value="{{i.id}}">
                                 <button type="submit" class="btn bg-transparent border-secondary border-3 text-white font-weight-bold"><i class="fa fa-eye" style="color: #2a9d8f; font-size:22px" aria-hidden="true"></i></button>
                             </form>
                         </td>
                         <td class="text-center">
                             <form action="{% url 'get_receipt_pdf' %}" method="POST" target="_blank">
                                 {% csrf_token %}
-                                <input name="receipt_id" type='hidden' value="{{r.id}}">
+                                <input name="receipt_id" type='hidden' value="{{i.id}}">
                                 <button type="submit" class="btn bg-transparent border-secondary border-3 text-white font-weight-bold"><i class="fa fa-eye" style="color: #2a9d8f; font-size:22px" aria-hidden="true"></i></button>
                             </form>
                         </td>

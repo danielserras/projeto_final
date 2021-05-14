@@ -1083,7 +1083,7 @@ msgstr "Payment is late"
 
 #: mainApp/templates/mainApp/manageAgreements.html:99
 msgid "Não existem atrasos"
-msgstr "Payment is up to date"
+msgstr "Payment is not late"
 
 #: mainApp/templates/mainApp/manageAgreements.html:101
 #: mainApp/templates/mainApp/manageAgreements.html:126
