@@ -193,7 +193,10 @@ img.blur {
 .text-green {
     color: #44be54;
 }
-
+.badge {
+    border: 1px solid black;
+    border-radius: 50%;
+}
 
 
 

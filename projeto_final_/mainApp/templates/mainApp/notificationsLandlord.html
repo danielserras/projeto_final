@@ -78,14 +78,14 @@
                 </form>
                 {% endif %}
               {% endfor %}
-              {% for id_ref,nameTen,value,actualFinishDate,property,startDate,plannedFinishDate,check,status,id_ten in fullListRef %}  
+              {% for id_ref,nameTen,value,actualFinishDate,property,startDate,plannedFinishDate,check,status,id_ten,dateOfReq in fullListRef %}  
                   {% if check is True %}
                       <a href="#" id="notifications_{{forloop.counter|add:sizeListRef}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
                         {% load static %}
                         <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
                           <div class="media-body ml-4">
                             <div class="d-flex align-items-center justify-content-between mb-1">
-                              <h6 class="mb-0 font-weight-bold">{{ nameTen }}</h6><small class="small font-weight-bold">{{ actualFinishDate }}</small>
+                              <h6 class="mb-0 font-weight-bold">{{ nameTen }}</h6><small class="small font-weight-bold">{{ dateOfReq }}</small>
                             </div>
                             <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Reembolso' %}.</p>
                           </div>
@@ -99,7 +99,7 @@
                       <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
                         <div class="media-body ml-4">
                           <div class="d-flex align-items-center justify-content-between mb-1">
-                            <h6 class="mb-0 font-weight-bold">{{ nameTen }}</h6><small class="small font-weight-bold">{{ actualFinishDate }}</small>
+                            <h6 class="mb-0 font-weight-bold">{{ nameTen }}</h6><small class="small font-weight-bold">{{ dateOfReq }}</small>
                           </div>
                           <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Reembolso' %}.</p>
                         </div>
@@ -186,7 +186,7 @@
               {% endif %}
             </div>
           {% endfor %}
-          {% for id_ref,nameTen,value,actualFinishDate,property,startDate,plannedFinishDate,check,status,id_ten in fullListRef %}
+          {% for id_ref,nameTen,value,actualFinishDate,property,startDate,plannedFinishDate,check,status,id_ten,dateOfReq in fullListRef %}
             <div id = "content_{{forloop.counter|add:sizeListRef}}" class='contentNotification' style="display:none">
               <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                   <h4 class="text-white mt-3 pl-3"> {% trans 'Reembolso' %} </h4>

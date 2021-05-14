@@ -727,14 +727,15 @@ def deny_request(request, request_id, formRich):
         value = rb.value
         startDate = (rb.agreement).startsDate
         plannedFinishDate = (rb.agreement).endDate
-        actualFinishDate = rb.dateOfRequest.date()
+        dateOfReq = rb.dateOfRequest
+        actualFinishDate =rb.dateOfRequest.date()
         check = rb.checkReadLandlord
         status = rb.status
         if (rb.agreement).associated_property_listing != None:
             propertyAddressR = (rb.agreement).associated_property_listing.associated_property.address
         else:
             propertyAddressR = (rb.agreement).associated_room_listing.associated_room.associated_property.address
-        fullListRef.append([id_ref,nameOfTen,value,actualFinishDate,propertyAddressR,startDate,plannedFinishDate,check,status,id_ten_ref])
+        fullListRef.append([id_ref,nameOfTen,value,actualFinishDate,propertyAddressR,startDate,plannedFinishDate,check,status,id_ten_ref,dateOfReq])
     reverseListRef = list(reversed(fullListRef))
     sizeListRef = len(fullListRef)
 
@@ -1587,14 +1588,15 @@ def notificationsLandlord(request):
         value = rb.value
         startDate = (rb.agreement).startsDate
         plannedFinishDate = (rb.agreement).endDate
-        actualFinishDate = rb.dateOfRequest.date()
+        dateOfReq = rb.dateOfRequest
+        actualFinishDate =rb.dateOfRequest.date()
         check = rb.checkReadLandlord
         status = rb.status
         if (rb.agreement).associated_property_listing != None:
             propertyAddressR = (rb.agreement).associated_property_listing.associated_property.address
         else:
             propertyAddressR = (rb.agreement).associated_room_listing.associated_room.associated_property.address
-        fullListRef.append([id_ref,nameOfTen,value,actualFinishDate,propertyAddressR,startDate,plannedFinishDate,check,status,id_ten_ref])
+        fullListRef.append([id_ref,nameOfTen,value,actualFinishDate,propertyAddressR,startDate,plannedFinishDate,check,status,id_ten_ref,dateOfReq])
     reverseListRef = list(reversed(fullListRef))
     sizeListRef = len(fullListRef)
 
