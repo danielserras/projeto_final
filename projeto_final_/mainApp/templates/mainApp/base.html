@@ -55,6 +55,17 @@
                                 <a class="nav-link" href="/mainApp/notificationsTenant">{% trans 'Notificações' %}</a>
                             </li>  
                         {% endif %}
+
+                        <li class="nav-item active my-auto">
+                            <a class="nav-link" href="{% url 'chatsList' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M4 21v-13a3 3 0 0 1 3 -3h10a3 3 0 0 1 3 3v6a3 3 0 0 1 -3 3h-9l-4 4" />
+                                    <line x1="8" y1="9" x2="16" y2="9" />
+                                    <line x1="8" y1="13" x2="14" y2="13" />
+                                </svg>
+                            </a>
+                        </li>
                                               
                         <li class="nav-item active my-auto">
                             <a class="nav-link" href="/mainApp/profile">{{user.username}}</a>
@@ -84,7 +95,8 @@
         </div>
     </nav>
     <main class = "" id="main">
-        {% block content %} {% endblock %}
+        {% block content %}
+        {% endblock %}
         <a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" data-toggle="tooltip" data-placement="left"><i class="fas fa-angle-double-up"></i></a>
     </main>
     <footer class="container-fluid bg-info text-light p-4" id="footer">
