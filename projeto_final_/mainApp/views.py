@@ -727,7 +727,7 @@ def deny_request(request, request_id, formRich):
         value = rb.value
         startDate = (rb.agreement).startsDate
         plannedFinishDate = (rb.agreement).endDate
-        actualFinishDate = rb.dateOfRequest
+        actualFinishDate = rb.dateOfRequest.date()
         check = rb.checkReadLandlord
         status = rb.status
         if (rb.agreement).associated_property_listing != None:
@@ -1501,7 +1501,7 @@ def notificationsTenant(request):
                 listing_name = main_listing.title
                 req_id = _id_req
 
-                invoiceList.append([nameLand, invoiceMonth, invoiceDate, paymentLimit, address, listing_name, i.id,checkReadTenInv,land_id,main_listing.id])
+                invoiceList.append([nameLand, invoiceMonth, invoiceDate, paymentLimit, address, listing_name, i.id,checkReadTenInv,land_id,main_listing.id,req_id])
     
     paymentWarningList = []
     for w in Payment_Warning.objects.all():
@@ -1587,7 +1587,7 @@ def notificationsLandlord(request):
         value = rb.value
         startDate = (rb.agreement).startsDate
         plannedFinishDate = (rb.agreement).endDate
-        actualFinishDate = rb.dateOfRequest
+        actualFinishDate = rb.dateOfRequest.date()
         check = rb.checkReadLandlord
         status = rb.status
         if (rb.agreement).associated_property_listing != None:
