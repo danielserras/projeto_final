@@ -795,6 +795,7 @@ def create_agreement(user_id, ag_request_id):
         assoc_listing.main_listing.is_active = False
         assoc_listing.save()
 
+    last_invoice.checkReadTenant = True
     last_invoice.agreement = new_ag
     last_invoice.save()
 
@@ -1895,9 +1896,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://87f47ae192f3.ngrok.io/paymentStatus/",
-            "return_url": "http://87f47ae192f3.ngrok.io/mainApp/search",
-            "cancel_return": "http://87f47ae192f3.ngrok.io/mainApp/profile",
+            "notify_url": "http://6b02de9a33da.ngrok.io/paymentStatus/",
+            "return_url": "http://6b02de9a33da.ngrok.io/mainApp/search",
+            "cancel_return": "http://6b02de9a33da.ngrok.io/mainApp/profile",
 
             }
 

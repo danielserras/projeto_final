@@ -41,14 +41,17 @@ def numUnreadNotifations(request):
             for a in ag_req:
                 if a.checkReadTenant !=True:
                     numUnreadNotifications += 1
+                    print('ag', numUnreadNotifications)
             for i in invoicesList:
                 for j in i:
                     if j.checkReadTenant !=True:
                         numUnreadNotifications += 1
+                        print('iv', j.id, numUnreadNotifications)
             for p in paywList:
                 for j in p:
                     if j.checkReadTenant !=True:
                         numUnreadNotifications += 1
+                        print('warn', numUnreadNotifications)
         
         return {"numUnreadNotifications":numUnreadNotifications}
     else:

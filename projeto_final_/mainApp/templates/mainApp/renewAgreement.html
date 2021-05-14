@@ -1,6 +1,7 @@
 {% extends 'mainApp/base.html' %}
 {% load i18n %}
 {% load static %}
+{% load app_extras %}
 <!--{% block styles %}
 {% endblock %}
 {% block scripts %}
@@ -26,7 +27,7 @@
             <div class="form-group row mt-4 mb-2">
                 <label for="example-date-input" class="col-sm-3 col-form-label">{% trans 'Data de Fim' %}:</label>
                 <div class="col-sm-5">
-                    <input class="form-control" type="date" name="endDate" value="">
+                    <input class="form-control" type="date" name="endDate" value="" min="{% add_one_day startDate_v2 %}">
                 </div>
             </div>
             <div class="row">

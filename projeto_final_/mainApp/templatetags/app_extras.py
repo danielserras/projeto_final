@@ -3,6 +3,7 @@ from django import template
 from django.utils.html import format_html
 from django.template import Variable, VariableDoesNotExist
 from django.utils.translation import gettext as _
+from datetime import datetime, timedelta
 
 register = template.Library()
 
@@ -40,6 +41,13 @@ def numberIten(color, feature, feature_name):
                             </div>\
                         </div>\
                     </div>', color, feature, feature_name)
+
+@register.simple_tag
+def add_one_day(dateIn):
+    date = datetime.strptime(dateIn, "%Y-%m-%d")
+    modified_date = date + timedelta(days=1)
+    return datetime.strftime(modified_date, "%Y-%m-%d")
+    
 
 def check(feature_name):
     return format_html('<div class="col-sm-3 room-detail-item">\
