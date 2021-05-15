@@ -68,6 +68,7 @@ urlpatterns = [
     path('propertyListingNotif/<int:id_req>', views.propertyListingNotif, name='propertyListingNotif'),
     path('propertyListingRef/<int:id_ref>', views.propertyListingRef, name='propertyListingRef'),
     path('propertyListingInv/<int:id_list>', views.propertyListingInv, name='propertyListingInv'),
-
+    path('user_manual', views.user_manual_view, name='user_manual'),
+    path('1st_tenant', views.tenant_firstpage, name='1st_tenant'),
 ]
 

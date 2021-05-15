@@ -2992,3 +2992,9 @@ def callReview(request):
     }
 
     return render(request, "mainApp/reviewProperty.html", context)
+def user_manual_view(request):
+    return render(request, "mainApp/user_manual.html", {})
+
+def tenant_firstpage(request):
+    return render(request, "mainApp/1st_tenant.html", {})
+

@@ -1,0 +1,35 @@
+{% extends 'mainApp/base.html' %}
+{% load i18n %}
+{% load static %}
+{% load app_extras %}
+{% block scripts%}
+<script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row d-flex justify-content-center mt-4">
+        <div class="col-sm-3 bg-secondary mr-5 border rounded border-secondary">
+            <h4 class="text-white font-weight-bold text-center mt-3 mb-3 bg-secondary">Histórico de Alugueres</h4>
+            <ul class="list-group bg-secondary">
+                <li class="list-group-item bg-secondary border border-white text-white"><a href="#" class="text-white">Alugueres em curso</a></li>
+                <li class="list-group-item bg-secondary border border-white text-white"><a href="#" class="text-white">Alugueres terminados </a></li>
+                <li class="list-group-item bg-secondary border border-white text-white"><a href="#" class="text-white">Propriedades Guardadas</a></li>
+                <li class="list-group-item bg-secondary border border-white text-white"><a href="#" class="text-white" >Histórico de pagamento e faturas</a></li>
+                <li class="list-group-item bg-secondary border border-white text-white mb-4"><a href="#" class="text-white">Histórico de incidências registadas</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-6 border border-5 border-secondary rounded ml-5">
+            <h4 class="text-center text-secondary font-weight-bold mt-4">Aluguer em Curso</h4>
+            <h5 class="text-info">Senhorio:</h5>
+            <h5 class="text-info">Data de início do contrato:</h5>
+            <h5 class="text-info">Data de término do contrato:</h5>
+            <h5 class="text-info">Preço a pagar:</h5>
+            <button class= "btn btn-secondary d-flex mx-auto mt-5">Imprimir faturas emitidas</button>
+        </div>
+        
+    </div>
+</div>
+
+
+{% endblock %}
