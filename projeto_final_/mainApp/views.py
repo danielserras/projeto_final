@@ -2951,3 +2951,10 @@ def  propertyListingRef(request,id_ref):
 def  propertyListingInv(request,id_list):
 
     return redirect(reverse('listing', kwargs={"listing_id": id_list}))
+
+def user_manual_view(request):
+    return render(request, "mainApp/user_manual.html", {})
+
+def tenant_firstpage(request):
+    return render(request, "mainApp/1st_tenant.html", {})
+
