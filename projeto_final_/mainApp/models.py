@@ -161,6 +161,7 @@ class Agreement(models.Model):
     endDate = models.DateField()
     last_invoice_date = models.DateField()
     status = models.BooleanField()
+    reviewed = models.BooleanField()
 
 
 class Rich_Text_Message(models.Model):

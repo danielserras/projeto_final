@@ -773,6 +773,7 @@ def create_agreement(user_id, ag_request_id):
             endDate= ag_request.endDate,
             last_invoice_date = last_invoice.timestamp,
             status = True,
+            reviewd = False,
         )
         new_ag.save()
         assoc_listing.main_listing.is_active = False
@@ -1635,7 +1636,6 @@ def search(request):
         app_user = App_user.objects.get(user=request.user)
         try:
             tenant = Tenant.objects.get(ten_user_id=app_user.id)
-            print(tenant.university)
             if tenant.university != '':
                 location = tenant.university + ", Portugal"
                 form = SearchForm(initial = {"location":location, "radius":10, "minPrice":tenant.min_search, "maxPrice":tenant.max_search})
@@ -2233,6 +2233,7 @@ def manage_agreements_view(request):
 
     listAgreementAndPaid = []
     for a in agreement:
+        has_ended = agreement_has_ended(a)
         send_invoice = True
         month = a.last_invoice_date.replace(day=1) + relativedelta(months=1)
         payment_warning = 'paid'
@@ -2269,14 +2270,13 @@ def manage_agreements_view(request):
         elif len(invoices_warning) == 0 and payment_warning == True:
             payment_warning = False      
 
-        print(payment_warning)
-
         #Checks if the agreement is ending in less then 30 days
         endDate = a.endDate
         presentTime = datetime.today().strftime('%d-%m-%Y')
         now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
         diffDates = (endDate - now_date).days
-        days_remaining = (30 - now_date).days
+        end_month = date(now_date.year, now_date.month, calendar.monthrange(now_date.year, now_date.month)[1])
+        days_remaining = (end_month- now_date).days
 
         #Rent to be returned
         if a.associated_property_listing_id == None:
@@ -2286,7 +2286,7 @@ def manage_agreements_view(request):
             listingRent = Listing.objects.get(id = Property_listing.objects.get(id=a.associated_property_listing_id).main_listing_id).monthly_payment
             rent_to_be_returned = round((listingRent / 30) * days_remaining,2)
 
-        listAgreementAndPaid.append([a, send_invoice, _(month.strftime("%B")), payment_warning, diffDates, rent_to_be_returned])
+        listAgreementAndPaid.append([a, send_invoice, _(month.strftime("%B")), payment_warning, diffDates, rent_to_be_returned, listing, has_ended])
 
     context = {
         "listAgreementAndPaid":listAgreementAndPaid,
@@ -2434,6 +2434,7 @@ def manageAgreementsTenant(request):
 
     listAgreementAndPaid = []
     for a in agreement:
+        has_ended = agreement_has_ended(a)
         send_invoice = True
         month = a.last_invoice_date.replace(day=1) + relativedelta(months=1)
         payment_warning = None
@@ -2473,7 +2474,7 @@ def manageAgreementsTenant(request):
             listingRent = Listing.objects.get(id = Property_listing.objects.get(id=a.associated_property_listing_id).main_listing_id).monthly_payment
             rent_to_be_returned = round((listingRent / 30) * days_remaining,2)
 
-        listAgreementAndPaid.append([a, send_invoice, _(month.strftime("%B")), payment_warning, diffDates, rent_to_be_returned, listing])
+        listAgreementAndPaid.append([a, send_invoice, _(month.strftime("%B")), payment_warning, diffDates, rent_to_be_returned, listing, has_ended])
 
     context = {
         "listAgreementAndPaid":listAgreementAndPaid,
@@ -2534,7 +2535,8 @@ def deleteAgreement(request):
         presentTime = datetime.today().strftime('%d-%m-%Y')
         now_date = date(int(presentTime.split("-")[2]), int(presentTime.split("-")[1]), int(presentTime.split("-")[0]))
         diffDates = (endDate - now_date).days
-        days_remaining = (30 - now_date).days
+        end_month = date(now_date.year, now_date.month, calendar.monthrange(now_date.year, now_date.month)[1])
+        days_remaining = (end_month- now_date).days
 
         if agreement.associated_property_listing_id == None:
             listingRent = Listing.objects.get(id = Room_listing.objects.get(id=agreement.associated_room_listing_id).main_listing_id).monthly_payment
@@ -2543,17 +2545,17 @@ def deleteAgreement(request):
             listingRent = Listing.objects.get(id = Property_listing.objects.get(id=agreement.associated_property_listing_id).main_listing_id).monthly_payment
             rent_to_be_returned = round((listingRent / 30) * days_remaining,2)
         
-        Agreement.objects.filter(id=agreement.id).update(status=False)
+        Agreement.objects.filter(id=agreement.id).update(status=False, reviewed=True)
         dateNow = timezone.now()
         refund_obj = Refund(
-        value = rent_to_be_returned,
-        tenant = tenant,
-        landlord = agreement.landlord,
-        agreement = agreement,
-        status = False, #hasnt been paid yet
-        checkReadLandlord = False, #hasnt been read yet
-        dateOfRequest = dateNow 
-        )
+            value = rent_to_be_returned,
+            tenant = tenant,
+            landlord = agreement.landlord,
+            agreement = agreement,
+            status = False, #hasnt been paid yet
+            checkReadLandlord = False, #hasnt been read yet
+            dateOfRequest = dateNow 
+            )
         refund_obj.save()       
         
         #Getting property, listing and lanlord info
@@ -2837,7 +2839,6 @@ def get_receipt_pdf(request):
 
         if receipt_id != None:
             total = 0
-            print(receipt_id)
             receipt = Receipt.objects.get(id=receipt_id)
             invoice = Invoice.objects.get(id=receipt.invoice_id)
             if (invoice.agreement_id == None):
@@ -2874,6 +2875,10 @@ def review(request):
         access=request.POST['starsInput-4']
         neighbours=request.POST['starsInput-5']
         tenants=request.POST['starsInput-6']
+
+        for i in conservation, landlord, services, access, neighbours, tenants:
+            if not (int(i) >= 0 and int(i) <=5):
+                return render(request,'mainApp/profile.html', {})
         
         try:
             review = PropertyReview.objects.get(property_id = property_id)
@@ -2952,6 +2957,41 @@ def  propertyListingInv(request,id_list):
 
     return redirect(reverse('listing', kwargs={"listing_id": id_list}))
 
+def agreement_has_ended(agreement):
+    ended = False
+    if datetime.today().strftime('%Y-%m-%d') > agreement.endDate.strftime('%Y-%m-%d'):
+        agreement.status=False
+        ended = True
+        return ended
+    return ended
+
+def callReview(request):
+    agreement_id = request.POST['agreement_id']
+    Agreement.objects.filter(id=agreement_id).update(reviewed=True)
+    agreement = Agreement.objects.get(id=agreement_id)
+    #Getting property, listing and lanlord info
+    if agreement.associated_property_listing == None:
+        room_listing = agreement.associated_room_listing
+        main_listing = room_listing.main_listing
+        room = room_listing.associated_room
+        property = room.associated_property
+    else:
+        prop_listing = agreement.associated_property_listing
+        main_listing = prop_listing.main_listing
+        property = prop_listing.associated_property
+
+    landlord = property.landlord.lord_user.user.username
+    landlord_id = property.landlord.id
+
+    context = {
+        "a": agreement,
+        "listing": main_listing,
+        "property": property,
+        "landlord": landlord,
+        "landlord_id": landlord_id
+    }
+
+    return render(request, "mainApp/reviewProperty.html", context)
 def user_manual_view(request):
     return render(request, "mainApp/user_manual.html", {})
 
