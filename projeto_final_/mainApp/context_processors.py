@@ -56,4 +56,21 @@ def numUnreadNotifations(request):
         return {"numUnreadNotifications":numUnreadNotifications}
     else:
         return {"numUnreadNotifications":None}
-    
+
+def numUnreadMessages(request):
+
+    if request.user.is_authenticated:
+        unreadMessages = 0
+
+        chats1 = list(Chat.objects.filter(user_1=request.user))
+        chats2 = list(Chat.objects.filter(user_2=request.user))
+
+        chatsList = chats1+chats2
+
+        for chat in chatsList:
+            unreadMessages += Message.objects.exclude(sender=request.user).filter(chat=chat, is_read=False).count()
+
+        return {"numUnreadMessages": unreadMessages}
+
+    else:
+        return {"numUnreadMessages": None}

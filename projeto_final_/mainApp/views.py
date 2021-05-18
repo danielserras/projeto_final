@@ -2694,7 +2694,7 @@ def chat_list_view(request):
             chats_dict[c] = c.user_2.first_name + " " + c.user_2.last_name
 
         for c in chats_2:
-            chats_dict[c] = c.user_1.first_name + " " + c.user_1.last_name
+            chats_dict[c] =  c.user_1.first_name + " " + c.user_1.last_name
 
         chats_sorted = sorted(chats_dict.keys(), key=lambda x: x.last_message, reverse=True)
         

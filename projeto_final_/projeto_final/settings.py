@@ -101,7 +101,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 #custom processors
-                'mainApp.context_processors.numUnreadNotifations'
+                'mainApp.context_processors.numUnreadNotifations',
+                'mainApp.context_processors.numUnreadMessages'
             ],
         },
     },
