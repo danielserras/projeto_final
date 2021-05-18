@@ -85,8 +85,8 @@
         </thead>
         <tbody>
             {% load app_extras %}
-            {% for a, send_invoice, month, payment_warning, diffDates, rent_to_be_returned, listing in listAgreementAndPaid%}
-                    <tr class="{% if not a.status %} child-td-italic opacity-2 {% endif %}">
+            {% for a, send_invoice, month, payment_warning, diffDates, rent_to_be_returned, listing, has_ended in listAgreementAndPaid%}
+                    <tr class="{% if not a.status %} child-td-italic child-opacity-2 {% endif %}">
                         <th scope="row">{{forloop.counter}}</th>
                         <td class="text-center pt-3 {% if a.status != 1 %} font-weight-bold {% endif %}">
                             {% if a.status %}
@@ -163,7 +163,7 @@
                                     <button type="submit" class="btn bg-transparent border-secondary border-3 text-white font-weight-bold"><i class="fa fa-eye" style="color: #2a9d8f; font-size:22px" aria-hidden="true"></i></button>
                                 </form>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center" style="opacity:1!important;">
                                 {% if a.status %}
                                     {% if diffDates <= 30 and diffDates >= 1 %}
                                         <div class="dropdown">
@@ -184,7 +184,13 @@
                                         <button type="button" class="btn btn-secondary w-100 cancelAgreement" onclick="popUpEndAgree('{{rent_to_be_returned}}','{{a.id}}','{{payment_warning}}')">{% trans 'Terminar Acordo' %}</button>
                                     {% endif %}
                                 {% endif %}
-                                
+                                {% if has_ended and not a.reviewed %}
+                                    <form action="{% url 'callReview' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input name="agreement_id" type='hidden' value="{{a.id}}">
+                                        <button type="submit" class="btn btn-secondary w-100">{% trans 'Avaliar' %}</button>
+                                    </form>
+                                {% endif %}
                             </td>
                         {% endif %}
                     </tr>

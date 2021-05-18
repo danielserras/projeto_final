@@ -62,10 +62,13 @@ urlpatterns = [
     path('receipt', views.get_receipt_pdf, name='get_receipt_pdf'),
     path('acceptDenyRequest/<int:request_id>', views.accept_deny_request, name='accept_deny_request'),
     path('review', views.review, name='review'),
+    path('callReview', views.callReview, name='callReview'),
     path('profileTenant/<int:ten_id>', views.profileTenant, name='profileTenant'),
     path('profileLandlord/<int:lan_id>', views.profileLandlord, name='profileLandlord'),
     path('propertyListingNotif/<int:id_req>', views.propertyListingNotif, name='propertyListingNotif'),
     path('propertyListingRef/<int:id_ref>', views.propertyListingRef, name='propertyListingRef'),
     path('propertyListingInv/<int:id_list>', views.propertyListingInv, name='propertyListingInv'),
+    path('user_manual', views.user_manual_view, name='user_manual'),
+    path('1st_tenant', views.tenant_firstpage, name='1st_tenant'),
 ]
 

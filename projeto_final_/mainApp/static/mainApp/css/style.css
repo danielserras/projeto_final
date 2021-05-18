@@ -84,6 +84,10 @@ a:hover {
     opacity:1!important;
 }
 
+.child-opacity-2 td{
+    opacity:0.4!important;  
+}
+
 .child-td-italic td{
     font-style: italic!important;
 }
