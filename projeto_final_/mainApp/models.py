@@ -9,12 +9,17 @@ def get_upload_path(instance, filename):
     path = instance.album.ListingAlbum.id
     return f'mainApp/static/mainApp/listings/{path}/{filename}'
 
+def get_profile_image_path(instance, filename):
+    path = instance.id
+    return f'mainApp/static/mainApp/profile/{path}/{filename}'
+
 
 class App_user(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phoneNumber = models.IntegerField(null=True, blank=True)
     birthDate = models.DateField(null=True, blank=True)
     address = models.CharField(max_length=100)
+    image = models.ImageField(upload_to=get_profile_image_path)
 
 class Tenant(models.Model):
     ten_user = models.OneToOneField(App_user, on_delete=models.CASCADE)

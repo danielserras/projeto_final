@@ -3,6 +3,7 @@
 {% load static %}
 {% block styles %}
     <link rel="stylesheet" href='{% static "mainApp/css/login.css" %}'>
+    <link rel="stylesheet" href='{% static "mainApp/css/profile.css" %}'>
 {% endblock %}
 {% block scripts %}
     <script src='{% static "mainApp/js/profile.js" %}'></script>
@@ -172,11 +173,20 @@
             </div>
 
             <!--User Details-->
-            <form class="col-sm-9" action="{% url 'profile' %}" method="POST">
+            <form class="col-sm-9" action="{% url 'profile' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="row justify-content-center">
-                    <div class="col-2 pt-3">
-                        <img src='{% static "mainApp/images/user.svg" %}' alt="" class="img-fluid">
+                <div class="row justify-content-center mb-3">
+                    <div class="col-sm-4 pt-3">
+                        {{form.image}}
+                        <img src='{% static image %}' alt="Profile Image" class="img-fluid">
+                        <div onclick="browseFile(this)">
+                            <svg id="changeProfilePic" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="46" height="46" viewBox="0 0 24 24" stroke-width="1.5" stroke="#E76F51" fill="#fff" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <circle cx="12" cy="12" r="9" />
+                                <line x1="9" y1="12" x2="15" y2="12" />
+                                <line x1="12" y1="9" x2="12" y2="15" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
                 <div class="row justify-content-center pt-2 pb-4">
@@ -223,7 +233,7 @@
                     <div class="col-6 p-3 mt-3">
                         <div class="row mt-4">
                             <div class="col-6 mx-auto">
-                                <button type="submit" class="btn btn-info font-weight-bold">{% trans 'Guardar Alterações' %}</button>
+                                <button type="submit" class="btn btn-info font-weight-bold" id="btnSaveProfileChanges">{% trans 'Guardar Alterações' %}</button>
                             </div>
                         </div>
                     </div>
@@ -245,7 +255,7 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-3 p-3">
-                        <button type="submit" class="btn btn-info font-weight-bold">{% trans 'Guardar Alterações' %}</button>
+                        <button type="submit" class="btn btn-info font-weight-bold" id="btnSaveProfileChanges">{% trans 'Guardar Alterações' %}</button>
                     </div>
                 </div>
             {% endif %}

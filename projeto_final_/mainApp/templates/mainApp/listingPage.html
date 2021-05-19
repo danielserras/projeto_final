@@ -142,7 +142,7 @@
             </div>
             <div class="row justify-content-center mt-4">
                 <p class="text-white my-auto mr-2">{{landlord_user.first_name}} {{landlord_user.last_name}}</p>
-                <img src='{% static "mainApp/images/user.svg" %}' width='13%'>
+                <img src='{% static landlord_image %}' width='13%'>
             </div>
             <div class="row justify-content-center mt-2">
                 <form action="{% url 'profileLandlord' land_id %}" method="POST">

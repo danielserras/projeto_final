@@ -27,7 +27,9 @@ from datetime import datetime, timedelta, date
 from django.views.generic import View
 from dateutil.relativedelta import relativedelta
 from django.urls import reverse
-import PIL
+from PIL import ImageDraw
+from PIL import Image as PILImage
+import numpy
 import time
 import json
 import math
@@ -93,6 +95,7 @@ def register_view(request):
             app_user_object.phoneNumber = pform.cleaned_data['phoneNumber']
             app_user_object.birthDate = pform.cleaned_data['birthDate']
             app_user_object.address = pform.cleaned_data['address']
+            app_user_object.image = "mainApp/static/mainApp/images/user.png"
             app_user_object.save()
 
             if request.POST['tipo'] == 'Inquilino':
@@ -513,7 +516,7 @@ def introduce_property_view (request):
                                             image = i,
                                             album = prop_album)
                                         img.save()
-                                        img_pli = PIL.Image.open(img.image)  
+                                        img_pli = PILImage.open(img.image)  
                                         img_r = img_pli.resize((600,337))
                                         img_r.save(str(img.image))
 
@@ -948,10 +951,11 @@ def create_request(request):
 def profile(request):
     current_user = request.user
     a_user = App_user.objects.get(user_id=current_user)
+    context = {}
 
     if request.method == 'POST':
-        
-        user_form = UpdateUserForm(data=request.POST)
+    
+        user_form = UpdateUserForm(request.POST, request.FILES)
         
         if user_form.is_valid():
             current_user.first_name = user_form.cleaned_data.get('first_name')
@@ -961,6 +965,34 @@ def profile(request):
 
             a_user.phoneNumber = user_form.cleaned_data.get('phoneNumber')
             a_user.birthDate = user_form.cleaned_data.get('birthDate')
+
+            a_user.image = user_form.cleaned_data.get('image')
+
+            a_user.save()
+
+            # Open the input image as numpy array, convert to RGB
+            img=PILImage.open(a_user.image).convert("RGB")
+            img = img.resize((200,200))
+
+            npImage=numpy.array(img)
+            h,w=img.size
+
+            # Create same size alpha layer with circle
+            alpha = PILImage.new('L', img.size,0)
+            draw = ImageDraw.Draw(alpha)
+            draw.pieslice([0,0,h,w],0,360,fill=255)
+
+            # Convert alpha Image to numpy array
+            npAlpha=numpy.array(alpha)
+
+            # Add alpha layer to RGB
+            npImage=numpy.dstack((npImage,npAlpha))
+
+            # Save with alpha
+            PILImage.fromarray(npImage).save(str(a_user.image).split('.')[0]+"_circle.png")
+
+            a_user.image = str(a_user.image).split('.')[0]+"_circle.png"
+
             a_user.save()
 
             if request.session['typeUser'] == "Tenant":
@@ -972,7 +1004,7 @@ def profile(request):
                 ten_user.max_search = user_form.cleaned_data.get('max_search')
                 ten_user.save()
         
-        return redirect('index')
+        return redirect('profile')
 
     else:
     
@@ -990,6 +1022,7 @@ def profile(request):
                         diffDates = (endDate - now_date).days
                         temp = True
 
+                        user_image = a_user.image
                         user_birth = a_user.birthDate.strftime('%Y-%m-%d')
                         user_phone = a_user.phoneNumber
                         user_type = _('Inquilino')
@@ -1007,6 +1040,7 @@ def profile(request):
                             listingRent = Listing.objects.get(id = Property_listing.objects.get(id=i.associated_property_listing_id).main_listing_id).monthly_payment
                             rent_to_be_returned = round((listingRent / 30) * diffDates,2)
 
+                        form = UpdateUserForm()
 
                         context = {"diffDates": diffDates,
                         "birth": user_birth,
@@ -1015,10 +1049,14 @@ def profile(request):
                         "min": user_min_search,
                         "max": user_max_search,
                         "university": user_university,
-                        "rent_to_be_returned": rent_to_be_returned}
+                        "rent_to_be_returned": rent_to_be_returned,
+                        "image": str(user_image).split('mainApp/static/')[1],
+                        "form": form}
+
                     elif (Tenant.objects.get(id = i.tenant_id)).ten_user_id == a_user.id and i.status != True:
                         temp = True
-
+                        
+                        user_image = a_user.image
                         user_birth = a_user.birthDate.strftime('%Y-%m-%d')
                         user_phone = a_user.phoneNumber
                         user_type = _('Inquilino')
@@ -1028,17 +1066,21 @@ def profile(request):
                         user_max_search = ten_user.max_search
                         user_university = ten_user.university
 
+                        form = UpdateUserForm()
 
                         context = {"birth": user_birth,
                         "phone": user_phone,
                         "type": user_type,
                         "min": user_min_search,
                         "max": user_max_search,
-                        "university": user_university}
+                        "university": user_university,
+                        "image": str(user_image).split('mainApp/static/')[1],
+                        "form": form}
                 except:
                     pass
 
             if temp == False:
+                user_image = a_user.image
                 user_birth = a_user.birthDate.strftime('%Y-%m-%d')
                 user_phone = a_user.phoneNumber
                 user_type = _('Inquilino')
@@ -1048,19 +1090,30 @@ def profile(request):
                 user_max_search = ten_user.max_search
                 user_university = ten_user.university
 
+                form = UpdateUserForm()
 
                 context = {"birth": user_birth,
                 "phone": user_phone,
                 "type": user_type,
                 "min": user_min_search,
                 "max": user_max_search,
-                "university": user_university}
+                "university": user_university,
+                "image": str(user_image).split('mainApp/static/')[1],
+                "form": form}
         else:
+            user_image = a_user.image
             user_birth = a_user.birthDate.strftime('%Y-%m-%d')
             user_phone = a_user.phoneNumber
             user_type = _('Senhorio')
 
-            context = {"birth": user_birth, "phone": user_phone, "type": user_type}
+            form = UpdateUserForm()
+
+            context = {
+            "birth": user_birth,
+            "phone": user_phone,
+            "type": user_type,
+            "image": str(user_image).split('mainApp/static/')[1],
+            "form": form}
 
         user_form = UpdateUserForm()
         context['user_form'] = user_form
@@ -1268,7 +1321,7 @@ def listing_editing_view(request, property_id, main_listing_id):
                         image = i,
                         album = prop_album)
                     img.save()
-                    img_pli = PIL.Image.open(img.image)  
+                    img_pli = PILImage.open(img.image)  
                     img_r = img_pli.resize((600,337))
                     img_r.save(str(img.image)) 
 
@@ -1357,7 +1410,7 @@ def create_listing_view(request, property_id):
                         image = i,
                         album = prop_album)
                     img.save()
-                    img_pli = PIL.Image.open(img.image)  
+                    img_pli = PILImage.open(img.image)  
                     img_r = img_pli.resize((600,337))
                     img_r.save(str(img.image)) 
 
@@ -1815,8 +1868,11 @@ def listing(request, listing_id):
         imagesPaths.append(pathSplited[1])
         range.append(int(range[-1]) + 1)
 
+    landlord_app = App_user.objects.get(user=landlord_user)
+
     context  = {
         "listing": listing,
+        "landlord_image": str(landlord_app.image).split('mainApp/static/')[1],
         "landlord_user": landlord_user,
         "bedrooms": bedrooms,
         "num_beds": num_beds,
@@ -2568,15 +2624,17 @@ def deleteAgreement(request):
             main_listing = prop_listing.main_listing
             property = prop_listing.associated_property
 
+        image = str(Image.objects.get(album_id = main_listing.album_id, is_cover = 1).image).split('mainApp/static/')[1]
         landlord = property.landlord.lord_user.user.username
         landlord_id = property.landlord.id
-
+        
         context = {
             "a": agreement,
             "listing": main_listing,
             "property": property,
             "landlord": landlord,
-            "landlord_id": landlord_id
+            "landlord_id": landlord_id,
+            "image": image,
         }
 
         return render(request, "mainApp/reviewProperty.html", context)
@@ -2927,8 +2985,14 @@ def profileTenant(request,ten_id):
     tenant_user = User.objects.get(id=ten_id)
     tenant_app_user = App_user.objects.get(id=ten_id)
     tenant = Tenant.objects.get(ten_user_id=ten_id)
+    user_image = tenant_app_user.image
 
-    context={"tenant_user":tenant_user, "tenant_app_user":tenant_app_user, "tenant": tenant}
+    context={
+        "tenant_user":tenant_user,
+        "tenant_app_user":tenant_app_user,
+        "tenant": tenant,
+        "image": str(user_image).split('mainApp/static/')[1],
+    }
     return render(request, "mainApp/profileTenant.html", context)
 
 def profileLandlord(request,lan_id):
@@ -2937,8 +3001,15 @@ def profileLandlord(request,lan_id):
     landlord = Landlord.objects.get(lord_user_id=lan_id)
     review_rounded = round(landlord.lord_review,1)
     review_rounded_int = round(landlord.lord_review)
+    user_image = landlord_app_user.image
 
-    context={"landlord_user":landlord_user, "landlord_app_user":landlord_app_user, "landlord": landlord, "review_rounded": review_rounded, "review_rounded_int": review_rounded_int}
+    context={
+        "landlord_user":landlord_user,
+        "landlord_app_user":landlord_app_user,
+        "landlord": landlord, "review_rounded": review_rounded,
+        "review_rounded_int": review_rounded_int,
+        "image": str(user_image).split('mainApp/static/')[1],
+    }
     return render(request, "mainApp/profileLandlord.html", context)
 
 def propertyListingNotif(request,id_req):

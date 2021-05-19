@@ -1,0 +1,9 @@
+#changeProfilePic{
+    position: absolute;
+    top: 82%;
+    right: 30%
+}
+
+#id_image{
+    display: none;
+}
