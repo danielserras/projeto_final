@@ -29,11 +29,10 @@ $(document).ready(function () {
 var myinterval;
 function update_num_of_unread_messages(){
     clearInterval(myinterval);
-    console.log("entrou")
     myinterval = setInterval(
         function(){
             $.ajax({
-                url : "/mainApp/numOfunreadedMessages/",
+                url : "/mainApp/numOfunreadMessages/",
                 type : "GET",
                 data : {}, 
         

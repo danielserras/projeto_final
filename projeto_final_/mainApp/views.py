@@ -3081,7 +3081,7 @@ def tenant_firstpage(request):
     return render(request, "mainApp/1st_tenant.html", {})
 
 @login_required
-def num_of_unreaded_messages(request):
+def num_of_unread_messages(request):
     if request.user.is_authenticated:
         unreadMessages = 0
 
