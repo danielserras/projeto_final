@@ -521,6 +521,7 @@ class UpdatePropertyForm(forms.ModelForm):
             'floor_area']
 
 class UpdateUserForm(forms.Form):
+    image = forms.ImageField(required=False)
     first_name = forms.CharField(required=True, max_length=50)
     last_name = forms.CharField(required=True, max_length=50)
     email = forms.EmailField(required=True, max_length=75)
@@ -529,6 +530,10 @@ class UpdateUserForm(forms.Form):
     university = forms.CharField(required=False, max_length=100)
     min_search = forms.IntegerField(required=False, max_value= 1000)
     max_search = forms.IntegerField(required=False, max_value= 2000)
+    if image.widget.attrs.get('onchange'):
+        image.widget.attrs['onchange'] += 'upload_img(this);'
+    else:
+        image.widget.attrs['onchange']='upload_img(this);'
 
 class GetChat(forms.Form):
     chat_id = forms.IntegerField(required=True)
@@ -545,8 +550,6 @@ class RichTextForm(ModelForm):
     class Meta:
         model = Rich_Text_Message
         fields = ['message']
-
-
 
 BedroomFormSet = modelformset_factory(model = Bedroom, form = BedroomForm, extra=1)
 

@@ -1,15 +1,21 @@
 $(document).ready(function () {
+    $(".stars").hover(
+        function() {
+        },
+        function() {
+            for (let i = 0; i <= 5; i++) {
+                $(this.children[i]).find('path').attr("fill-opacity","0.3")
+            }
+        }
+    )
     $(".star").hover(
         function() {
             num = $(this).attr('id').split("-")[1]
+            for (let i = num[0]+0; i <= num[0]+5; i++) {
+                $("#star-"+i).find('path').attr("fill-opacity","0.3")
+            }
             for (let i = num[0]+0; i <= $(this).attr('id').split("-")[1]; i++) {
                 $("#star-"+i).find('path').attr("fill-opacity","1")
-            }
-        },
-        function() {
-            num = $(this).attr('id').split("-")[1]
-            for (let i = num[0]+0; i <= $(this).attr('id').split("-")[1]; i++) {
-                $("#star-"+i).find('path').attr("fill-opacity","0.3")
             }
         }
     )

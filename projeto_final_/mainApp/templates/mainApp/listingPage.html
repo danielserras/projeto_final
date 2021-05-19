@@ -142,7 +142,7 @@
             </div>
             <div class="row justify-content-center mt-4">
                 <p class="text-white my-auto mr-2">{{landlord_user.first_name}} {{landlord_user.last_name}}</p>
-                <img src='{% static "mainApp/images/user.svg" %}' width='13%'>
+                <img src='{% static landlord_image %}' width='13%'>
             </div>
             <div class="row justify-content-center mt-2">
                 <form action="{% url 'profileLandlord' land_id %}" method="POST">
@@ -159,7 +159,8 @@
                 <form action="{% url 'chatsList' %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="receiver" value="{{landlord_user.id}}">
-                    <button type="submit" class="btn" onclick="location.href='{% url 'chatsList'%}'">
+                    <button type="submit" class="btn text-white" onclick="location.href='{% url 'chatsList'%}'">
+                        {% trans 'Chat' %}
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-messages" width="35" height="35" viewBox="0 0 24 24" stroke-width="2" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                             <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />

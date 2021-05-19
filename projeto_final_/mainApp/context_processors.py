@@ -42,19 +42,32 @@ def numUnreadNotifations(request):
             for a in ag_req:
                 if a.checkReadTenant !=True:
                     numUnreadNotifications += 1
-                    print('ag', numUnreadNotifications)
             for i in invoicesList:
                 for j in i:
                     if j.checkReadTenant !=True:
                         numUnreadNotifications += 1
-                        print('iv', j.id, numUnreadNotifications)
             for p in paywList:
                 for j in p:
                     if j.checkReadTenant !=True:
                         numUnreadNotifications += 1
-                        print('warn', numUnreadNotifications)
         
         return {"numUnreadNotifications":numUnreadNotifications}
     else:
         return {"numUnreadNotifications":None}
-    
+
+def numUnreadMessages(request):
+    if request.user.is_authenticated:
+        unreadMessages = 0
+
+        chats1 = list(Chat.objects.filter(user_1=request.user))
+        chats2 = list(Chat.objects.filter(user_2=request.user))
+
+        chatsList = chats1+chats2
+
+        for chat in chatsList:
+            unreadMessages += Message.objects.exclude(sender=request.user).filter(chat=chat, is_read=False).count()
+
+        return {"numUnreadMessages": unreadMessages}
+
+    else:
+        return {"numUnreadMessages": None}
