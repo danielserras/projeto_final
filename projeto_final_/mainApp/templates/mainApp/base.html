@@ -45,14 +45,14 @@
                                 </div>
                             </li>
                             <li class="nav-item active my-auto">
-                                <a class="nav-link" href="/mainApp/notificationsLandlord">{% trans 'Notificações' %} <span class="badge badge-light">{{ numUnreadNotifications }}</span></a>
+                                <a class="nav-link" href="/mainApp/notificationsLandlord">{% trans 'Notificações' %} <span class="badge border-white badge-light">{{ numUnreadNotifications }}</span></a>
                             </li> 
                         {% else %}
                             <li class="nav-item active my-auto">
                                 <a class="nav-link" href="/mainApp/search">{% trans "Pesquisar" %}</a>
                             </li>
                             <li class="nav-item active my-auto">
-                                <a class="nav-link" href="/mainApp/notificationsTenant">{% trans 'Notificações' %} <span class="badge badge-light">{{ numUnreadNotifications }}</span></a>
+                                <a class="nav-link" href="/mainApp/notificationsTenant">{% trans 'Notificações' %} <span class="badge border-white badge-light">{{ numUnreadNotifications }}</span></a>
                             </li>  
                         {% endif %}
 
@@ -65,7 +65,7 @@
                                     <line x1="8" y1="12" x2="8" y2="12.01" />
                                     <line x1="16" y1="12" x2="16" y2="12.01" />
                                 </svg>
-                                <span class="badge border-white badge-light">{{numUnreadMessages}}</span>
+                                <span class="badge border-white badge-light" id="unreadedMessages">{{numUnreadMessages}}</span>
                             </a>
                             
                         </li>

@@ -2625,7 +2625,7 @@ def chat_list_view(request):
         if form.is_valid():
             chat_id = form.cleaned_data.get("chat_id")
             chat_obj = Chat.objects.get(id=chat_id)
-
+            Message.objects.exclude(sender=request.user).filter(is_read=False).update(is_read=True)
             messages = sorted(list(Message.objects.filter(chat=chat_obj)), key=lambda x: x.timestamp, reverse=True)
             result = {}
             result["messages"] = {}
@@ -2685,40 +2685,50 @@ def chat_list_view(request):
                     chat_id = "#chat_" + str(chats_1[0].id)
                 else:
                     chat_id = "#chat_" + str(chats_2[0].id)
+
+        """ if request.is_ajax:     
+            chats_1 = list(Chat.objects.filter(user_1=user_id))
+            chats_2 = list(Chat.objects.filter(user_2=user_id))
+
+            chats_dict = {}
+
+            for c in chats_1:
+                chats_dict[c] = c.user_2.first_name + " " + c.user_2.last_name
+
+            for c in chats_2:
+                chats_dict[c] =  c.user_1.first_name + " " + c.user_1.last_name
+
+            chats_sorted = sorted(chats_dict.keys(), key=lambda x: x.last_message, reverse=True)
             
-        chats_1 = list(Chat.objects.filter(user_1=user_id))
-        chats_2 = list(Chat.objects.filter(user_2=user_id))
+            if chat_id == None:
+                context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict}
+            else:
+                context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict, "chat_id":chat_id}
 
-        chats_dict = {}
-
-        for c in chats_1:
-            chats_dict[c] = c.user_2.first_name + " " + c.user_2.last_name
-
-        for c in chats_2:
-            chats_dict[c] =  c.user_1.first_name + " " + c.user_1.last_name
-
-        chats_sorted = sorted(chats_dict.keys(), key=lambda x: x.last_message, reverse=True)
-        
-        if chat_id == None:
-            context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict}
-        else:
-            context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict, "chat_id":chat_id}
-
-        return render(request, "mainApp/chatsList.html", context)
+            return HttpResponse(json.dumps(context)) """
 
     chats_1 = list(Chat.objects.filter(user_1=user_id))
     chats_2 = list(Chat.objects.filter(user_2=user_id))
 
     chats_dict = {}
-
+    chats_with_unread_messages = {}
     for c in chats_1:
         chats_dict[c] = c.user_2.first_name + " " + c.user_2.last_name
+        num_unread_messages = Message.objects.exclude(sender=request.user).filter(is_read=False, chat=c).count()
+        
+        if num_unread_messages > 0:
+            chats_with_unread_messages[c] = True
+
 
     for c in chats_2:
         chats_dict[c] = c.user_1.first_name + " " + c.user_1.last_name
+        num_unread_messages = Message.objects.exclude(sender=request.user).filter(is_read=False, chat=c).count()
+        
+        if num_unread_messages > 0:
+            chats_with_unread_messages[c] = True
 
     chats_sorted = sorted(chats_dict.keys(), key=lambda x: x.last_message, reverse=True)
-    context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict}
+    context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict, "chats_with_unread_messages":chats_with_unread_messages}
 
     return render(request, "mainApp/chatsList.html", context)
 
@@ -2999,3 +3009,20 @@ def user_manual_view(request):
 def tenant_firstpage(request):
     return render(request, "mainApp/1st_tenant.html", {})
 
+@login_required
+def num_of_unreaded_messages(request):
+    if request.user.is_authenticated:
+        unreadMessages = 0
+
+        chats1 = list(Chat.objects.filter(user_1=request.user))
+        chats2 = list(Chat.objects.filter(user_2=request.user))
+
+        chatsList = chats1+chats2
+
+        for chat in chatsList:
+            unreadMessages += Message.objects.exclude(sender=request.user).filter(chat=chat, is_read=False).count()
+
+        return HttpResponse(json.dumps({"numUnreadMessages": unreadMessages}))
+
+    else:
+        return HttpResponse(json.dumps({"numUnreadMessages": None}))
