@@ -2,6 +2,7 @@ from django.conf import settings
 from .models import *
 from .views import *
 from django.contrib.auth.decorators import login_required
+from asgiref.sync import sync_to_async
 
 
 def numUnreadNotifations(request):

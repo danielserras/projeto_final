@@ -66,3 +66,12 @@ def month_name(month_number):
 @register.filter
 def get_item(dictionaty, key):
     return dictionaty.get(key)
+
+# @register.simple_tag
+# def get_type_notification(notification):
+#     if notification[len(notification)-1] == "agreement_request":
+#         return True
+#     elif notification[len(notification)-1] == "invoice":
+#         return False
+#     elif notification[len(notification)-1] == "warning":
+#         return None

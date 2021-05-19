@@ -23,4 +23,26 @@ $(document).ready(function () {
     });
     
     $('#back-to-top').tooltip('show');
+
+    update_num_of_unread_notifications()
 });
+
+var myinterval_notifications;
+function update_num_of_unread_notifications(){
+    clearInterval(myinterval_notifications);
+    myinterval_notifications = setInterval(
+        function(){
+            $.ajax({
+                url : "/mainApp/num_of_unread_notifications",
+                type : "GET",
+                data : {}, 
+
+                success : function(json) {
+                    let data = JSON.parse(json);
+                    $("#numUnreadNotifications").text(data["numUnreadNotifications"]);
+                }
+            });
+        }, 2000
+    )
+
+} 

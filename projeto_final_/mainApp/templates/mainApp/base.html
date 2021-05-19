@@ -45,14 +45,14 @@
                                 </div>
                             </li>
                             <li class="nav-item active my-auto">
-                                <a class="nav-link" href="/mainApp/notificationsLandlord">{% trans 'Notificações' %} <span class="badge badge-light">{{ numUnreadNotifications }}</span></a>
+                                <a class="nav-link" href="/mainApp/notificationsLandlord">{% trans 'Notificações' %} <span class="badge badge-light" id="numUnreadNotifications">{{ numUnreadNotifications }}</span></a>
                             </li> 
                         {% else %}
                             <li class="nav-item active my-auto">
                                 <a class="nav-link" href="/mainApp/search">{% trans "Pesquisar" %}</a>
                             </li>
                             <li class="nav-item active my-auto">
-                                <a class="nav-link" href="/mainApp/notificationsTenant">{% trans 'Notificações' %} <span class="badge badge-light">{{ numUnreadNotifications }}</span></a>
+                                <a class="nav-link" href="/mainApp/notificationsTenant">{% trans 'Notificações' %} <span class="badge badge-light" id="numUnreadNotifications">{{ numUnreadNotifications }}</span></a>
                             </li>  
                         {% endif %}
 
