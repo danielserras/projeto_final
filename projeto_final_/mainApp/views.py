@@ -1632,7 +1632,6 @@ def search(request):
     searched_values = []
     
     if request.user.is_authenticated:
-        current_user = request.user
         app_user = App_user.objects.get(user=request.user)
         try:
             tenant = Tenant.objects.get(ten_user_id=app_user.id)
@@ -1640,7 +1639,7 @@ def search(request):
                 location = tenant.university + ", Portugal"
                 form = SearchForm(initial = {"location":location, "radius":10, "minPrice":tenant.min_search, "maxPrice":tenant.max_search})
             else:
-                form = SearchForm()
+                form = SearchForm(initial = {"location":"", "radius":"", "minPrice":tenant.min_search, "maxPrice":tenant.max_search})
         except:
             form = SearchForm()
     else:
@@ -2980,15 +2979,17 @@ def callReview(request):
         main_listing = prop_listing.main_listing
         property = prop_listing.associated_property
 
+    image = str(Image.objects.get(album_id = main_listing.album_id, is_cover = 1).image).split('mainApp/static/')[1]
     landlord = property.landlord.lord_user.user.username
     landlord_id = property.landlord.id
-
+    
     context = {
         "a": agreement,
         "listing": main_listing,
         "property": property,
         "landlord": landlord,
-        "landlord_id": landlord_id
+        "landlord_id": landlord_id,
+        "image": image,
     }
 
     return render(request, "mainApp/reviewProperty.html", context)
