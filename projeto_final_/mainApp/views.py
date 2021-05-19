@@ -2624,15 +2624,17 @@ def deleteAgreement(request):
             main_listing = prop_listing.main_listing
             property = prop_listing.associated_property
 
+        image = str(Image.objects.get(album_id = main_listing.album_id, is_cover = 1).image).split('mainApp/static/')[1]
         landlord = property.landlord.lord_user.user.username
         landlord_id = property.landlord.id
-
+        
         context = {
             "a": agreement,
             "listing": main_listing,
             "property": property,
             "landlord": landlord,
-            "landlord_id": landlord_id
+            "landlord_id": landlord_id,
+            "image": image,
         }
 
         return render(request, "mainApp/reviewProperty.html", context)
