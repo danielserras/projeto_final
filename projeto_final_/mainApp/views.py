@@ -89,12 +89,15 @@ def register_view(request):
 
         #para verificar email ver https://github.com/foo290/Django-Verify-Email/   -alexfaustino
         if form.is_valid() and pform.is_valid():
+
+            print(pform.cleaned_data['nif'])
             inactive_user = send_verification_email(request, form)
             #user = form.save()
             app_user_object = App_user.objects.get(user_id=inactive_user)
             app_user_object.phoneNumber = pform.cleaned_data['phoneNumber']
             app_user_object.birthDate = pform.cleaned_data['birthDate']
             app_user_object.address = pform.cleaned_data['address']
+            app_user_object.nif = pform.cleaned_data['nif']
             app_user_object.image = "mainApp/static/mainApp/images/user.png"
             app_user_object.save()
 
@@ -791,8 +794,10 @@ def create_agreement(user_id, ag_request_id):
             reviewd = False,
         )
         new_ag.save()
+        print("house")
         assoc_listing.main_listing.is_active = False
         assoc_listing.save()
+        print(assoc_listing.main_listing.is_active)
 
     else:
         assoc_listing = ag_request.associated_room_listing
@@ -808,8 +813,10 @@ def create_agreement(user_id, ag_request_id):
             status = True,
         )
         new_ag.save()
+        print("room")
         assoc_listing.main_listing.is_active = False
         assoc_listing.save()
+        print(assoc_listing.main_listing.is_active)
 
     last_invoice.checkReadTenant = True
     last_invoice.agreement = new_ag
@@ -1119,13 +1126,13 @@ def profile(request):
             user_type = _('Senhorio')
 
             form = UpdateUserForm()
-
             context = {
             "birth": user_birth,
             "phone": user_phone,
             "type": user_type,
             "image": str(user_image).split('mainApp/static/')[1],
             "form": form}
+
 
         user_form = UpdateUserForm()
         context['user_form'] = user_form
@@ -1983,9 +1990,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://6b02de9a33da.ngrok.io/paymentStatus/",
-            "return_url": "http://6b02de9a33da.ngrok.io/mainApp/search",
-            "cancel_return": "http://6b02de9a33da.ngrok.io/mainApp/profile",
+            "notify_url": "http://20358cee8c9e.ngrok.io/paymentStatus/",
+            "return_url": "http://20358cee8c9e.ngrok.io/mainApp/search",
+            "cancel_return": "http://20358cee8c9e.ngrok.io/mainApp/profile",
 
             }
 
@@ -2092,6 +2099,7 @@ def make_payment_refunds(request, ref_id):
 @csrf_exempt
 def get_payment_status(sender, **kwargs):
     ipn_obj = sender.POST
+    print("funciona filho da puta")
     if ipn_obj['payment_status'] == ST_PP_COMPLETED:
 
         if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
@@ -2338,7 +2346,7 @@ def manage_agreements_view(request):
         #Adds late payments to the invoices_warning list
         for i in invoices:
                 if i.paid == 0:
-                    if (timezone.now().date() - i.timestamp).days >= 10:
+                    if (timezone.now().date() - i.timestamp.date()).days >= 10:
                         payment_warning = True
                         invoices_warning.append(i.id)
                     elif payment_warning == 'paid':
@@ -2393,6 +2401,20 @@ def get_invoice_pdf(request):
                 ag = Agreement_Request.objects.get(id=invoice.agreement_request_id)
             else:
                 ag = Agreement.objects.get(id=invoice.agreement_id)
+
+            if ag.associated_property_listing == None:
+                room_listing = ag.associated_room_listing
+                property = room_listing.associated_room.associated_property
+            else:
+                prop_listing = ag.associated_property_listing
+                property = prop_listing.associated_property
+
+            property_address = property.address
+
+            landlord = Landlord.objects.get(id=ag.landlord_id)
+            landlord_fname = landlord.lord_user.user.first_name
+            landlord_lname = landlord.lord_user.user.last_name
+
             tenant = Tenant.objects.get(id=ag.tenant_id)
             tenant_app = App_user.objects.get(user_id=tenant.ten_user_id)
             tenant_user = User.objects.get(id=tenant_app.user_id)
@@ -2402,10 +2424,13 @@ def get_invoice_pdf(request):
                 total += line.amount
 
             data = {
-                'today': invoice.timestamp, 
+                'today': invoice.timestamp.strftime("%Y-%m-%d"), 
                 'customer_name': str(tenant_user.first_name) + " " + str(tenant_user.last_name),
                 'order_id': invoice.id,
-                'phone_number': tenant_app.phoneNumber,
+                'nif': tenant_app.nif,
+                'landlord_fname': landlord_fname,
+                'landlord_lname': landlord_lname,
+                'property_address': property_address,
                 'adress': tenant_app.address,
                 'list_lines': list_invoice_line,
                 'total_amount': total,
@@ -2425,7 +2450,7 @@ def invoicesLandlord(request):
         for i in list_invoices:
             payment_warning = None
             if i.paid == 0:
-                if (timezone.now().date() - i.timestamp).days >= 10:
+                if (timezone.now().date() - i.timestamp.date()).days >= 10:
                     payment_warning = True
             else:
                 payment_warning = 'paid'
@@ -2953,7 +2978,7 @@ def get_receipt_pdf(request):
                 total += line.amount
 
             data = {
-                'today': invoice.timestamp, 
+                'today': _(invoice.timestamp), 
                 'customer_name': str(tenant_user.first_name) + " " + str(tenant_user.last_name),
                 'order_id': receipt.id,
                 'list_lines': list_invoice_line,

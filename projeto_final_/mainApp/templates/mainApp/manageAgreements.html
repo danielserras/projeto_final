@@ -137,7 +137,7 @@
                                 </form>
                             </td>
                             <td class="text-center">
-                                <a class="btn btn-danger btn-sm" role="button" href="{% url 'reasons' a.id%}">Relatar Incidencias</a>
+                                <a class="btn btn-danger btn-sm" role="button" href="{% url 'reasons' a.id%}">{% trans 'Relatar Incidencias' %}</a>
                             </td>
                         {% else %}
                             <td class="text-center pt-3">{{a.landlord.lord_user.user}}</td>

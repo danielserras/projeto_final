@@ -10,19 +10,19 @@
 {% block content %}
 
 <div class = "container-fluid my-auto mt-4">
-    <div class= "text-center mt-4 mb-4"><h1 class = "text-info font-weight-bold">Término do aluguer</h1></div>
+    <div class= "text-center mt-4 mb-4"><h1 class = "text-info font-weight-bold">{% trans 'Término do aluguer' %}</h1></div>
     <div class="row align-items-start p-3">
         <div class="col-sm-4">
             <div class="row fadeInDown mx-auto">
                 <div class="formContent mx-auto bg-primary border border-top rounded p-1">
                     <div class="fadeIn first">
-                        <h4 class="font-weight-bold mt-3 mb-3 text-white"> Dados do aluguer:</h4>         
+                        <h4 class="font-weight-bold mt-3 mb-3 text-white"> {% trans 'Dados do aluguer' %}:</h4>         
                         <div class = "row mt-4">
-                            <h5 class = "text-white font-weight-bold ml-5">Nome do inquilino:</h5>
+                            <h5 class = "text-white font-weight-bold ml-5">{% trans 'Nome do inquilino' %}:</h5>
                             <h5 class = "text-white-50 font-weight-bold ml-2">{{agreement.tenant.ten_user.user.first_name}} {{agreement.tenant.ten_user.user.last_name}}</h5>
                         </div>
                         <div class = "row mt-2">
-                            <h5 class = "text-white font-weight-bold ml-5">Nome da propriedade:</h5>
+                            <h5 class = "text-white font-weight-bold ml-5">{% trans 'Nome da propriedade' %}:</h5>
                             <h5 class = "text-white-50 font-weight-bold ml-2">{{agreement.associated_property_listing.main_listing.title}} {{agreement.associated_room_listing.main_listing.title}}</h5>
                         </div>
                         <div class = "row mt-2">
@@ -43,51 +43,51 @@
         </div>
         <div class="col-sm-6">
             <div class="p-1">
-                <h5 class="text-primary text-left ml-4 font-weight-bold mb-2">Selecione caraterísticas que comprometam a relação senhorio-inquilino</h5>
-                <p class="text-secondary text-left ml-4 font-weight-bold mb-4">Pelo menos uma razão deve ser fornecida</p>
+                <h5 class="text-primary text-left ml-4 font-weight-bold mb-2">{% trans 'Selecione caraterísticas que comprometam a relação senhorio-inquilino' %}</h5>
+                <p class="text-secondary text-left ml-4 font-weight-bold mb-4">{% trans 'Pelo menos uma razão deve ser fornecida' %}</p>
                 <form method="POST" id="form1">
                     {% csrf_token %}
                     <div class="form-check text-left ml-4">
                         <input class="form-check-input mr-2 myCheckBox" type="checkbox" value="1" name="cause">
                         <i class="fas fa-clock"></i>
-                        <label class="form-check-label">Incumprimento do prazo de pagamento das rendas</label>
+                        <label class="form-check-label">{% trans 'Incumprimento do prazo de pagamento das rendas' %}</label>
                     </div>
                     <div class="form-check text-left ml-4">
                         <input class="form-check-input mr-2 myCheckBox" type="checkbox" value="2" name="cause">
                         <i class="fas fa-house-damage"></i>
-                        <label class="form-check-label">Utilização inadequada do recheio da propriedade, danificando a mesma</label>
+                        <label class="form-check-label">{% trans 'Utilização inadequada do recheio da propriedade, danificando a mesma' %}</label>
                     </div>
                     <div class="form-check text-left ml-4">
                         <input class="form-check-input mr-2 myCheckBox" type="checkbox" value="3" name="cause">
                         <i class="fas fa-volume-up"></i>
-                        <label class="form-check-label">Incumprimento continuado da lei do ruído</label>
+                        <label class="form-check-label">{% trans 'Incumprimento continuado da lei do ruído' %}</label>
                     </div>
                     <div class="form-check text-left ml-4">
                         <input class="form-check-input mr-2 myCheckBox" type="checkbox" value="4" name="cause">
                         <i class="fas fa-minus-circle"></i>
-                        <label class="form-check-label">Violação de uma regra específica do contrato de aluguer</label>
+                        <label class="form-check-label">{% trans 'Violação de uma regra específica do contrato de aluguer' %}</label>
                     </div>
                     <div class="form-check text-left ml-4">
                         <input class="form-check-input mr-2 myCheckBox" type="checkbox" value="5" name="cause">
                         <i class="fas fa-user-friends"></i>
-                        <label class="form-check-label">Desacatos com vizinhos e mal-estar geral com a vizinhança</label>
+                        <label class="form-check-label">{% trans 'Desacatos com vizinhos e mal-estar geral com a vizinhança' %}</label>
                     </div>
                     <div class="form-check text-left ml-4">
                         <input class="form-check-input mr-2 myCheckBox" type="checkbox" value="6" name="cause">
                         <i class="fas fa-users"></i>
-                        <label class="form-check-label">Exceder frequentemente a lotação máxima da propriedade sem custos associados</label>
+                        <label class="form-check-label">{% trans 'Exceder frequentemente a lotação máxima da propriedade sem custos associados' %}</label>
                     </div>
                     <div class="form-group ml-4 mt-3">
-                        <label for="exampleFormControlTextarea1">Para além das opções assinaldas pode escrever uma breve descrição que ilustre a situação no campo abaixo:</label>
+                        <label for="exampleFormControlTextarea1">{% trans 'Para além das opções assinaldas pode escrever uma breve descrição que ilustre a situação no campo abaixo' %}:</label>
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value="1" name="description"></textarea>
                     </div>
                 </form>
                 <div class="row justify-content-end mt-4">
                     <div class="col-sm-4">
-                        <button name="buttonPressed" value="onlyIncidence" type="submit" form="form1" class="btn btn-primary mt-3 confirmButton">Apenas adicionar uma incidência</button>
+                        <button name="buttonPressed" value="onlyIncidence" type="submit" form="form1" class="btn btn-primary mt-3 confirmButton">{% trans 'Apenas adicionar uma incidência' %}</button>
                     </div>
                     <div class="col-sm-4">
-                        <button type="button" class="btn btn-primary mt-3 confirmButton" data-toggle="modal" data-target="#exampleModal">Terminar o contrato de aluguer</button>
+                        <button type="button" class="btn btn-primary mt-3 confirmButton" data-toggle="modal" data-target="#exampleModal">{% trans 'Terminar o contrato de aluguer' %}</button>
                     </div> 
                     </div>
                     
@@ -108,12 +108,12 @@
           </button>
         </div>
         <div class="modal-body">
-          Tem a certeza que pertende terminar o contrato de alguer?
-          Esta ação não poderá ser revertida
+          {% trans 'Tem a certeza que pertende terminar o contrato de alguer?' %}
+          {% trans 'Esta ação não poderá ser revertida' %}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-          <button name="buttonPressed" value="terminateContract" type="submit" form="form1" class="btn btn-primary">Terminar Contrato</button>
+          <button name="buttonPressed" value="terminateContract" type="submit" form="form1" class="btn btn-primary">t</button>
         </div>
       </div>
     </div>
@@ -125,6 +125,5 @@
         $('.confirmButton').prop('disabled', checkBoxes.filter(':checked').length < 1);
     });
     $('.myCheckBox').change();
-    console.log("CONA")
   </script>
 {% endblock %}

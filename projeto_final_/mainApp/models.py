@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from ckeditor.fields import RichTextField
+from django.core.validators import MaxValueValidator, MinValueValidator
 import time
 
 def get_upload_path(instance, filename):
@@ -19,6 +20,7 @@ class App_user(models.Model):
     phoneNumber = models.IntegerField(null=True, blank=True)
     birthDate = models.DateField(null=True, blank=True)
     address = models.CharField(max_length=100)
+    nif = models.IntegerField(null=True, validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
     image = models.ImageField(upload_to=get_profile_image_path)
 
 class Tenant(models.Model):
