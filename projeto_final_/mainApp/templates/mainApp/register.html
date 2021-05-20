@@ -39,30 +39,35 @@
             <div class="row form-group">
                 <div class="col-sm">
                     <label for="Nome de Utilizador">{% trans 'Nome de Utilizador' %}:</label>
+                    <br>
                     {{ form.username  }}
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
                     <label for="Palavra-passe">{% trans 'Palavra-passe' %}:</label>
+                    <br>
                     {{ form.password1  }}
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
                     <label for="Confirme a palavra-passe">{% trans 'Confirme a palavra-passe' %}:</label>
+                    <br>
                     {{ form.password2  }}
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
                     <label for="Primeiro nome">{% trans 'Primeiro nome' %}:</label>
+                    <br>
                     {{ form.first_name  }}
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm">
                     <label for="Apelido">{% trans 'Apelido' %}:</label>
+                    <br>
                     {{ form.last_name  }}
                 </div>
             </div>
@@ -76,13 +81,22 @@
             <div class="row form-group">
                 <div class="col-sm">
                     <label for="Número de telefone">{% trans 'Número de telefone' %}:</label>
+                    <br>
                     {{ pform.phoneNumber  }}
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-sm-12">
                     <label for="address">{% trans 'Morada' %}:</label>
+                    <br>
                     {{ pform.address }}
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-12">
+                    <label for="nif">{% trans 'NIF' %}:</label>
+                    <br>
+                    {{ pform.nif }}
                 </div>
             </div>
             <div class="row form-group">

@@ -89,12 +89,15 @@ def register_view(request):
 
         #para verificar email ver https://github.com/foo290/Django-Verify-Email/   -alexfaustino
         if form.is_valid() and pform.is_valid():
+
+            print(pform.cleaned_data['nif'])
             inactive_user = send_verification_email(request, form)
             #user = form.save()
             app_user_object = App_user.objects.get(user_id=inactive_user)
             app_user_object.phoneNumber = pform.cleaned_data['phoneNumber']
             app_user_object.birthDate = pform.cleaned_data['birthDate']
             app_user_object.address = pform.cleaned_data['address']
+            app_user_object.nif = pform.cleaned_data['nif']
             app_user_object.image = "mainApp/static/mainApp/images/user.png"
             app_user_object.save()
 
@@ -2361,6 +2364,20 @@ def get_invoice_pdf(request):
                 ag = Agreement_Request.objects.get(id=invoice.agreement_request_id)
             else:
                 ag = Agreement.objects.get(id=invoice.agreement_id)
+
+            if ag.associated_property_listing == None:
+                room_listing = ag.associated_room_listing
+                property = room_listing.associated_room.associated_property
+            else:
+                prop_listing = ag.associated_property_listing
+                property = prop_listing.associated_property
+
+            property_address = property.address
+
+            landlord = Landlord.objects.get(id=ag.landlord_id)
+            landlord_fname = landlord.lord_user.user.first_name
+            landlord_lname = landlord.lord_user.user.last_name
+
             tenant = Tenant.objects.get(id=ag.tenant_id)
             tenant_app = App_user.objects.get(user_id=tenant.ten_user_id)
             tenant_user = User.objects.get(id=tenant_app.user_id)
@@ -2373,7 +2390,10 @@ def get_invoice_pdf(request):
                 'today': invoice.timestamp, 
                 'customer_name': str(tenant_user.first_name) + " " + str(tenant_user.last_name),
                 'order_id': invoice.id,
-                'phone_number': tenant_app.phoneNumber,
+                'nif': tenant_app.nif,
+                'landlord_fname': landlord_fname,
+                'landlord_lname': landlord_lname,
+                'property_address': property_address,
                 'adress': tenant_app.address,
                 'list_lines': list_invoice_line,
                 'total_amount': total,
