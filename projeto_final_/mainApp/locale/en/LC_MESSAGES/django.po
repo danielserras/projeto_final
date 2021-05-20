@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-10 21:17+0100\n"
+"POT-Creation-Date: 2021-05-20 16:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: mainApp/forms.py:18 mainApp/templates/mainApp/login.html:99
-#: mainApp/templates/mainApp/register.html:47
+#: mainApp/templates/mainApp/register.html:48
 msgid "Palavra-passe"
 msgstr "Password"
 
-#: mainApp/forms.py:22 mainApp/templates/mainApp/register.html:53
+#: mainApp/forms.py:22 mainApp/templates/mainApp/register.html:55
 msgid "Confirme a palavra-passe"
 msgstr "Confirm your password"
 
@@ -36,121 +36,130 @@ msgstr "The passwords don't match"
 msgid "Nome de Utilizador"
 msgstr "Username"
 
-#: mainApp/forms.py:41 mainApp/templates/mainApp/register.html:59
+#: mainApp/forms.py:41 mainApp/templates/mainApp/register.html:62
 msgid "Primeiro nome"
 msgstr "First Name"
 
-#: mainApp/forms.py:47 mainApp/templates/mainApp/register.html:65
+#: mainApp/forms.py:47 mainApp/templates/mainApp/register.html:69
 msgid "Apelido"
 msgstr "Last Name"
 
-#: mainApp/forms.py:84 mainApp/templates/mainApp/profile.html:233
-#: mainApp/templates/mainApp/profileLandlord.html:97
-#: mainApp/templates/mainApp/profileTenant.html:96
-#: mainApp/templates/mainApp/register.html:78
+#: mainApp/forms.py:84 mainApp/templates/mainApp/profile.html:213
+#: mainApp/templates/mainApp/profileLandlord.html:199
+#: mainApp/templates/mainApp/profileTenant.html:56
+#: mainApp/templates/mainApp/register.html:83
 msgid "Número de telefone"
 msgstr "Phone number"
 
 #: mainApp/forms.py:97 mainApp/templates/mainApp/addProperty.html:44
 #: mainApp/templates/mainApp/editProperty.html:49
-#: mainApp/templates/mainApp/invoicePDF.html:95
+#: mainApp/templates/mainApp/intent.html:35
+#: mainApp/templates/mainApp/invoicePDF.html:130
+#: mainApp/templates/mainApp/invoicePDF.html:135
 #: mainApp/templates/mainApp/propertiesManagement.html:30
-#: mainApp/templates/mainApp/register.html:84
+#: mainApp/templates/mainApp/register.html:90
 msgid "Morada"
 msgstr "Address"
 
-#: mainApp/forms.py:376
+#: mainApp/forms.py:103 mainApp/templates/mainApp/invoicePDF.html:126
+#: mainApp/templates/mainApp/register.html:97
+msgid "NIF"
+msgstr "TIN"
+
+#: mainApp/forms.py:382
 msgid "Tipo de Alojamento"
 msgstr "Property type"
 
-#: mainApp/forms.py:377 mainApp/templates/mainApp/addProperty.html:179
+#: mainApp/forms.py:383 mainApp/templates/mainApp/addProperty.html:179
 #: mainApp/templates/mainApp/editProperty.html:169
 #: mainApp/templates/mainApp/listingsManagement.html:72
 msgid "Apartamento"
 msgstr "Apartment"
 
-#: mainApp/forms.py:378 mainApp/templates/mainApp/addProperty.html:175
+#: mainApp/forms.py:384 mainApp/templates/mainApp/addProperty.html:175
 #: mainApp/templates/mainApp/editProperty.html:165
 #: mainApp/templates/mainApp/listingsManagement.html:74
 msgid "Casa"
 msgstr "House"
 
-#: mainApp/forms.py:379 mainApp/templates/mainApp/addProperty.html:177
+#: mainApp/forms.py:385 mainApp/templates/mainApp/addProperty.html:177
 #: mainApp/templates/mainApp/editProperty.html:167
 #: mainApp/templates/mainApp/listingsManagement.html:76
 msgid "Estúdio"
 msgstr "Studio apartment"
 
-#: mainApp/forms.py:380 mainApp/templates/mainApp/addBedroom.html:41
+#: mainApp/forms.py:386 mainApp/templates/mainApp/addBedroom.html:41
 #: mainApp/templates/mainApp/addProperty.html:181
 #: mainApp/templates/mainApp/editBedrooms.html:50
 #: mainApp/templates/mainApp/editProperty.html:171
-#: mainApp/templates/mainApp/listingPage.html:196
+#: mainApp/templates/mainApp/listingPage.html:197
 #: mainApp/templates/mainApp/listingsManagement.html:78
 msgid "Quarto"
 msgstr "Bedroom"
 
-#: mainApp/forms.py:383
+#: mainApp/forms.py:389
 msgid "Número de Inquilinos"
 msgstr "Number of tenants"
 
-#: mainApp/forms.py:384
+#: mainApp/forms.py:390
 msgid "1 inquilino"
 msgstr "1 tenant"
 
-#: mainApp/forms.py:385
+#: mainApp/forms.py:391
 msgid "2 inquilinos"
 msgstr "2 tenants"
 
-#: mainApp/forms.py:386
+#: mainApp/forms.py:392
 msgid "3 inquilinos"
 msgstr "3 tenants"
 
-#: mainApp/forms.py:387
+#: mainApp/forms.py:393
 msgid "4 inquilinos"
 msgstr "4 tenants"
 
-#: mainApp/forms.py:388
+#: mainApp/forms.py:394
 msgid "5+ inquilinos"
 msgstr "5+ tenants"
 
-#: mainApp/forms.py:391 mainApp/templates/mainApp/addProperty.html:186
+#: mainApp/forms.py:397 mainApp/templates/mainApp/addProperty.html:186
 msgid "Número de Quartos"
 msgstr "Number of Bedrooms"
 
-#: mainApp/forms.py:392
+#: mainApp/forms.py:398
 msgid "1 quarto"
 msgstr "1 bedroom"
 
-#: mainApp/forms.py:393
+#: mainApp/forms.py:399
 msgid "2 quartos"
 msgstr "2 bedrooms"
 
-#: mainApp/forms.py:394
+#: mainApp/forms.py:400
 msgid "3 quartos"
 msgstr "3 bedrooms"
 
-#: mainApp/forms.py:395
+#: mainApp/forms.py:401
 msgid "4 quartos"
 msgstr "4 bedrooms"
 
-#: mainApp/forms.py:396
+#: mainApp/forms.py:402
 msgid "5+ quartos"
 msgstr "5+ bedrooms"
 
-#: mainApp/forms.py:403 mainApp/templates/mainApp/home.html:30
+#: mainApp/forms.py:409 mainApp/templates/mainApp/home.html:75
 msgid "Localização"
 msgstr "Location"
 
-#: mainApp/forms.py:412 mainApp/templates/mainApp/home.html:35
+#: mainApp/forms.py:418 mainApp/templates/mainApp/home.html:80
 msgid "Raio"
 msgstr "Radius"
 
-#: mainApp/forms.py:442
+#: mainApp/forms.py:448 mainApp/templates/mainApp/intent.html:47
+#: mainApp/templates/mainApp/reviewProperty.html:39
 msgid "Entrada"
 msgstr "Date-in"
 
-#: mainApp/forms.py:452
+#: mainApp/forms.py:458 mainApp/templates/mainApp/intent.html:51
+#: mainApp/templates/mainApp/reviewProperty.html:40
 msgid "Saída"
 msgstr "Date-out"
 
@@ -181,7 +190,7 @@ msgstr "Start,Bedrooms,Bathrooms,Kitchens,Finish"
 
 #: mainApp/templates/mainApp/addBathroom.html:40
 #: mainApp/templates/mainApp/editBathrooms.html:48
-#: mainApp/templates/mainApp/listingPage.html:244
+#: mainApp/templates/mainApp/listingPage.html:245
 msgid "Casa de Banho"
 msgstr "Bathroom"
 
@@ -321,7 +330,7 @@ msgstr "Maximum occupancy"
 
 #: mainApp/templates/mainApp/addKitchen.html:40
 #: mainApp/templates/mainApp/editKitchens.html:53
-#: mainApp/templates/mainApp/listingPage.html:220
+#: mainApp/templates/mainApp/listingPage.html:221
 msgid "Cozinha"
 msgstr "Kitchen"
 
@@ -405,7 +414,7 @@ msgid "Prentendo listar"
 msgstr "I want to list it"
 
 #: mainApp/templates/mainApp/addListing.html:41
-#: mainApp/templates/mainApp/manageAgreements.html:49
+#: mainApp/templates/mainApp/manageAgreements.html:66
 #: mainApp/templates/mainApp/payment.html:26
 #: mainApp/templates/mainApp/paymentRefunds.html:26
 msgid "Anúncio"
@@ -419,7 +428,7 @@ msgstr "Title"
 
 #: mainApp/templates/mainApp/addListing.html:54
 #: mainApp/templates/mainApp/editListing.html:37
-#: mainApp/templates/mainApp/invoicePDF.html:104
+#: mainApp/templates/mainApp/invoicePDF.html:144
 #: mainApp/templates/mainApp/receiptPDF.html:94
 msgid "Descrição"
 msgstr "Description"
@@ -437,16 +446,13 @@ msgstr "to"
 
 #: mainApp/templates/mainApp/addListing.html:70
 #: mainApp/templates/mainApp/editListing.html:53
+#: mainApp/templates/mainApp/intent.html:43
 #: mainApp/templates/mainApp/search.html:73
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:37
-#: mainApp/templates/mainApp/startsAgreementTenent.html:36
 msgid "Renda"
 msgstr "Rent"
 
 #: mainApp/templates/mainApp/addListing.html:74
 #: mainApp/templates/mainApp/editListing.html:57
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:38
-#: mainApp/templates/mainApp/startsAgreementTenent.html:37
 msgid "Caução"
 msgstr "Security Deposit"
 
@@ -525,9 +531,7 @@ msgstr "Drag the marker over the map to adjust the address"
 
 #: mainApp/templates/mainApp/addProperty.html:76
 #: mainApp/templates/mainApp/editProperty.html:79
-#: mainApp/templates/mainApp/listingPage.html:311
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:46
-#: mainApp/templates/mainApp/startsAgreementTenent.html:45
+#: mainApp/templates/mainApp/listingPage.html:312
 msgid "Regras"
 msgstr "Rules"
 
@@ -543,43 +547,31 @@ msgstr "Smoking"
 
 #: mainApp/templates/mainApp/addProperty.html:93
 #: mainApp/templates/mainApp/editProperty.html:96
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:58
-#: mainApp/templates/mainApp/startsAgreementTenent.html:53
 msgid "Visitas podem pernoitar ocasionalmente"
 msgstr "Visitors can stay overnight occasionally "
 
 #: mainApp/templates/mainApp/addProperty.html:101
 #: mainApp/templates/mainApp/editProperty.html:104
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:74
-#: mainApp/templates/mainApp/startsAgreementTenent.html:61
 msgid "Despesas Incluídas"
 msgstr "Expenses included"
 
 #: mainApp/templates/mainApp/addProperty.html:110
 #: mainApp/templates/mainApp/editProperty.html:113
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:91
-#: mainApp/templates/mainApp/startsAgreementTenent.html:70
 msgid "Água"
 msgstr "Water"
 
 #: mainApp/templates/mainApp/addProperty.html:114
 #: mainApp/templates/mainApp/editProperty.html:117
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:86
-#: mainApp/templates/mainApp/startsAgreementTenent.html:69
 msgid "Eletricidade"
 msgstr "Electricity"
 
 #: mainApp/templates/mainApp/addProperty.html:118
 #: mainApp/templates/mainApp/editProperty.html:121
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:81
-#: mainApp/templates/mainApp/startsAgreementTenent.html:68
 msgid "Internet"
 msgstr "Internet"
 
 #: mainApp/templates/mainApp/addProperty.html:122
 #: mainApp/templates/mainApp/editProperty.html:125
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:96
-#: mainApp/templates/mainApp/startsAgreementTenent.html:71
 msgid "Gás"
 msgstr "Gas"
 
@@ -590,7 +582,7 @@ msgstr "Cleaning service"
 
 #: mainApp/templates/mainApp/addProperty.html:136
 #: mainApp/templates/mainApp/editProperty.html:139
-#: mainApp/templates/mainApp/listingPage.html:280
+#: mainApp/templates/mainApp/listingPage.html:281
 msgid "Exterior"
 msgstr "Outside"
 
@@ -637,36 +629,36 @@ msgstr "Number of Livingrooms"
 msgid "Para avançar marque a localização e selecione um tipo de alojamento"
 msgstr "To advance mark your location and select the type of property"
 
-#: mainApp/templates/mainApp/base.html:39
+#: mainApp/templates/mainApp/base.html:40
 msgid "Propriedades"
 msgstr "Properties"
 
-#: mainApp/templates/mainApp/base.html:42
+#: mainApp/templates/mainApp/base.html:43
 msgid "Adicionar"
 msgstr "Add"
 
-#: mainApp/templates/mainApp/base.html:43
+#: mainApp/templates/mainApp/base.html:44
 msgid "Gerir"
 msgstr "Manage"
 
-#: mainApp/templates/mainApp/base.html:47
-#: mainApp/templates/mainApp/base.html:54
+#: mainApp/templates/mainApp/base.html:48
+#: mainApp/templates/mainApp/base.html:55
 msgid "Notificações"
 msgstr "Notifications"
 
-#: mainApp/templates/mainApp/base.html:51
-#: mainApp/templates/mainApp/base.html:72
-#: mainApp/templates/mainApp/home.html:46
+#: mainApp/templates/mainApp/base.html:52
+#: mainApp/templates/mainApp/base.html:87
+#: mainApp/templates/mainApp/home.html:91
 #: mainApp/templates/mainApp/search.html:87
 msgid "Pesquisar"
 msgstr "Search"
 
-#: mainApp/templates/mainApp/base.html:75
-#: mainApp/templates/mainApp/register.html:113
+#: mainApp/templates/mainApp/base.html:90
+#: mainApp/templates/mainApp/register.html:127
 msgid "Registar"
 msgstr "Register"
 
-#: mainApp/templates/mainApp/base.html:96
+#: mainApp/templates/mainApp/base.html:112
 msgid "Termos e Políticas"
 msgstr "Terms and policies"
 
@@ -683,8 +675,6 @@ msgid "Insira de novo a Palavra-passe"
 msgstr "Write your new password"
 
 #: mainApp/templates/mainApp/confirmPass.html:16
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:144
-#: mainApp/templates/mainApp/startsAgreementTenent.html:118
 msgid "Confirmar"
 msgstr "Confirm"
 
@@ -709,9 +699,22 @@ msgstr "Finish"
 msgid "Editar Anúncios"
 msgstr "Edit listings"
 
+#: mainApp/templates/mainApp/editListing.html:97
+msgid "Remover"
+msgstr "Remove"
+
+#: mainApp/templates/mainApp/editListing.html:115
+#: mainApp/templates/mainApp/editListing.html:143
+msgid "Escolher ficheiro"
+msgstr "Choose file"
+
 #: mainApp/templates/mainApp/editListing.html:167
 msgid "Guardar"
 msgstr "Save"
+
+#: mainApp/templates/mainApp/editListing.html:168
+msgid "Tem que ter no mínimo uma fotografia"
+msgstr "You need at least one picture"
 
 #: mainApp/templates/mainApp/editLivingrooms.html:23
 msgid "Editar Salas"
@@ -742,15 +745,106 @@ msgstr ""
 msgid "Verificar"
 msgstr "Verify"
 
-#: mainApp/templates/mainApp/home.html:14
+#: mainApp/templates/mainApp/home.html:28
+msgid "Aviso"
+msgstr "Warning"
+
+#: mainApp/templates/mainApp/home.html:40
+#: mainApp/templates/mainApp/login.html:44
+#: mainApp/templates/mainApp/login.html:64
+#: mainApp/templates/mainApp/login.html:83
+#: mainApp/templates/mainApp/manageAgreements.html:273
+#: mainApp/templates/mainApp/profile.html:77
+#: mainApp/templates/mainApp/profile.html:104
+#: mainApp/templates/mainApp/pw_reset.html:25
+msgid "Fechar"
+msgstr "Close"
+
+#: mainApp/templates/mainApp/home.html:59
 msgid "Vais estudar e não sabes onde ficar? Nós podemos ajudar!"
 msgstr "Going away to study and have nowhere to stay? We can help"
 
-#: mainApp/templates/mainApp/home.html:73
+#: mainApp/templates/mainApp/home.html:106
+msgid "Estou à procura de alojamento"
+msgstr "I'm looking for accommodation"
+
+#: mainApp/templates/mainApp/home.html:110
+msgid ""
+"Em UniHouses oferecemos ferramentas para que possas encontrar, alugar e "
+"gerir o aluguer do teu alojamento da melhor maneira."
+msgstr "At UniHouses we offer tools so that you can find, rent and manage the rental of your accommodation in the best way."
+
+#: mainApp/templates/mainApp/home.html:111
+msgid ""
+"Na página de pesquisa, podes encontrar alojamentos a uma distância "
+"costumizavel da tua faculdade ou outro sítio de referência."
+msgstr "On the search page, you can find accommodation at a comfortable distance from your college or another reference site."
+
+#: mainApp/templates/mainApp/home.html:112
+msgid ""
+"Todos os anúncios de alojamentos contêm uma lista que detalha as divisões da "
+"casa, o exterior, as despesas incluídas na renda e as regras."
+msgstr "All accommodation listings contain a list that details the rooms of the house, the exterior, the expenses included in the rent and the rules."
+
+#: mainApp/templates/mainApp/home.html:113
+msgid ""
+"Para que possas mais facilmente comparar alojamentos, colocamos o número "
+"total de elementos existentes no alojamento, no topo da lista."
+msgstr "To make it easier to compare accommodation, we put the total number of elements in the accommodation at the top of the list."
+
+#: mainApp/templates/mainApp/home.html:114
+msgid ""
+"É também disponibilizado um conjunto de fotos relativas à propriedade "
+"introduzidas pelo senhorio."
+msgstr "A set of photos related to the property introduced by the landlord is also available."
+
+#: mainApp/templates/mainApp/home.html:115
+msgid ""
+"Quando encontrares o alojamento ideal só mostrar o teu interesse ao senhorio "
+"e aguardar por resposta!"
+msgstr "When you find the ideal accommodation just show your interest to the landlord and wait for an answer!"
+
+#: mainApp/templates/mainApp/home.html:119
 msgid "Sou estudante"
 msgstr "I'm a student"
 
-#: mainApp/templates/mainApp/home.html:84
+#: mainApp/templates/mainApp/home.html:122
+msgid "Pretendo arrendar o meu alojamentos"
+msgstr "I intend to rent my accommodation"
+
+#: mainApp/templates/mainApp/home.html:126
+msgid ""
+"Em UniHouses oferecemos ferramentas para que possa publicitar o seu "
+"alojamento da melhor forma."
+msgstr "At UniHouses we offer tools for you to advertise your accommodation in the best way."
+
+#: mainApp/templates/mainApp/home.html:127
+msgid " Permitimos que adicine alojamentos inteiros ou quartos individuais."
+msgstr "We allow you to add entire accommodation or individual rooms."
+
+#: mainApp/templates/mainApp/home.html:128
+msgid "Para cada propriedade ou quarto pode adicionar múltiplos anuncios."
+msgstr "Para cada propriedade ou quarto pode adicionar múltiplos anuncios."
+
+#: mainApp/templates/mainApp/home.html:129
+msgid ""
+"Concebemos um sistema para que possa facilmente introduzir as especificações "
+"de todas as divisões da casa."
+msgstr "We designed a system so that you can easily enter the specifications for all rooms in the house."
+
+#: mainApp/templates/mainApp/home.html:130
+msgid ""
+"Em UniHouses damos especial atenção à relação entre o senhorio e o inquilino."
+msgstr "At UniHouses we pay special attention to the relationship between the landlord and the tenant."
+
+#: mainApp/templates/mainApp/home.html:131
+msgid ""
+"Para isso, desenhámos uma página onde pode gerir os seus acordos, de forma "
+"simples e eficaz. Pode emitir e ver faturas e recibos, enviar avisos de "
+"pagamento em atraso e relatar comportamentos inadequados dos inquilinos."
+msgstr "For this, we designed a page where you can manage your agreements, simply and effectively. You can issue and view invoices and receipts, send late payment notices and report inappropriate tenant behavior."
+
+#: mainApp/templates/mainApp/home.html:135
 msgid "Sou senhorio"
 msgstr "I'm a landlord"
 
@@ -758,53 +852,79 @@ msgstr "I'm a landlord"
 msgid "Estou interessado!"
 msgstr "I'm interested!"
 
+#: mainApp/templates/mainApp/intent.html:39
+#: mainApp/templates/mainApp/invoicePDF.html:121
+#: mainApp/templates/mainApp/manageAgreements.html:74
+#: mainApp/templates/mainApp/payment.html:21
+#: mainApp/templates/mainApp/register.html:122
+#: mainApp/templates/mainApp/reviewProperty.html:38
+#: mainApp/templates/mainApp/reviewProperty.html:73 mainApp/views.py:1126
+msgid "Senhorio"
+msgstr "Landlord"
+
 #: mainApp/templates/mainApp/intent.html:61
-#: mainApp/templates/mainApp/renewAgreement.html:21
-#: mainApp/templates/mainApp/renewAgreement.html:47
+#: mainApp/templates/mainApp/renewAgreement.html:22
+#: mainApp/templates/mainApp/renewAgreement.html:48
 msgid "Data de Início"
 msgstr "Starting date"
 
 #: mainApp/templates/mainApp/intent.html:67
-#: mainApp/templates/mainApp/renewAgreement.html:27
-#: mainApp/templates/mainApp/renewAgreement.html:48
+#: mainApp/templates/mainApp/renewAgreement.html:28
+#: mainApp/templates/mainApp/renewAgreement.html:49
 msgid "Data de Fim"
 msgstr "Ending date"
 
 #: mainApp/templates/mainApp/intent.html:74
-#: mainApp/templates/mainApp/renewAgreement.html:34
+#: mainApp/templates/mainApp/renewAgreement.html:35
 msgid "Mensagem a enviar ao senhorio"
 msgstr "Message to landlord"
 
+#: mainApp/templates/mainApp/intent.html:81
+#: mainApp/templates/mainApp/renewAgreement.html:41
+#: mainApp/templates/mainApp/user_manual.html:107
+msgid "Enviar"
+msgstr "Send"
+
 #: mainApp/templates/mainApp/invoicePDF.html:6
-#: mainApp/templates/mainApp/invoicePDF.html:66
-#: mainApp/templates/mainApp/invoicePDF.html:90
-#: mainApp/templates/mainApp/notificationsTenant.html:197
-#: mainApp/templates/mainApp/notificationsTenant.html:207
-#: mainApp/templates/mainApp/notificationsTenant.html:240
+#: mainApp/templates/mainApp/invoicePDF.html:75
+#: mainApp/templates/mainApp/invoicePDF.html:102
+#: mainApp/templates/mainApp/notificationsTenant.html:223
+#: mainApp/templates/mainApp/notificationsTenant.html:232
+#: mainApp/templates/mainApp/notificationsTenant.html:278
 msgid "Fatura"
 msgstr "Invoice"
 
-#: mainApp/templates/mainApp/invoicePDF.html:77
-msgid "Cobrar A"
-msgstr "Charget to"
+#: mainApp/templates/mainApp/invoicePDF.html:86
+msgid "Campo Grande 1749-016, Lisboa, Portugal"
+msgstr "Campo Grande 1749-016, Lisboa, Portugal"
 
-#: mainApp/templates/mainApp/invoicePDF.html:81
+#: mainApp/templates/mainApp/invoicePDF.html:94
 #: mainApp/templates/mainApp/invoices.html:29
 #: mainApp/templates/mainApp/receiptPDF.html:86
 msgid "Data de Emissão"
 msgstr "Issue date"
 
-#: mainApp/templates/mainApp/invoicePDF.html:86
-msgid "Número de Telefone"
-msgstr "Phone number"
+#: mainApp/templates/mainApp/invoicePDF.html:109
+msgid "Cobrar A"
+msgstr "Charget to"
 
-#: mainApp/templates/mainApp/invoicePDF.html:105
+#: mainApp/templates/mainApp/invoicePDF.html:112
+msgid "Acordo"
+msgstr "Agreement"
+
+#: mainApp/templates/mainApp/invoicePDF.html:117
+#: mainApp/templates/mainApp/profileLandlord.html:185
+#: mainApp/templates/mainApp/profileTenant.html:42
+msgid "Nome"
+msgstr "Name"
+
+#: mainApp/templates/mainApp/invoicePDF.html:145
 #: mainApp/templates/mainApp/receiptPDF.html:95
 msgid "Valor"
 msgstr "Amount"
 
 #: mainApp/templates/mainApp/invoices.html:19
-#: mainApp/templates/mainApp/manageAgreements.html:60
+#: mainApp/templates/mainApp/manageAgreements.html:77
 msgid "Faturas"
 msgstr "Invoices"
 
@@ -818,7 +938,7 @@ msgid "Mês"
 msgstr "Month"
 
 #: mainApp/templates/mainApp/invoices.html:31
-#: mainApp/templates/mainApp/manageAgreements.html:48
+#: mainApp/templates/mainApp/manageAgreements.html:65
 msgid "Estado"
 msgstr "Status"
 
@@ -833,7 +953,7 @@ msgstr "Send warning"
 
 #: mainApp/templates/mainApp/invoices.html:53
 #: mainApp/templates/mainApp/invoices.html:63
-#: mainApp/templates/mainApp/manageAgreements.html:128
+#: mainApp/templates/mainApp/manageAgreements.html:150
 msgid "A aguardar pagamento"
 msgstr "Awaiting payment"
 
@@ -842,7 +962,7 @@ msgid "Pagamento recebido"
 msgstr "Paid"
 
 #: mainApp/templates/mainApp/invoices.html:57
-#: mainApp/templates/mainApp/manageAgreements.html:103
+#: mainApp/templates/mainApp/manageAgreements.html:122
 msgid "Aviso enviado"
 msgstr "Warning sent"
 
@@ -854,6 +974,46 @@ msgstr "Payment is late!"
 msgid "Pagamento efetuado"
 msgstr "Paid"
 
+#: mainApp/templates/mainApp/landLord.html:13
+msgid "Adicione a sua primeira propriedade!"
+msgstr "Add your first property!"
+
+#: mainApp/templates/mainApp/landLord.html:16
+#: mainApp/templates/mainApp/landLord.html:21
+#: mainApp/templates/mainApp/landLord.html:26
+msgid "Passo"
+msgstr "Step"
+
+#: mainApp/templates/mainApp/landLord.html:16
+msgid "Informações gerais"
+msgstr "General information"
+
+#: mainApp/templates/mainApp/landLord.html:19
+msgid "Inserir informações gerais como a morada, regras tipo de alojamento"
+msgstr "Insert general information such as address, accommodation type rules"
+
+#: mainApp/templates/mainApp/landLord.html:21
+msgid "Adicionar dimensões"
+msgstr "Add dimensions"
+
+#: mainApp/templates/mainApp/landLord.html:24
+msgid "Indicar o que contem cada uma das divisões da casa"
+msgstr "Indicate the contents of each room in the house"
+
+#: mainApp/templates/mainApp/landLord.html:26
+msgid "Criar um anúncio"
+msgstr "Add a listing"
+
+#: mainApp/templates/mainApp/landLord.html:29
+msgid ""
+"Criar um anúncio contendo imagens, descrição, valores e datas em que a "
+"propriedade está disponível"
+msgstr "Create an ad containing images, description, values and dates when the property is available"
+
+#: mainApp/templates/mainApp/landLord.html:34
+msgid "Adicionar Alojamento!"
+msgstr "Add property"
+
 #: mainApp/templates/mainApp/listingPage.html:23
 msgid "Já mostrou interesse."
 msgstr "You have already shown interest"
@@ -863,7 +1023,7 @@ msgid "Só pode enviar uma mensagem de interesse para cada propriedade"
 msgstr "You can only show interest to a property once"
 
 #: mainApp/templates/mainApp/listingPage.html:35
-#: mainApp/templates/mainApp/profile.html:140
+#: mainApp/templates/mainApp/manageAgreements.html:248
 msgid "Ok"
 msgstr "Ok"
 
@@ -903,20 +1063,24 @@ msgstr "Availability"
 msgid "Ver Perfil"
 msgstr "See profile"
 
-#: mainApp/templates/mainApp/listingPage.html:174
-#: mainApp/templates/mainApp/listingPage.html:177
+#: mainApp/templates/mainApp/listingPage.html:163
+msgid "Chat"
+msgstr "Chat"
+
+#: mainApp/templates/mainApp/listingPage.html:175
+#: mainApp/templates/mainApp/listingPage.html:178
 msgid "Mostrar Interesse"
 msgstr "Show interest"
 
-#: mainApp/templates/mainApp/listingPage.html:189
+#: mainApp/templates/mainApp/listingPage.html:190
 msgid "Detalhes"
 msgstr "Features"
 
-#: mainApp/templates/mainApp/listingPage.html:262
+#: mainApp/templates/mainApp/listingPage.html:263
 msgid "Sala de estar"
 msgstr "Livingroom"
 
-#: mainApp/templates/mainApp/listingPage.html:294
+#: mainApp/templates/mainApp/listingPage.html:295
 msgid "Despesas incluídas"
 msgstr "Expenses included"
 
@@ -939,7 +1103,7 @@ msgid "Tipo"
 msgstr "Type"
 
 #: mainApp/templates/mainApp/listingsManagement.html:56
-#: mainApp/templates/mainApp/manageAgreements.html:74
+#: mainApp/templates/mainApp/manageAgreements.html:93
 msgid "Ativo"
 msgstr "Active"
 
@@ -955,7 +1119,8 @@ msgstr "Delete"
 msgid ""
 "Não tem nenhum anúncio para esta propriedade, pretende anunciar esta "
 "propriedade?"
-msgstr "You haven't create a listing for this property yet, do you want to do it now?"
+msgstr ""
+"You haven't create a listing for this property yet, do you want to do it now?"
 
 #: mainApp/templates/mainApp/login.html:30
 msgid "Confirmação E-mail"
@@ -966,15 +1131,6 @@ msgid ""
 "Enviámos-lhe um email de confirmação de conta, por favor confirme-a assim "
 "que possível."
 msgstr "We just sent you an email to confirm your account, please check it out"
-
-#: mainApp/templates/mainApp/login.html:44
-#: mainApp/templates/mainApp/login.html:64
-#: mainApp/templates/mainApp/login.html:83
-#: mainApp/templates/mainApp/manageAgreements.html:173
-#: mainApp/templates/mainApp/profile.html:67
-#: mainApp/templates/mainApp/pw_reset.html:25
-msgid "Fechar"
-msgstr "Close"
 
 #: mainApp/templates/mainApp/login.html:55
 #: mainApp/templates/mainApp/pw_reset.html:16
@@ -1009,257 +1165,320 @@ msgstr "Login"
 msgid "Registe-se agora"
 msgstr "Register now"
 
-#: mainApp/templates/mainApp/manageAgreements.html:29
-#: mainApp/templates/mainApp/notificationsTenant.html:279
-#: mainApp/templates/mainApp/profile.html:174
+#: mainApp/templates/mainApp/manageAgreements.html:46
+#: mainApp/templates/mainApp/notificationsTenant.html:323
+#: mainApp/templates/mainApp/profile.html:158
 msgid "Gerir Acordos"
 msgstr "Manage agreements"
 
-#: mainApp/templates/mainApp/manageAgreements.html:36
+#: mainApp/templates/mainApp/manageAgreements.html:53
 msgid "Ainda não existem acordos"
 msgstr "You have no agreements"
 
-#: mainApp/templates/mainApp/manageAgreements.html:50
+#: mainApp/templates/mainApp/manageAgreements.html:67
 msgid "Início"
 msgstr "Starting date"
 
-#: mainApp/templates/mainApp/manageAgreements.html:51
+#: mainApp/templates/mainApp/manageAgreements.html:68
 msgid "Fim"
 msgstr "Ending Date"
 
-#: mainApp/templates/mainApp/manageAgreements.html:53
+#: mainApp/templates/mainApp/manageAgreements.html:70
 #: mainApp/templates/mainApp/paymentRefunds.html:21
-#: mainApp/templates/mainApp/register.html:105 mainApp/views.py:990
-#: mainApp/views.py:1019 mainApp/views.py:1039
+#: mainApp/templates/mainApp/register.html:119 mainApp/views.py:1047
+#: mainApp/views.py:1081 mainApp/views.py:1105
 msgid "Inquilino"
 msgstr "Tenant"
 
-#: mainApp/templates/mainApp/manageAgreements.html:54
+#: mainApp/templates/mainApp/manageAgreements.html:71
 msgid "Emitir Fatura"
 msgstr "Issue invoice"
 
-#: mainApp/templates/mainApp/manageAgreements.html:55
+#: mainApp/templates/mainApp/manageAgreements.html:72
 msgid "Pagamento em atraso"
 msgstr "Payment late"
 
-#: mainApp/templates/mainApp/manageAgreements.html:57
-#: mainApp/templates/mainApp/payment.html:21
-#: mainApp/templates/mainApp/register.html:108
-#: mainApp/templates/mainApp/reviewProperty.html:72 mainApp/views.py:1056
-msgid "Senhorio"
-msgstr "Landlord"
-
-#: mainApp/templates/mainApp/manageAgreements.html:58
+#: mainApp/templates/mainApp/manageAgreements.html:75
 msgid "Pagamento"
 msgstr "Payment"
 
-#: mainApp/templates/mainApp/manageAgreements.html:61
+#: mainApp/templates/mainApp/manageAgreements.html:78
 #: mainApp/templates/mainApp/receiptPDF.html:6
 #: mainApp/templates/mainApp/receiptPDF.html:66
 #: mainApp/templates/mainApp/receiptPDF.html:77
 msgid "Recibo"
 msgstr "Receipt"
 
-#: mainApp/templates/mainApp/manageAgreements.html:63
+#: mainApp/templates/mainApp/manageAgreements.html:80
 msgid "Incidencias e término"
-msgstr ""
+msgstr "Occurrences and terminaiting"
 
-#: mainApp/templates/mainApp/manageAgreements.html:76
+#: mainApp/templates/mainApp/manageAgreements.html:82
+msgid "Opções para o acordo"
+msgstr "Agreement options"
+
+#: mainApp/templates/mainApp/manageAgreements.html:95
 msgid "Inativo"
 msgstr "Inactive"
 
-#: mainApp/templates/mainApp/manageAgreements.html:89
+#: mainApp/templates/mainApp/manageAgreements.html:108
 msgid "Fatura de"
 msgstr "Invoice of"
 
-#: mainApp/templates/mainApp/manageAgreements.html:92
+#: mainApp/templates/mainApp/manageAgreements.html:111
 msgid "Fatura emitida"
 msgstr "Invoice sent"
 
-#: mainApp/templates/mainApp/manageAgreements.html:97
-#: mainApp/templates/mainApp/manageAgreements.html:124
+#: mainApp/templates/mainApp/manageAgreements.html:116
+#: mainApp/templates/mainApp/manageAgreements.html:146
 msgid "Existem atrasos!"
 msgstr "Payment is late"
 
-#: mainApp/templates/mainApp/manageAgreements.html:99
+#: mainApp/templates/mainApp/manageAgreements.html:118
 msgid "Não existem atrasos"
 msgstr "Payment is not late"
 
-#: mainApp/templates/mainApp/manageAgreements.html:101
-#: mainApp/templates/mainApp/manageAgreements.html:126
+#: mainApp/templates/mainApp/manageAgreements.html:120
+#: mainApp/templates/mainApp/manageAgreements.html:148
 msgid "Pagamentos em dia"
 msgstr "Payments up to date"
 
-#: mainApp/templates/mainApp/manageAgreements.html:159
-#: mainApp/templates/mainApp/notificationsTenant.html:95
-#: mainApp/templates/mainApp/notificationsTenant.html:108
+#: mainApp/templates/mainApp/manageAgreements.html:140
+msgid "Relatar Incidencias"
+msgstr "Register occurrence"
+
+#: mainApp/templates/mainApp/manageAgreements.html:178
+msgid "Renovar acordo"
+msgstr "Renew agreement"
+
+#: mainApp/templates/mainApp/manageAgreements.html:180
+#: mainApp/templates/mainApp/manageAgreements.html:209
+msgid "Terminar acordo"
+msgstr "End agreement"
+
+#: mainApp/templates/mainApp/manageAgreements.html:184
+msgid "Terminar Acordo"
+msgstr "End agreement"
+
+#: mainApp/templates/mainApp/manageAgreements.html:191
+msgid "Avaliar"
+msgstr "Rate"
+
+#: mainApp/templates/mainApp/manageAgreements.html:216
+msgid "Tem a certeza que deseja eliminar o seu acordo atual?"
+msgstr "Are you sure you want to delete your current agreement"
+
+#: mainApp/templates/mainApp/manageAgreements.html:219
+msgid "Receberá um reembolso de"
+msgstr "You will receive a refund of"
+
+#: mainApp/templates/mainApp/manageAgreements.html:225
+msgid "Sim"
+msgstr "Yes"
+
+#: mainApp/templates/mainApp/manageAgreements.html:227
+msgid "Não"
+msgstr "No"
+
+#: mainApp/templates/mainApp/manageAgreements.html:238
+msgid "Pagamentos em atraso"
+msgstr "Late payments"
+
+#: mainApp/templates/mainApp/manageAgreements.html:245
+msgid ""
+"Não pode cancelar o seu acordo atual enquanto tiver pagamentos em atraso."
+msgstr ""
+"You can not cancel your current agreement while you are behind on payments"
+
+#: mainApp/templates/mainApp/manageAgreements.html:259
+#: mainApp/templates/mainApp/notificationsTenant.html:121
+#: mainApp/templates/mainApp/notificationsTenant.html:134
 msgid "Aviso de pagamento em atraso"
 msgstr "Warning of late payment"
 
-#: mainApp/templates/mainApp/manageAgreements.html:168
+#: mainApp/templates/mainApp/manageAgreements.html:268
 msgid "O aviso de pagamento em atraso foi enviado para o inquilino com sucesso"
 msgstr "The late payment warning was sent to the tenant successfully"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:45
+#: mainApp/templates/mainApp/notificationsLandlord.html:19
 #: mainApp/templates/mainApp/notificationsTenant.html:18
 msgid "Recentemente"
 msgstr "Recently"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:90
-#: mainApp/templates/mainApp/notificationsLandlord.html:104
+#: mainApp/templates/mainApp/notificationsLandlord.html:63
+#: mainApp/templates/mainApp/notificationsLandlord.html:77
+#: mainApp/templates/mainApp/notificationsLandlord.html:166
 msgid "Reembolso"
 msgstr "Refund"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:127
-#: mainApp/templates/mainApp/notificationsLandlord.html:189
-#: mainApp/templates/mainApp/notificationsTenant.html:143
-msgid "Assunto"
-msgstr "Subject"
+#: mainApp/templates/mainApp/notificationsLandlord.html:102
+msgid "Interessado"
+msgstr "Interested"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:130
-#: mainApp/templates/mainApp/notificationsLandlord.html:192
-#: mainApp/templates/mainApp/notificationsTenant.html:146
-#: mainApp/templates/mainApp/notificationsTenant.html:210
-#: mainApp/templates/mainApp/notificationsTenant.html:252
+#: mainApp/templates/mainApp/notificationsLandlord.html:105
+#: mainApp/templates/mainApp/notificationsLandlord.html:169
+#: mainApp/templates/mainApp/notificationsTenant.html:162
+#: mainApp/templates/mainApp/notificationsTenant.html:235
+#: mainApp/templates/mainApp/notificationsTenant.html:289
 msgid "Remetente"
 msgstr "Sender"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:137
-#: mainApp/templates/mainApp/notificationsLandlord.html:199
-#: mainApp/templates/mainApp/notificationsTenant.html:153
-msgid "Data Início"
-msgstr "Starting date"
-
-#: mainApp/templates/mainApp/notificationsLandlord.html:141
-#: mainApp/templates/mainApp/notificationsTenant.html:157
-msgid "Data término"
-msgstr "Ending date"
-
-#: mainApp/templates/mainApp/notificationsLandlord.html:145
-#: mainApp/templates/mainApp/notificationsLandlord.html:207
-#: mainApp/templates/mainApp/notificationsTenant.html:161
+#: mainApp/templates/mainApp/notificationsLandlord.html:112
+#: mainApp/templates/mainApp/notificationsLandlord.html:176
+#: mainApp/templates/mainApp/notificationsTenant.html:169
+#: mainApp/templates/mainApp/notificationsTenant.html:242
+#: mainApp/templates/mainApp/notificationsTenant.html:296
 msgid "Propriedade"
 msgstr "Property"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:149
+#: mainApp/templates/mainApp/notificationsLandlord.html:119
+#: mainApp/templates/mainApp/notificationsLandlord.html:183
+#: mainApp/templates/mainApp/notificationsTenant.html:176
+msgid "Data Início"
+msgstr "Starting date"
+
+#: mainApp/templates/mainApp/notificationsLandlord.html:123
+#: mainApp/templates/mainApp/notificationsTenant.html:180
+msgid "Data término"
+msgstr "Ending date"
+
+#: mainApp/templates/mainApp/notificationsLandlord.html:127
 msgid "Mensagem do Interessado"
 msgstr "Message from the interested"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:155
+#: mainApp/templates/mainApp/notificationsLandlord.html:133
 msgid "Mensagem de resposta (opcional)"
 msgstr "Message (optional)"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:163
+#: mainApp/templates/mainApp/notificationsLandlord.html:141
 msgid "Recusar"
 msgstr "Refuse"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:164
+#: mainApp/templates/mainApp/notificationsLandlord.html:142
 msgid "Aceitar"
 msgstr "Accept"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:171
-#: mainApp/templates/mainApp/notificationsTenant.html:166
+#: mainApp/templates/mainApp/notificationsLandlord.html:149
+#: mainApp/templates/mainApp/notificationsTenant.html:185
 msgid "A sua mensagem"
 msgstr "Your message"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:176
-#: mainApp/templates/mainApp/notificationsLandlord.html:232
+#: mainApp/templates/mainApp/notificationsLandlord.html:154
+#: mainApp/templates/mainApp/notificationsLandlord.html:208
 msgid "Estado do pedido"
 msgstr "State of the request"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:178
-#: mainApp/templates/mainApp/notificationsTenant.html:173
+#: mainApp/templates/mainApp/notificationsLandlord.html:156
+#: mainApp/templates/mainApp/notificationsTenant.html:192
 msgid "Aceite"
 msgstr "Accepted"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:180
-#: mainApp/templates/mainApp/notificationsTenant.html:176
+#: mainApp/templates/mainApp/notificationsLandlord.html:158
+#: mainApp/templates/mainApp/notificationsTenant.html:199
 msgid "Recusado"
 msgstr "Refused"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:203
+#: mainApp/templates/mainApp/notificationsLandlord.html:187
 msgid "Data de término planeada"
 msgstr "Ending date"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:211
-msgid "Nome do inquilino"
-msgstr "Tenant's name"
-
-#: mainApp/templates/mainApp/notificationsLandlord.html:215
-msgid "Valor do reembolso"
-msgstr "Refund amount"
-
-#: mainApp/templates/mainApp/notificationsLandlord.html:219
+#: mainApp/templates/mainApp/notificationsLandlord.html:191
 msgid "Data de cancelamento do acordo"
 msgstr "Agreement cancellation date"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:224
-#: mainApp/templates/mainApp/notificationsTenant.html:226
-#: mainApp/templates/mainApp/notificationsTenant.html:260
+#: mainApp/templates/mainApp/notificationsLandlord.html:195
+msgid "Valor do reembolso"
+msgstr "Refund amount"
+
+#: mainApp/templates/mainApp/notificationsLandlord.html:200
+#: mainApp/templates/mainApp/notificationsTenant.html:258
+#: mainApp/templates/mainApp/notificationsTenant.html:304
 msgid "Mensagem"
 msgstr "Message"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:233
+#: mainApp/templates/mainApp/notificationsLandlord.html:201
+msgid "O utilizador"
+msgstr "The user "
+
+#: mainApp/templates/mainApp/notificationsLandlord.html:201
+msgid "decidiu terminar o acordo planeado inicialmente."
+msgstr "decided to end the initially planned agreement."
+
+#: mainApp/templates/mainApp/notificationsLandlord.html:202
+msgid ""
+"Você fica então responsabilizado de pagar o reembolso relativo aos dias que "
+"faltavam para terminar o acordo inicial."
+msgstr "You are then responsible for paying the refund for the days left to complete the initial agreement."
+
+#: mainApp/templates/mainApp/notificationsLandlord.html:209
 msgid "Pago"
 msgstr "Paid"
 
-#: mainApp/templates/mainApp/notificationsLandlord.html:240
+#: mainApp/templates/mainApp/notificationsLandlord.html:216
 msgid "Pagar"
 msgstr "Make payment"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:33
-#: mainApp/templates/mainApp/notificationsTenant.html:47
-#: mainApp/templates/mainApp/notificationsTenant.html:171
+#: mainApp/templates/mainApp/notificationsTenant.html:34
+#: mainApp/templates/mainApp/notificationsTenant.html:48
+#: mainApp/templates/mainApp/notificationsTenant.html:159
+#: mainApp/templates/mainApp/notificationsTenant.html:190
 msgid "Resposta ao seu pedido de alojamento"
 msgstr "Answer to your agreement proposal"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:65
-#: mainApp/templates/mainApp/notificationsTenant.html:78
+#: mainApp/templates/mainApp/notificationsTenant.html:63
+#: mainApp/templates/mainApp/notificationsTenant.html:77
+msgid "À espera de resposta ao seu pedido de alojamento"
+msgstr "Waiting for a response to your accommodation request"
+
+#: mainApp/templates/mainApp/notificationsTenant.html:93
+#: mainApp/templates/mainApp/notificationsTenant.html:106
 msgid "Fatura do mês de "
 msgstr "Invoice of "
 
-#: mainApp/templates/mainApp/notificationsTenant.html:123
-msgid "Aviso de Relato de Incidencia em Aluguer"
-msgstr ""
-
-#: mainApp/templates/mainApp/notificationsTenant.html:179
+#: mainApp/templates/mainApp/notificationsTenant.html:195
+#: mainApp/templates/mainApp/notificationsTenant.html:202
 msgid "Mensagem do senhorio"
 msgstr "Landlord's message"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:189
+#: mainApp/templates/mainApp/notificationsTenant.html:206
+msgid "Não respondido"
+msgstr "Not answered"
+
+#: mainApp/templates/mainApp/notificationsTenant.html:215
+#: mainApp/templates/mainApp/notificationsTenant.html:271
 msgid "Realizar Pagamento"
 msgstr "Make payment"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:217
+#: mainApp/templates/mainApp/notificationsTenant.html:249
 msgid "Data de envio"
 msgstr "Issued at"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:221
+#: mainApp/templates/mainApp/notificationsTenant.html:253
 msgid "Data limite de pagamento"
 msgstr "Payment deadline"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:230
+#: mainApp/templates/mainApp/notificationsTenant.html:262
 msgid "Envio-lhe a fatura do mês de"
 msgstr "I am sending you the invoice of "
 
-#: mainApp/templates/mainApp/notificationsTenant.html:231
+#: mainApp/templates/mainApp/notificationsTenant.html:263
 msgid ", relativa ao alojamento localizado em"
 msgstr ", regarding the house located at"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:232
-#: mainApp/templates/mainApp/notificationsTenant.html:266
+#: mainApp/templates/mainApp/notificationsTenant.html:264
+#: mainApp/templates/mainApp/notificationsTenant.html:310
 msgid "e com um anúncio intitulado"
 msgstr "with a listing called"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:249
+#: mainApp/templates/mainApp/notificationsTenant.html:286
 msgid "Aviso de Pagamento em Atraso"
 msgstr "Warning of Late Payment"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:264
+#: mainApp/templates/mainApp/notificationsTenant.html:308
 msgid "Esta mensagem foi enviada pelo senhorio"
 msgstr "This message was sent by landlord"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:265
+#: mainApp/templates/mainApp/notificationsTenant.html:309
 msgid ""
 " a fim de informar que já ultrapassou a data limite de 10 dias para o "
 "pagamento da renda relativa ao alojamento localizado em"
@@ -1267,7 +1486,7 @@ msgstr ""
 " with the purpose of informing that the 10 days, given to make the rent "
 "payment, are up. This warning regards the house located at"
 
-#: mainApp/templates/mainApp/notificationsTenant.html:271
+#: mainApp/templates/mainApp/notificationsTenant.html:315
 msgid ""
 "Para gerir acordos e visualizar as suas faturas, clique no botão a baixo"
 msgstr ""
@@ -1281,33 +1500,33 @@ msgstr "AMOUNT TO PAY"
 #: mainApp/templates/mainApp/payment.html:30
 #: mainApp/templates/mainApp/paymentRefunds.html:30
 #: mainApp/templates/mainApp/reasons.html:29
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:35
-#: mainApp/templates/mainApp/startsAgreementTenent.html:34
 msgid "Data de entrada"
 msgstr "Entry date"
 
 #: mainApp/templates/mainApp/payment.html:34
 #: mainApp/templates/mainApp/paymentRefunds.html:34
 #: mainApp/templates/mainApp/reasons.html:33
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:36
-#: mainApp/templates/mainApp/startsAgreementTenent.html:35
 msgid "Data de saída"
 msgstr "Leaving date"
 
-#: mainApp/templates/mainApp/profile.html:53
+#: mainApp/templates/mainApp/profile.html:65
+msgid "Sucesso"
+msgstr "Success"
+
+#: mainApp/templates/mainApp/profile.html:90
 msgid "Adicionou uma nova propriedade!"
 msgstr "You just added a new property"
 
-#: mainApp/templates/mainApp/profile.html:62
+#: mainApp/templates/mainApp/profile.html:99
 msgid "Parabéns, adicionou uma nova propriedade à sua conta!"
 msgstr "Congratulations, you just added a new property!"
 
-#: mainApp/templates/mainApp/profile.html:79
-#: mainApp/templates/mainApp/profile.html:196
+#: mainApp/templates/mainApp/profile.html:116
+#: mainApp/templates/mainApp/profile.html:170
 msgid "Eliminar conta"
 msgstr "Delete account"
 
-#: mainApp/templates/mainApp/profile.html:85
+#: mainApp/templates/mainApp/profile.html:122
 msgid ""
 "Tem a certeza que pretede apagar a sua conta? Todos os seus dados serão "
 "eliminados e não poderam ser recuperados."
@@ -1315,111 +1534,60 @@ msgstr ""
 "Are you sure you want to delete your account? All your information will be "
 "permanently deleted and impossible to recover."
 
-#: mainApp/templates/mainApp/profile.html:89
+#: mainApp/templates/mainApp/profile.html:126
 msgid "Sim, pretendo eliminar a minha conta"
 msgstr "Yes, I want to delete my account"
 
-#: mainApp/templates/mainApp/profile.html:100
-msgid "Terminar acordo"
-msgstr "End agreement"
-
-#: mainApp/templates/mainApp/profile.html:107
-msgid "Tem a certeza que deseja eliminar o seu acordo atual?"
-msgstr "Are you sure you want to delete your current agreement"
-
-#: mainApp/templates/mainApp/profile.html:110
-msgid "Receberá um reembolso de"
-msgstr "You will receive a refund of"
-
-#: mainApp/templates/mainApp/profile.html:115
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:55
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:60
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:65
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:83
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:88
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:93
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:98
-msgid "Sim"
-msgstr "Yes"
-
-#: mainApp/templates/mainApp/profile.html:117
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:57
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:62
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:67
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:85
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:90
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:95
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:100
-msgid "Não"
-msgstr "No"
-
-#: mainApp/templates/mainApp/profile.html:128
-msgid "Pagamentos em atraso"
-msgstr "Late payments"
-
-#: mainApp/templates/mainApp/profile.html:135
-msgid ""
-"Não pode cancelar o seu acordo atual enquanto tiver pagamentos em atraso."
-msgstr "You can not cancel your current agreement while you are behind on payments"
-
-#: mainApp/templates/mainApp/profile.html:149
+#: mainApp/templates/mainApp/profile.html:133
 msgid "Perfil"
 msgstr "Profile"
 
-#: mainApp/templates/mainApp/profile.html:164
+#: mainApp/templates/mainApp/profile.html:148
 msgid "Gerir Alojamentos/Anuncios"
 msgstr "Manage properties and listings"
 
-#: mainApp/templates/mainApp/profile.html:169
+#: mainApp/templates/mainApp/profile.html:153
 msgid "Adicionar Alojamento"
 msgstr "Add property"
 
-#: mainApp/templates/mainApp/profile.html:181
+#: mainApp/templates/mainApp/profile.html:165
 msgid "Ver Acordos"
 msgstr "See agreements"
 
-#: mainApp/templates/mainApp/profile.html:185
-msgid "Terminar Acordo"
-msgstr "End agreement"
-
-#: mainApp/templates/mainApp/profile.html:190
-msgid "Renovar Acordo"
-msgstr "Renew agreement"
-
-#: mainApp/templates/mainApp/profile.html:219
+#: mainApp/templates/mainApp/profile.html:199
 msgid "Primeiro Nome"
 msgstr "First Name"
 
-#: mainApp/templates/mainApp/profile.html:223
+#: mainApp/templates/mainApp/profile.html:203
 msgid "Último Nome"
 msgstr "Last Name"
 
-#: mainApp/templates/mainApp/profile.html:229
-#: mainApp/templates/mainApp/profileLandlord.html:93
-#: mainApp/templates/mainApp/profileTenant.html:92
+#: mainApp/templates/mainApp/profile.html:209
+#: mainApp/templates/mainApp/profileLandlord.html:195
+#: mainApp/templates/mainApp/profileTenant.html:52
 msgid "Email"
 msgstr "Email"
 
-#: mainApp/templates/mainApp/profile.html:239
-#: mainApp/templates/mainApp/register.html:90
+#: mainApp/templates/mainApp/profile.html:219
+#: mainApp/templates/mainApp/register.html:104
 msgid "Data de Nascimento"
 msgstr "Birth date"
 
-#: mainApp/templates/mainApp/profile.html:246
-#: mainApp/templates/mainApp/profile.html:268
+#: mainApp/templates/mainApp/profile.html:233
+#: mainApp/templates/mainApp/profile.html:255
 msgid "Guardar Alterações"
 msgstr "Save changes"
 
-#: mainApp/templates/mainApp/profile.html:252
-#: mainApp/templates/mainApp/profileTenant.html:86
+#: mainApp/templates/mainApp/profile.html:239
+#: mainApp/templates/mainApp/profileTenant.html:46
 msgid "Universidade"
 msgstr "University"
 
-#: mainApp/templates/mainApp/profile.html:258
+#: mainApp/templates/mainApp/profile.html:245
 msgid "Valor mínimo da pesquisa"
 msgstr "Lowest search price"
 
-#: mainApp/templates/mainApp/profile.html:262
+#: mainApp/templates/mainApp/profile.html:249
 msgid "Valor máximo da pesquisa"
 msgstr "Highest search price"
 
@@ -1428,24 +1596,22 @@ msgstr "Highest search price"
 msgid "Dados Pessoais"
 msgstr "Personal information"
 
-#: mainApp/templates/mainApp/profileLandlord.html:46
-#: mainApp/templates/mainApp/profileTenant.html:45
+#: mainApp/templates/mainApp/profileLandlord.html:41
 msgid "Avaliação"
 msgstr "Rating"
 
-#: mainApp/templates/mainApp/profileLandlord.html:83
-#: mainApp/templates/mainApp/profileTenant.html:82
-msgid "Nome"
-msgstr "Name"
+#: mainApp/templates/mainApp/profileLandlord.html:47
+msgid "avaliações"
+msgstr "Ratings"
 
-#: mainApp/templates/mainApp/profileLandlord.html:87
+#: mainApp/templates/mainApp/profileLandlord.html:189
 msgid "Tipo de Senhorio"
 msgstr "Landlord type"
 
-#: mainApp/templates/mainApp/profileLandlord.html:102
-#: mainApp/templates/mainApp/profileTenant.html:101
+#: mainApp/templates/mainApp/profileLandlord.html:204
+#: mainApp/templates/mainApp/profileTenant.html:61
 msgid "Histórico de Incidências"
-msgstr ""
+msgstr "Occurrences"
 
 #: mainApp/templates/mainApp/propertiesManagement.html:31
 msgid "Editar Alojamento"
@@ -1516,13 +1682,84 @@ msgstr "Your username is:"
 msgid "Obrigado por utilizar o nosso site!"
 msgstr "Thank you for choosing our website"
 
+#: mainApp/templates/mainApp/reasons.html:13
+msgid "Término do aluguer"
+msgstr "Agreement ending"
+
+#: mainApp/templates/mainApp/reasons.html:19
+msgid "Dados do aluguer"
+msgstr "Agreement info:"
+
+#: mainApp/templates/mainApp/reasons.html:21
+msgid "Nome do inquilino"
+msgstr "Tenant's name"
+
+#: mainApp/templates/mainApp/reasons.html:25
+msgid "Nome da propriedade"
+msgstr "Property name"
+
 #: mainApp/templates/mainApp/reasons.html:37
 msgid "Duração do contrato"
 msgstr "Agreement duration"
 
+#: mainApp/templates/mainApp/reasons.html:46
+msgid "Selecione caraterísticas que comprometam a relação senhorio-inquilino"
+msgstr "Select features that compromise the landlord-tenant relationship"
+
+#: mainApp/templates/mainApp/reasons.html:47
+msgid "Pelo menos uma razão deve ser fornecida"
+msgstr "At least one reason must be provided"
+
+#: mainApp/templates/mainApp/reasons.html:53
+msgid "Incumprimento do prazo de pagamento das rendas"
+msgstr "Non-compliance with the term for payment of rents"
+
+#: mainApp/templates/mainApp/reasons.html:58
+msgid "Utilização inadequada do recheio da propriedade, danificando a mesma"
+msgstr "Inappropriate use of the property's filling, damaging it"
+
+#: mainApp/templates/mainApp/reasons.html:63
+msgid "Incumprimento continuado da lei do ruído"
+msgstr "Continued failure to comply with the noise law"
+
+#: mainApp/templates/mainApp/reasons.html:68
+msgid "Violação de uma regra específica do contrato de aluguer"
+msgstr "Violation of a specific rule of the rental agreement"
+
+#: mainApp/templates/mainApp/reasons.html:73
+msgid "Desacatos com vizinhos e mal-estar geral com a vizinhança"
+msgstr "Conflicts with neighbors and general uneasiness with the neighborhood"
+
+#: mainApp/templates/mainApp/reasons.html:78
+msgid ""
+"Exceder frequentemente a lotação máxima da propriedade sem custos associados"
+msgstr "Often exceeding the maximum capacity of the property without associated costs"
+
+#: mainApp/templates/mainApp/reasons.html:81
+msgid ""
+"Para além das opções assinaldas pode escrever uma breve descrição que "
+"ilustre a situação no campo abaixo"
+msgstr "In addition to the checked options, you can write a brief description that illustrate the situation in the field below"
+
+#: mainApp/templates/mainApp/reasons.html:87
+msgid "Apenas adicionar uma incidência"
+msgstr "Add only one incidence"
+
+#: mainApp/templates/mainApp/reasons.html:90
+msgid "Terminar o contrato de aluguer"
+msgstr "End agreement"
+
 #: mainApp/templates/mainApp/reasons.html:105
 msgid "Atenção!"
 msgstr "Warning!"
+
+#: mainApp/templates/mainApp/reasons.html:111
+msgid "Tem a certeza que pertende terminar o contrato de alguer?"
+msgstr "Are you sure you want to delete this agreement"
+
+#: mainApp/templates/mainApp/reasons.html:112
+msgid "Esta ação não poderá ser revertida"
+msgstr "This action cannot be reversed"
 
 #: mainApp/templates/mainApp/receiptPDF.html:82
 msgid "Recebido por"
@@ -1548,59 +1785,63 @@ msgstr "See receipt"
 msgid "Registo"
 msgstr "Registration"
 
-#: mainApp/templates/mainApp/register.html:71
+#: mainApp/templates/mainApp/register.html:76
 msgid "E-mail"
 msgstr "E-mail"
 
-#: mainApp/templates/mainApp/register.html:103
+#: mainApp/templates/mainApp/register.html:117
 msgid "Tipo de Conta"
 msgstr "Account type"
 
-#: mainApp/templates/mainApp/renewAgreement.html:16
+#: mainApp/templates/mainApp/renewAgreement.html:17
 msgid "Quero renovar!"
 msgstr "I want to extend it!"
 
-#: mainApp/templates/mainApp/renewAgreement.html:37
+#: mainApp/templates/mainApp/renewAgreement.html:38
 msgid "Introduza uma mensagem a enviar ao senhorio..."
 msgstr "Write your message to the landlord here"
 
-#: mainApp/templates/mainApp/renewAgreement.html:49
+#: mainApp/templates/mainApp/renewAgreement.html:46
+msgid "Informação do acordo atual"
+msgstr "Current agreement info"
+
+#: mainApp/templates/mainApp/renewAgreement.html:50
 msgid "Morada da propriedade"
 msgstr "Property address"
 
-#: mainApp/templates/mainApp/renewAgreement.html:50
+#: mainApp/templates/mainApp/renewAgreement.html:51
 msgid "Nome do senhorio"
 msgstr "Landlord's name"
 
-#: mainApp/templates/mainApp/reviewProperty.html:23
+#: mainApp/templates/mainApp/reviewProperty.html:24
 msgid "Avaliação da sua estadia"
 msgstr "Review your staying"
 
-#: mainApp/templates/mainApp/reviewProperty.html:50
+#: mainApp/templates/mainApp/reviewProperty.html:51
 msgid "Estado do alojamento"
 msgstr "Property condition"
 
-#: mainApp/templates/mainApp/reviewProperty.html:98
+#: mainApp/templates/mainApp/reviewProperty.html:99
 msgid "Serviços nas proximidades"
 msgstr "Services nearby"
 
-#: mainApp/templates/mainApp/reviewProperty.html:120
+#: mainApp/templates/mainApp/reviewProperty.html:121
 msgid "Facilidade de acesso"
 msgstr "Accessibility"
 
-#: mainApp/templates/mainApp/reviewProperty.html:146
+#: mainApp/templates/mainApp/reviewProperty.html:147
 msgid "Vizinhança"
 msgstr "Neighbours"
 
-#: mainApp/templates/mainApp/reviewProperty.html:168
+#: mainApp/templates/mainApp/reviewProperty.html:169
 msgid "Outros Inquilinos"
 msgstr "Other tenants"
 
-#: mainApp/templates/mainApp/reviewProperty.html:199
+#: mainApp/templates/mainApp/reviewProperty.html:202
 msgid "Por favor preencha todos os parâmetros de avaliação antes de submeter"
 msgstr "Please fill all the fields before submiting"
 
-#: mainApp/templates/mainApp/reviewProperty.html:204
+#: mainApp/templates/mainApp/reviewProperty.html:207
 msgid "Submeter Avaliação"
 msgstr "Submit review"
 
@@ -1624,104 +1865,185 @@ msgstr "Km away"
 msgid "Não foram encontrados resultados para a sua pesquisa."
 msgstr "No results found :("
 
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:15
-#: mainApp/templates/mainApp/startsAgreementTenent.html:14
-msgid "Descrição do Acordo"
-msgstr "Agreement description"
+#: mainApp/templates/mainApp/user_manual.html:19
+msgid "Manual do utilizador"
+msgstr "User Manual"
 
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:28
-#: mainApp/templates/mainApp/startsAgreementTenent.html:27
-msgid "Condições de Arrendamento"
-msgstr "Rental conditions"
+#: mainApp/templates/mainApp/user_manual.html:22
+msgid "Geral"
+msgstr "General"
 
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:39
-#: mainApp/templates/mainApp/startsAgreementTenent.html:38
-msgid "Frequência dos Serviços de limpeza"
-msgstr "Cleaning services frequency"
+#: mainApp/templates/mainApp/user_manual.html:26
+msgid "Como posso registar-me"
+msgstr "How can I register"
 
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:53
-#: mainApp/templates/mainApp/startsAgreementTenent.html:52
-msgid "Animais de estimação permitidos"
-msgstr "Pets allowed"
+#: mainApp/templates/mainApp/user_manual.html:29
+msgid "Atualizar a informação do teu perfil"
+msgstr "Update my profile info"
 
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:107
-#: mainApp/templates/mainApp/startsAgreementTenent.html:78
-msgid "Outros"
-msgstr "Others"
+#: mainApp/templates/mainApp/user_manual.html:32
+msgid "Fazer Logout"
+msgstr "Logout"
 
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:131
-msgid "Enviar acordo"
-msgstr "Send agreement"
+#: mainApp/templates/mainApp/user_manual.html:35
+msgid "Eliminar a minha conta"
+msgstr "Delete my account"
 
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:140
-msgid "Pretende enviar o acordo ao Inquilino"
-msgstr "Do you want to send the agreement to the tenant"
+#: mainApp/templates/mainApp/user_manual.html:41
+msgid "Senhorios"
+msgstr "Landlords"
 
-#: mainApp/templates/mainApp/sendAgreementLandlord.html:143
-#: mainApp/templates/mainApp/startsAgreementTenent.html:117
-msgid "Cancelar"
-msgstr "Cancel"
+#: mainApp/templates/mainApp/user_manual.html:45
+msgid "Adicionar uma propriedade"
+msgstr "Add a property"
 
-#: mainApp/templates/mainApp/startsAgreementTenent.html:54
-msgid "Permitido fumar"
-msgstr "Smoking allowed"
+#: mainApp/templates/mainApp/user_manual.html:48
+msgid "Iniciar um contrato com um inquilino"
+msgstr "Start a contract with a tenant"
 
-#: mainApp/templates/mainApp/startsAgreementTenent.html:94
-msgid "Li e aceito todas as regras acima estabelecidas"
-msgstr ""
-"I have read, understood and accept the rules and regulations set out above"
+#: mainApp/templates/mainApp/user_manual.html:51
+msgid "Verificar se há interesse numa propriedade por mim adicionada"
+msgstr "Check if there is interest in a property I added"
 
-#: mainApp/templates/mainApp/startsAgreementTenent.html:100
-msgid "Recusar Acordo"
-msgstr "Refuse agreement"
-
-#: mainApp/templates/mainApp/startsAgreementTenent.html:101
-msgid "Propor alterações"
-msgstr "Propose changes"
-
-#: mainApp/templates/mainApp/startsAgreementTenent.html:102
-msgid "Aceitar Acordo"
-msgstr "Accept agreement"
-
-#: mainApp/templates/mainApp/startsAgreementTenent.html:111
+#: mainApp/templates/mainApp/user_manual.html:54
 msgid ""
-"Confirma que pretende iniciar o acordo com as condições impostas pelo "
-"Senhorio disponibilizadas no acordo"
-msgstr ""
-"I intend to start and agree with the conditions set out by the landlord in "
-"the agreement"
+"Listar apenas uma propriedade sem colocá-la disponível para que outros "
+"utilizadores a vejam"
+msgstr "List only one property without making it available for other users to see"
 
-#: mainApp/templates/mainApp/startsAgreementTenent.html:114
+#: mainApp/templates/mainApp/user_manual.html:57
+msgid "Terminar um contrato depois de iniciado"
+msgstr "End a contract after it starts"
+
+#: mainApp/templates/mainApp/user_manual.html:60
+msgid "Comunicar com um possível interessado"
+msgstr "Communicate with a possible interested party"
+
+#: mainApp/templates/mainApp/user_manual.html:63
+msgid "Relatar alguma queixa caso exista em relação ao inquilino"
+msgstr "Report a complaint if it exists in relation to the tenant"
+
+#: mainApp/templates/mainApp/user_manual.html:69
+msgid "Inquilinos"
+msgstr "Tenants"
+
+#: mainApp/templates/mainApp/user_manual.html:73
+msgid "Como posso mostrar interesse num alojamento"
+msgstr "How can I show interest in a listing"
+
+#: mainApp/templates/mainApp/user_manual.html:76
+msgid "Como posso efetuar o pagamento do aluguer"
+msgstr "How can I pay the rent"
+
+#: mainApp/templates/mainApp/user_manual.html:79
+msgid "É possível não renovar um contrato de aluguer ou este não ser renovado"
+msgstr "It is possible not to renew a rental contract or it will not be renewed"
+
+#: mainApp/templates/mainApp/user_manual.html:82
+msgid "Como posso relatar um problema ao senhorio"
+msgstr "How can I report a problem to the landlord"
+
+#: mainApp/templates/mainApp/user_manual.html:85
+msgid "Como posso cancelar o aluguer de um alojamento"
+msgstr "How can I cancel the rental of an accommodation"
+
+#: mainApp/templates/mainApp/user_manual.html:88
+msgid "Como posso comunicar com o senhorio"
+msgstr "How can I communicate with the landlord"
+
+#: mainApp/templates/mainApp/user_manual.html:99
 msgid ""
-"O Senhorio será notificado e a informação do acordo será guardada na sua "
-"área pessoal e na área pessoal do Senhorio"
-msgstr ""
-"The landlord will be notified and the agreement will be stored in both your "
-"personal areas"
+"Caso tenha alguma dúvida acerca do funcionamento da aplicação ou queira "
+"reportar um erro envie-nos uma mensagem"
+msgstr "If you have any questions about the operation of the application or want to report an error send us a message"
 
-#: mainApp/views.py:630
+#: mainApp/views.py:639
 msgid "Depósito de Entrada"
 msgstr "Deposit"
 
-#: mainApp/views.py:643 mainApp/views.py:2342
+#: mainApp/views.py:652 mainApp/views.py:2509
 msgid "Renda do mês de "
 msgstr "Rent of "
 
-#: mainApp/views.py:706 mainApp/views.py:1464 mainApp/views.py:1565
+#: mainApp/views.py:720 mainApp/views.py:1544 mainApp/views.py:1658
 msgid "O senhorio não disponibilizou nenhuma mensagem"
 msgstr "The landlord did not include a message"
 
-#: mainApp/views.py:1798
+#: mainApp/views.py:1895
 msgid "Opção reservada a inquilinos."
 msgstr "Option available only to tenants"
 
-#: mainApp/views.py:2140 mainApp/views.py:2157
+#: mainApp/views.py:2245 mainApp/views.py:2262
 msgid ""
 "Ainda possui contratos ativos. Terá de terminar os contratos antes de "
 "eliminar os seus dados."
 msgstr ""
 "You still have active agreements. You need to terminate them in order to "
 "delete your account."
+
+#: mainApp/views.py:3035
+msgid "Obrigado pela sua avaliação!"
+msgstr "Thank you for your rating!"
+
+#~ msgid "Número de Telefone"
+#~ msgstr "Phone number"
+
+#~ msgid "Assunto"
+#~ msgstr "Subject"
+
+#~ msgid "Descrição do Acordo"
+#~ msgstr "Agreement description"
+
+#~ msgid "Condições de Arrendamento"
+#~ msgstr "Rental conditions"
+
+#~ msgid "Frequência dos Serviços de limpeza"
+#~ msgstr "Cleaning services frequency"
+
+#~ msgid "Animais de estimação permitidos"
+#~ msgstr "Pets allowed"
+
+#~ msgid "Outros"
+#~ msgstr "Others"
+
+#~ msgid "Enviar acordo"
+#~ msgstr "Send agreement"
+
+#~ msgid "Pretende enviar o acordo ao Inquilino"
+#~ msgstr "Do you want to send the agreement to the tenant"
+
+#~ msgid "Cancelar"
+#~ msgstr "Cancel"
+
+#~ msgid "Permitido fumar"
+#~ msgstr "Smoking allowed"
+
+#~ msgid "Li e aceito todas as regras acima estabelecidas"
+#~ msgstr ""
+#~ "I have read, understood and accept the rules and regulations set out above"
+
+#~ msgid "Recusar Acordo"
+#~ msgstr "Refuse agreement"
+
+#~ msgid "Propor alterações"
+#~ msgstr "Propose changes"
+
+#~ msgid "Aceitar Acordo"
+#~ msgstr "Accept agreement"
+
+#~ msgid ""
+#~ "Confirma que pretende iniciar o acordo com as condições impostas pelo "
+#~ "Senhorio disponibilizadas no acordo"
+#~ msgstr ""
+#~ "I intend to start and agree with the conditions set out by the landlord "
+#~ "in the agreement"
+
+#~ msgid ""
+#~ "O Senhorio será notificado e a informação do acordo será guardada na sua "
+#~ "área pessoal e na área pessoal do Senhorio"
+#~ msgstr ""
+#~ "The landlord will be notified and the agreement will be stored in both "
+#~ "your personal areas"
 
 #~ msgid "Cancelar Acordo"
 #~ msgstr "Refuse agreement"
@@ -1738,14 +2060,8 @@ msgstr ""
 #~ msgid "Ajuda-nos a procurar a melhorar a tua experiência!"
 #~ msgstr "Help us improve your overall experience"
 
-#~ msgid "Informação do perfil"
-#~ msgstr "Profile Info"
-
 #~ msgid "Por favor insira a sua nova palavra-passe"
 #~ msgstr "Write your new password"
-
-#~ msgid "Escolher ficheiro"
-#~ msgstr "Choose file"
 
 #~ msgid "Residência de estudantes"
 #~ msgstr "Student residence"
@@ -1756,14 +2072,8 @@ msgstr ""
 #~ msgid "Username ou password incorretos"
 #~ msgstr "Username or password incorrect"
 
-#~ msgid "Utilizador "
-#~ msgstr "User "
-
 #~ msgid " criado!"
 #~ msgstr " created!"
 
 #~ msgid "Tem que ter no mínimo uma casa de banho"
 #~ msgstr "You need at least one bathroom"
-
-#~ msgid "Tem que ter no mínimo um quarto"
-#~ msgstr "You need at least one bedroom"

@@ -63,6 +63,9 @@
                 font-size: 23px;
                 font-weight: 600;
             }
+            .bold{
+                font-weight: bold;
+            }
         </style>
     </head>
     <body>
@@ -88,7 +91,7 @@
                         (+351) 217 500 000
                     </td>
                     <td class="right-align">
-                        {% trans 'Data de Emissão' %}: {{today}}
+                        <p class="inline bold">{% trans 'Data de Emissão' %}:</p> {{today}}
                     </td>
                 </tr>
                 <tr>
@@ -96,7 +99,7 @@
                         info@ciencias.ulisboa.pt
                     </td>
                     <td class="right-align">
-                        {% trans 'Fatura' %} # {{order_id}}
+                        <p class="inline bold">{% trans 'Fatura' %}</p> # {{order_id}}
                     </td>
                 </tr>
             </table>

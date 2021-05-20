@@ -38,12 +38,12 @@
             <textarea class="border border-info border-3 mx-auto w-100 h-75" placeholder='{% trans "Introduza uma mensagem a enviar ao senhorio..." %}' style="text-indent: 0px;" name="message"></textarea>
             <div class="row mt-4">
                 <div class="col-sm-12">
-                    <button type="submit" class="btn btn-secondary btn-lg w-25">Enviar</button>
+                    <button type="submit" class="btn btn-secondary btn-lg w-25">{% trans 'Enviar' %}</button>
                 </div>
             </div>
         </form>
         <div class="col-sm-4 mt-4 mx-auto">
-                 <h5 class="font-weight-bold mb-4">Informação do acordo atual:</h5>
+                 <h5 class="font-weight-bold mb-4">{% trans 'Informação do acordo atual' %}:</h5>
                   <ul class="border border-info border-3">
                     <li class="mt-4"><span class="font-weight-bold">{% trans 'Data de Início' %}:</span> {{ startDate }}</li>
                     <li class="mt-4"><span class="font-weight-bold">{% trans 'Data de Fim' %}:</span> {{ endDate }}</li>

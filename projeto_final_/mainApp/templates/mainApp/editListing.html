@@ -93,7 +93,7 @@
                                             <img src="{% static i.0 %}" alt="" class="img-thumbnail">
                                         </div>
                                         <div class="row  justify-content-xs-center">
-                                            <a href="{{request.get_full_path}}/removeImage/{{i.1}}" class="mt-2 btn btn-primary">Remover</a>    
+                                            <a href="{{request.get_full_path}}/removeImage/{{i.1}}" class="mt-2 btn btn-primary">{% trans 'Remover' %}</a>    
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -111,7 +111,7 @@
                                                     <line x1="12" y1="11" x2="12" y2="17" />
                                                     <polyline points="9 14 12 11 15 14" />
                                                 </svg>
-                                                Choose file
+                                                {% trans 'Escolher ficheiro' %}
                                             </button>
                                             <button class="btn removeImage col-xs-4 px-0" type="button" onclick="remove_img(this)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#e76f51" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -139,7 +139,7 @@
                                                     <line x1="12" y1="11" x2="12" y2="17" />
                                                     <polyline points="9 14 12 11 15 14" />
                                                 </svg>
-                                                Choose file
+                                                {% trans 'Escolher ficheiro' %}
                                             </button>
                                             <button class="btn removeImage col-xs-4 px-0" type="button" onclick="remove_img(this)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="35" height="35" viewBox="0 0 24 24" stroke-width="1.5" stroke="#e76f51" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -164,7 +164,7 @@
         <div class="row justify-content-md-center text-center mb-3">
             <div class="col-sm-auto">
                 <button type="submit" id="saveListing" class="btn btn-secondary listing_submit" {% if imagesNum == 0 or "createListing" in request.get_full_path %}disabled{%endif%}>{% trans 'Guardar' %}</button>
-                {% if imagesNum == 0 or "createListing" in request.get_full_path%}<p id="photoAlert"class="text-danger">Tem que ter no mínimo uma fotografia</p>{%endif%}
+                {% if imagesNum == 0 or "createListing" in request.get_full_path%}<p id="photoAlert"class="text-danger">{% trans 'Tem que ter no mínimo uma fotografia' %}</p>{%endif%}
             </div>
         </div>
     </form>

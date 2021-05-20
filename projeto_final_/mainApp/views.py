@@ -982,6 +982,8 @@ def profile(request):
 
             a_user.phoneNumber = user_form.cleaned_data.get('phoneNumber')
             a_user.birthDate = user_form.cleaned_data.get('birthDate')
+            a_user.address = user_form.cleaned_data.get('address')
+            a_user.nif = user_form.cleaned_data.get('nif')
 
             a_user.image = user_form.cleaned_data.get('image')
 
@@ -1122,9 +1124,10 @@ def profile(request):
             user_birth = a_user.birthDate.strftime('%Y-%m-%d')
             user_phone = a_user.phoneNumber
             user_type = _('Senhorio')
-
+                
             form = UpdateUserForm()
             context = {
+            "a_user": a_user,
             "birth": user_birth,
             "phone": user_phone,
             "type": user_type,
@@ -2362,7 +2365,7 @@ def manage_agreements_view(request):
         #Adds late payments to the invoices_warning list
         for i in invoices:
                 if i.paid == 0:
-                    if (timezone.now().date() - i.timestamp).days >= 10:
+                    if (timezone.now().date() - i.timestamp.date()).days >= 10:
                         payment_warning = True
                         invoices_warning.append(i.id)
                     elif payment_warning == 'paid':
@@ -2440,7 +2443,7 @@ def get_invoice_pdf(request):
                 total += line.amount
 
             data = {
-                'today': invoice.timestamp, 
+                'today': invoice.timestamp.strftime("%Y-%m-%d"), 
                 'customer_name': str(tenant_user.first_name) + " " + str(tenant_user.last_name),
                 'order_id': invoice.id,
                 'nif': tenant_app.nif,
@@ -2467,7 +2470,7 @@ def invoicesLandlord(request):
         for i in list_invoices:
             payment_warning = None
             if i.paid == 0:
-                if (timezone.now().date() - i.timestamp).days >= 10:
+                if (timezone.now().date() - i.timestamp.date()).days >= 10:
                     payment_warning = True
             else:
                 payment_warning = 'paid'
@@ -2999,7 +3002,7 @@ def get_receipt_pdf(request):
                 total += line.amount
 
             data = {
-                'today': invoice.timestamp, 
+                'today': _(invoice.timestamp), 
                 'customer_name': str(tenant_user.first_name) + " " + str(tenant_user.last_name),
                 'order_id': receipt.id,
                 'list_lines': list_invoice_line,
@@ -3065,12 +3068,26 @@ def profileTenant(request,ten_id):
     tenant_app_user = App_user.objects.get(id=ten_id)
     tenant = Tenant.objects.get(ten_user_id=ten_id)
     user_image = tenant_app_user.image
+    agreement = Agreement.objects.get(tenant=tenant)
+    incidence = Incidence.objects.filter(agreement=agreement)
+    incidencesList = []
+    for i in incidence:
+        incidencesList.append(i)
 
+    causes_description = []
+
+    for i in incidence:
+        causes = i.causes.all()
+        for c in causes:
+            causes_description.append(c.description)
+    
     context={
         "tenant_user":tenant_user,
         "tenant_app_user":tenant_app_user,
         "tenant": tenant,
         "image": str(user_image).split('mainApp/static/')[1],
+        "incidences": incidencesList,
+        "causes_description":causes_description
     }
     return render(request, "mainApp/profileTenant.html", context)
 
@@ -3209,8 +3226,7 @@ def num_of_unread_notifications(request):
                         numUnreadNotifications += 1
                         print('warn', numUnreadNotifications)
         
-        print("numUnreadNotifications",numUnreadNotifications)
-        
+                
         return HttpResponse(json.dumps({"numUnreadNotifications":numUnreadNotifications}))
     else:
         return HttpResponse(json.dumps({"numUnreadNotifications":None}))

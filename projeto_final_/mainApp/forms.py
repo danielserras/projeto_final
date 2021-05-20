@@ -530,8 +530,10 @@ class UpdateUserForm(forms.Form):
     image = forms.ImageField(required=False)
     first_name = forms.CharField(required=True, max_length=50)
     last_name = forms.CharField(required=True, max_length=50)
+    address = forms.CharField(required=True, max_length=100)
     email = forms.EmailField(required=True, max_length=75)
     phoneNumber = forms.IntegerField(required=True, max_value= 999999999)
+    nif = forms.IntegerField(required=True, min_value= 100000000, max_value= 999999999)
     birthDate = forms.DateField(required=True)
     university = forms.CharField(required=False, max_length=100)
     min_search = forms.IntegerField(required=False, max_value= 1000)
@@ -540,6 +542,26 @@ class UpdateUserForm(forms.Form):
         image.widget.attrs['onchange'] += 'upload_img(this);'
     else:
         image.widget.attrs['onchange']='upload_img(this);'
+
+class ProfileImage(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ProfileImage, self).__init__(*args, **kwargs)
+        '''for field_name, field in self.fields.items():
+            if field.widget.attrs.get('class'):
+                field.widget.attrs['class'] += 'imgfield form-control-file'
+            else:
+                field.widget.attrs['class']='imgfield form-control-file'
+                
+            if field.widget.attrs.get('onchange'):
+                field.widget.attrs['onchange'] += 'upload_img(this);'
+            else:
+                field.widget.attrs['onchange']='upload_img(this);'''
+
+    images = forms.ImageField()
+
+    class Meta:
+        model = App_user
+        fields = ['image' ]
 
 class GetChat(forms.Form):
     chat_id = forms.IntegerField(required=True)
@@ -550,7 +572,6 @@ class SendMessage(forms.Form):
 
 class CreateChat(forms.Form):
     receiver = forms.IntegerField(required=True)
-
 
 class RichTextForm(ModelForm):
     class Meta:

@@ -153,7 +153,7 @@
                                 <a class="text-white" href="/mainApp/addProperty"><button type="button" class="btn btn-info w-100">{% trans 'Adicionar Alojamento' %}</button></a>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row pb-5">
                             <div class="col-12 p-3">
                                 <a class="text-white" href="/mainApp/profile/manageAgreements"><button type="button" class="btn btn-info w-100">{% trans 'Gerir Acordos' %}</button></a>
                             </div>
@@ -176,20 +176,23 @@
             <form class="col-sm-9" action="{% url 'profile' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row justify-content-center mb-3">
-                    <div class="col-sm-4 pt-3">
+                    <div class="col-sm-4 col-xs-1 pt-3 justify-content-center">
                         {{form.image}}
-                        <img src='{% static image %}' alt="Profile Image" class="img-fluid">
-                        <div onclick="browseFile(this)">
+                        <img src='{% static image %}' alt="Profile Image" class="mx-auto">
+                        <a href="#" onclick="browseFile(this)">
                             <svg id="changeProfilePic" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="46" height="46" viewBox="0 0 24 24" stroke-width="1.5" stroke="#E76F51" fill="#fff" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                 <circle cx="12" cy="12" r="9" />
                                 <line x1="9" y1="12" x2="15" y2="12" />
                                 <line x1="12" y1="9" x2="12" y2="15" />
                             </svg>
-                        </div>
+                        </a>
                     </div>
                 </div>
-                <div class="row justify-content-center pt-2 pb-4">
+                <div class="row justify-content-center pt-2 pb-4 mr-4">
+                    <div class="col-4 pl-2 text-center">
+                        <h2 class="mb-0 text-info" style="font-size: 28px;">{{user.username}}</h2>
+                    </div>
                     <div class="col-4 px-2 text-center">
                         <h2 class="mb-0 text-primary" style="font-size: 28px;">{{ type }}</h2>
                     </div>
@@ -212,6 +215,16 @@
                     <div class="col-6 p-3">
                         <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Número de telefone' %}:</p>
                         <input type="number" class="inputType1 ml-4" value="{{ phone }}" name="phoneNumber">
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-6 p-3">
+                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'Morada' %}:</p>
+                        <input type="text" class="inputType1 ml-4" value="{{a_user.address}}" name="address">
+                    </div>
+                    <div class="col-6 p-3">
+                        <p class="text-info pl-5 mb-0 font-weight-bold">{% trans 'NIF' %}:</p>
+                        <input type="number" min="100000000" max="999999999" class="inputType1 ml-4" value="{{ a_user.nif }}" name="nif">
                     </div>
                 </div>
                 <div class="row justify-content-center">

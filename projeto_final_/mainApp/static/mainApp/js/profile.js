@@ -1,5 +1,7 @@
 $(document).ready(function () {
     //Define min in highest value
+    upload_img()
+
     $("#minProfile").on('input', function() {
         $("#maxProfile").attr("min", $("#minProfile").val());
     });
@@ -19,6 +21,12 @@ function showDeleteAccountPopUp() {
     $(".deletePOP").click(function() {
         $('#modalDeleteAccount').modal('hide');
     });
+}
+
+function upload_img(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+    }
 }
 
 function browseFile(div){
