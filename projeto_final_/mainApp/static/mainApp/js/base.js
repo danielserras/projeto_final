@@ -24,9 +24,9 @@ $(document).ready(function () {
     
     $('#back-to-top').tooltip('show');
 
-    /* update_num_of_unread_notifications()
+    update_num_of_unread_notifications()
 
-    update_num_of_unread_messages(); */
+    update_num_of_unread_messages();
 });
 
 var myinterval_notifications;
