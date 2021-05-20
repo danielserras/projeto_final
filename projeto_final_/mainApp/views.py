@@ -791,8 +791,10 @@ def create_agreement(user_id, ag_request_id):
             reviewd = False,
         )
         new_ag.save()
+        print("house")
         assoc_listing.main_listing.is_active = False
         assoc_listing.save()
+        print(assoc_listing.main_listing.is_active)
 
     else:
         assoc_listing = ag_request.associated_room_listing
@@ -808,8 +810,10 @@ def create_agreement(user_id, ag_request_id):
             status = True,
         )
         new_ag.save()
+        print("room")
         assoc_listing.main_listing.is_active = False
         assoc_listing.save()
+        print(assoc_listing.main_listing.is_active)
 
     last_invoice.checkReadTenant = True
     last_invoice.agreement = new_ag
@@ -1119,13 +1123,13 @@ def profile(request):
             user_type = _('Senhorio')
 
             form = UpdateUserForm()
-
             context = {
             "birth": user_birth,
             "phone": user_phone,
             "type": user_type,
             "image": str(user_image).split('mainApp/static/')[1],
             "form": form}
+
 
         user_form = UpdateUserForm()
         context['user_form'] = user_form
@@ -1983,9 +1987,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://6b02de9a33da.ngrok.io/paymentStatus/",
-            "return_url": "http://6b02de9a33da.ngrok.io/mainApp/search",
-            "cancel_return": "http://6b02de9a33da.ngrok.io/mainApp/profile",
+            "notify_url": "http://20358cee8c9e.ngrok.io/paymentStatus/",
+            "return_url": "http://20358cee8c9e.ngrok.io/mainApp/search",
+            "cancel_return": "http://20358cee8c9e.ngrok.io/mainApp/profile",
 
             }
 
@@ -2092,6 +2096,7 @@ def make_payment_refunds(request, ref_id):
 @csrf_exempt
 def get_payment_status(sender, **kwargs):
     ipn_obj = sender.POST
+    print("funciona filho da puta")
     if ipn_obj['payment_status'] == ST_PP_COMPLETED:
 
         if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
