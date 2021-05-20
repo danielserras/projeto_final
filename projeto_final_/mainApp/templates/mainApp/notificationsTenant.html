@@ -19,116 +19,131 @@
         </div>
 
         <div class="messages-box">
-          <div id="leftStart" class="list-group rounded-0">
-            {% for a,b,c,d,e,f,g,h,i,j,k,l in fullList %}
-              {% if f is not None %}
-                {% if j is True %}
-                  <a href="#" id="notificationsTen_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
-                    {% load static %}
-                    <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                      <div class="media-body ml-4">
-                        <div class="d-flex align-items-center justify-content-between mb-1">
-                          <h6 class="mb-0 font-weight-bold">{{ b }}</h6><small class="small font-weight-bold">{{ g }}</small>
+            <div id="leftStart" class="list-group rounded-0">
+            {% for el1,el2,el3,el4,el5,el6,el7,el8,el9,el10,el11,el12,dateRequest,type in sorted_list_all_notifications %}
+                {% if type  == 'agreement_request' %}
+                        {% if el6 is not None %}
+                            {% if el10 is True %}
+                            <a href="#" id="notificationsTen_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
+                                {% load static %}
+                                <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                                  <div class="media-body ml-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                      <h6 class="mb-0 font-weight-bold">{{ el2 }}</h6><small class="small font-weight-bold">{{ el7 }}</small>
+                                    </div>
+                                    <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Resposta ao seu pedido de alojamento' %}.</p>
+                                  </div>
+                                </div>
+                              </a>
+                            {% else %}
+                              <form action="{% url 'checkReadTenant' el1 %}" method="POST" id="myform_{{forloop.counter}}_{{ el1 }}" class="myformTen">
+                                {% csrf_token %}
+                                <a href="#" id="notificationsTen_{{forloop.counter}}_{{ el1 }}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
+                                  {% load static %}
+                                  <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                                    <div class="media-body ml-4">
+                                      <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <h6 class="mb-0 font-weight-bold">{{ el2 }}</h6><small class="small font-weight-bold">{{ el7 }}</small>
+                                      </div>
+                                      <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Resposta ao seu pedido de alojamento' %}.</p>
+                                    </div>
+                                  </div>
+                                </a>
+                              </form>  
+                            {% endif %}
+                        {% else %}
+                            {% if el10 is True %}
+                                <a href="#" id="notificationsTen_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
+                                    {% load static %}
+                                    <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                                        <div class="media-body ml-4">
+                                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                                <h6 class="mb-0 font-weight-bold">{{ el2 }}</h6><small class="small font-weight-bold">{{ el7 }}</small>
+                                            </div>
+                                            <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'À espera de resposta ao seu pedido de alojamento' %}.</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            {% else %}
+                              <form action="{% url 'checkReadTenant' el1 %}" method="POST" id="myform_{{forloop.counter}}_{{ el1 }}" class="myformTen">
+                                {% csrf_token %}
+                                <a href="#" id="notificationsTen_{{forloop.counter}}_{{ el1 }}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
+                                  {% load static %}
+                                  <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                                    <div class="media-body ml-4">
+                                      <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <h6 class="mb-0 font-weight-bold">{{ el2 }}</h6><small class="small font-weight-bold">{{ el7 }}</small>
+                                      </div>
+                                      <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'À espera de resposta ao seu pedido de alojamento' %}.</p>
+                                    </div>
+                                  </div>
+                                </a>
+                              </form>
+                            {% endif %}
+                        {% endif %}
+                {% elif type == 'invoice' %}
+                    {% if el8 is True %}
+                        <a href="#" id="notificationsTen_{{forloop.counter}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
+                        {% load static %}
+                        <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                            <div class="media-body ml-4">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <h6 class="mb-0 font-weight-bold">{{ el1 }}</h6><small class="small font-weight-bold">{{ el12 }}</small>
+                            </div>
+                            <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Fatura do mês de '%}{{ el2 }}.</p>
+                            </div>
                         </div>
-                        <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Resposta ao seu pedido de alojamento' %}.</p>
-                      </div>
-                    </div>
-                  </a>
-                {% else %}
-                  <form action="{% url 'checkReadTenant' a %}" method="POST" id="myform_{{forloop.counter}}_{{ a }}" class="myformTen">
-                    {% csrf_token %}
-                    <a href="#" id="notificationsTen_{{forloop.counter}}_{{ a }}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
-                      {% load static %}
-                      <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                        <div class="media-body ml-4">
-                          <div class="d-flex align-items-center justify-content-between mb-1">
-                            <h6 class="mb-0 font-weight-bold">{{ b }}</h6><small class="small font-weight-bold">{{ g }}</small>
-                          </div>
-                          <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Resposta ao seu pedido de alojamento' %}.</p>
+                        </a>
+                    {% else %}
+                        <form action="{% url 'checkReadTenantInvoice' el7 %}" method="POST" id="myform_{{forloop.counter}}_{{ el7 }}" class="myformInv">
+                        <a href="#" id="notificationsTen_{{forloop.counter}}_{{ el7 }}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
+                            {% load static %}
+                            <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                            <div class="media-body ml-4">
+                                <div class="d-flex align-items-center justify-content-between mb-1">
+                                <h6 class="mb-0 font-weight-bold">{{ el1 }}</h6><small class="small font-weight-bold">{{ el12 }}</small>
+                                </div>
+                                <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Fatura do mês de '%}{{ el2 }}.</p>
+                            </div>
+                            </div>
+                        </a>
+                        </form>
+                    {% endif %}
+                {% elif type  == 'warning' %}
+                    {% if el5 is True %}
+                        <a href="#" id="notificationsTen_{{forloop.counter}}" class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
+                        {% load static %}
+                        <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                            <div class="media-body ml-4">
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <h6 class="mb-0 font-weight-bold">{{ el2 }}</h6><small class="small font-weight-bold">{{ el1 }}</small>
+                            </div>
+                            <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Aviso de pagamento em atraso'%}</p>
+                            </div>
                         </div>
-                      </div>
-                    </a>
-                  </form>
+                        </a>
+                    {% else %}
+                        <form action="{% url 'checkReadTenantWarning' el6 %}" method="POST" id="myform_{{forloop.counter}}_{{ el6 }}" class="myformWarn">
+                        <a href="#" id="notificationsTen_{{forloop.counter}}_{{ el6 }}" class='notification list-group-item list-group-item-action list-group-item-danger rounded-0'>
+                            {% load static %}
+                            <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
+                            <div class="media-body ml-4">
+                                <div class="d-flex align-items-center justify-content-between mb-1">
+                                <h6 class="mb-0 font-weight-bold">{{ el2 }}</h6><small class="small font-weight-bold">{{ el1 }}</small>
+                                </div>
+                                <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Aviso de pagamento em atraso'%}</p>
+                            </div>
+                            </div>
+                        </a>
+                        </form>
+                    {% endif %}
                 {% endif %}
-              {% endif %}
             {% endfor %}
-            <!-- FOR LOOP PELOS INVOICES COM SIZELIST + FORLOOP.COUNTER-->
-            {% for land, timestamp, sentDate, paymentLimit, address, name, invoice_id,checkReadInv,land_id,main_listing,req_id in invoiceList %}
-              {% if checkReadInv is True %}
-                <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull}}"   class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
-                  {% load static %}
-                  <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                    <div class="media-body ml-4">
-                      <div class="d-flex align-items-center justify-content-between mb-1">
-                        <h6 class="mb-0 font-weight-bold">{{ land }}</h6><small class="small font-weight-bold">{{ timestamp }}</small>
-                      </div>
-                      <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Fatura do mês de '%}{{ timestamp }}.</p>
-                    </div>
-                  </div>
-                </a>
-              {% else %}
-                <form action="{% url 'checkReadTenantInvoice' invoice_id %}" method="POST" id="myform_{{forloop.counter|add:sizeFull}}_{{ invoice_id }}" class="myformInv">
-                  <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull}}_{{ invoice_id }}"   class='notification list-group-item list-group-item-action list-group-item-warning rounded-0'>
-                    {% load static %}
-                    <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                      <div class="media-body ml-4">
-                        <div class="d-flex align-items-center justify-content-between mb-1">
-                          <h6 class="mb-0 font-weight-bold">{{ land }}</h6><small class="small font-weight-bold">{{ timestamp }}</small>
-                        </div>
-                        <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Fatura do mês de '%}{{ timestamp }}.</p>
-                      </div>
-                    </div>
-                  </a>
-                </form>
-              {% endif %}
-            {% endfor %}
-            <!-- FOR LOOP PELOS WARNINGS COM SIZELIST + FORLOOP.COUNTER-->
-            {% for timestamp, land, address, name,checkReadWarn,warnId,id_land_warn,main_listing in paymentWarningList %}
-              {% if checkReadWarn is True %}
-                <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull|add:sizeInvoice}}" class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
-                  {% load static %}
-                  <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                    <div class="media-body ml-4">
-                      <div class="d-flex align-items-center justify-content-between mb-1">
-                        <h6 class="mb-0 font-weight-bold">{{ land }}</h6><small class="small font-weight-bold">{{ timestamp }}</small>
-                      </div>
-                      <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Aviso de pagamento em atraso'%}</p>
-                    </div>
-                  </div>
-                </a>
-              {% else %}
-                <form action="{% url 'checkReadTenantWarning' warnId %}" method="POST" id="myform_{{forloop.counter|add:sizeFull|add:sizeInvoice}}_{{ warnId }}" class="myformWarn">
-                  <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull|add:sizeInvoice}}_{{ warnId }}" class='notification list-group-item list-group-item-action list-group-item-danger rounded-0'>
-                    {% load static %}
-                    <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                      <div class="media-body ml-4">
-                        <div class="d-flex align-items-center justify-content-between mb-1">
-                          <h6 class="mb-0 font-weight-bold">{{ land }}</h6><small class="small font-weight-bold">{{ timestamp }}</small>
-                        </div>
-                        <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Aviso de pagamento em atraso'%}</p>
-                      </div>
-                    </div>
-                  </a>
-                </form>
-              {% endif %}
-            {% endfor %}
-            {% for incidence in incidences %}
-            <a href="#" id="notificationsTen_{{forloop.counter|add:sizeFull|add:sizeInvoice}}" class='notification list-group-item list-group-item-action list-group-item-info rounded-0'>
-              {% load static %}
-              <div class="media"><img src='{% static "mainApp/images/userMsg.svg" %}' alt="user" width="50" class="rounded-circle">
-                <div class="media-body ml-4">
-                  <div class="d-flex align-items-center justify-content-between mb-1">
-                    <h6 class="mb-0 font-weight-bold">{{ land }}</h6><small class="small font-weight-bold">{{ timestamp }}</small>
-                  </div>
-                  <p class="messageText font-italic text-muted mb-0 text-small">{% trans 'Aviso de Relato de Incidencia em Aluguer'%}</p>
-                </div>
-              </div>
-            </a>
-            {% endfor %}
-          </div>
+        </div>
+        </div>
         </div>
       </div>
-    </div>
+    
 
       <!-- Caixa de notificações-->
 
@@ -137,174 +152,181 @@
           {% load static %}
           <img src='{% static "mainApp/images/message.svg" %}' class='img' id="defaultImg" alt='Image representing a message' />
       </div>
-        {% for a,b,c,d,e,f,g,h,i,j,k,l in fullList %}
-          <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
+      {% for el1,el2,el3,el4,el5,el6,el7,el8,el9,el10,el11,el12,dateRequest,type in sorted_list_all_notifications %}
+      {% if type  == 'agreement_request' %}
+        <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
             <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                 <h4 class="text-white mt-3 pl-3"> {% trans 'Resposta ao seu pedido de alojamento' %} </h4>
             </div>
             <div class="row m-2">
-              <p class= "text-info font-weight-bold">{% trans 'Remetente' %}:&nbsp </p>
-              <form action="{% url 'profileLandlord' l %}" method="POST" id="land_form_{{ l }}">
+            <p class= "text-info font-weight-bold">{% trans 'Remetente' %}:&nbsp </p>
+            <form action="{% url 'profileLandlord' el12 %}" method="POST" id="land_form_{{ el12 }}">
                 {% csrf_token %}
-                <a href="javascript:{}" onclick="document.getElementById('land_form_{{ l }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ b }}</u></a>
-              </form>
+                <a href="javascript:{}" onclick="document.getElementById('land_form_{{ el12 }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ el2 }}</u></a>
+            </form>
             </div>
             <div class="row m-2">
-              <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
-              <form action="{% url 'propertyListingNotif' a %}" method="POST" id="propertyTen_form_{{ a }}">
+            <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
+            <form action="{% url 'propertyListingNotif' el1 %}" method="POST" id="propertyTen_form_{{ el1 }}">
                 {% csrf_token %}
-                <a href="javascript:{}" onclick="document.getElementById('propertyTen_form_{{ a }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ i }}</u></a>
-              </form>
+                <a href="javascript:{}" onclick="document.getElementById('propertyTen_form_{{ el1 }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ el1 }}</u></a>
+            </form>
             </div>
             <div class="row m-2">
                 <p class= "text-info font-weight-bold">{% trans 'Data Início' %}:&nbsp </p>
-                <p class= "text-info"> {{ d }}</p>
+                <p class= "text-info"> {{ el4 }}</p>
             </div>
             <div class="row m-2">
                 <p class= "text-info font-weight-bold">{% trans 'Data término' %}:&nbsp </p>
-                <p class= "text-info"> {{ e }}</p>
+                <p class= "text-info"> {{ el4 }}</p>
             </div>
             <div class="row m-2">
-              <div>
+            <div>
                 <p class="text-info font-weight-bold">{% trans 'A sua mensagem' %}:&nbsp</p>
-                <p class="text-info">{{ c|safe }}</p>
-              </div>
+                <p class="text-info">{{ el3|safe }}</p>
+            </div>
             </div>
             <div class="row m-2">
-              <p class="text-info font-weight-bold big_text">{% trans 'Resposta ao seu pedido de alojamento' %}:&nbsp</p>
-              {% if f is True %}
+            <p class="text-info font-weight-bold big_text">{% trans 'Resposta ao seu pedido de alojamento' %}:&nbsp</p>
+            {% if el6 is True %}
                 <p class="text-info big_text">{% trans 'Aceite' %}</p>
                 <br>
-              {% else %}
-                <p class="text-info">{% trans 'Recusado' %}</p>
-              {% endif %}
-                {% if k != '' %}
-                  <p class="text-info font-weight-bold">{% trans 'Mensagem do senhorio' %}:&nbsp</p>
-                  {{k|safe}}            
+                {% if el11 != '' %}
+                <p class="text-info font-weight-bold">{% trans 'Mensagem do senhorio' %}:&nbsp</p>
+                {{el11|safe}}            
                 {% endif %}
+            {% elif el6 is False%}
+                <p class="text-info big_text">{% trans 'Recusado' %}</p>
+                <br>
+                {% if el11 != '' %}
+                <p class="text-info font-weight-bold">{% trans 'Mensagem do senhorio' %}:&nbsp</p>
+                {{el11|safe}}            
+                {% endif %}
+            {% else %}
+                <p class="text-info big_text">{% trans 'Não respondido' %}</p>
+            {% endif %}
             </div>
             <div class="row m-2 mt-3 justify-content-center">
-              <div class="col-6">              
-                {% if f is True %}
-                  <!-- PAGAMENTO -->
-                  <form method="POST" action="{% url 'make_payment' a %}">
+            <div class="col-6">              
+                {% if el6 is True %}
+                <!-- PAGAMENTO -->
+                <form method="POST" action="{% url 'make_payment' el1 %}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-info font-weight-bold float-right">{% trans 'Realizar Pagamento' %}</button>
-                  </form>
-              </div>
-              <div class="col-6">  
-                  <!-- FATURA -->
-                  <form action="{% url 'get_invoice_pdf'%}" method="POST" target="_blank">
-                    {% csrf_token %}
-                    <input name="invoice_id" type='hidden' value="{{h}}">
-                    <button type="submit" class="btn btn-info font-weight-bold">{% trans 'Fatura' %}</button>
-                  </form>
-                {% endif %}
-              </div>
+                </form>
             </div>
-          </div>
-        {% endfor %}
-        {% for land, month, sentDate, paymentLimit, address, name, invoice_id,checkReadInv,land_id,main_listing,req_id in invoiceList %}
-          <div id = "content_{{forloop.counter|add:sizeFull}}"class='contentNotification' style="display:none">
+            <div class="col-6">  
+                <!-- FATURA -->
+                <form action="{% url 'get_invoice_pdf'%}" method="POST" target="_blank">
+                    {% csrf_token %}
+                    <input name="invoice_id" type='hidden' value="{{el8}}">
+                    <button type="submit" class="btn btn-info font-weight-bold">{% trans 'Fatura' %}</button>
+                </form>
+                {% endif %}
+            </div>
+            </div>
+        </div>
+      {% elif type == 'invoice' %}
+        <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
             <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                 <h4 class="text-white mt-3 pl-3"> {% trans 'Fatura' %} </h4>
             </div>
             <div class="row m-2">
-              <p class= "text-info font-weight-bold">{% trans 'Remetente' %}:&nbsp </p>
-              <form action="{% url 'profileLandlord' land_id %}" method="POST" id="landInv_form_{{ land_id }}">
+            <p class= "text-info font-weight-bold">{% trans 'Remetente' %}:&nbsp </p>
+            <form action="{% url 'profileLandlord' el9 %}" method="POST" id="landInv_form_{{ el9 }}">
                 {% csrf_token %}
-                <a href="javascript:{}" onclick="document.getElementById('landInv_form_{{ land_id }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ land }}</u></a>
-              </form>
+                <a href="javascript:{}" onclick="document.getElementById('landInv_form_{{ el9 }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ el1 }}</u></a>
+            </form>
             </div>
             <div class="row m-2">
-              <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
-              <form action="{% url 'propertyListingInv' main_listing %}" method="POST" id="propertyInv_form_{{ invoice_id }}">
+            <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
+            <form action="{% url 'propertyListingInv' el10 %}" method="POST" id="propertyInv_form_{{ el7 }}">
                 {% csrf_token %}
-                <a href="javascript:{}" onclick="document.getElementById('propertyInv_form_{{ invoice_id }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ address }}</u></a>
-              </form>
+                <a href="javascript:{}" onclick="document.getElementById('propertyInv_form_{{ el7 }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ el5 }}</u></a>
+            </form>
             </div>
             <div class="row m-2">
                 <p class= "text-info font-weight-bold">{% trans 'Data de envio' %}:&nbsp </p>
-                <p class= "text-info"> {{sentDate}} </p>
+                <p class= "text-info"> {{el3}} </p>
             </div>
             <div class="row m-2">
                 <p class= "text-info font-weight-bold">{% trans 'Data limite de pagamento' %}: &nbsp </p>
-                <p class= "text-info"> {{paymentLimit}} </p>
+                <p class= "text-info"> {{el4}} </p>
             </div>
             <div class="row m-2">
-              <div>
+            <div>
                 <p class="text-info font-weight-bold">{% trans 'Mensagem' %}:&nbsp</p>
-              </div>
+            </div>
             </div>
             <div class="row m-2">
                 <p class= "text-info">{% trans 'Envio-lhe a fatura do mês de' %}
-                  {{ month }}{% trans ', relativa ao alojamento localizado em' %}
-                  {{ address }} {% trans 'e com um anúncio intitulado' %}
-                  "{{ name }}" &nbsp</p>
+                {{ el2 }}{% trans ', relativa ao alojamento localizado em' %}
+                {{ el5 }} {% trans 'e com um anúncio intitulado' %}
+                "{{ el6 }}" &nbsp</p>
             </div>
             <div class="row m-2 mt-3 justify-content-center">
-              <div class="col-6">
-                <form method="POST" action="{% url 'make_payment' req_id %}">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-info font-weight-bold float-right">{% trans 'Realizar Pagamento' %}</button>
+            <div class="col-6">
+                <form method="POST" action="{% url 'make_payment' el11 %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-info font-weight-bold float-right">{% trans 'Realizar Pagamento' %}</button>
                 </form>
-              </div>
-              <div class="col-6">
-                <form action="{% url 'get_invoice_pdf'%}" method="POST" target="_blank">
-                  {% csrf_token %}
-                  <input name="invoice_id" type='hidden' value="{{invoice_id}}">
-                  <button type="submit" class="btn btn-info font-weight-bold ml-3">{% trans 'Fatura' %}</button>
-                </form>
-              </div>
             </div>
-          </div>
-        {% endfor %}
-        {% for timestamp, land, address, name,checkReadWarn,warnId,id_land_warn,main_listing in paymentWarningList %}
-          <div id = "content_{{forloop.counter|add:sizeFull|add:sizeInvoice}}"class='contentNotification' style="display:none">
+            <div class="col-6">
+                <form action="{% url 'get_invoice_pdf'%}" method="POST" target="_blank">
+                {% csrf_token %}
+                <input name="invoice_id" type='hidden' value="{{el7}}">
+                <button type="submit" class="btn btn-info font-weight-bold ml-3">{% trans 'Fatura' %}</button>
+                </form>
+            </div>
+            </div>
+        </div>
+      {% elif type  == 'warning' %}
+        <div id = "content_{{forloop.counter}}"class='contentNotification' style="display:none">
             <div class="row mb-0 mt-0 p-0 pl-0 ml-0 bg-secondary rounded-bottom">
                 <h4 class="text-white mt-3 pl-3"> {% trans 'Aviso de Pagamento em Atraso' %} </h4>
             </div>
             <div class="row m-2">
-              <p class= "text-info font-weight-bold">{% trans 'Remetente' %}:&nbsp </p>
-              <form action="{% url 'profileLandlord' id_land_warn %}" method="POST" id="landWarn_form_{{ id_land_warn }}">
+            <p class= "text-info font-weight-bold">{% trans 'Remetente' %}:&nbsp </p>
+            <form action="{% url 'profileLandlord' el7 %}" method="POST" id="landWarn_form_{{ el7 }}">
                 {% csrf_token %}
-                <a href="javascript:{}" onclick="document.getElementById('landWarn_form_{{ id_land_warn }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ land }}</u></a>
-              </form>
+                <a href="javascript:{}" onclick="document.getElementById('landWarn_form_{{ el7 }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ el2 }}</u></a>
+            </form>
             </div>
             <div class="row m-2">
-              <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
-              <form action="{% url 'propertyListingInv' main_listing %}" method="POST" id="propertyWarn_form_{{ warnId }}">
+            <p class= "text-info font-weight-bold">{% trans 'Propriedade' %}:&nbsp </p>
+            <form action="{% url 'propertyListingInv' el8 %}" method="POST" id="propertyWarn_form_{{ el6 }}">
                 {% csrf_token %}
-                <a href="javascript:{}" onclick="document.getElementById('propertyWarn_form_{{ warnId }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ address }}</u></a>
-              </form>
+                <a href="javascript:{}" onclick="document.getElementById('propertyWarn_form_{{ el6 }}').submit();" class="font-weight-bold"><u class= "text-primary">{{ el3 }}</u></a>
+            </form>
             </div>
             <div class="row m-2">
-              <div>
+            <div>
                 <p class="text-info font-weight-bold">{% trans 'Mensagem' %}:&nbsp</p>
-              </div>
+            </div>
             </div>
             <div class=" row m-2">
                 <p class= "text-info">{% trans 'Esta mensagem foi enviada pelo senhorio' %}
-                  {{ land }}{% trans ' a fim de informar que já ultrapassou a data limite de 10 dias para o pagamento da renda relativa ao alojamento localizado em' %}
-                  {{ address }} {% trans 'e com um anúncio intitulado' %}
-                  "{{ name }}". &nbsp</p>
+                {{ el2 }}{% trans ' a fim de informar que já ultrapassou a data limite de 10 dias para o pagamento da renda relativa ao alojamento localizado em' %}
+                {{ el3 }} {% trans 'e com um anúncio intitulado' %}
+                "{{ el4 }}". &nbsp</p>
             </div>
             <div class="row m-2">
-              <div>
+            <div>
                 <p class="text-info font-weight-bold">{% trans 'Para gerir acordos e visualizar as suas faturas, clique no botão a baixo' %}</p>
-              </div>
+            </div>
             </div>
             <div class="row m-2">
-              <div class="mx-auto">
+            <div class="mx-auto">
                 <form action="{% url 'get_invoice_pdf'%}" method="POST" target="_blank">
-                  {% csrf_token %}
-                  <input name="invoice_id" type='hidden' value="{{invoice_id}}">
-                  <button type="submit" class="btn btn-info font-weight-bold ml-3">{% trans 'Gerir Acordos' %}</button>
+                {% csrf_token %}
+                <input name="invoice_id" type='hidden' value="{{el9}}">
+                <button type="submit" class="btn btn-info font-weight-bold ml-3">{% trans 'Gerir Acordos' %}</button>
                 </form>
-              </div>
             </div>
-          </div>
-        {% endfor %}
+            </div>
+        </div>
+      {% endif %}
+  {% endfor %}
     </div>
   </div>
 </div>

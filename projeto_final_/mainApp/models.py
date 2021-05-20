@@ -191,7 +191,7 @@ class Agreement_Request(models.Model):
 class Invoice(models.Model):
     agreement_request = models.ForeignKey(Agreement_Request, null=True, on_delete=models.CASCADE)
     agreement = models.ForeignKey(Agreement, null=True, on_delete=models.CASCADE)
-    timestamp = models.DateField()
+    timestamp = models.DateTimeField()
     month = models.DateField(null=True)
     paid = models.BooleanField()
     checkReadTenant = models.BooleanField()

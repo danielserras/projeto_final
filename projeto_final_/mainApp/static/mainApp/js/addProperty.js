@@ -25,6 +25,30 @@ $(document).ready(function(){
         $('.num_divisions').show();
     }) */
 
+    /* if ($(".studio_type").prop('checked')){
+        $("#roomsLabel").hide();
+        $("#bedroomsNum").hide();
+        $("#bedroomsNum").val("1");
+    }
+    
+    if ($(".bedroom_type").prop('checked')){
+        $("#roomsLabel").hide();
+        $("#bedroomsNum").hide();
+        $("#bedroomsNum").val("1");
+    } */
+
+    $('.studio_type, .bedroom_type').click(function(){
+        $("#roomsLabel").hide();
+        $("#bedroomsNum").hide();
+        $("#bedroomsNum").val("1");
+    })
+
+    $('.house_type, .apartment_type').click(function(){
+        $("#roomsLabel").show();
+        $("#bedroomsNum").show();
+        $("#bedroomsNum").val("");
+    })
+
     if (!$(".multiple_form").is(":hidden")){
 
         $(".listing_form").show();

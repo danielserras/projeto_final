@@ -610,6 +610,7 @@ def accept_request(request, request_id, formRich):
 
     ag_request = Agreement_Request.objects.get(id=request_id)
     ag_request.accepted = True
+    ag_request.checkReadTenant = False
     richText = formRich.save(commit=False)
     richText.save()
     ag_request.messageLandlord = richText
@@ -675,6 +676,7 @@ def accept_request(request, request_id, formRich):
     return redirect('notificationsLandlord')
 
 def deny_request(request, request_id, formRich):
+    list_all_notifications = []
 
     current_user = request.user
     a_user = App_user.objects.get(user_id=current_user)
@@ -685,6 +687,7 @@ def deny_request(request, request_id, formRich):
 
     ag_request = Agreement_Request.objects.get(id=request_id)
     ag_request.accepted = False
+    ag_request.checkReadTenant = False
     richText = formRich.save(commit=False)
     richText.save()
     ag_request.messageLandlord = richText
@@ -692,9 +695,10 @@ def deny_request(request, request_id, formRich):
 
     listOfAgreements_ = []
     for e in Agreement_Request.objects.all():
-        if e.landlord_id == lord.id:
+        if e.landlord_id == landlord_.id:
             listOfAgreements_.append(e)
-    fullList_ = []
+    
+    
     for a in listOfAgreements_:
         id_req = a.id
         user_ = a.tenant #objeto tenant
@@ -702,11 +706,13 @@ def deny_request(request, request_id, formRich):
         userTen = _user_.user
         nomeTen = userTen.username
         message_ = a.message 
-        startsDate_ = a.startsDate
-        endDate_ = a.endDate
-        accepted_ = a.accepted #vem sempre a null, pronta a ser definida pelo landlord
+        startsDate_ = a.startsDate.strftime("%d-%m-%Y")
+        endDate_ = a.endDate.strftime("%d-%m-%Y")
+        accepted_ = a.accepted 
         dateOfRequest_ = a.dateOfRequest
         checkReadLandlord = a.checkReadLandlord
+        typeN = "agreement_request"
+        dateO = dateOfRequest_
         try:
             rich = Rich_Text_Message.objects.get(id=a.messageLandlord.id)
             messageLand = rich.message
@@ -716,16 +722,15 @@ def deny_request(request, request_id, formRich):
             propertyAddress = a.associated_property_listing.associated_property.address
         else:
             propertyAddress = a.associated_room_listing.associated_room.associated_property.address
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress, checkReadLandlord, messageLand,userTen.id])
-    sizeList = len(fullList_)
-    reverseList = list(reversed(fullList_))
+        list_all_notifications.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress,checkReadLandlord, messageLand, userTen.id,dateO,typeN])
+    
 
     listOfRefunds = []
     for r in Refund.objects.all():
-        if r.landlord == lord:
+        if r.landlord == landlord_:
             listOfRefunds.append(r)
     
-    fullListRef = []
+    
     for rb in listOfRefunds:
         id_ref = rb.id
         nameOfTen = (((rb.tenant).ten_user).user).username
@@ -737,15 +742,22 @@ def deny_request(request, request_id, formRich):
         actualFinishDate =rb.dateOfRequest.date()
         check = rb.checkReadLandlord
         status = rb.status
+        dateO= dateOfReq
+        typeN="refund"
         if (rb.agreement).associated_property_listing != None:
             propertyAddressR = (rb.agreement).associated_property_listing.associated_property.address
         else:
             propertyAddressR = (rb.agreement).associated_room_listing.associated_room.associated_property.address
-        fullListRef.append([id_ref,nameOfTen,value,actualFinishDate,propertyAddressR,startDate,plannedFinishDate,check,status,id_ten_ref,dateOfReq])
-    reverseListRef = list(reversed(fullListRef))
-    sizeListRef = len(fullListRef)
+        list_all_notifications.append([id_ref,nameOfTen,value,actualFinishDate,propertyAddressR,startDate,plannedFinishDate,check,status,id_ten_ref,dateOfReq,dateO,typeN])
+    
+    sorted_list_all_notifications = sorted(list_all_notifications,
+    key=lambda x: x[len(x)-2], reverse=False)
+    for i in sorted_list_all_notifications:
+        print("Element1:", i[0], "Element2:",i[1], "Element3:",i[2])
+        print(i, "\n")
 
-    context = {"fullList_": reverseList, 'range': range(sizeList), "fullListRef": reverseListRef,"sizeListRef": sizeListRef}
+
+    context = {"sorted_list_all_notifications":list(reversed(sorted_list_all_notifications))}
 
     return render(request, "mainApp/notificationsLandlord.html", context)
 
@@ -782,8 +794,10 @@ def create_agreement(user_id, ag_request_id):
             reviewd = False,
         )
         new_ag.save()
+        print("house")
         assoc_listing.main_listing.is_active = False
         assoc_listing.save()
+        print(assoc_listing.main_listing.is_active)
 
     else:
         assoc_listing = ag_request.associated_room_listing
@@ -799,8 +813,10 @@ def create_agreement(user_id, ag_request_id):
             status = True,
         )
         new_ag.save()
+        print("room")
         assoc_listing.main_listing.is_active = False
         assoc_listing.save()
+        print(assoc_listing.main_listing.is_active)
 
     last_invoice.checkReadTenant = True
     last_invoice.agreement = new_ag
@@ -1110,13 +1126,13 @@ def profile(request):
             user_type = _('Senhorio')
 
             form = UpdateUserForm()
-
             context = {
             "birth": user_birth,
             "phone": user_phone,
             "type": user_type,
             "image": str(user_image).split('mainApp/static/')[1],
             "form": form}
+
 
         user_form = UpdateUserForm()
         context['user_form'] = user_form
@@ -1491,6 +1507,8 @@ def delete_listing_view(request, property_id, main_listing_id):
     return redirect("/mainApp/profile/propertiesManagement/listingEditing/{}".format(property_id))
 
 def notificationsTenant(request):
+    list_all_notifications = []
+
     current_user_ = request.user
     a_user_ = App_user.objects.get(user_id=current_user_)
     invoice_id = None
@@ -1505,7 +1523,6 @@ def notificationsTenant(request):
         if e.tenant_id == tenant_.id:
             listOfAgreements.append(e)
 
-    fullList = []
     for a in listOfAgreements:
         _id_req = a.id
         _landlord_ = a.landlord #objeto landlord
@@ -1518,6 +1535,8 @@ def notificationsTenant(request):
         accepted = a.accepted #para ver se esta null, aceite ou recusada
         dateOfRequest_ = a.dateOfRequest
         checkReadTenant = a.checkReadTenant
+        typeN = "agreement_request"
+        dateO = dateOfRequest_
         try:
             rich = Rich_Text_Message.objects.get(id=a.messageLandlord.id)
             messageLand = rich.message
@@ -1531,9 +1550,8 @@ def notificationsTenant(request):
             invoice_id = Invoice.objects.get(agreement_request_id=a.id).id
         except:
             pass
-        fullList.append([_id_req, nomeLand, message, startsDate, endDate, accepted, dateOfRequest_, invoice_id, propertyAddress,checkReadTenant, messageLand,userLand.id])
+        list_all_notifications.append([_id_req, nomeLand, message, startsDate, endDate, accepted, dateOfRequest_, invoice_id, propertyAddress,checkReadTenant, messageLand,userLand.id,dateO,typeN])
 
-    invoiceList = []
     for i in Invoice.objects.all():
         if i.agreement_request == None:
             a = Agreement.objects.get(id=i.agreement_id)
@@ -1544,6 +1562,8 @@ def notificationsTenant(request):
                 paymentLimit = invoiceDate + timedelta(days=10)
                 invoiceMonth = _(i.month.strftime("%B"))
                 checkReadTenInv = i.checkReadTenant
+                typeN = "invoice"
+                dateO = invoiceDate
 
                 if a.associated_property_listing == None:
                     room_listing = a.associated_room_listing
@@ -1560,7 +1580,7 @@ def notificationsTenant(request):
                 listing_name = main_listing.title
                 req_id = _id_req
 
-                invoiceList.append([nameLand, invoiceMonth, invoiceDate, paymentLimit, address, listing_name, i.id,checkReadTenInv,land_id,main_listing.id,req_id])
+                list_all_notifications.append([nameLand, invoiceMonth, invoiceDate.strftime("%d-%m-%Y"), paymentLimit.strftime("%d-%m-%Y"), address, listing_name, i.id,checkReadTenInv,land_id,main_listing.id,req_id,invoiceDate,dateO,typeN])
     
     paymentWarningList = []
     for w in Payment_Warning.objects.all():
@@ -1569,6 +1589,8 @@ def notificationsTenant(request):
             nameLand = a.landlord.lord_user.user.username
             idLand_warn = a.landlord.lord_user.user.id
             checkReadTenWarn = w.checkReadTenant
+            typeN = "warning"
+            dateO = w.timestamp
             if a.associated_property_listing == None:
                 room_listing = a.associated_room_listing
                 assoc_room = room_listing.associated_room
@@ -1584,16 +1606,23 @@ def notificationsTenant(request):
             listing_name = main_listing.title
             timestamp = w.timestamp
 
-            paymentWarningList.append([timestamp, nameLand, address, listing_name,checkReadTenWarn,w.id,idLand_warn,main_listing.id])
+            list_all_notifications.append([timestamp, nameLand, address, listing_name,checkReadTenWarn,w.id,idLand_warn,main_listing.id,w.invoice_id,"trash1","trash2","trash3",dateO,typeN])
 
-    reverseList = list(reversed(fullList))
 
     user_incidences = Incidence.objects.filter(agreement__in=Agreement.objects.filter(tenant = tenant_)).filter(is_read = False)
-    
-    context = {"fullList" : reverseList, "sizeFull": len(fullList), "invoiceList": invoiceList, "sizeInvoice":len(invoiceList), "paymentWarningList": paymentWarningList, "sizeWarning":len(paymentWarningList), "incidences":user_incidences}
+
+    sorted_list_all_notifications = sorted(list_all_notifications,
+    key=lambda x: x[len(x)-2], reverse=False)
+    for i in sorted_list_all_notifications:
+        print("Element1:", i[0], "Element2:",i[1], "Element3:",i[2])
+        print(i, "\n")
+
+    context = {'sorted_list_all_notifications':list(reversed(sorted_list_all_notifications)), "incidences":user_incidences}
     return render(request, "mainApp/notificationsTenant.html", context)
 
 def notificationsLandlord(request):
+    list_all_notifications = []
+
     current_user_ = request.user
     a_user_ = App_user.objects.get(user_id=current_user_)
 
@@ -1607,7 +1636,7 @@ def notificationsLandlord(request):
         if e.landlord_id == landlord_.id:
             listOfAgreements_.append(e)
     
-    fullList_ = []
+    
     for a in listOfAgreements_:
         id_req = a.id
         user_ = a.tenant #objeto tenant
@@ -1620,6 +1649,8 @@ def notificationsLandlord(request):
         accepted_ = a.accepted 
         dateOfRequest_ = a.dateOfRequest
         checkReadLandlord = a.checkReadLandlord
+        typeN = "agreement_request"
+        dateO = dateOfRequest_
         try:
             rich = Rich_Text_Message.objects.get(id=a.messageLandlord.id)
             messageLand = rich.message
@@ -1629,16 +1660,15 @@ def notificationsLandlord(request):
             propertyAddress = a.associated_property_listing.associated_property.address
         else:
             propertyAddress = a.associated_room_listing.associated_room.associated_property.address
-        fullList_.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress,checkReadLandlord, messageLand, userTen.id])
-    sizeList = len(fullList_)
-    reverseList = list(reversed(fullList_))
+        list_all_notifications.append([id_req, nomeTen, message_, startsDate_, endDate_, accepted_,dateOfRequest_, propertyAddress,checkReadLandlord, messageLand, userTen.id,dateO,typeN])
+    
 
     listOfRefunds = []
     for r in Refund.objects.all():
         if r.landlord == landlord_:
             listOfRefunds.append(r)
     
-    fullListRef = []
+    
     for rb in listOfRefunds:
         id_ref = rb.id
         nameOfTen = (((rb.tenant).ten_user).user).username
@@ -1650,17 +1680,23 @@ def notificationsLandlord(request):
         actualFinishDate =rb.dateOfRequest.date()
         check = rb.checkReadLandlord
         status = rb.status
+        dateO= dateOfReq
+        typeN="refund"
         if (rb.agreement).associated_property_listing != None:
             propertyAddressR = (rb.agreement).associated_property_listing.associated_property.address
         else:
             propertyAddressR = (rb.agreement).associated_room_listing.associated_room.associated_property.address
-        fullListRef.append([id_ref,nameOfTen,value,actualFinishDate,propertyAddressR,startDate,plannedFinishDate,check,status,id_ten_ref,dateOfReq])
-    reverseListRef = list(reversed(fullListRef))
-    sizeListRef = len(fullListRef)
+        list_all_notifications.append([id_ref,nameOfTen,value,actualFinishDate,propertyAddressR,startDate,plannedFinishDate,check,status,id_ten_ref,dateOfReq,dateO,typeN])
+    
+    sorted_list_all_notifications = sorted(list_all_notifications,
+    key=lambda x: x[len(x)-2], reverse=False)
+    for i in sorted_list_all_notifications:
+        print("Element1:", i[0], "Element2:",i[1], "Element3:",i[2])
+        print(i, "\n")
 
     form = RichTextForm()
 
-    context = {"fullList_": reverseList, 'range': range(sizeList), "fullListRef": reverseListRef, "sizeListRef": sizeListRef, "form": form}
+    context = {"sorted_list_all_notifications":list(reversed(sorted_list_all_notifications)), "form": form}
     return render(request, "mainApp/notificationsLandlord.html", context)
 
 def get_distance(lat_1, lng_1, lat_2, lng_2): 
@@ -1954,9 +1990,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://6b02de9a33da.ngrok.io/paymentStatus/",
-            "return_url": "http://6b02de9a33da.ngrok.io/mainApp/search",
-            "cancel_return": "http://6b02de9a33da.ngrok.io/mainApp/profile",
+            "notify_url": "http://20358cee8c9e.ngrok.io/paymentStatus/",
+            "return_url": "http://20358cee8c9e.ngrok.io/mainApp/search",
+            "cancel_return": "http://20358cee8c9e.ngrok.io/mainApp/profile",
 
             }
 
@@ -2063,6 +2099,7 @@ def make_payment_refunds(request, ref_id):
 @csrf_exempt
 def get_payment_status(sender, **kwargs):
     ipn_obj = sender.POST
+    print("funciona filho da puta")
     if ipn_obj['payment_status'] == ST_PP_COMPLETED:
 
         if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
@@ -2703,7 +2740,7 @@ def chat_list_view(request):
         if form.is_valid():
             chat_id = form.cleaned_data.get("chat_id")
             chat_obj = Chat.objects.get(id=chat_id)
-
+            Message.objects.exclude(sender=request.user).filter(is_read=False).update(is_read=True)
             messages = sorted(list(Message.objects.filter(chat=chat_obj)), key=lambda x: x.timestamp, reverse=True)
             result = {}
             result["messages"] = {}
@@ -2763,40 +2800,50 @@ def chat_list_view(request):
                     chat_id = "#chat_" + str(chats_1[0].id)
                 else:
                     chat_id = "#chat_" + str(chats_2[0].id)
+
+        """ if request.is_ajax:     
+            chats_1 = list(Chat.objects.filter(user_1=user_id))
+            chats_2 = list(Chat.objects.filter(user_2=user_id))
+
+            chats_dict = {}
+
+            for c in chats_1:
+                chats_dict[c] = c.user_2.first_name + " " + c.user_2.last_name
+
+            for c in chats_2:
+                chats_dict[c] =  c.user_1.first_name + " " + c.user_1.last_name
+
+            chats_sorted = sorted(chats_dict.keys(), key=lambda x: x.last_message, reverse=True)
             
-        chats_1 = list(Chat.objects.filter(user_1=user_id))
-        chats_2 = list(Chat.objects.filter(user_2=user_id))
+            if chat_id == None:
+                context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict}
+            else:
+                context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict, "chat_id":chat_id}
 
-        chats_dict = {}
-
-        for c in chats_1:
-            chats_dict[c] = c.user_2.first_name + " " + c.user_2.last_name
-
-        for c in chats_2:
-            chats_dict[c] = c.user_1.first_name + " " + c.user_1.last_name
-
-        chats_sorted = sorted(chats_dict.keys(), key=lambda x: x.last_message, reverse=True)
-        
-        if chat_id == None:
-            context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict}
-        else:
-            context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict, "chat_id":chat_id}
-
-        return render(request, "mainApp/chatsList.html", context)
+            return HttpResponse(json.dumps(context)) """
 
     chats_1 = list(Chat.objects.filter(user_1=user_id))
     chats_2 = list(Chat.objects.filter(user_2=user_id))
 
     chats_dict = {}
-
+    chats_with_unread_messages = {}
     for c in chats_1:
         chats_dict[c] = c.user_2.first_name + " " + c.user_2.last_name
+        num_unread_messages = Message.objects.exclude(sender=request.user).filter(is_read=False, chat=c).count()
+        
+        if num_unread_messages > 0:
+            chats_with_unread_messages[c] = True
+
 
     for c in chats_2:
         chats_dict[c] = c.user_1.first_name + " " + c.user_1.last_name
+        num_unread_messages = Message.objects.exclude(sender=request.user).filter(is_read=False, chat=c).count()
+        
+        if num_unread_messages > 0:
+            chats_with_unread_messages[c] = True
 
     chats_sorted = sorted(chats_dict.keys(), key=lambda x: x.last_message, reverse=True)
-    context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict}
+    context = {"chats_sorted":chats_sorted, "chats_dict":chats_dict, "chats_with_unread_messages":chats_with_unread_messages}
 
     return render(request, "mainApp/chatsList.html", context)
 
@@ -3090,3 +3137,75 @@ def user_manual_view(request):
 def tenant_firstpage(request):
     return render(request, "mainApp/1st_tenant.html", {})
 
+@login_required
+def num_of_unread_notifications(request):
+    if request.user.is_authenticated:
+        current_user_ = request.user
+        a_user = App_user.objects.get(user_id=current_user_)
+        numUnreadNotifications = 0 
+        landlord = False
+        tenant = False
+        try:
+            landlord = Landlord.objects.get(lord_user=a_user)
+        except:
+            tenant = Tenant.objects.get(ten_user=a_user)
+        if landlord:
+            agreements_req= Agreement_Request.objects.filter(landlord=landlord)
+            refunds = Refund.objects.filter(landlord=landlord)
+            for a in agreements_req:
+                if a.checkReadLandlord !=True:
+                    numUnreadNotifications += 1
+            for r in refunds:
+                if r.checkReadLandlord !=True:
+                    numUnreadNotifications += 1
+        else:
+            ag_req = Agreement_Request.objects.filter(tenant=tenant)
+            agreements = Agreement.objects.filter(tenant=tenant)
+
+            invoicesList = []
+            for a in agreements:
+                inv = Invoice.objects.filter(agreement=a)
+                invoicesList.append(inv)
+
+            paywList = []   
+            for a in agreements: 
+                payw = Payment_Warning.objects.filter(agreement=a)
+                paywList.append(payw)
+
+            for a in ag_req:
+                if a.checkReadTenant !=True:
+                    numUnreadNotifications += 1
+                    print('ag', numUnreadNotifications)
+            for i in invoicesList:
+                for j in i:
+                    if j.checkReadTenant !=True:
+                        numUnreadNotifications += 1
+                        print('iv', j.id, numUnreadNotifications)
+            for p in paywList:
+                for j in p:
+                    if j.checkReadTenant !=True:
+                        numUnreadNotifications += 1
+                        print('warn', numUnreadNotifications)
+        
+        print("numUnreadNotifications",numUnreadNotifications)
+        
+        return HttpResponse(json.dumps({"numUnreadNotifications":numUnreadNotifications}))
+    else:
+        return HttpResponse(json.dumps({"numUnreadNotifications":None}))
+        
+def num_of_unread_messages(request):
+    if request.user.is_authenticated:
+        unreadMessages = 0
+
+        chats1 = list(Chat.objects.filter(user_1=request.user))
+        chats2 = list(Chat.objects.filter(user_2=request.user))
+
+        chatsList = chats1+chats2
+
+        for chat in chatsList:
+            unreadMessages += Message.objects.exclude(sender=request.user).filter(chat=chat, is_read=False).count()
+
+        return HttpResponse(json.dumps({"numUnreadMessages": unreadMessages}))
+
+    else:
+        return HttpResponse(json.dumps({"numUnreadMessages": None}))

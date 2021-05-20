@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '6b02de9a33da.ngrok.io']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '20358cee8c9e.ngrok.io']
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -101,7 +101,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 #custom processors
-                'mainApp.context_processors.numUnreadNotifations'
+                'mainApp.context_processors.numUnreadNotifations',
+                'mainApp.context_processors.numUnreadMessages'
             ],
         },
     },

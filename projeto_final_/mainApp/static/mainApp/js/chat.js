@@ -16,8 +16,10 @@ $(document).ready(function () {
             headers: { "X-CSRFToken": csrf_token }
         });
     });
+
 });
 var myinterval;
+var myinterval2;
 function select_chat(form){
     clearInterval(myinterval);
     var pathname = window.location.pathname;
