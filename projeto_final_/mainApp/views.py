@@ -1987,9 +1987,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://20358cee8c9e.ngrok.io/paymentStatus/",
-            "return_url": "http://20358cee8c9e.ngrok.io/mainApp/search",
-            "cancel_return": "http://20358cee8c9e.ngrok.io/mainApp/profile",
+            "notify_url": "http://9a52b6b6d117.ngrok.io/paymentStatus/",
+            "return_url": "http://9a52b6b6d117.ngrok.io/mainApp/search",
+            "cancel_return": "http://9a52b6b6d117.ngrok.io/mainApp/profile",
 
             }
 
