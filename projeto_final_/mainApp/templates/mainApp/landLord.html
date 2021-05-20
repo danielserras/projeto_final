@@ -10,28 +10,28 @@
 {% block content %}
 
 <div class = "container-fluid my-auto mt-4">
-    <div class= "text-center mt-5 mb-4"><h1 class = "text-secondary font-weight-bold">Adicione a sua primeira propriedade!</h1></div>
+    <div class= "text-center mt-5 mb-4"><h1 class = "text-secondary font-weight-bold">{% trans 'Adicione a sua primeira propriedade!' %}</h1></div>
     <div class="row align-items-start">
         <div class="col-sm-8">
-            <h4 class= "text-left text-secondary font-weight-bold ml-5 pl-5 mt-4"> Passo 1 - Informações gerais</h4>
+            <h4 class= "text-left text-secondary font-weight-bold ml-5 pl-5 mt-4"> {% trans 'Passo' %} 1 - {% trans 'Informações gerais' %}</h4>
             <div class = "row ml-5 pl-5 mt-3">
                 <h1 class = "text-secondary"><i class= " text-secondary fas fa-long-arrow-alt-down"></i></h1>
-                <h6 class = "mt-3 pl-4">Inserir informações gerais como a morada, regras tipo de alojamento</h6>
+                <h6 class = "mt-3 pl-4">{% trans 'Inserir informações gerais como a morada, regras tipo de alojamento' %}</h6>
             </div>
-            <h4 class= "text-left text-secondary font-weight-bold ml-5 pl-5 mt-4"> Passo 2 - Adicionar dimensões</h4>
+            <h4 class= "text-left text-secondary font-weight-bold ml-5 pl-5 mt-4"> {% trans 'Passo' %} 2 - {% trans 'Adicionar dimensões' %}</h4>
             <div class = "row ml-5 pl-5 mt-3">
                 <h1 class = "text-secondary"><i class= " text-secondary fas fa-long-arrow-alt-down"></i></h1>
-                <h6 class = "mt-3 pl-4">Indicar o que contem cada uma das divisões da casa</h6>
+                <h6 class = "mt-3 pl-4">{% trans 'Indicar o que contem cada uma das divisões da casa' %}</h6>
             </div>
-            <h4 class= "text-left text-secondary font-weight-bold ml-5 pl-5 mt-4"> Passo 3 - Criar um anúncio</h4>
+            <h4 class= "text-left text-secondary font-weight-bold ml-5 pl-5 mt-4"> {% trans 'Passo' %} 3 - {% trans 'Criar um anúncio' %}</h4>
             <div class = "row ml-5 pl-5 mt-3">
                 <h1 class = "text-secondary"><i class= " text-secondary fas fa-long-arrow-alt-down"></i></h1>
-                <h6 class = "mt-3 pl-4">Criar um anúncio contendo imagens, descrição, valores e datas em que a propriedade está disponível</h6>
+                <h6 class = "mt-3 pl-4">{% trans 'Criar um anúncio contendo imagens, descrição, valores e datas em que a propriedade está disponível' %}</h6>
             </div>
         </div>
         <div class="col-sm-4 text-center">
             <img src='{% static "mainApp/images/mainPage_Landlord.svg" %}' class="img-fluid mx-auto" alt="landlord image">
-            <a class="btn btn-secondary mt-5" href="{% url 'addProperty'%}" role="button" aria-pressed="true">Adicionar Alojamento!</a>
+            <a class="btn btn-secondary mt-5" href="{% url 'addProperty'%}" role="button" aria-pressed="true">{% trans 'Adicionar Alojamento!' %}</a>
         </div>
         
 

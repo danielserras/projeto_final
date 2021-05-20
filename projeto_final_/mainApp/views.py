@@ -2346,7 +2346,7 @@ def manage_agreements_view(request):
         #Adds late payments to the invoices_warning list
         for i in invoices:
                 if i.paid == 0:
-                    if (timezone.now().date() - i.timestamp).days >= 10:
+                    if (timezone.now().date() - i.timestamp.date()).days >= 10:
                         payment_warning = True
                         invoices_warning.append(i.id)
                     elif payment_warning == 'paid':
@@ -2424,7 +2424,7 @@ def get_invoice_pdf(request):
                 total += line.amount
 
             data = {
-                'today': invoice.timestamp, 
+                'today': invoice.timestamp.strftime("%Y-%m-%d"), 
                 'customer_name': str(tenant_user.first_name) + " " + str(tenant_user.last_name),
                 'order_id': invoice.id,
                 'nif': tenant_app.nif,
@@ -2450,7 +2450,7 @@ def invoicesLandlord(request):
         for i in list_invoices:
             payment_warning = None
             if i.paid == 0:
-                if (timezone.now().date() - i.timestamp).days >= 10:
+                if (timezone.now().date() - i.timestamp.date()).days >= 10:
                     payment_warning = True
             else:
                 payment_warning = 'paid'
@@ -2978,7 +2978,7 @@ def get_receipt_pdf(request):
                 total += line.amount
 
             data = {
-                'today': invoice.timestamp, 
+                'today': _(invoice.timestamp), 
                 'customer_name': str(tenant_user.first_name) + " " + str(tenant_user.last_name),
                 'order_id': receipt.id,
                 'list_lines': list_invoice_line,

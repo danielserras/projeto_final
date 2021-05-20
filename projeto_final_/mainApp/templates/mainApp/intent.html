@@ -32,23 +32,23 @@
                 <div class="car-body">
                     <h1 class="card-title text-info mb-2 text-30 text-center font-weight-bold">{{listing.title}}</h1>
                     <div class="row ml-5 pl-4">
-                        <p class="text-info mb-0 text-20 font-weight-bold">Morada: &nbsp </p>
+                        <p class="text-info mb-0 text-20 font-weight-bold">{% trans 'Morada' %}: &nbsp </p>
                         <p class="text-info mb-0 text-20">{{address}}</p>
                     </div>
                     <div class="row ml-5 pl-4">
-                        <p class="text-info mb-0 text-20 font-weight-bold">Senhorio: &nbsp </p>
+                        <p class="text-info mb-0 text-20 font-weight-bold">{% trans 'Senhorio' %}: &nbsp </p>
                         <p class="text-info mb-0 text-20">{{landlord}}</p>
                     </div>
                     <div class="row ml-5 pl-4">
-                        <p class="text-info mb-0 text-20 font-weight-bold">Renda: &nbsp </p>
+                        <p class="text-info mb-0 text-20 font-weight-bold">{% trans 'Renda' %}: &nbsp </p>
                         <p class="text-info mb-0 text-20">{{listing.monthly_payment}}€</p>
                     </div>
                     <div class="row ml-5 pl-4">
-                        <p class="text-info mb-0 text-20 font-weight-bold">Entrada: &nbsp </p>
+                        <p class="text-info mb-0 text-20 font-weight-bold">{% trans 'Entrada' %}: &nbsp </p>
                         <p class="text-info mb-0 text-20">{{listing.availability_starts}}</p>
                     </div>
                     <div class="row ml-5 pl-4">
-                        <p class="text-info mb-0 text-20 font-weight-bold">Saída: &nbsp </p>
+                        <p class="text-info mb-0 text-20 font-weight-bold">{% trans 'Saída' %}: &nbsp </p>
                         <p class="text-info mb-0 text-20">{{listing.availability_ending}}</p>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
             {{form.media}}
             <div class="row justify-content-center mt-4">
                 <div class="col-sm-4">
-                    <button type="submit" class="btn btn-info btn-lg w-100">Enviar</button>
+                    <button type="submit" class="btn btn-info btn-lg w-100">{% trans 'Enviar' %}</button>
                 </div>
             </div>
         </form>
