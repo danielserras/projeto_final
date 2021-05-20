@@ -3046,12 +3046,26 @@ def profileTenant(request,ten_id):
     tenant_app_user = App_user.objects.get(id=ten_id)
     tenant = Tenant.objects.get(ten_user_id=ten_id)
     user_image = tenant_app_user.image
+    agreement = Agreement.objects.get(tenant=tenant)
+    incidence = Incidence.objects.filter(agreement=agreement)
+    incidencesList = []
+    for i in incidence:
+        incidencesList.append(i)
 
+    causes_description = []
+
+    for i in incidence:
+        causes = i.causes.all()
+        for c in causes:
+            causes_description.append(c.description)
+    
     context={
         "tenant_user":tenant_user,
         "tenant_app_user":tenant_app_user,
         "tenant": tenant,
         "image": str(user_image).split('mainApp/static/')[1],
+        "incidences": incidencesList,
+        "causes_description":causes_description
     }
     return render(request, "mainApp/profileTenant.html", context)
 
@@ -3190,8 +3204,7 @@ def num_of_unread_notifications(request):
                         numUnreadNotifications += 1
                         print('warn', numUnreadNotifications)
         
-        print("numUnreadNotifications",numUnreadNotifications)
-        
+                
         return HttpResponse(json.dumps({"numUnreadNotifications":numUnreadNotifications}))
     else:
         return HttpResponse(json.dumps({"numUnreadNotifications":None}))
