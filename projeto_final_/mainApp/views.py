@@ -583,7 +583,7 @@ def introduce_property_view (request):
     else:
         return redirect('index')
 
-#@login_required(login_url='login_view')
+
 def index(request):
     return render(request, "mainApp/home.html", {})
 
@@ -791,13 +791,11 @@ def create_agreement(user_id, ag_request_id):
             endDate= ag_request.endDate,
             last_invoice_date = last_invoice.timestamp,
             status = True,
-            reviewd = False,
+            reviewed = False,
         )
         new_ag.save()
-        print("house")
         assoc_listing.main_listing.is_active = False
-        assoc_listing.save()
-        print(assoc_listing.main_listing.is_active)
+        assoc_listing.main_listing.save()
 
     else:
         assoc_listing = ag_request.associated_room_listing
@@ -811,12 +809,11 @@ def create_agreement(user_id, ag_request_id):
             endDate= ag_request.endDate,
             last_invoice_date = last_invoice.timestamp,
             status = True,
+            reviewed=False
         )
         new_ag.save()
-        print("room")
         assoc_listing.main_listing.is_active = False
-        assoc_listing.save()
-        print(assoc_listing.main_listing.is_active)
+        assoc_listing.main_listing.save()
 
     last_invoice.checkReadTenant = True
     last_invoice.agreement = new_ag
@@ -896,6 +893,7 @@ def create_request(request):
                 )
                 ag_request.save()
 
+                messages.success(request, _('Pedido de aluguer enviado! Aguarde a resposta do senhorio.'), extra_tags='request_sent')
                 return redirect('index')
     else:
 
@@ -1139,6 +1137,7 @@ def profile(request):
 
         return render(request, "mainApp/profile.html", context)
 
+@login_required(login_url='login_view')
 def properties_management_view(request):
     current_user = request.user
     app_user = App_user.objects.get(user_id = current_user)
@@ -1148,6 +1147,7 @@ def properties_management_view(request):
     context = {"properties":properties}
     return render(request, "mainApp/propertiesManagement.html", context)
 
+@login_required(login_url='login_view')
 def property_editing_view(request, property_id=None):
     current_user = request.user
     a_user = App_user.objects.get(user_id=current_user)
@@ -1170,6 +1170,7 @@ def property_editing_view(request, property_id=None):
     context={"property":property_object}
     return render(request, "mainApp/editProperty.html", context)
 
+@login_required(login_url='login_view')
 def bedrooms_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
     bedrooms_queryset = Bedroom.objects.filter(associated_property=property_object)
@@ -1204,6 +1205,7 @@ def bedrooms_editing_view(request, property_id):
     context = {'bed_formset':bed_formset, 'property_id':property_id, 'bedrooms_info_zip':bedrooms_info_zip, 'bedrooms_num':len(bedrooms_list)}
     return render(request, "mainApp/editBedrooms.html", context)
 
+@login_required(login_url='login_view')
 def bathrooms_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
     bathrooms_queryset = Bathroom.objects.filter(associated_property=property_object)
@@ -1224,6 +1226,7 @@ def bathrooms_editing_view(request, property_id):
     context = {'bath_formset':bath_formset, 'property_id':property_id, 'bathrooms_num': len(list(bathrooms_queryset))}
     return render(request, "mainApp/editBathrooms.html", context)
 
+@login_required(login_url='login_view')
 def kitchens_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
     kitchens_queryset = Kitchen.objects.filter(associated_property=property_object)
@@ -1250,6 +1253,7 @@ def kitchens_editing_view(request, property_id):
     context = {'kitchen_formset':kitchen_formset, 'property_id':property_id, 'kitchens_num': len(list(kitchens_queryset)), 'livingrooms_num':livingrooms_num}
     return render(request, "mainApp/editKitchens.html", context)
 
+@login_required(login_url='login_view')
 def livingrooms_editing_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
     livingrooms_queryset = Livingroom.objects.filter(associated_property=property_object)
@@ -1266,6 +1270,7 @@ def livingrooms_editing_view(request, property_id):
     context = {'live_formset':livingroom_formset, 'property_id':property_id}
     return render(request, "mainApp/editLivingrooms.html", context)
 
+@login_required(login_url='login_view')
 def listings_management_view(request, property_id):
     property_object = Property.objects.get(id=property_id)
     bedrooms = list(Bedroom.objects.filter(associated_property=property_object))
@@ -1306,6 +1311,7 @@ def listings_management_view(request, property_id):
     context = {'property_listing':property_listing, 'main_listing':main_listing, 'property':property_object, "cannot_removed":cannot_removed}
     return render(request, "mainApp/listingsManagement.html", context)
 
+@login_required(login_url='login_view')
 def listing_editing_view(request, property_id, main_listing_id):
     main_listing = Listing.objects.get(id=main_listing_id)
     main_listing.availability_starts = main_listing.availability_starts.strftime('%Y-%m-%d')
@@ -1506,6 +1512,7 @@ def delete_listing_view(request, property_id, main_listing_id):
 
     return redirect("/mainApp/profile/propertiesManagement/listingEditing/{}".format(property_id))
 
+@login_required(login_url='login_view')
 def notificationsTenant(request):
     list_all_notifications = []
 
@@ -1620,6 +1627,7 @@ def notificationsTenant(request):
     context = {'sorted_list_all_notifications':list(reversed(sorted_list_all_notifications)), "incidences":user_incidences}
     return render(request, "mainApp/notificationsTenant.html", context)
 
+@login_required(login_url='login_view')
 def notificationsLandlord(request):
     list_all_notifications = []
 
@@ -1895,10 +1903,16 @@ def listing(request, listing_id):
             messages.info(request, _('Opção reservada a inquilinos.'), extra_tags='tenant_lock')
             request.session['tenant'] = None
             request.session['landlord'] = None
+
+        if listing.is_active == False:
+            is_tenant = False
+            messages.info(request, _('Este alojamento já se encontra alugado.'), extra_tags='rent_lock')
+
     else:
-        is_tenant = True
+        is_tenant = False
         request.session['tenant'] = None
         request.session['landlord'] = None
+        messages.info(request, _('Opção reservada a inquilinos.'), extra_tags='tenant_lock')
 
     imagesPaths = []
     range = [0,]
@@ -2222,6 +2236,7 @@ def landlord(request):
         return redirect('index')
     return render(request, "mainApp/landLord.html", {})
 
+@login_required(login_url='login_view')
 def delete_account(request):
 
     current_user = request.user
@@ -2318,6 +2333,7 @@ def delete_account(request):
 
     return redirect('index')
 
+@login_required(login_url='login_view')
 def manage_agreements_view(request):
     current_user = request.user
     app_user = App_user.objects.get(user_id = current_user)
@@ -2438,6 +2454,7 @@ def get_invoice_pdf(request):
             pdf = render_to_pdf('mainApp/invoicePDF.html', data)
             return HttpResponse(pdf, content_type='application/pdf')
 
+@login_required(login_url='login_view')
 def invoicesLandlord(request):
     context={}
 
@@ -2468,6 +2485,7 @@ def invoicesLandlord(request):
  
     return render(request, "mainApp/invoices.html", context)
 
+@login_required(login_url='login_view')
 def send_invoice(request):
     if request.method == 'POST':
         agreement_id=request.POST['agreement_id']
@@ -2536,6 +2554,7 @@ def send_payment_warning(request):
             request.session['redirectPage'] = 'manage_agreements_view'
     return redirect('manage_agreements_view')
 
+@login_required(login_url='login_view')
 def manageAgreementsTenant(request):
     current_user = request.user
     app_user = App_user.objects.get(user_id = current_user)
@@ -2594,6 +2613,7 @@ def manageAgreementsTenant(request):
     }
     return render(request, "mainApp/manageAgreements.html", context)
 
+@login_required(login_url='login_view')
 def invoicesTenant(request):
     context={}
 
@@ -2932,7 +2952,8 @@ def reasons(request, agreement_id):
         return render(request, "mainApp/reasons.html", context)
 
     return render(request, "mainApp/reasons.html", context)
-    
+
+@login_required(login_url='login_view')
 def receipts(request):
     context={}
 
@@ -2987,6 +3008,7 @@ def get_receipt_pdf(request):
             pdf = render_to_pdf('mainApp/receiptPDF.html', data)
             return HttpResponse(pdf, content_type='application/pdf')
 
+@login_required(login_url='login_view')
 def review(request):
     if request.method == 'POST':
 
@@ -3079,7 +3101,7 @@ def propertyListingNotif(request,id_req):
 
     return redirect(reverse('listing', kwargs={"listing_id": listingId}))
 
-def  propertyListingRef(request,id_ref):
+def propertyListingRef(request,id_ref):
     current_ref = Refund.objects.get(id=id_ref)
     agreem = current_ref.agreement
 
@@ -3090,7 +3112,7 @@ def  propertyListingRef(request,id_ref):
 
     return redirect(reverse('listing', kwargs={"listing_id": listingId}))
 
-def  propertyListingInv(request,id_list):
+def propertyListingInv(request,id_list):
 
     return redirect(reverse('listing', kwargs={"listing_id": id_list}))
 

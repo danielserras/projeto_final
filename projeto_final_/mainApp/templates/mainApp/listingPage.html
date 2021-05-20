@@ -180,6 +180,9 @@
                         {%if message.extra_tags == "tenant_lock"%}
                             <p class="info_msg text-white" >{{ message }}</p>
                         {% endif %}
+                        {%if message.extra_tags == "rent_lock"%}
+                            <p class="info_msg text-white" >{{ message }}</p>
+                        {% endif %}
                     {% endfor %}
                 {% endif %}
             </div>
