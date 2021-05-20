@@ -50,12 +50,18 @@
                 padding-bottom: 0px;
             }
             .staticInfo{
-                font-weight: bold;
                 display: inline;
             }
             .total{
                 margin-top: 80px;
                 font-size: 30px
+            }
+            .inline{
+                display: inline;
+            }
+            .subTitle{
+                font-size: 23px;
+                font-weight: 600;
             }
         </style>
     </head>
@@ -71,11 +77,15 @@
             </tr>
         </table>
         <div class='details'>
-            <table style="width:100%">
+            <table style="width:100%;">
                 <tr>
                     <td>
-                        <p class="staticInfo">{% trans 'Cobrar A' %}: </p>
-                        {{customer_name}}
+                        <p class="inline">{% trans 'Campo Grande 1749-016, Lisboa, Portugal' %}</p><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        (+351) 217 500 000
                     </td>
                     <td class="right-align">
                         {% trans 'Data de Emissão' %}: {{today}}
@@ -83,11 +93,38 @@
                 </tr>
                 <tr>
                     <td>
-                        <p class="staticInfo">{% trans 'Número de Telefone' %}: </p>
-                        {{phone_number}}
+                        info@ciencias.ulisboa.pt
                     </td>
                     <td class="right-align">
                         {% trans 'Fatura' %} # {{order_id}}
+                    </td>
+                </tr>
+            </table>
+            <table style="width:100%;">
+                <tr>
+                    <td>
+                        <p class="subTitle">{% trans 'Cobrar A' %} &nbsp</p>
+                    </td>
+                    <td class="right-align">
+                        <p class="subTitle">{% trans 'Acordo' %} &nbsp</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="staticInfo">{% trans 'Nome' %}: </p>
+                        {{customer_name}}
+                    </td>
+                    <td class="right-align">
+                        {% trans 'Senhorio' %}: {{landlord_fname}} {{landlord_lname}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="staticInfo">{% trans 'NIF' %}: </p>
+                        {{nif}}
+                    </td>
+                    <td class="right-align">
+                        {% trans 'Morada' %}: {{property_address}}
                     </td>
                 </tr>
                 <tr>

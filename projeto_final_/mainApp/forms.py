@@ -76,7 +76,7 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = App_user
-        fields = ['phoneNumber', 'birthDate','address']
+        fields = ['phoneNumber', 'birthDate','address','nif']
 
         widgets = {
             "phoneNumber": NumberInput(
@@ -95,6 +95,12 @@ class ProfileForm(forms.ModelForm):
             , "address" : TextInput(
                 attrs={
                     'placeholder': _('Morada'),
+                    'class': 'inputType1'
+                }
+            )
+            , "nif" : NumberInput(
+                attrs={
+                    'placeholder': _('NIF'),
                     'class': 'inputType1'
                 }
             )
