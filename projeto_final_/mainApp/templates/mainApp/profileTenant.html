@@ -60,15 +60,21 @@
                         <div class="row justify-content-center mt-3">
                             <h3 class="mb-0 text-info text-right">{% trans 'Histórico de Incidências' %}:</h3>
                         </div>
-                        <div class="row justify-content-center pt-2 pb-4">
-                            <p class="mb-0">Incidência 1</p>
-                        </div>
-                        <div class="row justify-content-center pt-2 pb-4">
-                            <p class="mb-0">Incidência 2</p>
-                        </div>
-                        <div class="row justify-content-center pt-2 pb-4">
-                            <p class="mb-0">Incidência 3</p>
-                        </div>
+                        {% for incidence in incidences %}
+                        <h5 class="font-weight-bold mb-4">{% trans 'Incidência' %} &nbsp{{forloop.counter}}:&nbsp</h5>
+                        <ul class="border border-info border-3">
+                            <li class="mt-4"><span class="font-weight-bold">{% trans 'Data' %}:&nbsp</span> {{incidence.filing_time}}</li>
+                            {% if incidence.grouds_for_termination is True %}
+                                <li class="mt-4 mb-4"><span class="font-weight-bold">{% trans 'Justificado terminar contrato?' %} &nbsp</span> Sim</li>
+                            {% else %}    
+                                <li class="mt-4 mb-4"><span class="font-weight-bold">{% trans 'Justificado terminar contrato?' %} &nbsp</span> Não</li>
+                            {% endif %}
+                            <li class="mt-4"><span class="font-weight-bold">{% trans 'Descrição' %}: &nbsp</span> {{incidence.description}}</li>
+                            {% for cause in causes_description %}
+                                <li class="mt-4 mb-4"><span class="font-weight-bold">{% trans 'Razão de incidência' %} &nbsp{{forloop.counter}}:</span> {{cause}}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endfor %}
                     </div>                
             </div>
         </div>
