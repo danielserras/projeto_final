@@ -90,7 +90,6 @@ def register_view(request):
         #para verificar email ver https://github.com/foo290/Django-Verify-Email/   -alexfaustino
         if form.is_valid() and pform.is_valid():
 
-            print(pform.cleaned_data['nif'])
             inactive_user = send_verification_email(request, form)
             #user = form.save()
             app_user_object = App_user.objects.get(user_id=inactive_user)
@@ -753,7 +752,6 @@ def deny_request(request, request_id, formRich):
     sorted_list_all_notifications = sorted(list_all_notifications,
     key=lambda x: x[len(x)-2], reverse=False)
     for i in sorted_list_all_notifications:
-        print("Element1:", i[0], "Element2:",i[1], "Element3:",i[2])
         print(i, "\n")
 
 
@@ -794,10 +792,8 @@ def create_agreement(user_id, ag_request_id):
             reviewd = False,
         )
         new_ag.save()
-        print("house")
         assoc_listing.main_listing.is_active = False
         assoc_listing.save()
-        print(assoc_listing.main_listing.is_active)
 
     else:
         assoc_listing = ag_request.associated_room_listing
@@ -813,10 +809,8 @@ def create_agreement(user_id, ag_request_id):
             status = True,
         )
         new_ag.save()
-        print("room")
         assoc_listing.main_listing.is_active = False
         assoc_listing.save()
-        print(assoc_listing.main_listing.is_active)
 
     last_invoice.checkReadTenant = True
     last_invoice.agreement = new_ag
@@ -987,34 +981,38 @@ def profile(request):
             a_user.address = user_form.cleaned_data.get('address')
             a_user.nif = user_form.cleaned_data.get('nif')
 
-            a_user.image = user_form.cleaned_data.get('image')
-
             a_user.save()
 
-            # Open the input image as numpy array, convert to RGB
-            img=PILImage.open(a_user.image).convert("RGB")
-            img = img.resize((200,200))
+            if(user_form.cleaned_data.get('image') != None):
 
-            npImage=numpy.array(img)
-            h,w=img.size
+                a_user.image = user_form.cleaned_data.get('image')
 
-            # Create same size alpha layer with circle
-            alpha = PILImage.new('L', img.size,0)
-            draw = ImageDraw.Draw(alpha)
-            draw.pieslice([0,0,h,w],0,360,fill=255)
+                a_user.save()
 
-            # Convert alpha Image to numpy array
-            npAlpha=numpy.array(alpha)
+                # Open the input image as numpy array, convert to RGB
+                img=PILImage.open(a_user.image).convert("RGB")
+                img = img.resize((200,200))
 
-            # Add alpha layer to RGB
-            npImage=numpy.dstack((npImage,npAlpha))
+                npImage=numpy.array(img)
+                h,w=img.size
 
-            # Save with alpha
-            PILImage.fromarray(npImage).save(str(a_user.image).split('.')[0]+"_circle.png")
+                # Create same size alpha layer with circle
+                alpha = PILImage.new('L', img.size,0)
+                draw = ImageDraw.Draw(alpha)
+                draw.pieslice([0,0,h,w],0,360,fill=255)
 
-            a_user.image = str(a_user.image).split('.')[0]+"_circle.png"
+                # Convert alpha Image to numpy array
+                npAlpha=numpy.array(alpha)
 
-            a_user.save()
+                # Add alpha layer to RGB
+                npImage=numpy.dstack((npImage,npAlpha))
+
+                # Save with alpha
+                PILImage.fromarray(npImage).save(str(a_user.image).split('.')[0]+"_circle.png")
+
+                a_user.image = str(a_user.image).split('.')[0]+"_circle.png"
+
+                a_user.save()
 
             if request.session['typeUser'] == "Tenant":
 
@@ -1064,6 +1062,7 @@ def profile(request):
                         form = UpdateUserForm()
 
                         context = {"diffDates": diffDates,
+                        "a_user": a_user,
                         "birth": user_birth,
                         "phone": user_phone,
                         "type": user_type,
@@ -1090,6 +1089,7 @@ def profile(request):
                         form = UpdateUserForm()
 
                         context = {"birth": user_birth,
+                        "a_user": a_user,
                         "phone": user_phone,
                         "type": user_type,
                         "min": user_min_search,
@@ -1114,6 +1114,7 @@ def profile(request):
                 form = UpdateUserForm()
 
                 context = {"birth": user_birth,
+                "a_user": a_user,
                 "phone": user_phone,
                 "type": user_type,
                 "min": user_min_search,
@@ -1617,7 +1618,6 @@ def notificationsTenant(request):
     sorted_list_all_notifications = sorted(list_all_notifications,
     key=lambda x: x[len(x)-2], reverse=False)
     for i in sorted_list_all_notifications:
-        print("Element1:", i[0], "Element2:",i[1], "Element3:",i[2])
         print(i, "\n")
 
     context = {'sorted_list_all_notifications':list(reversed(sorted_list_all_notifications)), "incidences":user_incidences}
@@ -1694,7 +1694,6 @@ def notificationsLandlord(request):
     sorted_list_all_notifications = sorted(list_all_notifications,
     key=lambda x: x[len(x)-2], reverse=False)
     for i in sorted_list_all_notifications:
-        print("Element1:", i[0], "Element2:",i[1], "Element3:",i[2])
         print(i, "\n")
 
     form = RichTextForm()
@@ -2102,7 +2101,6 @@ def make_payment_refunds(request, ref_id):
 @csrf_exempt
 def get_payment_status(sender, **kwargs):
     ipn_obj = sender.POST
-    print("funciona filho da puta")
     if ipn_obj['payment_status'] == ST_PP_COMPLETED:
 
         if ipn_obj['receiver_email'] == settings.PAYPAL_RECEIVER_EMAIL:
@@ -3192,17 +3190,14 @@ def num_of_unread_notifications(request):
             for a in ag_req:
                 if a.checkReadTenant !=True:
                     numUnreadNotifications += 1
-                    print('ag', numUnreadNotifications)
             for i in invoicesList:
                 for j in i:
                     if j.checkReadTenant !=True:
                         numUnreadNotifications += 1
-                        print('iv', j.id, numUnreadNotifications)
             for p in paywList:
                 for j in p:
                     if j.checkReadTenant !=True:
                         numUnreadNotifications += 1
-                        print('warn', numUnreadNotifications)
         
                 
         return HttpResponse(json.dumps({"numUnreadNotifications":numUnreadNotifications}))
