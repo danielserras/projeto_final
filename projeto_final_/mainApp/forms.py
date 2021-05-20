@@ -543,6 +543,26 @@ class UpdateUserForm(forms.Form):
     else:
         image.widget.attrs['onchange']='upload_img(this);'
 
+class ProfileImage(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ProfileImage, self).__init__(*args, **kwargs)
+        '''for field_name, field in self.fields.items():
+            if field.widget.attrs.get('class'):
+                field.widget.attrs['class'] += 'imgfield form-control-file'
+            else:
+                field.widget.attrs['class']='imgfield form-control-file'
+                
+            if field.widget.attrs.get('onchange'):
+                field.widget.attrs['onchange'] += 'upload_img(this);'
+            else:
+                field.widget.attrs['onchange']='upload_img(this);'''
+
+    images = forms.ImageField()
+
+    class Meta:
+        model = App_user
+        fields = ['image' ]
+
 class GetChat(forms.Form):
     chat_id = forms.IntegerField(required=True)
 
