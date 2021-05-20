@@ -1745,11 +1745,11 @@ def search(request):
                 location = tenant.university + ", Portugal"
                 form = SearchForm(initial = {"location":location, "radius":10, "minPrice":tenant.min_search, "maxPrice":tenant.max_search})
             else:
-                form = SearchForm(initial = {"location":"", "radius":"", "minPrice":tenant.min_search, "maxPrice":tenant.max_search})
+                form = SearchForm(initial = {"location":"", "radius":"", "minPrice":"", "maxPrice":""})
         except:
             form = SearchForm()
     else:
-        form = SearchForm()
+        form = SearchForm(initial = {"location":"", "radius":"", "minPrice":"450", "maxPrice":"1200"})
 
     if request.method == 'POST':
         form = SearchForm(data=request.POST)
