@@ -984,6 +984,8 @@ def profile(request):
 
             a_user.phoneNumber = user_form.cleaned_data.get('phoneNumber')
             a_user.birthDate = user_form.cleaned_data.get('birthDate')
+            a_user.address = user_form.cleaned_data.get('address')
+            a_user.nif = user_form.cleaned_data.get('nif')
 
             a_user.image = user_form.cleaned_data.get('image')
 
@@ -1124,9 +1126,10 @@ def profile(request):
             user_birth = a_user.birthDate.strftime('%Y-%m-%d')
             user_phone = a_user.phoneNumber
             user_type = _('Senhorio')
-
+                
             form = UpdateUserForm()
             context = {
+            "a_user": a_user,
             "birth": user_birth,
             "phone": user_phone,
             "type": user_type,

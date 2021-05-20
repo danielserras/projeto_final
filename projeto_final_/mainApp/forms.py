@@ -530,8 +530,10 @@ class UpdateUserForm(forms.Form):
     image = forms.ImageField(required=False)
     first_name = forms.CharField(required=True, max_length=50)
     last_name = forms.CharField(required=True, max_length=50)
+    address = forms.CharField(required=True, max_length=100)
     email = forms.EmailField(required=True, max_length=75)
     phoneNumber = forms.IntegerField(required=True, max_value= 999999999)
+    nif = forms.IntegerField(required=True, min_value= 100000000, max_value= 999999999)
     birthDate = forms.DateField(required=True)
     university = forms.CharField(required=False, max_length=100)
     min_search = forms.IntegerField(required=False, max_value= 1000)
@@ -550,7 +552,6 @@ class SendMessage(forms.Form):
 
 class CreateChat(forms.Form):
     receiver = forms.IntegerField(required=True)
-
 
 class RichTextForm(ModelForm):
     class Meta:
