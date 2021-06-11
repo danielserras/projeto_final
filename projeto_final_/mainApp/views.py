@@ -3246,3 +3246,53 @@ def num_of_unread_messages(request):
 
     else:
         return HttpResponse(json.dumps({"numUnreadMessages": None}))
+
+
+def user_1(request):
+    return render(request, "mainApp/user_1.html", {})
+
+def user_2(request):
+    return render(request, "mainApp/user_2.html", {})
+
+def user_3(request):
+    return render(request, "mainApp/user_3.html", {})
+
+def user_4(request):
+    return render(request, "mainApp/user_4.html", {})
+
+def ut1(request):
+    return render(request, "mainApp/ut1.html", {})
+
+
+def ut2(request):
+    return render(request, "mainApp/ut2.html", {})
+
+def ut3(request):
+    return render(request, "mainApp/ut3.html", {})
+
+def ut4(request):
+    return render(request, "mainApp/ut4.html", {})
+
+def ut5(request):
+    return render(request, "mainApp/ut5.html", {})
+
+def ut6(request):
+    return render(request, "mainApp/ut6.html", {})
+
+def ut7(request):
+    return render(request, "mainApp/ut7.html", {})
+
+def ut8(request):
+    return render(request, "mainApp/ut8.html", {})
+
+def ut9(request):
+    return render(request, "mainApp/ut9.html", {})
+
+def ut10(request):
+    return render(request, "mainApp/ut10.html", {})
+
+def ut11(request):
+    return render(request, "mainApp/ut11.html", {})
+
+def ut12(request):
+    return render(request, "mainApp/ut12.html", {})
