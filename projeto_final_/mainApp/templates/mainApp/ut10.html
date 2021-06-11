@@ -4,7 +4,9 @@
 {% load app_extras %}
 {% block scripts%}
 <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
-
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/user_manual.css" %}'>
 {% endblock %}
 {% block content %}
 
@@ -94,22 +96,28 @@
         </div>
         
       </div>
-    <div class="justify-content-center">
-        <div class="col-sm-11 border border-info border-5 rounded mt-5 ml-5 mb-5 pl-5">
+    <div class="mx-auto pl-5">
+        <div class="col-sm-11 border border-info border-5 rounded mt-5 mb-5 pl-5">
             <div class="row">
-                <h6 class="ml-4 mt-2 p-2 font-weight-bold">{% trans 'Caso tenha alguma dúvida acerca do funcionamento da aplicação ou queira reportar um erro envie-nos uma mensagem' %}:</h6>
+                <h5 class="text-center mt-3 mb-3 font-weight-bold">Como posso terminar um contrato já iniciado?</h5>
             </div>
-                <form>
-                    <div class="form-group">
-                        <textarea class="form-control p-3" rows="5"></textarea>
-                    </div>
-                </form>
-            <div class="text-right">
-                <button class="btn btn-primary btn-rounded mb-3 ">{% trans 'Enviar' %} </button>
+            <div>
+                <ol class="list-group list-group-numbered" id="">
+                    <li class="">
+                        <p>Deves clicar em gerir acordos e clicar no acordo que pretendes cancelar</p>
+                    </li>
+                    <li class="">
+                        <p>Clica na opção que te permite cancelar o acordo</p>
+                        
+                    </li>
+                    
+                   
+                </ol>
+
             </div>
         </div>
+        </div>
     </div>
-    
 </div>
 
 {% endblock %}

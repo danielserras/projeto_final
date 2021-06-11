@@ -4,7 +4,9 @@
 {% load app_extras %}
 {% block scripts%}
 <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
-
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href='{% static "mainApp/css/user_manual.css" %}'>
 {% endblock %}
 {% block content %}
 
@@ -94,22 +96,30 @@
         </div>
         
       </div>
-    <div class="justify-content-center">
-        <div class="col-sm-11 border border-info border-5 rounded mt-5 ml-5 mb-5 pl-5">
+    <div class="ml-auto p-4 pr-5 mr-5">
+        <div class="col-sm-11 border border-info border-5 rounded mt-5 mb-5 pl-5">
             <div class="row">
-                <h6 class="ml-4 mt-2 p-2 font-weight-bold">{% trans 'Caso tenha alguma dúvida acerca do funcionamento da aplicação ou queira reportar um erro envie-nos uma mensagem' %}:</h6>
+                <h5 class="text-center mt-3 mb-3 font-weight-bold">Como posso comunicar com algum dos meus inquilinos ou interessados?</h5>
             </div>
-                <form>
-                    <div class="form-group">
-                        <textarea class="form-control p-3" rows="5"></textarea>
-                    </div>
-                </form>
-            <div class="text-right">
-                <button class="btn btn-primary btn-rounded mb-3 ">{% trans 'Enviar' %} </button>
+            <div>
+                <ol class="list-group list-group-numbered" id="">
+                    <li class="">
+                        <p>Deves clicar no botão com ícone de mensagem no teu canto superior direito, assinalado na figura</p>
+                        <img src='{% static "mainApp/images/landlord_11.png" %}' class="img-fluid mb-4" alt="aux image" id="img_user">
+                    </li>
+                    <li class="">
+                        <p>Agora podes visualizar a lista de chats, clicar num à tua escolha e começar uma conversa</p>
+                        <img src='{% static "mainApp/images/landlord_10.png" %}' class="img-fluid mb-4" alt="aux image" id="img_user">
+                        
+                    </li>
+                    
+                   
+                </ol>
+
             </div>
         </div>
+        </div>
     </div>
-    
 </div>
 
 {% endblock %}
