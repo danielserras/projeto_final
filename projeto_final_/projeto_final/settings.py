@@ -14,6 +14,31 @@ from pathlib import Path
 import os
 from decouple import config
 
+PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)
+
+DEFAULT_FILE_STORAGE = 'gcloud.GoogleCloudMediaFileStorage'
+STATICFILES_STORAGE = 'gcloud.GoogleCloudStaticFileStorage'
+    
+GS_PROJECT_ID = 'dotted-clover-316000'
+GS_STATIC_BUCKET_NAME = 'unihouses_imgs'
+GS_MEDIA_BUCKET_NAME = 'unihouses_imgs'
+
+STATIC_URL = 'https://storage.googleapis.com/{}/'.format(GS_STATIC_BUCKET_NAME)
+STATIC_ROOT = "static/"
+
+MEDIA_URL = 'https://storage.googleapis.com/{}/'.format(GS_MEDIA_BUCKET_NAME)
+MEDIA_ROOT = "media/"
+    
+UPLOAD_ROOT = 'media/uploads/'
+    
+DOWNLOAD_ROOT = os.path.join(PROJECT_ROOT, "static/media/downloads")
+DOWNLOAD_URL = STATIC_URL + "media/downloads"
+GS_DEFAULT_ACL = 'publicRead'
+
+
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file('/home/joaopedrosesimbra/projeto_final/projeto_final_/unihouses.json')
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -164,8 +189,8 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale') ]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = "/static/"
+#STATIC_URL = '/static/'
+#STATIC_ROOT = "/static/"
 
 from django.utils.translation import gettext_lazy as _
 
