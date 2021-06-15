@@ -26,10 +26,10 @@ GS_STATIC_BUCKET_NAME = 'unihouses_imgs'
 STATIC_URL = 'https://storage.googleapis.com/{}/'.format(GS_STATIC_BUCKET_NAME)
 STATIC_ROOT = "static/"
 
-#MEDIA_URL = 'https://storage.googleapis.com/{}/'.format(GS_MEDIA_BUCKET_NAME)
-#MEDIA_ROOT = "media/"
+MEDIA_URL = 'https://storage.googleapis.com/{}/'.format(GS_STATIC_BUCKET_NAME)
+MEDIA_ROOT = "static/"
     
-#UPLOAD_ROOT = 'media/uploads/'
+UPLOAD_ROOT = 'media/uploads/'
     
 DOWNLOAD_ROOT = os.path.join(PROJECT_ROOT, "static/media/downloads")
 DOWNLOAD_URL = STATIC_URL + "media/downloads"
