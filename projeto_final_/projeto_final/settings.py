@@ -36,7 +36,7 @@ DOWNLOAD_URL = STATIC_URL + "media/downloads"
 GS_DEFAULT_ACL = 'publicRead'
 
 
-GS_CREDENTIALS = service_account.Credentials.from_service_account_file('/home/joaopedrosesimbra/projeto_final/projeto_final_/unihouses.json')
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file('/unihouses.json')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -189,8 +189,8 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale') ]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-#STATIC_URL = '/static/'
-#STATIC_ROOT = "/static/"
+STATIC_URL = '/static/'
+STATIC_ROOT = "/static/"
 
 from django.utils.translation import gettext_lazy as _
 
