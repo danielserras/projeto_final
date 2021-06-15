@@ -36,7 +36,7 @@ DOWNLOAD_URL = STATIC_URL + "media/downloads"
 GS_DEFAULT_ACL = 'publicRead'
 
 
-GS_CREDENTIALS = service_account.Credentials.from_service_account_file('/unihouses.json')
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file('/home/joaopedrosesimbra/projeto_final/projeto_final_/unihouses.json')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
