@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '9a52b6b6d117.ngrok.io']
+ALLOWED_HOSTS = ['127.0.0.1', '35.207.146.239', '35.207.111.230']
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -116,12 +116,12 @@ WSGI_APPLICATION = 'projeto_final.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-	'NAME' : 'proj_final',
-	'HOST': '127.0.0.1',
+    'ENGINE': 'django.db.backends.mysql',
+	'NAME' : '3rmvjeBxVe',
+	'HOST': 'remotemysql.com',
 	'PORT': '3306',
-	'USER': 'root',
-	'PASSWORD': '',
+	'USER': '3rmvjeBxVe',
+	'PASSWORD': config('DB_KEY'),
     }
 }
 
