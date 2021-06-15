@@ -21,13 +21,13 @@ STATICFILES_STORAGE = 'gcloud.GoogleCloudStaticFileStorage'
     
 GS_PROJECT_ID = 'dotted-clover-316000'
 GS_STATIC_BUCKET_NAME = 'unihouses_imgs'
-#GS_MEDIA_BUCKET_NAME = 'unihouses_imgs'
+GS_MEDIA_BUCKET_NAME = 'unihouses_imgs'
 
 STATIC_URL = 'https://storage.googleapis.com/{}/'.format(GS_STATIC_BUCKET_NAME)
 STATIC_ROOT = "static/"
 
-MEDIA_URL = 'https://storage.googleapis.com/{}/'.format(GS_STATIC_BUCKET_NAME)
-MEDIA_ROOT = "static/"
+#MEDIA_URL = 'https://storage.googleapis.com/{}/'.format(GS_MEDIA_BUCKET_NAME)
+MEDIA_ROOT = "media/"
     
 UPLOAD_ROOT = 'media/uploads/'
     
