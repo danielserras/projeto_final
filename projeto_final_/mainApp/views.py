@@ -1443,9 +1443,9 @@ def create_listing_view(request, property_id):
                         image = i,
                         album = prop_album)
                     img.save()
-                    img_pli = PILImage.open(img.image)  
-                    img_r = img_pli.resize((600,337))
-                    img_r.save(str(img.image)) 
+                    #img_pli = PILImage.open(img.image)  
+                    #img_r = img_pli.resize((600,337))
+                    #img_r.save(str(img.image)) 
 
         return redirect("/mainApp/profile/propertiesManagement/listingEditing/{}".format(property_object.id))
     

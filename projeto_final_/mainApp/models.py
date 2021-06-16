@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from ckeditor.fields import RichTextField
 from django.core.validators import MaxValueValidator, MinValueValidator
 import time
+from stdimage import StdImageField, JPEGField
 
 def get_upload_path(instance, filename):
     path = instance.album.ListingAlbum.id
@@ -21,7 +22,7 @@ class App_user(models.Model):
     birthDate = models.DateField(null=True, blank=True)
     address = models.CharField(max_length=100)
     nif = models.IntegerField(null=True, validators=[MaxValueValidator(999999999), MinValueValidator(100000000)])
-    image = models.ImageField(upload_to=get_profile_image_path)
+    image = JPEGField(null=True, upload_to=get_profile_image_path, variations={'medium': (300, 200),})
 
 class Tenant(models.Model):
     ten_user = models.OneToOneField(App_user, on_delete=models.CASCADE)
@@ -52,7 +53,7 @@ class ImageAlbum(models.Model):
 class Image(models.Model):
     name = models.CharField(max_length=250)
     is_cover = models.BooleanField(default=False)
-    image = models.ImageField(upload_to=get_upload_path)
+    image = JPEGField(upload_to=get_upload_path, variations={'medium': (600, 337),})
     album = models.ForeignKey(ImageAlbum, related_name="images", on_delete=models.CASCADE)
 
 
