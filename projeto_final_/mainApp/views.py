@@ -3004,7 +3004,7 @@ def get_receipt_pdf(request):
                 total += line.amount
 
             data = {
-                'today': _(invoice.timestamp), 
+                'today': invoice.timestamp, 
                 'customer_name': str(tenant_user.first_name) + " " + str(tenant_user.last_name),
                 'order_id': receipt.id,
                 'list_lines': list_invoice_line,
