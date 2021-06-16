@@ -518,9 +518,9 @@ def introduce_property_view (request):
                                             image = i,
                                             album = prop_album)
                                         img.save()
-                                        img_pli = PILImage.open(img.image)  
-                                        img_r = img_pli.resize((600,337))
-                                        img_r.save(str(img.image))
+                                        #img_pli = PILImage.open(img.image)  
+                                        #img_r = img_pli.resize((600,337))
+                                        #img_r.save(str(img.image))
 
                             del request.session['prop_serial']
 
