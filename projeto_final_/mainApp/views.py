@@ -1129,7 +1129,7 @@ def profile(request):
             user_birth = a_user.birthDate.strftime('%Y-%m-%d')
             user_phone = a_user.phoneNumber
             user_type = _('Senhorio')
-                
+            print(str(user_image))
             form = UpdateUserForm()
             context = {
             "a_user": a_user,
