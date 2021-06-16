@@ -1122,7 +1122,7 @@ def profile(request):
                 "min": user_min_search,
                 "max": user_max_search,
                 "university": user_university,
-                "image": str(user_image).split('mainApp/static/')[1],
+                "image": str(user_image),
                 "form": form}
         else:
             user_image = a_user.image
@@ -1136,7 +1136,7 @@ def profile(request):
             "birth": user_birth,
             "phone": user_phone,
             "type": user_type,
-            "image": str(user_image).split('mainApp/static/')[1],
+            "image": str(user_image),
             "form": form}
 
 
