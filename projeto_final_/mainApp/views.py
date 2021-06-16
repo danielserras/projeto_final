@@ -3087,7 +3087,7 @@ def profileTenant(request,ten_id):
         "tenant_user":tenant_user,
         "tenant_app_user":tenant_app_user,
         "tenant": tenant,
-        "image": str(user_image).split('mainApp/static/')[1],
+        "image": str(user_image),
         "incidences": incidencesList,
         "causes_description":causes_description
     }
@@ -3106,7 +3106,7 @@ def profileLandlord(request,lan_id):
         "landlord_app_user":landlord_app_user,
         "landlord": landlord, "review_rounded": review_rounded,
         "review_rounded_int": review_rounded_int,
-        "image": str(user_image).split('mainApp/static/')[1],
+        "image": str(user_image),
     }
     return render(request, "mainApp/profileLandlord.html", context)
 
