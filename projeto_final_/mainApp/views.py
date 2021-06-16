@@ -1366,8 +1366,8 @@ def listing_editing_view(request, property_id, main_listing_id):
     imagesPaths = []
     imagesId = []
     for i in list(images):
-        pathSplited = str(i.image).split('mainApp/static/')
-        imagesPaths.append(pathSplited[1])
+        pathSplited = str(i.image)
+        imagesPaths.append(pathSplited)
         imagesId.append(i.id)
 
     imagesZip = zip(imagesPaths, imagesId)
