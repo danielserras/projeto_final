@@ -1072,7 +1072,7 @@ def profile(request):
                         "max": user_max_search,
                         "university": user_university,
                         "rent_to_be_returned": rent_to_be_returned,
-                        "image": str(user_image).split('mainApp/static/')[1],
+                        "image": str(user_image),
                         "form": form}
 
                     elif (Tenant.objects.get(id = i.tenant_id)).ten_user_id == a_user.id and i.status != True:
@@ -1097,7 +1097,7 @@ def profile(request):
                         "min": user_min_search,
                         "max": user_max_search,
                         "university": user_university,
-                        "image": str(user_image).split('mainApp/static/')[1],
+                        "image": str(user_image),
                         "form": form}
                 except:
                     pass
