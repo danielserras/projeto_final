@@ -2010,9 +2010,9 @@ def make_payment(request, ag_request_id):
             "item_name": main_listing.title,
             "item_number": ag_request.id,
             "custom": current_user.id,
-            "notify_url": "http://9a52b6b6d117.ngrok.io/paymentStatus/",
-            "return_url": "http://9a52b6b6d117.ngrok.io/mainApp/search",
-            "cancel_return": "http://9a52b6b6d117.ngrok.io/mainApp/profile",
+            "notify_url": "https://unihouses.codes/paymentStatus/",
+            "return_url": "https://unihouses.codes/mainApp/search",
+            "cancel_return": "https://unihouses.codes/mainApp/profile",
 
             }
 
@@ -2088,9 +2088,9 @@ def make_payment_refunds(request, ref_id):
             "item_name": main_listing.title,
             "item_number": ref.id,
             "custom": current_user.id,
-            "notify_url": "http://8a87ee157da8.ngrok.io/en/paymentStatusRef/",
-            "return_url": "http://8a87ee157da8.ngrok.io/mainApp/search",
-            "cancel_return": "http://8a87ee157da8.ngrok.io/mainApp/profile",
+            "notify_url": "https://unihouses.codes/en/paymentStatusRef/",
+            "return_url": "https://unihouses.codes/mainApp/search",
+            "cancel_return": "https://unihouses.codes/mainApp/profile",
 
             }
 
