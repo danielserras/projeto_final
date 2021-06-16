@@ -3044,7 +3044,7 @@ def review(request):
                 tenants = tenants,
             )
             review.save()
-            return render(request,'mainApp/profile.html', {})
+            return redirect('profile')
         
         review.conservation = (review.conservation*review.num_reviews + int(conservation)) / (review.num_reviews + 1)
         review.services = (review.services*review.num_reviews + int(services)) / (review.num_reviews + 1)
