@@ -1010,9 +1010,9 @@ def profile(request):
                 npImage=numpy.dstack((npImage,npAlpha))
 
                 # Save with alpha
-                PILImage.fromarray(npImage).save(str(a_user.image).split('.')[0]+"_circle.png")
+                #PILImage.fromarray(npImage).save(str(a_user.image).split('.')[0]+"_circle.png")
 
-                a_user.image = str(a_user.image).split('.')[0]+"_circle.png"
+                a_user.image = str(a_user.image).split('.')[0]+".medium.jpeg"
 
                 a_user.save()
 
@@ -1129,7 +1129,7 @@ def profile(request):
             user_birth = a_user.birthDate.strftime('%Y-%m-%d')
             user_phone = a_user.phoneNumber
             user_type = _('Senhorio')
-            print(str(user_image))
+            print(user_image)
             form = UpdateUserForm()
             context = {
             "a_user": a_user,
