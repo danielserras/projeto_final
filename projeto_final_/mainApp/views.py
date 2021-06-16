@@ -1831,7 +1831,7 @@ def search(request):
 
     for i in range(len(row)):
         lng_1, lat_1, lng_2, lat_2 = map(math.radians, [location.longitude, location.latitude, row[i][4], row[i][3]])
-        tempTuple = row[i][:5] + (row[i][5].split('mainApp/static/')[1],) + row[i][6:] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),)
+        tempTuple = row[i][:5] + (row[i][5],) + row[i][6:] + (round(get_distance(lng_1, lat_1, lng_2, lat_2),1),)
         row = row[:i] + (tempTuple,) + row[i+1:]
         rangeList.append(i)
         if (i % previewPerPage == 0):
