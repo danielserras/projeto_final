@@ -5,10 +5,11 @@ from django.dispatch import receiver
 from ckeditor.fields import RichTextField
 from django.core.validators import MaxValueValidator, MinValueValidator
 import time
+from projeto_final import settings
 
 def get_upload_path(instance, filename):
     path = instance.album.ListingAlbum.id
-    return f'static/mainApp/listings/{path}/{filename}'
+    return settings.STATIC_URL+f'static/mainApp/listings/{path}/{filename}'
 
 def get_profile_image_path(instance, filename):
     path = instance.id
